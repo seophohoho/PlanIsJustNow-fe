@@ -5,7 +5,7 @@ import { InputGroup, Form, Col, Row, Button, Container, Navbar, Image } from 're
 
 function App() {
   let inputs = useState(["e-mail","인증번호","비밀번호","비밀번호 확인","닉네임"])
-
+  let spaceholder = useState()
   return (
     <div>
       <header>
@@ -93,7 +93,7 @@ function App() {
                   <div className='float-display'>
                     <Button as="input" type="button" value="이미지 선택"/>
                     <p className='color-violet impo-margin-zero'>100px*100px 권장</p>
-                    <p className='color-violet'>PNG, JPNG, JPEG가 지원</p>
+                    <p className='color-violet'>PNG, JPNG, JPEG가 지원됩니다.</p>
                   </div>
                 </Col>
               </Row>
@@ -107,6 +107,14 @@ function App() {
       <footer></footer>
     </div>
   );
+}
+
+function InputModal(){
+  return(
+    <div>
+
+    </div>
+  )
 }
 
 export default App;
