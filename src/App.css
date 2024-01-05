@@ -4,6 +4,18 @@
   
 }
 
+.impo-margin-zero{
+  margin: 0px !important;
+}
+
+.float-display{
+  float: left;
+}
+
+.color-violet {
+  color: rgb(200, 200, 250) !important;
+}
+
 .form{
   width: 60% !important;
 }
@@ -23,6 +35,14 @@
   font-weight: 800;
   color: rgb(90, 100, 255);
 }
+.center{
+  margin: 50px;
+  text-align: center;
+}
+.image-w{
+  display: inline !important;
+  width: 100px;
+}
 
 .color-darkBlue{
   color: rgb(35, 45, 150);
@@ -38,7 +58,6 @@
   padding-top: 20px;
   width: auto !important;
   border-bottom: 3px solid rgb(200, 200, 250);
-  display: flex;
   /*폰트 미정*/
 }
 

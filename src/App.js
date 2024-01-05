@@ -24,56 +24,82 @@ function App() {
         <div className='App'>
             <Form className='form'>
             <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
-                  <Form.Label column sm={5}>
-                  <p className='color-darkBlue'><span>*</span> e-mail</p> 
+                <Col>
+                  <Form.Label column>
+                    <p className='color-darkBlue'><span>*</span> e-mail</p> 
                   </Form.Label>
-                <Col sm={5}>
+                </Col>
+                <Col className='mb-3'>
                   <Form.Control type="email" placeholder="pettodo@abc.com" className=''/>
+                </Col>
+                <Col>
+                 <Button as="input" type="button" value="인증번호 전송"/>{' '}
                 </Col>
             </Form.Group>
 
+
             <Form.Group as={Row} className="mb-3" controlId="formHorizontalAuth">
-              <Form.Label column sm={5}>
+              <Form.Label column>
                 <p className='color-darkBlue'><span>*</span> 인증번호</p>
               </Form.Label>
-              <Col sm={5}>
+              <Col className='mb-3'>
                 <Form.Control type="email" placeholder="인증번호 입력하세요. (숫자 6자리)" />
+              </Col>
+              <Col>
+                 <Button as="input" type="button" value="확인"/>{' '}
               </Col>
             </Form.Group>
 
             <Form.Group as={Row} className="mb-3" controlId="formHorizontalPassword">
-              <Form.Label column sm={5}>
-                <p className='color-darkBlue'><span>*</span> 비밀번호</p>
-              </Form.Label>
-              <Col sm={5}>
-                <Form.Control type="password" placeholder="비밀번호를 입력하세요.(숫자와 특수문자를 포함한 8글자 이상)" />
-              </Col>
-            </Form.Group>
-
-            <Form.Group as={Row} className="mb-3">
-              <Form.Label column sm={5}>
-                  <p className='color-darkBlue'><span>*</span> 비밀번호 확인</p>
+                <Form.Label column>
+                  <p className='color-darkBlue'><span>*</span> 비밀번호</p>
                 </Form.Label>
-                <Col sm={5}>
-                  <Form.Control type="passwordCheck" placeholder="비밀번호 재입력" />
+                <Col className='mb-3'>
+                  <Form.Control type="password" placeholder="비밀번호를 입력하세요.(숫자와 특수문자를 포함한 8글자 이상)" />
+                </Col>
+                <Col>
                 </Col>
             </Form.Group>
 
             <Form.Group as={Row} className="mb-3">
-              <Form.Label column sm={5}>
+              <Form.Label column>
+                  <p className='color-darkBlue'><span>*</span> 비밀번호 확인</p>
+                </Form.Label>
+                <Col>
+                  <Form.Control type="passwordCheck" placeholder="비밀번호 재입력" />
+                </Col>
+                <Col>
+                </Col>
+            </Form.Group>
+
+            <Form.Group as={Row} className="mb-3">
+              <Form.Label column>
                 <p className='color-darkBlue'><span>*</span> 닉네임</p>
               </Form.Label>
-              <Col sm={5}>
+              <Col>
                 <Form.Control type="name" placeholder="닉네임을 입력하세요" />
+              </Col>
+              <Col>
               </Col>
             </Form.Group>
 
             <Container>
               <Row>
-                <Col xs={6} md={4}>
-                  <Image src="/logo192." roundedCircle />
+                <Col>
+                  <p className='color-darkBlue'>프로필 사진</p>
+                </Col>
+                <Col className='center' sm={7}>
+                  <Image src="/logo192.png" roundedCircle className='input-bgSet image-w float-display' />
+                  <div className='float-display'>
+                    <Button as="input" type="button" value="이미지 선택"/>
+                    <p className='color-violet impo-margin-zero'>100px*100px 권장</p>
+                    <p className='color-violet'>PNG, JPNG, JPEG가 지원</p>
+                  </div>
                 </Col>
               </Row>
+              <div className='center'>
+                <Button as="input" type="button" value="다음" />
+              </div>
             </Container>
           </Form>
         </div>
