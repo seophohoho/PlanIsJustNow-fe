@@ -33,11 +33,11 @@ function App() {
   let [addr, setAddr] = useState(["api/auth/mail", "api/auth/check"])
   let [data, setData] = useState([
     {
-      "email" : "사용자가 작성한 e-mail"
+      "email" : email
     },
     {
-      "email" : "사용자가 작성한 e-mail",
-      "code" : "사용자가 작성한 인증코드"
+      "email" : email,
+      "code" : authCode
     }
   ])
  
@@ -82,9 +82,9 @@ function App() {
                 <Button as="input" type="button" value="다음" onClick={()=>{
                   try{
                     axios.post("http://localhost:8080/api/account/signup",{
-                      "email" : "사용자가 작성한 e-mail",
-                      "password" : "사용자가 작성한 비밀번호",
-                      "nickname" : "사용자가 작성한 닉네임",
+                      "email" : email,
+                      "password" : password,
+                      "nickname" : nickname,
                       "todolist_failure_count" : 0
                     })
                   }
