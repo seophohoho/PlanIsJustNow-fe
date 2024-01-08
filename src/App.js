@@ -5,13 +5,25 @@ import { useState } from 'react';
 import { InputGroup, Form, Col, Row, Button, Container, Navbar, Image } from 'react-bootstrap';
 
 function App() {
-  let inputs = useState(["e-mail","인증번호","비밀번호","비밀번호 확인","닉네임"])
-  let spaceholder = useState("")
+  let [inputsTitle] = useState(["e-mail","인증번호","비밀번호","비밀번호 확인","닉네임"])
+  let [inputsType, setInputType] = useState("");
+  let [spaceholder, setSpaceholder] = useState("");
+  let [btnMessage,setBtnMessage] = useState("");
+
   //todo 나중에 배열로 합친다음 필요한 정보만 수정, 전달하는 형식으로 변경하는게 좋을듯
   let [email, setEmail] = useState("")
   let [authCode, setAuthCode] = useState("")
   let [password, setPassward] = useState("")
   let [nickname, setNickname] = useState("")
+
+  axios.get("https://example.com/api/data", {
+    headers: {
+      
+    }
+  })
+  .then(response => console.log(response.data))
+  .catch(error => console.error("Error:", error));
+
 
   return (
     <div>
@@ -44,7 +56,9 @@ function App() {
                  <Button as="input" type="button" value="인증번호 전송" onClick={()=>{
                   //TODO 전달전 양식 올바른지 판단(빈값, @ 있는지)
                   try{
-                    axios.post("/api/auth/mail",{"email" : email});
+                    axios.post("/api/auth/mail",
+                      {"email" : email},
+                      {headers:"https://localhost:3000"});
                   }catch(error){
                   alert(error + "디버그용: 올바르게 작동하지 않음!")
                  }}}/>{' '}
@@ -67,7 +81,8 @@ function App() {
                   try{
                   axios.post("/api/auth/check",{
                     "email" : email,
-                    "code" : authCode});
+                    "code" : authCode},
+                    {headers:"https://localhost:3000"});
                  }catch(error){
                   alert("디버그용 올바르게 작동하지 않음!")
                  }}}/>
@@ -135,7 +150,8 @@ function App() {
                     axios.post("/api/account/signup",{
                       "email" : email,
                       "password" : password,
-                      "nickname" : nickname,})
+                      "nickname" : nickname},
+                      {headers:"https://localhost:3000"})
                   }catch(error){
                     alert("디버그용 올바르게 작동하지 않음!")}
                 }} />
@@ -149,13 +165,26 @@ function App() {
   );
 }
 
-function InputModal(){
-  return(
-    <div>
-
-    </div>
-  )
-}
+// function InputModal(){
+//   return(
+//     <>
+//       <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
+//           <Col>
+//             <Form.Label column>
+//               <p className='color-darkBlue'><span>*</span> { inputsTitle }</p> 
+//             </Form.Label>
+//           </Col>
+//           <Col className='mb-3'>
+//             <Form.Control type={ inputsType } placeholder={ placeholder } onChange={(e)=>{
+//               state셋내용}}/>
+//           </Col>
+//           <Col>
+//             <Button as="input" type="button" value={ btnMessage } onClick={()=>{}}/>
+//           </Col>
+//       </Form.Group>
+//     </>
+//   )
+// }
 
 function shallowCopy(state, set, value){
   let copy = [...state]
