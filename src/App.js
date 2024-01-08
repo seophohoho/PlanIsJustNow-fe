@@ -16,7 +16,7 @@ import { InputGroup, Form, Col, Row, Button, Container, Navbar, Image } from 're
 
 function App() {
   let [inputTitle, setInputTitle] = useState(["e-mail","인증번호","비밀번호","비밀번호 확인","닉네임"])
-  let [inputType, setInputType] = useState(["email","number","passward","passward","text"]);
+  let [inputType, setInputType] = useState(["email","number","password","password","text"]);
   let [placeholder, setPlaceholder] = useState([
     "pettodo@abc.com",
     "인증번호 입력하세요. (숫자 6자리)",
@@ -28,7 +28,7 @@ function App() {
   let [btnMessage,setBtnMessage] = useState(["인증번호 전송","확인",false,false,false]);
   let [email, setEmail] = useState("")//묶어서 보내면 컴포넌트에서 배열번호로 표기할텐데 어느위치의 어느 정보인이 알기 힘들어짐
   let [authCode, setAuthCode] = useState("")
-  let [password, setPassward] = useState("")
+  let [password, setPassword] = useState("")
   let [nickname, setNickname] = useState("")
   let [addr, setAddr] = useState(["api/auth/mail", "api/auth/check"])
   let [data, setData] = useState([
@@ -61,8 +61,8 @@ function App() {
           <Form className='form'>
             {
               <InputComponent inputTitle={inputTitle} inputType={inputType} placeholder={placeholder} 
-                              classNames={classNames} btnMessage={btnMessage} addr={addr} data={data}
-                              email={email} setEmail={setEmail}/>
+                              classNames={classNames} btnMessage={btnMessage} addr={addr} data={data} email={email} 
+                              setEmail={setEmail} setAuthCode={setAuthCode} setPassword={setPassword} setNickname={setNickname}/>
             }
             <Container>
               <Row>

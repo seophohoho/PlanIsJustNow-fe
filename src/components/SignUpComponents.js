@@ -2,12 +2,17 @@ import { InputGroup, Form, Col, Row, Button, Container, Navbar, Image } from 're
 import axios from 'axios';
 
 { 
-  //TODO InputComponent-onChange: value 갱신될 때마다 app.js의 각각의 state에 갱신
+  //TODO InputComponent-onChange: value 갱신될 때마다 app.js의 각각의 state에 갱신 -> 함수구조 생각안하고 if로 임시처리 나중에 모듈화할 것
   //Todo InputComponent-onChange: 5개의 input 양식 조건 state 구현후 map 순서따라 할당(상세내용 app.js Todo확인)
 }
 
 function InputComponent(props){
-    const {inputTitle, inputType, placeholder, classNames, btnMessage, addr, data, email, setEmail} = props 
+    const {
+      inputTitle, inputType, 
+      placeholder,classNames, 
+      btnMessage, addr, data,
+      setEmail, setAuthCode,
+      setPassword, setNickname} = props 
     return(
       <>
         {
@@ -21,9 +26,11 @@ function InputComponent(props){
                     </Col>
                     <Col className='mb-3'>
                       <Form.Control type={ inputType[i] } placeholder={ placeholder[i] } className={classNames[i]} onChange={(e)=>{
-                        //---testing
-                        setEmail(e.target.value)
-                        //---만약 i 0일때 1일때 각각 조정 아니면 다같이처리? -> 리소스 낭비인 것 같은데
+                        if(i===0)setEmail(e.target.value);
+                        else if(i===1)setAuthCode(e.target.value);
+                        else if(i===2)setPassword(e.target.value);
+                        else if(i===4)setNickname(e.target.value);
+                        else{}
                       }}/>
                     </Col>
                     <Col>
