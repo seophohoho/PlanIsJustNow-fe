@@ -15,13 +15,24 @@ function App() {
     "닉네임을 입력하세요"
   ]);
   let [classNames, setClassNames] = useState(["","","","",""])
-  let [btnMessage,setBtnMessage] = useState(["인증번호 전송","확인","false","false","false"]);
+  let [btnMessage,setBtnMessage] = useState(["인증번호 전송","확인",false,false,false]);
 
   //todo 나중에 배열로 합친다음 필요한 정보만 수정, 전달하는 형식으로 변경하는게 좋을듯// X => 직관적이게 분할하자
   let [email, setEmail] = useState("")
   let [authCode, setAuthCode] = useState("")
   let [password, setPassward] = useState("")
   let [nickname, setNickname] = useState("")
+  let [addr, setAddr] = useState(["api/auth/mail", "api/auth/check"])
+  let [data, setData] = useState([
+    {
+      "email" : "사용자가 작성한 e-mail"
+    },
+    {
+      "email" : "사용자가 작성한 e-mail",
+      "code" : "사용자가 작성한 인증코드"
+    }
+  ])
+ 
 
   return (
     <div>
@@ -41,43 +52,16 @@ function App() {
         <div className='App'>
           <Form className='form'>
             {
-              <InputComponent inputTitle={inputTitle} inputType={inputType} placeholder={placeholder} classNames={classNames} btnMessage={btnMessage}/>
+              <InputComponent inputTitle={inputTitle} inputType={inputType} placeholder={placeholder} 
+                              classNames={classNames} btnMessage={btnMessage} addr={addr} data={data}/>
             }
             
-              {
-                /* <Button as="input" type="button" value="인증번호 전송" onClick={()=>{
-                //TODO 전달전 양식 올바른지 판단(빈값, @ 있는지)
-                try{
-                  axios.post("http://localhost:8080/api/auth/mail",
-                    {"email" : email});
-                }catch(error){
-                alert(error + "디버그용: 올바르게 작동하지 않음!")
-                }}}/>{' '}
-        
-        
-                <Button as="input" type="button" value="확인" onClick={()=>{
-                //TODO 사용자가 인증번호 전송 버튼을 누르지 않고 해당 버튼을 누르는 경우
-                try{
-                axios.post("http://localhost:8080/api/auth/check",{
-                  "email" : email,
-                  "code" : authCode});
-                }catch(error){
-                alert("디버그용 올바르게 작동하지 않음!")
-                }}}/>
-
-                <Form.Control type="password" placeholder="비밀번호를 입력하세요.(숫자와 특수문자를 포함한 8글자 이상)" onChange={(e)=>{
-                  //todo 비밀번호가 양식과 일치하는지 확인
-                  setPassward(e.target.value);
-                }} />
-        
-                <Form.Control type="password" placeholder="비밀번호 재입력" onChange={(e)=>{
-                  //todo 비밀번호가 일치한지 확인
-                }}/> 
-        
-              <Form.Control type="text" placeholder="닉네임을 입력하세요" onChange={(e)=>{
-                setNickname(e.target.value);
-              }} />
-              {/* 중복확인 기능 필요 */
+            {
+              //TODO 전달전 양식 올바른지 판단(빈값, @ 있는지)
+              //TODO 사용자가 인증번호 전송 버튼을 누르지 않고 해당 버튼을 누르는 경우
+              //todo 비밀번호가 양식과 일치하는지 확인
+              //todo 비밀번호가 일치한지 확인            
+              /* 중복확인 기능 필요 */
             }
             
             <Container>
@@ -96,8 +80,18 @@ function App() {
               </Row>
               <div className='center'>
                 <Button as="input" type="button" value="다음" onClick={()=>{
-                  
-                }} />
+                  try{
+                    axios.post("http://localhost:8080/api/account/signup",{
+                      "email" : "사용자가 작성한 e-mail",
+                      "password" : "사용자가 작성한 비밀번호",
+                      "nickname" : "사용자가 작성한 닉네임",
+                      "todolist_failure_count" : 0
+                    })
+                  }
+                  catch(error){
+                    console.log("무언가 잘못됨 " + error)
+                  }
+                }}/>
               </div>
             </Container>
           </Form>
@@ -108,11 +102,18 @@ function App() {
   );
 }
 
-function btnFeat(inpo, setInpo){
+function btnFeat(addr, data){
+  try{
+    axios.post(`http://localhost:8080/${addr}`, data)}
+  catch(error){
+    alert(error + "디버그용: 올바르게 작동하지 않음!")
+  }
 }
 
+
+
 function InputComponent(props){
-  const {inputTitle, inputType, placeholder, classNames, btnMessage} = props 
+  const {inputTitle, inputType, placeholder, classNames, btnMessage, addr, data} = props 
   return(
     <>
       {
@@ -130,9 +131,9 @@ function InputComponent(props){
                     }}/>
                   </Col>
                   <Col>
-                    {
-                      btnMessage === "false" ? null : <Button as="input" type="button" value={ btnMessage[i] } onClick={()=>{
-                        //TODO post 함수 제작후 각각 할당 내부 value 확인 후 해당되지 않는 칸에는 버튼 비활성화
+                    { //필요없는 곳에 할당된 버튼 삭제 & 기능 부여("다음" 버튼 제외)
+                      btnMessage[i]===false ? null : <Button as="input" type="button" value={ btnMessage[i] } onClick={()=>{
+                        btnFeat(addr[i], data[i])
                       }}/>
                     }
                   </Col>
