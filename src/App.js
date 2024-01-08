@@ -16,15 +16,6 @@ function App() {
   let [password, setPassward] = useState("")
   let [nickname, setNickname] = useState("")
 
-  axios.get("https://example.com/api/data", {
-    headers: {
-      
-    }
-  })
-  .then(response => console.log(response.data))
-  .catch(error => console.error("Error:", error));
-
-
   return (
     <div>
       <header>
@@ -56,9 +47,8 @@ function App() {
                  <Button as="input" type="button" value="인증번호 전송" onClick={()=>{
                   //TODO 전달전 양식 올바른지 판단(빈값, @ 있는지)
                   try{
-                    axios.post("/api/auth/mail",
-                      {"email" : email},
-                      {headers:"https://localhost:3000"});
+                    axios.post("https://localhost:3000/api/auth/mail",
+                      {"email" : email});
                   }catch(error){
                   alert(error + "디버그용: 올바르게 작동하지 않음!")
                  }}}/>{' '}
@@ -79,10 +69,9 @@ function App() {
                  <Button as="input" type="button" value="확인" onClick={()=>{
                   //TODO 사용자가 인증번호 전송 버튼을 누르지 않고 해당 버튼을 누르는 경우
                   try{
-                  axios.post("/api/auth/check",{
+                  axios.post("https://localhost:3000/api/auth/check",{
                     "email" : email,
-                    "code" : authCode},
-                    {headers:"https://localhost:3000"});
+                    "code" : authCode});
                  }catch(error){
                   alert("디버그용 올바르게 작동하지 않음!")
                  }}}/>
@@ -108,7 +97,7 @@ function App() {
                   <p className='color-darkBlue'><span>*</span> 비밀번호 확인</p>
                 </Form.Label>
                 <Col>
-                  <Form.Control type="passwordCheck" placeholder="비밀번호 재입력" onChange={(e)=>{
+                  <Form.Control type="password" placeholder="비밀번호 재입력" onChange={(e)=>{
                     //todo 비밀번호가 일치한지 확인, css로 가려주는 것도 추가해야함
                   }}/>
                 </Col>
@@ -147,11 +136,10 @@ function App() {
               <div className='center'>
                 <Button as="input" type="button" value="다음" onClick={()=>{
                   try{
-                    axios.post("/api/account/signup",{
+                    axios.post("https://localhost:3000/api/account/signup",{
                       "email" : email,
                       "password" : password,
-                      "nickname" : nickname},
-                      {headers:"https://localhost:3000"})
+                      "nickname" : nickname})
                   }catch(error){
                     alert("디버그용 올바르게 작동하지 않음!")}
                 }} />
