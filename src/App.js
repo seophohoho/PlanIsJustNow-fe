@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { InputGroup, Form, Col, Row, Button, Container, Navbar, Image } from 'react-bootstrap';
             
 {
-  //TODO 이메일: 전달전 양식 올바른지 판단(빈값, @ 있는지)
+  //TODO 이메일: 전달전 양식 올바른지 판단(빈값, @ 있는지) 정규표현식
   //TODO 사용자: 인증번호 전송 버튼을 누르지 않고 해당 버튼을 누르는 경우
   //todo 비밀번호: 보안양식과 일치하는지 확인
   //todo 비밀번호: 일치한지 확인            
@@ -31,15 +31,7 @@ function App() {
   let [password, setPassword] = useState("")
   let [nickname, setNickname] = useState("")
   let [addr, setAddr] = useState(["api/auth/mail", "api/auth/check"])
-  let [data, setData] = useState([
-    {
-      "email" : email
-    },
-    {
-      "email" : email,
-      "code" : authCode
-    }
-  ])
+  
  
 
   return (
@@ -61,7 +53,7 @@ function App() {
           <Form className='form'>
             {
               <InputComponent inputTitle={inputTitle} inputType={inputType} placeholder={placeholder} 
-                              classNames={classNames} btnMessage={btnMessage} addr={addr} data={data} email={email} 
+                              classNames={classNames} btnMessage={btnMessage} addr={addr} email={email} authCode={authCode}
                               setEmail={setEmail} setAuthCode={setAuthCode} setPassword={setPassword} setNickname={setNickname}/>
             }
             <Container>
@@ -80,17 +72,13 @@ function App() {
               </Row>
               <div className='center'>
                 <Button as="input" type="button" value="다음" onClick={()=>{
-                  try{
                     axios.post("http://localhost:8080/api/account/signup",{
                       "email" : email,
                       "password" : password,
                       "nickname" : nickname,
                       "todolist_failure_count" : 0
-                    })
-                  }
-                  catch(error){
-                    console.log("무언가 잘못됨 " + error)
-                  }
+                    }).then(Response=>console.log(Response)).catch(alert("실패"))
+                    console.log(email,authCode,password,nickname)
                 }}/>
               </div>
             </Container>

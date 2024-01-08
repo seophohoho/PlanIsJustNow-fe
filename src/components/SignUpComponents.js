@@ -8,12 +8,13 @@ import axios from 'axios';
 
 function InputComponent(props){
     const {
-      inputTitle, inputType, 
-      placeholder,classNames, 
-      btnMessage, addr, data,
+      inputTitle, inputType, authCode,
+      placeholder,classNames, email,
+      btnMessage, addr, 
       setEmail, setAuthCode,
       setPassword, setNickname} = props 
-    return(
+
+      return(
       <>
         {
           inputTitle.map(function(notUse, i){
@@ -26,17 +27,21 @@ function InputComponent(props){
                     </Col>
                     <Col className='mb-3'>
                       <Form.Control type={ inputType[i] } placeholder={ placeholder[i] } className={classNames[i]} onChange={(e)=>{
-                        if(i===0)setEmail(e.target.value);
-                        else if(i===1)setAuthCode(e.target.value);
+                        
+                        if(i===0){setEmail(e.target.value);console.log(email);}
+                        else if(i===1){setAuthCode(e.target.value);}
                         else if(i===2)setPassword(e.target.value);
                         else if(i===4)setNickname(e.target.value);
                         else{}
+                        
                       }}/>
                     </Col>
                     <Col>
                       {
                         btnMessage[i]===false ? null : <Button as="input" type="button" value={ btnMessage[i] } onClick={()=>{
-                          btnFeat(addr[i], data[i])
+                          btnAuth(addr[i], email, authCode);
+                          btnEmail(addr[i], email); 
+                          
                         }}/>
                       }
                     </Col>
@@ -47,13 +52,20 @@ function InputComponent(props){
     )
 }
 
-function btnFeat(addr, data){
-    try{
-        axios.post(`http://localhost:8080/${addr}`, data)}
-    catch(error){
-      alert(error + "디버그용: 올바르게 작동하지 않음!")
-    }
+function btnAuth(addr, email, authCode){
+  if(addr==="api/auth/check")
+  axios.post(`http://localhost:8080/api/auth/check`, {
+      "email" : email,
+      "code" : authCode
+    }).then(Response => console.log(Response)).catch(alert("!!"))
 }
   
+function btnEmail(addr, email){
+  if(addr==="api/auth/mail")
+  axios.post(`http://localhost:8080/api/auth/email`, {
+    "email" : email
+  }).then(Response => console.log(Response)).catch(alert("!!!!"))
+}
+
 
 export default InputComponent
