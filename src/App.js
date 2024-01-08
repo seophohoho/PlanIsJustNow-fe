@@ -6,7 +6,7 @@ import { InputGroup, Form, Col, Row, Button, Container, Navbar, Image } from 're
 
 function App() {
   let [inputsTitle] = useState(["e-mail","인증번호","비밀번호","비밀번호 확인","닉네임"])
-  let [inputsType, setInputType] = useState("");
+  let [inputsType, setInputType] = useState(["email","number","passward","passward","text"]);
   let [spaceholder, setSpaceholder] = useState("");
   let [btnMessage,setBtnMessage] = useState("");
 
@@ -110,7 +110,7 @@ function App() {
                 <p className='color-darkBlue'><span>*</span> 닉네임</p>
               </Form.Label>
               <Col>
-                <Form.Control type="name" placeholder="닉네임을 입력하세요" onChange={(e)=>{
+                <Form.Control type="text" placeholder="닉네임을 입력하세요" onChange={(e)=>{
                   setNickname(e.target.value);
                 }} />
                 {/* 중복확인 기능 필요 */}
