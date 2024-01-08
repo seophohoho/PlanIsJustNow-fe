@@ -40,7 +40,7 @@ function App() {
                   </Form.Label>
                 </Col>
                 <Col className='mb-3'>
-                  <Form.Control type="email" placeholder="pettodo@abc.com" onChange={(e)=>{
+                  <Form.Control type="email" placeholder="pettodo@abc.com"  onChange={(e)=>{
                     setEmail(e.target.value)}}/>
                 </Col>
                 <Col>
@@ -61,7 +61,7 @@ function App() {
                 <p className='color-darkBlue'><span>*</span> 인증번호</p>
               </Form.Label>
               <Col className='mb-3'>
-                <Form.Control type="email" placeholder="인증번호 입력하세요. (숫자 6자리)" onChange={(e)=>{
+                <Form.Control type="number" placeholder="인증번호 입력하세요. (숫자 6자리)" className='' onChange={(e)=>{
                   setAuthCode(e.target.value);
                 }} />
               </Col>
@@ -163,7 +163,7 @@ function App() {
 //             </Form.Label>
 //           </Col>
 //           <Col className='mb-3'>
-//             <Form.Control type={ inputsType } placeholder={ placeholder } onChange={(e)=>{
+//             <Form.Control type={ inputsType } placeholder={ placeholder } className={css클래스} onChange={(e)=>{
 //               state셋내용}}/>
 //           </Col>
 //           <Col>

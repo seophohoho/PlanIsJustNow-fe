@@ -1,10 +1,28 @@
-const { createProxyMiddleware } = require("http-proxy-middleware");
+import { createProxyMiddleware } from "http-proxy-middleware";
 
-module.exports = function (app) {
+export default function (app) {
   app.use(
-    createProxyMiddleware("/api/v1", {
+    createProxyMiddleware("/api/auth/mail", {
       target: "http://localhost:8082",
       changeOrigin: true,
     })
   );
+};
+
+export default function (app) {
+    app.use(
+      createProxyMiddleware("/api/auth/check", {
+        target: "http://localhost:8082",
+        changeOrigin: true,
+      })
+    );
+  };
+
+export default function (app) {
+app.use(
+    createProxyMiddleware("/api/account/signup", {
+    target: "http://localhost:8082",
+    changeOrigin: true,
+    })
+);
 };
