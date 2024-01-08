@@ -1,3 +1,4 @@
+import axios from 'axios';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import { useState } from 'react';
@@ -5,7 +6,13 @@ import { InputGroup, Form, Col, Row, Button, Container, Navbar, Image } from 're
 
 function App() {
   let inputs = useState(["e-mail","인증번호","비밀번호","비밀번호 확인","닉네임"])
-  let spaceholder = useState()
+  let spaceholder = useState("")
+  //todo 나중에 배열로 합친다음 필요한 정보만 수정, 전달하는 형식으로 변경하는게 좋을듯
+  let [email, setEmail] = useState("")
+  let [authCode, setAuthCode] = useState("")
+  let [password, setPassward] = useState("")
+  let [nickname, setNickname] = useState("")
+
   return (
     <div>
       <header>
@@ -30,10 +37,17 @@ function App() {
                   </Form.Label>
                 </Col>
                 <Col className='mb-3'>
-                  <Form.Control type="email" placeholder="pettodo@abc.com" className=''/>
+                  <Form.Control type="email" placeholder="pettodo@abc.com" onChange={(e)=>{
+                    setEmail(e.target.value)}}/>
                 </Col>
                 <Col>
-                 <Button as="input" type="button" value="인증번호 전송"/>{' '}
+                 <Button as="input" type="button" value="인증번호 전송" onClick={()=>{
+                  //TODO 전달전 양식 올바른지 판단(빈값, @ 있는지)
+                  try{
+                    axios.post("/api/auth/mail",{"email" : email});
+                  }catch(error){
+                  alert("디버그용: 올바르게 작동하지 않음!")
+                 }}}/>{' '}
                 </Col>
             </Form.Group>
 
@@ -43,10 +57,20 @@ function App() {
                 <p className='color-darkBlue'><span>*</span> 인증번호</p>
               </Form.Label>
               <Col className='mb-3'>
-                <Form.Control type="email" placeholder="인증번호 입력하세요. (숫자 6자리)" />
+                <Form.Control type="email" placeholder="인증번호 입력하세요. (숫자 6자리)" onChange={(e)=>{
+                  setAuthCode(e.target.value);
+                }} />
               </Col>
               <Col>
-                 <Button as="input" type="button" value="확인"/>{' '}
+                 <Button as="input" type="button" value="확인" onClick={()=>{
+                  //TODO 사용자가 인증번호 전송 버튼을 누르지 않고 해당 버튼을 누르는 경우
+                  try{
+                  axios.post("/api/auth/check",{
+                    "email" : email,
+                    "code" : authCode});
+                 }catch(error){
+                  alert("디버그용 올바르게 작동하지 않음!")
+                 }}}/>
               </Col>
             </Form.Group>
 
@@ -55,7 +79,9 @@ function App() {
                   <p className='color-darkBlue'><span>*</span> 비밀번호</p>
                 </Form.Label>
                 <Col className='mb-3'>
-                  <Form.Control type="password" placeholder="비밀번호를 입력하세요.(숫자와 특수문자를 포함한 8글자 이상)" />
+                  <Form.Control type="password" placeholder="비밀번호를 입력하세요.(숫자와 특수문자를 포함한 8글자 이상)" onChange={(e)=>{
+                    //todo 비밀번호가 양식과 일치하는지 확인
+                  }} />
                 </Col>
                 <Col>
                 </Col>
@@ -66,7 +92,9 @@ function App() {
                   <p className='color-darkBlue'><span>*</span> 비밀번호 확인</p>
                 </Form.Label>
                 <Col>
-                  <Form.Control type="passwordCheck" placeholder="비밀번호 재입력" />
+                  <Form.Control type="passwordCheck" placeholder="비밀번호 재입력" onChange={(e)=>{
+                    //todo 비밀번호가 일치한지 확인, css로 가려주는 것도 추가해야함
+                  }}/>
                 </Col>
                 <Col>
                 </Col>
@@ -78,6 +106,7 @@ function App() {
               </Form.Label>
               <Col>
                 <Form.Control type="name" placeholder="닉네임을 입력하세요" />
+                {/* 중복확인 기능 필요 */}
               </Col>
               <Col>
               </Col>
@@ -98,7 +127,15 @@ function App() {
                 </Col>
               </Row>
               <div className='center'>
-                <Button as="input" type="button" value="다음" />
+                <Button as="input" type="button" value="다음" onClick={()=>{
+                  try{
+                    axios.post("api/account/signup",{
+                      "email" : email,
+                      "password" : password,
+                      "nickname" : nickname,})
+                  }catch(error){
+                    alert("디버그용 올바르게 작동하지 않음!")}
+                }} />
               </div>
             </Container>
           </Form>
@@ -117,4 +154,9 @@ function InputModal(){
   )
 }
 
+function shallowCopy(state, set, value){
+  let copy = [...state]
+  copy = value;
+  set(value);
+}
 export default App;
