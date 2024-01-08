@@ -46,7 +46,7 @@ function App() {
                   try{
                     axios.post("/api/auth/mail",{"email" : email});
                   }catch(error){
-                  alert("디버그용: 올바르게 작동하지 않음!")
+                  alert(error + "디버그용: 올바르게 작동하지 않음!")
                  }}}/>{' '}
                 </Col>
             </Form.Group>
@@ -81,6 +81,7 @@ function App() {
                 <Col className='mb-3'>
                   <Form.Control type="password" placeholder="비밀번호를 입력하세요.(숫자와 특수문자를 포함한 8글자 이상)" onChange={(e)=>{
                     //todo 비밀번호가 양식과 일치하는지 확인
+                    setPassward(e.target.value);
                   }} />
                 </Col>
                 <Col>
@@ -105,7 +106,9 @@ function App() {
                 <p className='color-darkBlue'><span>*</span> 닉네임</p>
               </Form.Label>
               <Col>
-                <Form.Control type="name" placeholder="닉네임을 입력하세요" />
+                <Form.Control type="name" placeholder="닉네임을 입력하세요" onChange={(e)=>{
+                  setNickname(e.target.value);
+                }} />
                 {/* 중복확인 기능 필요 */}
               </Col>
               <Col>
