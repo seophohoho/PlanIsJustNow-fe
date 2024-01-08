@@ -44,7 +44,7 @@ function App() {
                  <Button as="input" type="button" value="인증번호 전송" onClick={()=>{
                   //TODO 전달전 양식 올바른지 판단(빈값, @ 있는지)
                   try{
-                    axios.post("/api/auth/mail",{"email" : email});
+                    axios.post("https://api/auth/mail",{"email" : email});
                   }catch(error){
                   alert(error + "디버그용: 올바르게 작동하지 않음!")
                  }}}/>{' '}
@@ -65,7 +65,7 @@ function App() {
                  <Button as="input" type="button" value="확인" onClick={()=>{
                   //TODO 사용자가 인증번호 전송 버튼을 누르지 않고 해당 버튼을 누르는 경우
                   try{
-                  axios.post("/api/auth/check",{
+                  axios.post("https://api/auth/check",{
                     "email" : email,
                     "code" : authCode});
                  }catch(error){
@@ -132,7 +132,7 @@ function App() {
               <div className='center'>
                 <Button as="input" type="button" value="다음" onClick={()=>{
                   try{
-                    axios.post("api/account/signup",{
+                    axios.post("https://api/account/signup",{
                       "email" : email,
                       "password" : password,
                       "nickname" : nickname,})
