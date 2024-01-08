@@ -1,8 +1,18 @@
 import axios from 'axios';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
+import InputComponent from './components/SignUpComponents.js'; 
 import { useState } from 'react';
 import { InputGroup, Form, Col, Row, Button, Container, Navbar, Image } from 'react-bootstrap';
+            
+{
+  //TODO 이메일: 전달전 양식 올바른지 판단(빈값, @ 있는지)
+  //TODO 사용자: 인증번호 전송 버튼을 누르지 않고 해당 버튼을 누르는 경우
+  //todo 비밀번호: 보안양식과 일치하는지 확인
+  //todo 비밀번호: 일치한지 확인            
+  //todo 닉네임: 중복확인 기능 필요
+  //todo 81-다음: 버튼 비활성화(disable) 해제 조건 구현필요 -> 작성완료시 해제
+}
 
 function App() {
   let [inputTitle, setInputTitle] = useState(["e-mail","인증번호","비밀번호","비밀번호 확인","닉네임"])
@@ -16,9 +26,7 @@ function App() {
   ]);
   let [classNames, setClassNames] = useState(["","","","",""])
   let [btnMessage,setBtnMessage] = useState(["인증번호 전송","확인",false,false,false]);
-
-  //todo 나중에 배열로 합친다음 필요한 정보만 수정, 전달하는 형식으로 변경하는게 좋을듯// X => 직관적이게 분할하자
-  let [email, setEmail] = useState("")
+  let [email, setEmail] = useState("")//묶어서 보내면 컴포넌트에서 배열번호로 표기할텐데 어느위치의 어느 정보인이 알기 힘들어짐
   let [authCode, setAuthCode] = useState("")
   let [password, setPassward] = useState("")
   let [nickname, setNickname] = useState("")
@@ -53,17 +61,9 @@ function App() {
           <Form className='form'>
             {
               <InputComponent inputTitle={inputTitle} inputType={inputType} placeholder={placeholder} 
-                              classNames={classNames} btnMessage={btnMessage} addr={addr} data={data}/>
+                              classNames={classNames} btnMessage={btnMessage} addr={addr} data={data}
+                              email={email} setEmail={setEmail}/>
             }
-            
-            {
-              //TODO 전달전 양식 올바른지 판단(빈값, @ 있는지)
-              //TODO 사용자가 인증번호 전송 버튼을 누르지 않고 해당 버튼을 누르는 경우
-              //todo 비밀번호가 양식과 일치하는지 확인
-              //todo 비밀번호가 일치한지 확인            
-              /* 중복확인 기능 필요 */
-            }
-            
             <Container>
               <Row>
                 <Col>
@@ -101,49 +101,6 @@ function App() {
     </div>
   );
 }
-
-function btnFeat(addr, data){
-  try{
-    axios.post(`http://localhost:8080/${addr}`, data)}
-  catch(error){
-    alert(error + "디버그용: 올바르게 작동하지 않음!")
-  }
-}
-
-
-
-function InputComponent(props){
-  const {inputTitle, inputType, placeholder, classNames, btnMessage, addr, data} = props 
-  return(
-    <>
-      {
-        inputTitle.map(function(notuse, i){
-          return(
-              <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
-                  <Col>
-                    <Form.Label column>
-                      <p className='color-darkBlue'><span>*</span> { inputTitle[i] }</p> 
-                    </Form.Label>
-                  </Col>
-                  <Col className='mb-3'>
-                    <Form.Control type={ inputType[i] } placeholder={ placeholder[i] } className={classNames[i]} onChange={(e)=>{
-                      //TODO 양식 상태 확인 함수 state에 저장 후 map 순서에 따라 할당
-                    }}/>
-                  </Col>
-                  <Col>
-                    { //필요없는 곳에 할당된 버튼 삭제 & 기능 부여("다음" 버튼 제외)
-                      btnMessage[i]===false ? null : <Button as="input" type="button" value={ btnMessage[i] } onClick={()=>{
-                        btnFeat(addr[i], data[i])
-                      }}/>
-                    }
-                  </Col>
-              </Form.Group>
-          )})
-      }
-    </>
-  )
-}
-
 
 function shallowCopy(state, set, value){
   let copy = [...state]
