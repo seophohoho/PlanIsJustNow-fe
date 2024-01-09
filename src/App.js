@@ -4,13 +4,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 import InputComponent from './components/SignUpComponents.js'; 
 import { useState } from 'react';
 import { InputGroup, Form, Col, Row, Button, Container, Navbar, Image } from 'react-bootstrap';
-            
 {
-  //TODO 이메일: 전달전 양식 올바른지 판단(빈값, @ 있는지) 정규표현식
-  //TODO 사용자: 인증번호 전송 버튼을 누르지 않고 해당 버튼을 누르는 경우
-  //todo 비밀번호: 보안양식과 일치하는지 확인
-  //todo 비밀번호: 일치한지 확인            
-  //todo 닉네임: 중복확인 기능 필요
+
   //todo 81-다음: 버튼 비활성화(disable) 해제 조건 구현필요 -> 작성완료시 해제
 }
 
@@ -26,7 +21,7 @@ function App() {
   ]);
   let [classNames, setClassNames] = useState(["","","","",""])
   let [btnMessage,setBtnMessage] = useState(["인증번호 전송","확인",false,false,false]);
-  let [email, setEmail] = useState("")//묶어서 보내면 컴포넌트에서 배열번호로 표기할텐데 어느위치의 어느 정보인이 알기 힘들어짐
+  let [email, setEmail] = useState("")
   let [authCode, setAuthCode] = useState("")
   let [password, setPassword] = useState("")
   let [nickname, setNickname] = useState("")
