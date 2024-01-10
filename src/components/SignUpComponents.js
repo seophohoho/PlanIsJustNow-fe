@@ -6,63 +6,81 @@ import { useState } from 'react';
   //TODO 이메일: 전달전 양식 올바른지 판단(빈값, @ 있는지) 정규표현식
   //TODO 사용자: 인증번호 전송 버튼을 누르지 않고 해당 버튼을 누르는 경우
   //todo 비밀번호: 보안양식과 일치하는지 확인
-  //todo 비밀번호: 일치한지 확인
-  //todo 닉네임: 중복확인 기능 필요
+  //todo 비밀번호: 재확인 일치한지 확인
+  //todo 닉네임: 중복확인 기능 필요 --> 유저id로 처리할거고 본인 이름으로 하는 것도 있을 텐데? 이메일 중복만 판단하도록 변경
   //Todo InputComponent-onChange: 5개의 input 양식 조건 state 구현후 map 순서따라 할당(상세내용 app.js Todo확인)
+  //todo 102 line
 }
-
-
 
 function InputComponent(props){
   const {
     inputTitle, inputType, authCode,
     placeholder,classNames, email,
-    btnMessage, addr, 
-    setEmail, setAuthCode,
-    setPassword, setNickname} = props 
+    btnMessage, addr, password, nickname,
+    setEmail, setAuthCode, isNickName,
+    isEmail, isPassword, isAuthCode,
+    isPasswordConfirm, setIsNickName, setIsAuthCode,
+    setIsEmail, setIsPassword,setIsNextButtonDisabled,
+    setIsPasswordConfirm, setPassword, setNickname} = props 
+
+  //유효성 메시지 상태저장
+  const [passwordMessage, setPasswordMessage] = useState('')
+  const [passwordConfirmMessage, setPasswordConfirmMessage] = useState('')
+  const [nickNameMessage, setNickNameMessage] = useState('')
 
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
-  const handleButtonClick = (index) => {
-    if (index === 0) {
-      // 버튼 0이 클릭되면 버튼 1을 활성화하도록 상태 업데이트
-      setIsButtonDisabled(false);
-    }
-    // 여기에서 다른 버튼 로직 추가 가능
-  };
-
-
   return(
     <>
-      {
+      {//입력 컴포넌트 inputTitle의 배열 만큼 input 입력칸이 생기도록 설정
         inputTitle.map(function(notUse, i){
           return(
               <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
                   <Col>
-                    <Form.Label column>
+                    <Form.Label column>{/** label칸 */}
                       <p className='color-darkBlue'><span>*</span> { inputTitle[i] }</p> 
                     </Form.Label>
                   </Col>
-                  <Col className='mb-3'>
-                    <Form.Control type={ inputType[i] } placeholder={ placeholder[i] } className={classNames[i]} onChange={(e)=>{
-                      
+                  <Col className='mb-3'>{/** input칸 */}
+                    <Form.Control type={ inputType[i] } placeholder={ placeholder[i] } maxLength={i === 1 ? 6 : 20} className={classNames[i]} 
+                    oninput=""
+                    onChange={(e)=>{
+                      //다음 버튼 활성화 조건
+                      if(isNickName && isAuthCode && isPassword && isPasswordConfirm && isEmail){setIsNextButtonDisabled(false)}
+                      //내용에 따른 state 설정
                       if(i===0){setEmail(e.target.value);}
-                      else if(i===1){setAuthCode(e.target.value);}
-                      else if(i===2)setPassword(e.target.value);
-                      else if(i===4)setNickname(e.target.value);
+                      else if(i===1){setAuthCode(e.target.value)}
+                      else if(i===2){setPassword(e.target.value)
+                        if(isValidPassword(password)){
+                          setPasswordMessage("완벽해요!")
+                          setIsPassword(true)
+                        }else setPasswordMessage("숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!")
+                      }
+                      else if(i===3){if(password === e.target.value){
+                        setPasswordConfirmMessage("완벽해요!")
+                        setIsPasswordConfirm(true)
+                      }else{
+                        setPasswordConfirmMessage("무언가 다른것 같아요..")
+                      }}
+                      else if(i===4){setNickname(e.target.value)
+                      if(isValidNickname(nickname)){
+                        setNickNameMessage("완벽해요!")
+                        setIsNickName(true)
+                      }else setNickNameMessage("최소 2글자는 입력! 특수문자 공백은 사용할 수 없어요!")}
                       else{}
                       
                     }}/>
+                    <label className='border-zero impo-margin-zero '>
+                      {i === 2 ? passwordMessage : i === 3 ? passwordConfirmMessage : i === 4 ? nickNameMessage : ''}
+                    </label>
                   </Col>
                   <Col>
                     {
                       btnMessage[i]===false ? null : <Button as="input" type="button" value={ btnMessage[i] }
-                      disabled={i === 1 && isButtonDisabled}
+                      disabled={i === 1 && isButtonDisabled}//i가 인증보내기 칸이고 state또한 일치하면 버튼활성화
                       onClick={()=>{
-                        handleButtonClick(i);
-                        btnAuth(addr[i], email, authCode);
-                        btnEmail(addr[i], email); 
-                        
+                        setIsButtonDisabled(btnEmail(addr[i], email));//통신 성공시 버튼 활성화
+                        if(btnAuth(addr[i], email, authCode)){setIsAuthCode(true)}
                       }}/>
                     }
                   </Col>
@@ -73,33 +91,45 @@ function InputComponent(props){
   )
 }
 
+//post 인증번호 확인 요청
 function btnAuth(addr, email, authCode){
-  if(addr==="api/auth/check")
+  if(addr==="api/auth/check" && (authCode.length === 6))
   axios.post(`http://localhost:8080/api/auth/check`, {
       "email" : email,
       "code" : authCode
-    }).then(Response => console.log(Response)).catch(alert("!!"))
+    }).then((Response)=>{
+      if(Response.status === 200){
+        alert("인증이 완료되었어요!")}
+      else{
+        alert("잘못된 인증코드입니다.")}
+    }).catch(alert("!!"))
 }
   
+//post 이메일 인증 보내기 요청 & 이메일 유효성확인
 function btnEmail(addr, email){
-  if(addr==="api/auth/mail")
-  axios.post(`http://localhost:8080/api/auth/email`, {
-    "email" : email
-  }).then(Response => console.log(Response)).catch(alert("!!!!"))
-}
-
-const isEmailValid = (email)=>{
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-  return emailRegex.test(email);
+
+  //return은 실패,성공에 따른 인증확인 버튼 활성화상태 반환용
+  if(addr==="api/auth/mail" && emailRegex.test(email))
+    axios.post(`http://localhost:8080/api/auth/email`, {"email" : email})
+      .then((Response)=>{
+        if(Response.status === 200){ alert("인증메일이 발송됐어요!"); return false} 
+        else if(Response.status == {}){}// todo 이메일 중복 코드 도착시 코드추가
+        else return true})
+      .catch(alert("메일발송에 실패했습니다. 다시한번 시도해주세요"))
+  else{alert("이메일 양식을 다시 확인해주세요..");}
+  return true
 }
 
-const isbtnAct = ()=>{
-
+function isValidPassword(password){
+  const Regex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$/
+  return Regex.test(password);
 }
 
-const isPasswordValid = (password)=>{
-  const passwordRegex = /^[A-Za-z0-9]{8,20}$/;
-  return passwordRegex.test(password);
+function isValidNickname(nickname) {
+  //20자 이내 확인->html로 제한
+  const regex = /^[a-zA-Z가-힣0-9]{2,20}$/;
+  return regex.test(nickname);
 }
 
 

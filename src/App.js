@@ -5,7 +5,6 @@ import InputComponent from './components/SignUpComponents.js';
 import { useState } from 'react';
 import { InputGroup, Form, Col, Row, Button, Container, Navbar, Image } from 'react-bootstrap';
 {
-
   //todo 81-다음: 버튼 비활성화(disable) 해제 조건 구현필요 -> 작성완료시 해제
 }
 
@@ -21,13 +20,22 @@ function App() {
   ]);
   let [classNames, setClassNames] = useState(["","","","",""])
   let [btnMessage,setBtnMessage] = useState(["인증번호 전송","확인",false,false,false]);
+  //회원가입 정보 저장
   let [email, setEmail] = useState("")
   let [authCode, setAuthCode] = useState("")
   let [password, setPassword] = useState("")
   let [nickname, setNickname] = useState("")
+  //post 정보
   let [addr, setAddr] = useState(["api/auth/mail", "api/auth/check"])
+  //버튼 상태 저장
+  let [isNextButtonDisabled, setIsNextButtonDisabled] = useState(true);
   
- 
+  //유효성 검사 상태(다음 버튼 활성화용)
+  const [isNickName, setIsNickName] = useState(false)//연결
+  const [isEmail, setIsEmail] = useState(false)//연결
+  const [isAuthCode, setIsAuthCode] = useState(false)//연결
+  const [isPassword, setIsPassword] = useState(false)//연결
+  const [isPasswordConfirm, setIsPasswordConfirm] = useState(false)//연결
 
   return (
     <div>
@@ -47,9 +55,33 @@ function App() {
         <div className='App'>
           <Form className='form'>
             {
-              <InputComponent inputTitle={inputTitle} inputType={inputType} placeholder={placeholder} 
-                              classNames={classNames} btnMessage={btnMessage} addr={addr} email={email} authCode={authCode}
-                              setEmail={setEmail} setAuthCode={setAuthCode} setPassword={setPassword} setNickname={setNickname}/>
+              <InputComponent
+              inputTitle={inputTitle}
+              inputType={inputType}
+              placeholder={placeholder}
+              password={password}
+              classNames={classNames}
+              btnMessage={btnMessage}
+              addr={addr}
+              email={email}
+              authCode={authCode}
+              nickname={nickname}
+              setEmail={setEmail}
+              setAuthCode={setAuthCode}
+              setPassword={setPassword}
+              setNickname={setNickname}
+              isNickName={isNickName}
+              isEmail={isEmail}
+              isAuthCode={isAuthCode}
+              isPassword={isPassword}
+              isPasswordConfirm={isPasswordConfirm}
+              setIsNickName={setIsNickName}
+              setIsEmail={setIsEmail}
+              setIsAuthCode={setIsAuthCode}
+              setIsPassword={setIsPassword}
+              setIsPasswordConfirm={setIsPasswordConfirm}
+              setIsNextButtonDisabled={setIsNextButtonDisabled}
+            />
             }
             <Container>
               <Row>
@@ -66,14 +98,22 @@ function App() {
                 </Col>
               </Row>
               <div className='center'>
-                <Button as="input" type="button" value="다음" onClick={()=>{
-                    axios.post("http://localhost:8080/api/account/signup",{
-                      "email" : email,
-                      "password" : password,
-                      "nickname" : nickname,
-                      "todolist_failure_count" : 0
-                    }).then(Response=>console.log(Response)).catch(alert("실패"))
-                    console.log(email,authCode,password,nickname)
+                <Button as="input" type="button" value="다음" disabled={isNextButtonDisabled} onClick={()=>{
+                    axios.post("http://localhost:8080/api/account/signup", {
+                      "email": email,
+                      "password": password,
+                      "nickname": nickname,
+                      "todolist_failure_count": 0
+                    })
+                      .then((response) => {
+                        console.log(response);
+                        if (response.status === 200) {
+                        }
+                      })
+                      .catch((error) => {
+                        console.error(error);
+                        setIsNextButtonDisabled(true);//실패시 여전히 비활성화
+                      });
                 }}/>
               </div>
             </Container>
@@ -83,12 +123,6 @@ function App() {
       <footer></footer>
     </div>
   );
-}
-
-function shallowCopy(state, set, value){
-  let copy = [...state]
-  copy = value;
-  set(value);
 }
 
 export default App;

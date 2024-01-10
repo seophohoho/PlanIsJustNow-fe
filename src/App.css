@@ -3,6 +3,11 @@
   justify-content: center;
   
 }
+.border-zero{
+  border: 0px;
+  font-size: small;
+  font-weight: bold;
+}
 
 .impo-margin-zero{
   margin: 0px !important;
