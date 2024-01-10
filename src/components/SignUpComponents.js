@@ -1,5 +1,6 @@
-import { InputGroup, Form, Col, Row, Button, Container, Navbar, Image } from 'react-bootstrap';
+import { Form, Col, Row, Button, Container, Navbar, Image } from 'react-bootstrap';
 import axios from 'axios';
+import { serverUrl } from '../serverConfig';
 import { useState } from 'react';
 
 { 
@@ -22,7 +23,7 @@ function InputComponent(props){
     isPasswordConfirm, setIsNickName, setIsAuthCode,
     setIsEmail, setIsPassword,setIsNextButtonDisabled,
     setIsPasswordConfirm, setPassword, setNickname} = props 
-
+ 
   //유효성 메시지 상태저장
   const [passwordMessage, setPasswordMessage] = useState('')
   const [passwordConfirmMessage, setPasswordConfirmMessage] = useState('')
@@ -74,7 +75,8 @@ function InputComponent(props){
                           setIsPasswordConfirm(false)
                         }
                       }
-                      else if(i===4){setNickname(e.target.value)
+                      else if(i===4){
+                        setNickname(e.target.value)
                         if(isValidNickname(nickname)){
                           setNickNameMessage("완벽해요!")
                           setIsNickName(true)
@@ -99,7 +101,7 @@ function InputComponent(props){
                           setIsButtonDisabled(copy)
                           setIsEmail(!copy)
                         };//통신 성공시 버튼 활성화
-                        if(btnAuth(addr[i], email, authCode)){setIsAuthCode(true)}
+                        setIsAuthCode(btnAuth(addr[i], email, authCode))
                       }}/>
                     }
                   </Col>
@@ -113,18 +115,16 @@ function InputComponent(props){
 //post 인증번호 확인 요청 & 인증번호 유효성확인
 function btnAuth(addr, email, authCode){
   if(addr==="api/auth/check" && (authCode.length === 6)){
-  axios.post(`http://localhost:8080/api/auth/check`, {
-      "email" : email,
-      "code" : authCode
-    }).then((Response)=>{
-      if(Response.status === 200){
-        alert("인증이 완료되었어요!")
-        return true;
-      }
-      else{
-        alert("잘못된 인증코드입니다.")}
-    }).catch(alert("인증과정 중 문제가 발생했습니다. 나중에 다시 시도해주세요"))}
-    return false
+    axios.post(`${serverUrl}/api/auth/check`, {
+        "email" : email,
+        "code" : authCode
+      }).then((Response)=>{
+        if(Response.status === 200){alert("인증이 완료되었어요!");return true}
+        else{alert("잘못된 인증코드입니다.");return false}
+      }).catch((error)=>{alert(error+":인증과정 중 문제가 발생했습니다. 나중에 다시 시도해주세요");return false}
+    ); return true
+  }
+  else{alert("인증번호 6자리를 입력해야합니다!");return false}
 }
   
 //post 이메일 인증 보내기 요청 & 이메일 유효성확인
@@ -133,14 +133,20 @@ function btnEmail(addr, email){
 
   //return은 실패,성공에 따른 인증확인 버튼 활성화 상태 반환용
   if(addr==="api/auth/mail" && emailRegex.test(email)){
-    axios.post(`http://localhost:8080/api/auth/mail`, {"email" : email})
+    axios.post(`${serverUrl}/api/auth/mail`, {"email" : email})
       .then((Response)=>{
-        if(Response.status === 200){ alert("인증메일이 발송됐어요!"); return false} 
-        else if(Response.status == 409){alert("이미 사용중인 이메일입니다!")}})
-      .catch(alert("메일발송에 실패했습니다. 잠시후 다시 시도해주세요"))
+        if(Response.status === 200){
+          alert("인증메일이 발송됐어요!"); 
+          return false
+        } 
+        else if(Response.status === 409){
+          alert("이미 사용중인 이메일입니다!");
+          return true
+        }
+      }
+    ).catch((error)=>{alert(error+":메일발송에 실패했습니다. 잠시후 다시 시도해주세요");return true})
   }
-  else{alert("이메일 양식을 다시 확인해주세요..");}
-  return true //false로 빠진 경우아니면 전부 true
+  else{alert("이메일 양식을 다시 확인해주세요..");return true}
 }
 
 function isValidPassword(password){

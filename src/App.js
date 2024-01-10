@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { serverUrl } from './serverConfig.js';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import InputComponent from './components/SignUpComponents.js'; 
@@ -99,7 +100,7 @@ function App() {
               </Row>
               <div className='center'>
                 <Button as="input" type="button" value="다음" disabled={isNextButtonDisabled} onClick={()=>{
-                    axios.post("http://localhost:8080/api/account/signup", {
+                    axios.post(`${serverUrl}/api/account/signup`, {
                       "email": email,
                       "password": password,
                       "nickname": nickname,
@@ -107,7 +108,8 @@ function App() {
                     })
                       .then((response) => {
                         console.log(response);
-                        if (response.status === 200) {
+                        if (response.status === 200) {alert("회원가입이 완료되었습니다!!")
+                          //로그인 페이지로 이동시키는 로직
                         }
                       })
                       .catch((error) => {
