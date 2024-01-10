@@ -43,7 +43,10 @@ function InputComponent(props){
                   </Col>
                   <Col className='mb-3'>{/** input칸 */}
                     <Form.Control type={ inputType[i] } placeholder={ placeholder[i] } maxLength={i === 1 ? 6 : 20} className={classNames[i]} 
-                    oninput=""
+                    onInput={(e) => {
+                      if (e.target.value.length > e.target.maxLength)
+                        e.target.value = e.target.value.slice(0, e.target.maxLength);
+                    }}
                     onChange={(e)=>{
                       //다음 버튼 활성화 조건
                       if(isNickName && isAuthCode && isPassword && isPasswordConfirm && isEmail){setIsNextButtonDisabled(false)}
@@ -116,7 +119,7 @@ function btnEmail(addr, email){
         if(Response.status === 200){ alert("인증메일이 발송됐어요!"); return false} 
         else if(Response.status == 409){alert("이미 사용중인 이메일입니다!")}
         else return true})
-      .catch(alert("메일발송에 실패했습니다. 다시한번 시도해주세요"))
+      .catch(alert("메일발송에 실패했습니다. 잠시후 다시 시도해주세요"))
   else{alert("이메일 양식을 다시 확인해주세요..");}
   return true
 }
