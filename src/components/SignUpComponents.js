@@ -94,7 +94,11 @@ function InputComponent(props){
                       btnMessage[i]===false ? null : <Button as="input" type="button" value={ btnMessage[i] }
                       disabled={i === 1 ? isButtonDisabled : ""}//i가 인증보내기 칸이고 state또한 일치하면 버튼활성화
                       onClick={()=>{
-                        if(i==0)setIsButtonDisabled(btnEmail(addr[i], email));//통신 성공시 버튼 활성화
+                        if(i==0){
+                          const copy = btnEmail(addr[i], email)
+                          setIsButtonDisabled(copy)
+                          setIsEmail(!copy)
+                        };//통신 성공시 버튼 활성화
                         if(btnAuth(addr[i], email, authCode)){setIsAuthCode(true)}
                       }}/>
                     }
@@ -106,7 +110,7 @@ function InputComponent(props){
   )
 }
 
-//post 인증번호 확인 요청
+//post 인증번호 확인 요청 & 인증번호 유효성확인
 function btnAuth(addr, email, authCode){
   if(addr==="api/auth/check" && (authCode.length === 6)){
   axios.post(`http://localhost:8080/api/auth/check`, {
@@ -114,10 +118,13 @@ function btnAuth(addr, email, authCode){
       "code" : authCode
     }).then((Response)=>{
       if(Response.status === 200){
-        alert("인증이 완료되었어요!")}
+        alert("인증이 완료되었어요!")
+        return true;
+      }
       else{
         alert("잘못된 인증코드입니다.")}
     }).catch(alert("인증과정 중 문제가 발생했습니다. 나중에 다시 시도해주세요"))}
+    return false
 }
   
 //post 이메일 인증 보내기 요청 & 이메일 유효성확인
@@ -133,6 +140,7 @@ function btnEmail(addr, email){
       .catch(alert("메일발송에 실패했습니다. 잠시후 다시 시도해주세요"))
   }
   else{alert("이메일 양식을 다시 확인해주세요..");}
+  return true //false로 빠진 경우아니면 전부 true
 }
 
 function isValidPassword(password){
