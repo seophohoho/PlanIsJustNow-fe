@@ -9,26 +9,26 @@ import { InputGroup, Form, Col, Row, Button, Container, Navbar, Image } from 're
 }
 
 function App() {
-  let [inputTitle, setInputTitle] = useState(["e-mail","인증번호","비밀번호","비밀번호 확인","닉네임"])
-  let [inputType, setInputType] = useState(["email","number","password","password","text"]);
-  let [placeholder, setPlaceholder] = useState([
+  const [inputTitle, setInputTitle] = useState(["e-mail","인증번호","비밀번호","비밀번호 확인","닉네임"])
+  const [inputType, setInputType] = useState(["email","number","password","password","text"]);
+  const [placeholder, setPlaceholder] = useState([
     "pettodo@abc.com",
     "인증번호 입력하세요. (숫자 6자리)",
     "비밀번호를 입력하세요.(숫자와 특수문자를 포함한 8글자 이상)",
     "비밀번호 재입력",
     "닉네임을 입력하세요"
   ]);
-  let [classNames, setClassNames] = useState(["","","","",""])
-  let [btnMessage,setBtnMessage] = useState(["인증번호 전송","확인",false,false,false]);
+  const [classNames, setClassNames] = useState(["","","","",""])
+  const [btnMessage,setBtnMessage] = useState(["인증번호 전송","확인",false,false,false]);
   //회원가입 정보 저장
-  let [email, setEmail] = useState("")
-  let [authCode, setAuthCode] = useState("")
-  let [password, setPassword] = useState("")
-  let [nickname, setNickname] = useState("")
+  const [email, setEmail] = useState("")
+  const [authCode, setAuthCode] = useState("")
+  const [password, setPassword] = useState("")
+  const [nickname, setNickname] = useState("")
   //post 정보
-  let [addr, setAddr] = useState(["api/auth/mail", "api/auth/check"])
+  const [addr, setAddr] = useState(["api/auth/mail", "api/auth/check"])
   //버튼 상태 저장
-  let [isNextButtonDisabled, setIsNextButtonDisabled] = useState(true);
+  const [isNextButtonDisabled, setIsNextButtonDisabled] = useState(true);
   
   //유효성 검사 상태(다음 버튼 활성화용)
   const [isNickName, setIsNickName] = useState(false)//연결

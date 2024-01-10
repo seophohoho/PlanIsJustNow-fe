@@ -69,7 +69,7 @@ function InputComponent(props){
                       if(isValidNickname(nickname)){
                         setNickNameMessage("완벽해요!")
                         setIsNickName(true)
-                      }else setNickNameMessage("최소 2글자는 입력! 특수문자 공백은 사용할 수 없어요!")}
+                      }else {setNickNameMessage("최소 2글자는 입력! 특수문자 공백은 사용할 수 없어요!")}}
                       else{}
                       
                     }}/>
@@ -82,7 +82,7 @@ function InputComponent(props){
                       btnMessage[i]===false ? null : <Button as="input" type="button" value={ btnMessage[i] }
                       disabled={i === 1 ? isButtonDisabled : ""}//i가 인증보내기 칸이고 state또한 일치하면 버튼활성화
                       onClick={()=>{
-                        setIsButtonDisabled(btnEmail(addr[i], email));//통신 성공시 버튼 활성화
+                        if(i==0)setIsButtonDisabled(btnEmail(addr[i], email));//통신 성공시 버튼 활성화
                         if(btnAuth(addr[i], email, authCode)){setIsAuthCode(true)}
                       }}/>
                     }
@@ -96,7 +96,7 @@ function InputComponent(props){
 
 //post 인증번호 확인 요청
 function btnAuth(addr, email, authCode){
-  if(addr==="api/auth/check" && (authCode.length === 6))
+  if(addr==="api/auth/check" && (authCode.length === 6)){
   axios.post(`http://localhost:8080/api/auth/check`, {
       "email" : email,
       "code" : authCode
@@ -105,7 +105,7 @@ function btnAuth(addr, email, authCode){
         alert("인증이 완료되었어요!")}
       else{
         alert("잘못된 인증코드입니다.")}
-    }).catch(alert("!!"))
+    }).catch(alert("인증과정 중 문제가 발생했습니다. 나중에 다시 시도해주세요"))}
 }
   
 //post 이메일 인증 보내기 요청 & 이메일 유효성확인
@@ -113,14 +113,14 @@ function btnEmail(addr, email){
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
 
   //return은 실패,성공에 따른 인증확인 버튼 활성화 상태 반환용
-  if(addr==="api/auth/mail" && emailRegex.test(email))
+  if(addr==="api/auth/mail" && emailRegex.test(email)){
     axios.post(`http://localhost:8080/api/auth/mail`, {"email" : email})
       .then((Response)=>{
         if(Response.status === 200){ alert("인증메일이 발송됐어요!"); return false} 
-        else if(Response.status == 409){alert("이미 사용중인 이메일입니다!")}
-        else return true})
+        else if(Response.status == 409){alert("이미 사용중인 이메일입니다!")}})
       .catch(alert("메일발송에 실패했습니다. 잠시후 다시 시도해주세요"))
-  else{alert("이메일 양식을 다시 확인해주세요.."); return true}
+  }
+  else{alert("이메일 양식을 다시 확인해주세요..");}
 }
 
 function isValidPassword(password){
