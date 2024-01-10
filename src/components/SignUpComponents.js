@@ -114,7 +114,7 @@ function btnEmail(addr, email){
     axios.post(`http://localhost:8080/api/auth/email`, {"email" : email})
       .then((Response)=>{
         if(Response.status === 200){ alert("인증메일이 발송됐어요!"); return false} 
-        else if(Response.status == {}){}// todo 이메일 중복 코드 도착시 코드추가
+        else if(Response.status == 409){alert("이미 사용중인 이메일입니다!")}
         else return true})
       .catch(alert("메일발송에 실패했습니다. 다시한번 시도해주세요"))
   else{alert("이메일 양식을 다시 확인해주세요..");}
