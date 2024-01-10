@@ -53,24 +53,36 @@ function InputComponent(props){
                       //내용에 따른 state 설정
                       if(i===0){setEmail(e.target.value);}
                       else if(i===1){setAuthCode(e.target.value)}
-                      else if(i===2){setPassword(e.target.value)
+                      else if(i===2){
+                        setPassword(e.target.value)
                         if(isValidPassword(password)){
                           setPasswordMessage("완벽해요!")
                           setIsPassword(true)
-                        }else setPasswordMessage("숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!")
+                        }
+                        else {
+                          setPasswordMessage("숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!")
+                          setIsPassword(false)
+                        }
                       }
-                      else if(i===3){if(password === e.target.value){
-                        setPasswordConfirmMessage("완벽해요!")
-                        setIsPasswordConfirm(true)
-                      }else{
-                        setPasswordConfirmMessage("무언가 다른것 같아요..")
-                      }}
+                      else if(i===3){
+                        if(password === e.target.value){
+                          setPasswordConfirmMessage("완벽해요!")
+                          setIsPasswordConfirm(true)
+                        }
+                        else{
+                          setPasswordConfirmMessage("무언가 다른것 같아요..")
+                          setIsPasswordConfirm(false)
+                        }
+                      }
                       else if(i===4){setNickname(e.target.value)
-                      if(isValidNickname(nickname)){
-                        setNickNameMessage("완벽해요!")
-                        setIsNickName(true)
-                      }else {setNickNameMessage("최소 2글자는 입력! 특수문자 공백은 사용할 수 없어요!")}}
-                      else{}
+                        if(isValidNickname(nickname)){
+                          setNickNameMessage("완벽해요!")
+                          setIsNickName(true)
+                        }
+                        else {setNickNameMessage("최소 2글자는 입력! 특수문자 공백은 사용할 수 없어요!")
+                              setIsNickName(false)}
+                      }
+                      console.log(isEmail, isAuthCode, isPassword, isPasswordConfirm, isNickName)
                       
                     }}/>
                     <label className='border-zero impo-margin-zero '>
