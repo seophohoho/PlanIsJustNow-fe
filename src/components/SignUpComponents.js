@@ -84,8 +84,7 @@ function InputComponent(props){
                         else {setNickNameMessage("최소 2글자는 입력! 특수문자 공백은 사용할 수 없어요!")
                               setIsNickName(false)}
                       }
-                      console.log(isEmail, isAuthCode, isPassword, isPasswordConfirm, isNickName)
-                      
+                      console.log('check '+ isEmail, isAuthCode, isPassword, isPasswordConfirm, isNickName)
                     }}/>
                     <label className='border-zero impo-margin-zero '>
                       {i === 2 ? passwordMessage : i === 3 ? passwordConfirmMessage : i === 4 ? nickNameMessage : ''}
@@ -113,18 +112,29 @@ function InputComponent(props){
 }
 
 //post 인증번호 확인 요청 & 인증번호 유효성확인
-function btnAuth(addr, email, authCode){
-  if(addr==="api/auth/check" && (authCode.length === 6)){
-    axios.post(`${serverUrl}/api/auth/check`, {
-        "email" : email,
-        "code" : authCode
-      }).then((Response)=>{
-        if(Response.status === 200){alert("인증이 완료되었어요!");return true}
-        else{alert("잘못된 인증코드입니다.");return false}
-      }).catch((error)=>{alert(error+":인증과정 중 문제가 발생했습니다. 나중에 다시 시도해주세요");return false}
-    ); return true
+async function btnAuth(addr, email, authCode){
+  if (addr === "api/auth/check" && authCode.length === 6) {
+    try {
+      const response = await axios.post(`${serverUrl}/api/auth/check`, {
+        "email": email,
+        "code": authCode
+      });
+
+      if (response.status === 200) {
+        alert("인증이 완료되었어요!");
+        return true;
+      } else {
+        alert("잘못된 인증코드입니다.");
+        return false;
+      }
+    } catch (error) {
+      alert(error + ": 인증과정 중 문제가 발생했습니다. 나중에 다시 시도해주세요");
+      return false;
+    }
+  } else {
+    alert("인증번호 6자리를 입력해야합니다!");
+    return false;
   }
-  else{alert("인증번호 6자리를 입력해야합니다!");return false}
 }
   
 //post 이메일 인증 보내기 요청 & 이메일 유효성확인
