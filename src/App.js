@@ -98,7 +98,7 @@ function App() {
                   <div className='float-display'>
                     <p className='color-violet impo-margin-zero'>100px*100px 권장</p>
                     <p className='color-violet'>PNG, JPNG, JPEG가 지원됩니다.</p>
-                    <Form.Control type="file" />
+                    <Form.Control type="file" accept='.png, .jpng, .jpeg'/>
                   </div>
                 </Col>
               </Row>
