@@ -38,10 +38,9 @@ function InputComponent(props){
 
   useEffect(()=>{
     if(authBtnReact){
-      setIsAuthCode(btnAuth(email, authCode))
-      if(isAuthCode){
-        setIsInputDisabled(true)
-      }
+      const copy = btnAuth(email, authCode)
+      setIsAuthCode(copy)
+      setIsInputDisabled(copy)
       if(isPassword && isPasswordConfirm && isNickName){setIsNextButtonDisabled(false)}
     }
     else{
@@ -132,18 +131,21 @@ function InputComponent(props){
                        if(i===0){
                         setEmail(e.target.value)
                       }
-                       else if(i===1){
+                      else if(i===1){
                         setAuthCode(e.target.value)
+                        
                       }
-                       else if(i===2){
-                         setPassword(e.target.value)
-                       }
-                       else if(i===3){
-                         setPasswordConfirm(e.target.value)
-                       }
-                       else if(i===4){
-                         setNickname(e.target.value) 
-                       }
+                      else if(i===2){
+                        setPassword(e.target.value)
+                      }
+                      else if(i===3){
+                        setPasswordConfirm(e.target.value)
+                      }
+                      else if(i===4){
+                        setNickname(e.target.value) 
+                      }
+                      if(isPassword && isPasswordConfirm && isNickName){setIsNextButtonDisabled(false)}
+
                       console.log('check '+isPassword, isPasswordConfirm, isNickName)
                     }}/>
                     <label className='border-zero impo-margin-zero '>
