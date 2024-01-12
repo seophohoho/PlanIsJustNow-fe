@@ -31,8 +31,8 @@ function App() {
   //input disabled 상태 저장
   const [isInputDisabled, setIsInputDisabled] = useState(false)
   //유효성 검사 상태(다음 버튼 활성화용)
-  const [isEmail, setIsEmail] = useState(true)
-  const [isAuthCode, setIsAuthCode] = useState(true)
+  const [isEmail, setIsEmail] = useState(false)
+  const [isAuthCode, setIsAuthCode] = useState(false)
   const [isPassword, setIsPassword] = useState(false)
   const [isPasswordConfirm, setIsPasswordConfirm] = useState(false)
   const [isNickName, setIsNickName] = useState(false)
