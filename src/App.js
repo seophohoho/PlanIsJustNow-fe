@@ -4,10 +4,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import InputComponent from './components/SignUpComponents.js'; 
 import { useState } from 'react';
-import { InputGroup, Form, Col, Row, Button, Container, Navbar, Image } from 'react-bootstrap';
-{
-  //todo 81-다음: 버튼 비활성화(disable) 해제 조건 구현필요 -> 작성완료시 해제
-}
+import { Form, Col, Row, Button, Container, Navbar, Image } from 'react-bootstrap';
 
 function App() {
   const [inputTitle, setInputTitle] = useState(["e-mail","인증번호","비밀번호","비밀번호 확인","닉네임"])
@@ -25,18 +22,20 @@ function App() {
   const [email, setEmail] = useState("")
   const [authCode, setAuthCode] = useState("")
   const [password, setPassword] = useState("")
+  const [passwordConfirm, setPasswordConfirm] = useState("")
   const [nickname, setNickname] = useState("")
   //post 정보
   const [addr, setAddr] = useState(["api/auth/mail", "api/auth/check"])
-  //버튼 상태 저장
-  const [isNextButtonDisabled, setIsNextButtonDisabled] = useState(true);
-  
+  //버튼 disabled상태 저장
+  const [isNextButtonDisabled, setIsNextButtonDisabled] = useState(true)
+  //input disabled 상태 저장
+  const [isInputDisabled, setIsInputDisabled] = useState(false)
   //유효성 검사 상태(다음 버튼 활성화용)
-  const [isNickName, setIsNickName] = useState(false)//연결
-  const [isEmail, setIsEmail] = useState(false)//연결
-  const [isAuthCode, setIsAuthCode] = useState(false)//연결
-  const [isPassword, setIsPassword] = useState(false)//연결
-  const [isPasswordConfirm, setIsPasswordConfirm] = useState(false)//연결
+  const [isEmail, setIsEmail] = useState(true)
+  const [isAuthCode, setIsAuthCode] = useState(true)
+  const [isPassword, setIsPassword] = useState(false)
+  const [isPasswordConfirm, setIsPasswordConfirm] = useState(false)
+  const [isNickName, setIsNickName] = useState(false)
 
   return (
     <div>
@@ -61,6 +60,7 @@ function App() {
               inputType={inputType}
               placeholder={placeholder}
               password={password}
+              passwordConfirm={passwordConfirm}
               classNames={classNames}
               btnMessage={btnMessage}
               addr={addr}
@@ -70,6 +70,7 @@ function App() {
               setEmail={setEmail}
               setAuthCode={setAuthCode}
               setPassword={setPassword}
+              setPasswordConfirm={setPasswordConfirm}
               setNickname={setNickname}
               isNickName={isNickName}
               isEmail={isEmail}
@@ -81,7 +82,10 @@ function App() {
               setIsAuthCode={setIsAuthCode}
               setIsPassword={setIsPassword}
               setIsPasswordConfirm={setIsPasswordConfirm}
+              isNextButtonDisabled={isNextButtonDisabled}
               setIsNextButtonDisabled={setIsNextButtonDisabled}
+              setIsInputDisabled={setIsInputDisabled}
+              isInputDisabled={isInputDisabled}
             />
             }
             <Container>
@@ -99,7 +103,8 @@ function App() {
                 </Col>
               </Row>
               <div className='center'>
-                <Button as="input" type="button" value="다음" disabled={isNextButtonDisabled} onClick={()=>{
+                <Button as="input" type="button" value="다음" disabled={isNextButtonDisabled} 
+                onClick={()=>{
                     axios.post(`${serverUrl}/api/account/signup`, {
                       "email": email,
                       "password": password,
@@ -114,7 +119,6 @@ function App() {
                       })
                       .catch((error) => {
                         console.error(error);
-                        setIsNextButtonDisabled(true);//실패시 여전히 비활성화
                       });
                 }}/>
               </div>
