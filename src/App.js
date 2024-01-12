@@ -96,9 +96,9 @@ function App() {
                 <Col className='center' sm={7}>
                   <Image src="/logo192.png" roundedCircle className='input-bgSet image-w float-display'/>
                   <div className='float-display'>
-                    <Button as="input" type="button" value="이미지 선택"/>
                     <p className='color-violet impo-margin-zero'>100px*100px 권장</p>
                     <p className='color-violet'>PNG, JPNG, JPEG가 지원됩니다.</p>
+                    <Form.Control type="file" />
                   </div>
                 </Col>
               </Row>
