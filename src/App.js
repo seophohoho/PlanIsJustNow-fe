@@ -94,11 +94,11 @@ function App() {
                   <p className='color-darkBlue'>프로필 사진</p>
                 </Col>
                 <Col className='center' sm={7}>
-                  <Image src="/logo192.png" roundedCircle className='input-bgSet image-w float-display'/>
+                  <Image src="/logo192.png" roundedCircle className='input-bgSet image-w float-display'/>{/**state로 저장된 선택된 파일을 보여줌 */}
                   <div className='float-display'>
                     <p className='color-violet impo-margin-zero'>100px*100px 권장</p>
                     <p className='color-violet'>PNG, JPNG, JPEG가 지원됩니다.</p>
-                    <Form.Control type="file" accept='.png, .jpng, .jpeg'/>
+                    <Form.Control type="file" accept='.png, .jpng, .jpeg' className=''/>{/**파일 선택한 파일 서버로 post후 서버에서 해당 id 이미지 받아오느 걸로 */}
                   </div>
                 </Col>
               </Row>

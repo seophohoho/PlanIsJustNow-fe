@@ -19,78 +19,35 @@ function InputComponent(props){
   const [passwordConfirmMessage, setPasswordConfirmMessage] = useState('')
   const [nickNameMessage, setNickNameMessage] = useState('')
   
-  const [emailBtnReact, setEmailBtnReact] = useState(false)
-  const [authBtnReact, setAuthBtnReact] = useState(false)
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   
-  useEffect(()=>{
-    if(emailBtnReact){
-      const copy = btnEmail(email)
-      setIsButtonDisabled(copy)
-      setIsEmail(!copy)
-      if(isPassword && isPasswordConfirm && isNickName){setIsNextButtonDisabled(false)}
+  const passwordCheckHandler = (password, passwordConfirm) => {
+    const passwordRegex = /^[a-z\d!@*&-_]{8,20}$/;
+    if (password === '') {
+      setPasswordMessage('');
+      setIsPassword(false)
+    } 
+    else if (!passwordRegex.test(password)) {
+      setPasswordMessage('비밀번호는 8~20자의 영소문자, 숫자, !@*&-_만 입력해주세요!');
+      setIsPassword(false)
+    } 
+    if (passwordConfirm !== password) {
+      setPasswordMessage('');
+      setPasswordConfirmMessage('비밀번호가 일치하지 않습니다.');
+      setIsPassword(false)
+    }  
+    else {
+      setPasswordMessage('완벽해요');
+      setPasswordConfirmMessage('완벽해요');
+      setIsPassword(true)
     }
-    else{
-      setIsNextButtonDisabled(true)
-    }
-    console.log('check '+ isPassword, isPasswordConfirm, isNickName)
-  },[emailBtnReact])
-
-  useEffect(()=>{
-    if(authBtnReact){
-      const copy = btnAuth(email, authCode)
-      setIsAuthCode(copy)
-      setIsInputDisabled(copy)
-      if(isPassword && isPasswordConfirm && isNickName){setIsNextButtonDisabled(false)}
-    }
-    else{
-      setIsNextButtonDisabled(true)
-    }
-    console.log('check '+ isPassword, isPasswordConfirm, isNickName)
-
-  },[authBtnReact])
-
-  useEffect(()=>{
-    if(password){
-      if(isValidPassword(password)){
-        setIsPassword(true)
-        setPasswordMessage("완벽해요!")
-        if(isPassword && isPasswordConfirm && isNickName){setIsNextButtonDisabled(false)}
-      }
-      else {
-        setIsPassword(false)
-        setPasswordMessage("숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!")
-        setIsNextButtonDisabled(true)
-      }
-    }
-    console.log('check '+ isPassword, isPasswordConfirm, isNickName)
-   
-  },[password])
- 
-  useEffect(()=>{
-    if(passwordConfirm){
-      if(password === passwordConfirm){
-        setIsPasswordConfirm(true)
-        setPasswordConfirmMessage("완벽해요!")
-        if(isPassword && isPasswordConfirm && isNickName){setIsNextButtonDisabled(false)}
-        
-      }
-      else{
-        setIsPasswordConfirm(false)
-        setPasswordConfirmMessage("무언가 다른것 같아요..")
-        setIsNextButtonDisabled(true)
-      }
-    }
-    console.log('check '+ isPassword, isPasswordConfirm, isNickName)
-
-  },[passwordConfirm])
+  }
   
   useEffect(()=>{
-    if(nickname){
+    if(nickname!== ""){
       if(isValidNickname(nickname)){
         setIsNickName(true)
         setNickNameMessage("완벽해요!")
-        if(isPassword && isPasswordConfirm && isNickName){setIsNextButtonDisabled(false)}
       }
       else {
         setIsNickName(false)
@@ -98,13 +55,9 @@ function InputComponent(props){
         setIsNextButtonDisabled(true)
       }
     }
-    console.log('check '+ isPassword, isPasswordConfirm, isNickName)
+    console.log('check '+ isPassword, isNickName)
 
   },[nickname])
-
-  useEffect(()=>{
-
-  },[])
 
   return(
     <>
@@ -119,21 +72,16 @@ function InputComponent(props){
                   </Col>
                   <Col className='mb-3'>{/** input칸 */}
                     <Form.Control type={ inputType[i] } placeholder={ placeholder[i] } maxLength={i === 1 ? 6 : 20} className={classNames[i]} 
+                    value={i===0 ? email : i===1 ? authCode : i===2 ? password : i===3 ? passwordConfirm : i===4 ? nickname : ""}
                     onInput={(e) => {
                       if (e.target.value.length > e.target.maxLength){
                         e.target.value = e.target.value.slice(0, e.target.maxLength);
                       }
-                    }
-                    }
-                    disabled={i === 0 ? isInputDisabled : i === 1 ? isInputDisabled : ""}
-                    onChange={(e)=>{
-                      //내용에 따른 state 설정
-                       if(i===0){
+                      if(i===0){
                         setEmail(e.target.value)
                       }
                       else if(i===1){
                         setAuthCode(e.target.value)
-                        
                       }
                       else if(i===2){
                         setPassword(e.target.value)
@@ -144,9 +92,21 @@ function InputComponent(props){
                       else if(i===4){
                         setNickname(e.target.value) 
                       }
-                      if(isPassword && isPasswordConfirm && isNickName){setIsNextButtonDisabled(false)}
+                    }
+                    }
+                    disabled={i === 0 ? isInputDisabled : i === 1 ? isInputDisabled : ""}
+                    onChange={(e) => {
+                      if (i === 0) {
+                        setEmail(e.target.value);
+                      } else if (i === 1) {
+                        setAuthCode(e.target.value);
+                      } else if (i === 2 || i === 3) {
+                        passwordCheckHandler(password, passwordConfirm);
+                      } else if (i === 4) {
+                        setNickname(e.target.value);
+                      }
+                      console.log('check '+ isPassword, isNickName)
 
-                      console.log('check '+isPassword, isPasswordConfirm, isNickName)
                     }}/>
                     <label className='border-zero impo-margin-zero '>
                       {i === 2 ? passwordMessage : i === 3 ? passwordConfirmMessage : i === 4 ? nickNameMessage : ''}
@@ -156,14 +116,23 @@ function InputComponent(props){
                     {
                       btnMessage[i]===false ? null : <Button as="input" type="button" value={ btnMessage[i] }
                       disabled={i === 1 ? isButtonDisabled : ""}//i가 인증보내기 칸이고 state또한 일치하면 버튼활성화
-                      onClick={()=>{
-                        if(i===0){ 
-                          setEmailBtnReact(true)
-                        };//통신 성공시 버튼 활성화
+                      onClick={() => {
+                        if (i === 0) {
+                          btnEmail(email).then(copy=>{
+                            console.log(copy);
+                            setIsButtonDisabled(copy);
+                            setIsEmail(!copy);
+                          })
+                          if(isPassword && isNickName){setIsNextButtonDisabled(false)}
+                        };
                         if(i===1){
-                          setAuthBtnReact(true)
+                          btnAuth(email, authCode).then(copy=>{
+                            setIsAuthCode(copy)
+                            setIsInputDisabled(copy)
+                            if(isPassword && isPasswordConfirm && isNickName){setIsNextButtonDisabled(false)}
+                          })
                         }
-                      }}/>
+                        }}/>
                     }
                   </Col>
               </Form.Group>
@@ -200,32 +169,33 @@ async function btnAuth(email, authCode){
   }
 }
   
-function btnEmail(email) {
+async function btnEmail(email) {
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{1,6}$/;
 
   // return은 실패, 성공에 따른 인증확인 버튼 활성화 상태 반환용
   if (emailRegex.test(email)) {
-      axios.post(`${serverUrl}/api/auth/mail`, {"email": email}).then((Response)=>{
+    try {
+      const Response = await axios.post(`${serverUrl}/api/auth/mail`, {"email": email});
+
       if (Response.status === 200) {
         alert("인증메일이 발송됐어요!");
+        console.log("email false")
         return false;
       } else if (Response.status === 409) {
         alert("이미 사용중인 이메일입니다!");
+        console.log("email tt")
         return true;
-      }}).catch((error)=>{
-         alert(error + ": 메일발송에 실패했습니다. 잠시후 다시 시도해주세요");
-        return true;
-      })
+      }
+    } catch (error) {
+      alert(error + ": 메일발송에 실패했습니다. 잠시후 다시 시도해주세요");
+      console.log("email tt")
+      return true;
     }
-  else {
+  } else {
     alert("이메일 양식을 다시 확인해주세요..");
+    console.log("email tt")
     return true;
   }
-}
-
-function isValidPassword(password){
-  const regex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$/
-  return regex.test(password);
 }
 
 function isValidNickname(nickname) {
