@@ -93,7 +93,6 @@ function InputComponent(props){
                       } else if (i === 1) {
                         setAuthCode(e.target.value);
                       } else if (i === 2 || i === 3) {
-                        setPassword(e.target.value)
                         passwordCheckHandler(password, passwordConfirm);
                       } else if (i === 4) {
                         setNickname(e.target.value);
