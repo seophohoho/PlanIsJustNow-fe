@@ -33,9 +33,9 @@ function App() {
   //유효성 검사 상태(다음 버튼 활성화용)
   const [isEmail, setIsEmail] = useState(false)
   const [isAuthCode, setIsAuthCode] = useState(false)
-  const [isPassword, setIsPassword] = useState(false)
+  const [isPassword, setIsPassword] = useState(true)
   const [isPasswordConfirm, setIsPasswordConfirm] = useState(false)
-  const [isNickName, setIsNickName] = useState(false)
+  const [isNickName, setIsNickName] = useState(true)
 
   return (
     <div>

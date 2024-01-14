@@ -77,21 +77,13 @@ function InputComponent(props){
                       if (e.target.value.length > e.target.maxLength){
                         e.target.value = e.target.value.slice(0, e.target.maxLength);
                       }
-                      if(i===0){
-                        setEmail(e.target.value)
-                      }
-                      else if(i===1){
-                        setAuthCode(e.target.value)
-                      }
-                      else if(i===2){
+                     if(i===2){
                         setPassword(e.target.value)
                       }
                       else if(i===3){
                         setPasswordConfirm(e.target.value)
                       }
-                      else if(i===4){
-                        setNickname(e.target.value) 
-                      }
+                      if(isPassword && isNickName){setIsNextButtonDisabled(false)}
                     }
                     }
                     disabled={i === 0 ? isInputDisabled : i === 1 ? isInputDisabled : ""}
@@ -101,6 +93,7 @@ function InputComponent(props){
                       } else if (i === 1) {
                         setAuthCode(e.target.value);
                       } else if (i === 2 || i === 3) {
+                        setPassword(e.target.value)
                         passwordCheckHandler(password, passwordConfirm);
                       } else if (i === 4) {
                         setNickname(e.target.value);
@@ -122,14 +115,14 @@ function InputComponent(props){
                             console.log(copy);
                             setIsButtonDisabled(copy);
                             setIsEmail(!copy);
-                          })
                           if(isPassword && isNickName){setIsNextButtonDisabled(false)}
+                          })
                         };
                         if(i===1){
                           btnAuth(email, authCode).then(copy=>{
                             setIsAuthCode(copy)
                             setIsInputDisabled(copy)
-                            if(isPassword && isPasswordConfirm && isNickName){setIsNextButtonDisabled(false)}
+                            if(isPassword && isNickName){setIsNextButtonDisabled(false)}
                           })
                         }
                         }}/>
