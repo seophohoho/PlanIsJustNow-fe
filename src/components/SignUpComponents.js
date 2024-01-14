@@ -121,7 +121,7 @@ function InputComponent(props){
                         if(i===1){
                           btnAuth(email, authCode).then(copy=>{
                             setIsAuthCode(copy)
-                            setIsInputDisabled(copy)
+                            setIsInputDisabled(!copy)
                             if(isPassword && isNickName){setIsNextButtonDisabled(false)}
                           })
                         }
