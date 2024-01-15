@@ -21,7 +21,7 @@ function InputComponent(props){
   
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   
-  const passwordCheckHandler = (password, passwordConfirm) => {
+  useEffect(()=>{
     const passwordRegex = /^[a-z\d!@*&-_]{8,20}$/;
     if (password === '') {
       setPasswordMessage('');
@@ -41,7 +41,7 @@ function InputComponent(props){
       setPasswordConfirmMessage('완벽해요');
       setIsPassword(true)
     }
-  }
+  },[password, passwordConfirm])
   
   useEffect(()=>{
     if(nickname!== ""){
@@ -79,7 +79,7 @@ function InputComponent(props){
                       if (i === 2) {
                         setPassword(value);
                       } else if (i === 3) {
-                          setPasswordConfirm(value);
+                        setPasswordConfirm(value);
                       }
                       console.log(isPassword, isNickName)
                       if(isPassword && isNickName){setIsNextButtonDisabled(false)}
@@ -98,7 +98,6 @@ function InputComponent(props){
                       } else if (i === 2 || i === 3) {
                         if(i===2)setPassword(value)
                         else if(i===3)setPasswordConfirm(value)
-                        passwordCheckHandler(password, passwordConfirm);
                       } else if (i === 4) {
                         setNickname(value);
                       }
