@@ -7,12 +7,12 @@ function InputComponent(props){
   const {
     inputTitle, inputType, authCode,
     placeholder,classNames, email, passwordConfirm,
-    btnMessage, password, nickname, isNextButtonDisabled,
+    btnMessage, password, nickname, isEmail,
     setEmail, setAuthCode, isNickName, setPasswordConfirm,
-    isEmail, isPassword, isAuthCode, isInputDisabled, setIsInputDisabled,
-    isPasswordConfirm, setIsNickName, setIsAuthCode,
+    isPassword, isAuthCode, isInputDisabled, setIsInputDisabled,
+    setIsNickName, setIsAuthCode,
     setIsEmail, setIsPassword,setIsNextButtonDisabled,
-    setIsPasswordConfirm, setPassword, setNickname} = props 
+    setPassword, setNickname} = props 
  
   //유효성 메시지 상태저장
   const [passwordMessage, setPasswordMessage] = useState('')
@@ -81,7 +81,6 @@ function InputComponent(props){
                       } else if (i === 3) {
                         setPasswordConfirm(value);
                       }
-                      console.log(isPassword, isNickName)
                       if(isPassword && isNickName){setIsNextButtonDisabled(false)}
                       else{
                         setIsNextButtonDisabled(true)
@@ -101,7 +100,6 @@ function InputComponent(props){
                       } else if (i === 4) {
                         setNickname(value);
                       }
-                      console.log(isPassword, isNickName)
 
                     }}/>
                     <label className='border-zero impo-margin-zero '>
@@ -115,7 +113,6 @@ function InputComponent(props){
                       onClick={() => {
                         if (i === 0) {
                           btnEmail(email).then(copy=>{
-                            console.log(copy);
                             setIsButtonDisabled(copy);
                             setIsEmail(!copy);
                           if(isPassword && isNickName){setIsNextButtonDisabled(false)}

@@ -34,7 +34,6 @@ function App() {
   const [isEmail, setIsEmail] = useState(false)
   const [isAuthCode, setIsAuthCode] = useState(false)
   const [isPassword, setIsPassword] = useState(false)
-  const [isPasswordConfirm, setIsPasswordConfirm] = useState(false)
   const [isNickName, setIsNickName] = useState(false)
 
   return (
@@ -72,16 +71,14 @@ function App() {
               setPassword={setPassword}
               setPasswordConfirm={setPasswordConfirm}
               setNickname={setNickname}
-              isNickName={isNickName}
               isEmail={isEmail}
+              isNickName={isNickName}
               isAuthCode={isAuthCode}
               isPassword={isPassword}
-              isPasswordConfirm={isPasswordConfirm}
-              setIsNickName={setIsNickName}
               setIsEmail={setIsEmail}
+              setIsNickName={setIsNickName}
               setIsAuthCode={setIsAuthCode}
               setIsPassword={setIsPassword}
-              setIsPasswordConfirm={setIsPasswordConfirm}
               isNextButtonDisabled={isNextButtonDisabled}
               setIsNextButtonDisabled={setIsNextButtonDisabled}
               setIsInputDisabled={setIsInputDisabled}
