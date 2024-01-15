@@ -31,7 +31,7 @@ function InputComponent(props){
       setPasswordMessage('비밀번호는 8~20자의 영소문자, 숫자, !@*&-_만 입력해주세요!');
       setIsPassword(false)
     } 
-    if (passwordConfirm !== password) {
+    else if (passwordConfirm !== password) {
       setPasswordMessage('');
       setPasswordConfirmMessage('비밀번호가 일치하지 않습니다.');
       setIsPassword(false)
@@ -55,8 +55,6 @@ function InputComponent(props){
         setIsNextButtonDisabled(true)
       }
     }
-    console.log('check '+ isPassword, isNickName)
-
   },[nickname])
 
   return(
@@ -74,30 +72,37 @@ function InputComponent(props){
                     <Form.Control type={ inputType[i] } placeholder={ placeholder[i] } maxLength={i === 1 ? 6 : 20} className={classNames[i]} 
                     value={i===0 ? email : i===1 ? authCode : i===2 ? password : i===3 ? passwordConfirm : i===4 ? nickname : ""}
                     onInput={(e) => {
+                      const value = e.target.value
                       if (e.target.value.length > e.target.maxLength){
                         e.target.value = e.target.value.slice(0, e.target.maxLength);
                       }
-                     if(i===2){
-                        setPassword(e.target.value)
+                      if (i === 2) {
+                        setPassword(value);
+                      } else if (i === 3) {
+                          setPasswordConfirm(value);
                       }
-                      else if(i===3){
-                        setPasswordConfirm(e.target.value)
-                      }
+                      console.log(isPassword, isNickName)
                       if(isPassword && isNickName){setIsNextButtonDisabled(false)}
+                      else{
+                        setIsNextButtonDisabled(true)
+                      }
                     }
                     }
                     disabled={i === 0 ? isInputDisabled : i === 1 ? isInputDisabled : ""}
                     onChange={(e) => {
+                      const value = e.target.value;
                       if (i === 0) {
-                        setEmail(e.target.value);
+                        setEmail(value);
                       } else if (i === 1) {
-                        setAuthCode(e.target.value);
+                        setAuthCode(value);
                       } else if (i === 2 || i === 3) {
+                        if(i===2)setPassword(value)
+                        else if(i===3)setPasswordConfirm(value)
                         passwordCheckHandler(password, passwordConfirm);
                       } else if (i === 4) {
-                        setNickname(e.target.value);
+                        setNickname(value);
                       }
-                      console.log('check '+ isPassword, isNickName)
+                      console.log(isPassword, isNickName)
 
                     }}/>
                     <label className='border-zero impo-margin-zero '>
@@ -171,21 +176,17 @@ async function btnEmail(email) {
 
       if (Response.status === 200) {
         alert("인증메일이 발송됐어요!");
-        console.log("email false")
         return false;
       } else if (Response.status === 409) {
         alert("이미 사용중인 이메일입니다!");
-        console.log("email tt")
         return true;
       }
     } catch (error) {
       alert(error + ": 메일발송에 실패했습니다. 잠시후 다시 시도해주세요");
-      console.log("email tt")
       return true;
     }
   } else {
     alert("이메일 양식을 다시 확인해주세요..");
-    console.log("email tt")
     return true;
   }
 }
