@@ -1,6 +1,6 @@
 import { Form, Col, Row, Button } from 'react-bootstrap';
 import axios from 'axios';
-import { serverUrl } from '../serverConfig';
+import serverUrl from '../serverConfig'
 import { useEffect, useState } from 'react';
 
 function InputComponent(props){
