@@ -3,11 +3,9 @@
   justify-content: center;
   
 }
-.w-10{
-  width: 10px;
-}
-.h-10{
-  height: 10px;
+.pet-image{
+  width: 100px;
+  text-align: center;
 }
 
 input[type="number"]::-webkit-inner-spin-button {
