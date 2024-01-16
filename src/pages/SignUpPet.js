@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Form, Col, Row, Button, Image, Container, Navbar } from 'react-bootstrap';
+import { Form, Col, Row, Button, Image, Container, Navbar, Stack } from 'react-bootstrap';
 
 function SignUpPet() {
     const [petImage, setPetIamge] = useState(['Example Path',])
@@ -22,13 +22,10 @@ function SignUpPet() {
             <Container>
                 <Row>
                     <Col>
-                        {/* 좌측 펫 선택지 */}
                         <PetCircleImage/>
                     </Col>
                     <Col>
                         <PetCircleImage/>
-
-                        {/* 우측 */}
                     </Col>
                 </Row>
             </Container>
@@ -42,18 +39,12 @@ function SignUpPet() {
 
 function PetCircleImage(props){
     return(
-        <div>
-            <Container>
-                <Row>
-                    <Col>
-                        <Image src={'/thumbnail.png'} roundedCircle className='pet-image'/>
-                        <label className='pet-image'>이름</label>
-                    </Col>
-                    <Col>
-                    </Col>
-                </Row>
-            </Container>
-        </div>
+        <>
+        <Stack gap={2}>
+            <Image src={'/thumbnail.png'} roundedCircle className='pet-image'/>
+            <label className='pet-image'>이름</label>
+        </Stack>
+        </>
     )
 }
 
