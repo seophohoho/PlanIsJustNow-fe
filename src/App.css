@@ -2,8 +2,21 @@
   display: flex;
 }
 
-div{
+.border-outline{
+  border: 3px solid rgb(90, 100, 255) !important;
 }
+
+.border-outline{
+  border: 3px solid rgb(90, 100, 255) !important;
+}
+.border-outline:hover{
+  border: 3px solid rgb(90, 100, 255) !important;
+  cursor:pointer
+}
+.border-outline:active{
+  border: 3px solid rgb(35, 45, 150) !important;
+}
+
 
 .pet-image{
   width: 100px;
