@@ -3,8 +3,12 @@ import { Form, Col, Row, Button, Image, Container, Navbar, Stack } from 'react-b
 
 function SignUpPet() {
     const [petImage, setPetIamge] = useState(['Path',])
-    
-  return (
+    const [petName, setPetName] = useState(["name",])
+    const [petInpo, setpetInpo] = useState(["inpo",])
+    const [petId, setPetId] = useState(["petId",])
+    const [postUrl, setPostUrl] = useState(["url",])
+
+return (
     <div>
         <header>
             <Navbar expand="md" className="bg-body-tertiary">
@@ -50,10 +54,10 @@ function SignUpPet() {
                                         펫 이름
                                     </Form.Label>
                                     <Col sm="8">
-                                        <Form.Control type="text" placeholder="캐릭터이름 전달" />
+                                        <Form.Control type="text" placeholder="state전달예정 펫이름" />
                                     </Col>
                                 </Stack>
-                                <p className='color-lightPurple'>ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎ</p>{/* 캐릭터 설명 라벨 */}
+                                <p className='color-lightPurple'>state전달예정 설명</p>{/* 캐릭터 설명 라벨 */}
                             </Stack>
                             <Button variant="primary" bold>이 펫으로 할래요!</Button>
                         </Col>
@@ -72,7 +76,7 @@ function PetCircleImage(props){
     return(
         <Stack gap={1}>
             <Image src={'/thumbnail.png'} roundedCircle className='pet-image border-outline'/>
-            <p className='pet-image'>이름</p>
+            <p className='pet-image color-lightPurple'>state전달</p>
         </Stack>
     )
 }
