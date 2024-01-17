@@ -45,7 +45,7 @@ function SignUpPet() {
                         <Col md="5">{/* 완성후 component로 전환 */}
                             <Stack className='center margin-bottom-10'>
                                 <Image src="/700x460.png" fluid/>
-                                <Stack direction='horizontal' gap={2}  className='center '>
+                                <Stack direction='horizontal' gap={2}  className='center margin-bottom-10'>
                                     <Form.Label column sm="4" className='color-darkBlue'>
                                         펫 이름
                                     </Form.Label>
