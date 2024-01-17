@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Form, Col, Row, Button, Image, Container, Navbar, Stack, InputGroup } from 'react-bootstrap';
+import { Form, Col, Row, Button, Image, Container, Navbar, Stack, FloatingLabel } from 'react-bootstrap';
 
 function SignUpPet() {
     const [petImage, setPetIamge] = useState(['Path',])
@@ -42,17 +42,13 @@ function SignUpPet() {
                                 <PetCircleImage/>
                             </Stack>
                         </Col>
-                        <Col md="5">
-                            <Stack>
+                        <Col md="5">{/* 완성후 component로 전환 */}
+                            <Stack className='center'>
                                 <Image src="/700x460.png" fluid/>
                                 <Stack direction='horizontal' gap={2}  className='center'>
-                                    <InputGroup className="mb-3">
-                                    <InputGroup.Text id="inputGroup-sizing-default" className='color-darkBlue'>펫 이름</InputGroup.Text>
-                                    <Form.Control
-                                    aria-label="Default"
-                                    aria-describedby="inputGroup-sizing-default"
-                                    />
-                                </InputGroup>
+                                <FloatingLabel controlId="floatingName" label="캐릭터 이름" className='color-violet'>
+                                    <Form.Control type="text" placeholder='' className='color-violet'/>
+                                </FloatingLabel>
                                 </Stack>
                                 <label> </label>{/* 캐릭터 설명 라벨 */}
                                 {/* 버튼 */}
