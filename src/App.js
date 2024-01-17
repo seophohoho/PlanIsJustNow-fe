@@ -1,4 +1,3 @@
-import React from 'react';
 import Signup from './pages/SignUp';
 import SignUpPet from './pages/SignUpPet';
 
