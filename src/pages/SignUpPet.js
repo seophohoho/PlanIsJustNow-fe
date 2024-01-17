@@ -46,9 +46,12 @@ function SignUpPet() {
                             <Stack className='center'>
                                 <Image src="/700x460.png" fluid/>
                                 <Stack direction='horizontal' gap={2}  className='center'>
-                                <FloatingLabel controlId="floatingName" label="캐릭터 이름" className='color-violet'>
-                                    <Form.Control type="text" placeholder='' className='color-violet'/>
-                                </FloatingLabel>
+                                <Form.Label column sm="4" className='color-darkBlue'>
+                                펫 이름
+                                </Form.Label>
+                                <Col sm="8">
+                                <Form.Control type="password" placeholder="Password" />
+                                </Col>
                                 </Stack>
                                 <label> </label>{/* 캐릭터 설명 라벨 */}
                                 {/* 버튼 */}
