@@ -1,8 +1,10 @@
 .App {
   display: flex;
-  justify-content: center;
-  
 }
+
+div{
+}
+
 .pet-image{
   width: 100px;
   text-align: center;
@@ -58,10 +60,13 @@ input[type="number"]::-webkit-inner-spin-button {
   display: inline !important;
   width: 100px;
 }
+.margin-bottom-20{
+  margin-bottom: 20px;
+}
 
 .color-darkBlue{
-  color: rgb(35, 45, 150);
-  font-weight: 800;
+  color: rgb(35, 45, 150) !important;
+  font-weight: 800 !important;
 }
 
 .input-bgSet{

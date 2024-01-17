@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Form, Col, Row, Button, Image, Container, Navbar, Stack } from 'react-bootstrap';
+import { Form, Col, Row, Button, Image, Container, Navbar, Stack, InputGroup } from 'react-bootstrap';
 
 function SignUpPet() {
     const [petImage, setPetIamge] = useState(['Path',])
@@ -22,32 +22,41 @@ function SignUpPet() {
             <div className='center'>
                 <Container fluid>
                     <Row>
-                        <Col md="6">
-                            <Stack direction='horizontal' gap={0}>
+                        <Col md="7">
+                            <Stack direction='horizontal' gap={1} className='margin-bottom-20'>
                                 <PetCircleImage/>
                                 <PetCircleImage/>
                                 <PetCircleImage/>
                                 <PetCircleImage/>
                             </Stack>
-                            <Stack direction='horizontal' gap={0}>
+                            <Stack direction='horizontal' gap={1} className='margin-bottom-20'>
                                 <PetCircleImage/>
                                 <PetCircleImage/>
                                 <PetCircleImage/>
                                 <PetCircleImage/>
                             </Stack>
-                            <Stack direction='horizontal' gap={0}>
+                            <Stack direction='horizontal' gap={1} className='margin-bottom-20'>
                                 <PetCircleImage/>
                                 <PetCircleImage/>
                                 <PetCircleImage/>
                                 <PetCircleImage/>
                             </Stack>
                         </Col>
-                        <Col md="4">
-                            <Image src="/700x460.png" fluid />;
-                            {/* 펫이름 라벨 */}
-                            {/* 인풋  placeholder 기본 이름 */}
-                            {/* 캐릭터 설명 라벨 */}
-                            {/* 버튼 */}
+                        <Col md="5">
+                            <Stack>
+                                <Image src="/700x460.png" fluid/>
+                                <Stack direction='horizontal' gap={2}  className='center'>
+                                    <InputGroup className="mb-3">
+                                    <InputGroup.Text id="inputGroup-sizing-default" className='color-darkBlue'>펫 이름</InputGroup.Text>
+                                    <Form.Control
+                                    aria-label="Default"
+                                    aria-describedby="inputGroup-sizing-default"
+                                    />
+                                </InputGroup>
+                                </Stack>
+                                <label> </label>{/* 캐릭터 설명 라벨 */}
+                                {/* 버튼 */}
+                            </Stack>
                         </Col>
                     </Row>
                 </Container>
