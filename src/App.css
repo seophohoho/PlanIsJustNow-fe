@@ -13,6 +13,9 @@
   border: 3px solid rgb(90, 100, 255) !important;
   cursor:pointer
 }
+.border-outline:focus{
+  border: 3px solid rgb(35, 45, 150) !important;
+}
 .border-outline:active{
   border: 3px solid rgb(35, 45, 150) !important;
 }
@@ -37,13 +40,22 @@ input[type="number"]::-webkit-inner-spin-button {
 .impo-margin-zero{
   margin: 0px !important;
 }
+.margin-bottom-10{
+  margin-bottom: 10px !important;
+}
 
 .float-display{
   float: left;
 }
 
+.color-lightPurple{
+  color: rgb(90, 100, 255);
+  font-weight: 800;
+}
+
 .color-violet {
   color: rgb(200, 200, 250) !important;
+  font-weight: 800;
 }
 
 .form{
