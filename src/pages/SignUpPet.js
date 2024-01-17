@@ -77,4 +77,11 @@ function PetCircleImage(props){
     )
 }
 
+function PetInpoComponent(props){
+    return(
+        <>
+        </>
+    )
+}
+
 export default SignUpPet;
