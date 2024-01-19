@@ -2,7 +2,7 @@ import { Form, Col, Row, Button } from 'react-bootstrap';
 import axios from 'axios';
 import serverUrl from '../serverConfig'
 import { useEffect, useState } from 'react';
-//ㅋㅋ 이건 컴포넌트가 아니라 사실상 page 실수했다.. 다음엔 컴포넌트 답게 만들어야겠다..
+
 function InputComponent(props){
   const {
     inputTitle, inputType, authCode,

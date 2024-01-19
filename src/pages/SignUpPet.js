@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Form, Col, Row, Button, Image, Container, Navbar, Stack } from 'react-bootstrap';
-
+//Todo 추후 redux 라이브러리로 수정
 function SignUpPet() {
     const [petImage, setPetIamge] = useState(['Path',])
     const [petName, setPetName] = useState(["name",])
