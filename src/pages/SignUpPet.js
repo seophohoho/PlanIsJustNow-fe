@@ -1,9 +1,10 @@
+import axios from 'axios';
 import { useState } from 'react';
 import { Form, Col, Row, Button, Image, Container, Navbar, Stack } from 'react-bootstrap';
 //Todo 추후 redux 라이브러리로 수정
 function SignUpPet() {
     const [petImage, setPetIamge] = useState(['Path',])
-    const [petName, setPetName] = useState(["name",])
+    const [petName, setPetName] = useState(["햄톨이",])
     const [petInpo, setpetInpo] = useState(["inpo",])
     const [petId, setPetId] = useState(["petId",])
     const [postUrl, setPostUrl] = useState(["url",])
@@ -28,7 +29,7 @@ return (
                     <Row>
                         <Col md="7">
                             <Stack direction='horizontal' gap={1} className='margin-bottom-20'>
-                                <PetCircleImage/>
+                                <PetCircleImage petName={petName}/>
                                 <PetCircleImage/>
                                 <PetCircleImage/>
                                 <PetCircleImage/>
@@ -54,12 +55,14 @@ return (
                                         펫 이름
                                     </Form.Label>
                                     <Col sm="8">
-                                        <Form.Control type="text" placeholder="state전달예정 펫이름" />
+                                        <Form.Control type="text" placeholder={petName[0]} />
                                     </Col>
                                 </Stack>
                                 <p className='color-lightPurple'>state전달예정 설명</p>{/* 캐릭터 설명 라벨 */}
                             </Stack>
-                            <Button variant="primary" bold>이 펫으로 할래요!</Button>
+                            <Button variant="primary" bold
+                            onClick={SelectBtnAct}
+                            >이 펫으로 할래요!</Button>
                         </Col>
                     </Row>
                 </Container>
@@ -72,11 +75,16 @@ return (
   );
 }
 
+function SelectBtnAct(){
+    axios.post("",)
+}
+
 function PetCircleImage(props){
+    const { petName } = props
     return(
         <Stack gap={1}>
             <Image src={'/thumbnail.png'} roundedCircle className='pet-image border-outline'/>
-            <p className='pet-image color-lightPurple'>state전달</p>
+            <p className='pet-image color-lightPurple'>{petName}</p>
         </Stack>
     )
 }
