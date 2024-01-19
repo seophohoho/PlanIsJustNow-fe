@@ -1,13 +1,17 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { Form, Col, Row, Button, Image, Container, Navbar, Stack } from 'react-bootstrap';
-//Todo 추후 redux 라이브러리로 수정
+import { useDispatch, useSelector } from "react-redux"
+import {  } from "../store/store"
+
 function SignUpPet() {
     const [petImage, setPetIamge] = useState(['Path',])
     const [petName, setPetName] = useState(["햄톨이",])
     const [petInpo, setpetInpo] = useState(["inpo",])
     const [petId, setPetId] = useState(["petId",])
     const [postUrl, setPostUrl] = useState(["url",])
+
+
 
 return (
     <div>
