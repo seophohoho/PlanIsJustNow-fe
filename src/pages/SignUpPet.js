@@ -3,12 +3,12 @@ import { useState } from 'react';
 import { serverUrl } from "../serverConfig"
 import { Form, Col, Row, Button, Image, Container, Navbar, Stack } from 'react-bootstrap';
 import { useDispatch, useSelector } from "react-redux"
-import {  } from "../store/store"
+import {  } from "../store/store"//수정할 함수 import 해야함
 
 function SignUpPet() {
 
-    const state = useSelector((state)=>{return state})
-    const dispatch = useDispatch()
+    const state = useSelector((state)=>{return state})//store에 있는 state 가져옴
+    const dispatch = useDispatch()//state변경 함수 사용할때 둘러야함
 
     return (
         <div>
@@ -56,12 +56,12 @@ function SignUpPet() {
                                             펫 이름
                                         </Form.Label>
                                         <Col sm="8">
-                                            <Form.Control type="text" placeholder="gd" />
+                                            <Form.Control type="text" placeholder={state.petName} />
                                         </Col>
                                     </Stack>
-                                    <p className='color-lightPurple'>state전달예정 설명</p>{/* 캐릭터 설명 라벨 */}
+                                    <p className='color-lightPurple'>{state.petInpo}</p>{/* 캐릭터 설명 라벨 */}
                                 </Stack>
-                                <Button variant="primary" bold
+                                <Button variant="primary"
                                 onClick={SelectBtnAct}
                                 >이 펫으로 할래요!</Button>
                             </Col>
@@ -81,10 +81,14 @@ function SelectBtnAct(){
 }
 
 function PetCircleImage(){
+    const state = useSelector((state)=>{return state})
+    const dispatch = useDispatch()
     return(
         <Stack gap={1}>
-            <Image src={'/thumbnail.png'} roundedCircle className='pet-image border-outline'/>
-            <p className='pet-image color-lightPurple'>gd</p>
+            <Image src={'/thumbnail.png'} roundedCircle className='pet-image border-outline'
+            onClick={""}//todo 버튼 클릭으로 해당하는 state로 변경할 수 있는 장치?
+            />
+            <p className='pet-image color-lightPurple'>{state.petName}</p>
         </Stack>
     )
 }
