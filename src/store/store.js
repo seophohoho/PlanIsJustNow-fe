@@ -37,13 +37,13 @@ const petInpo = createSlice({//펫 설명
 
 const petSelected = createSlice({
   name : "petSelected",
-  initialState : { id : "petid" ,name : "petname"},
+  initialState : { id : -1 ,name : "petname"},
   reducers:{
     selectPetId(state, action){
-      state.id = action.payload
+      console.log(state.id = action.payload)
     },
     selectPetName(state, action){
-      state.name = action.payload
+      console.log(state.name = action.payload)
     }
   }
 })

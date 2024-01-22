@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useState } from 'react';
-import { serverUrl } from "../serverConfig"
+import serverUrl from "../serverConfig"
 import { Form, Col, Row, Button, Image, Container, Navbar, Stack } from 'react-bootstrap';
 import { useDispatch, useSelector } from "react-redux"
 import { selectPetId, selectPetName } from "../store/store"//수정할 함수 import 해야함
@@ -30,7 +30,7 @@ function SignUpPet() {
                         <Row>
                             <Col md="7">
                                 <Stack direction='horizontal' gap={1} className='margin-bottom-20'>
-                                    <PetCircleImage/>
+                                    <PetCircleImage petName={state.petName[0]} petId={state.petId[0]}/>
                                     <PetCircleImage/>
                                     <PetCircleImage/>
                                     <PetCircleImage/>
@@ -56,7 +56,7 @@ function SignUpPet() {
                                             펫 이름
                                         </Form.Label>
                                         <Col sm="8">
-                                            <Form.Control type="text" placeholder={state.petName} 
+                                            <Form.Control type="text" placeholder={state.petName}//todo 펫 선택시 입력칸 싹비우기 추가
                                             onChange={(e)=>{
                                                 dispatch(selectPetName(e.target.value))
                                             }} />
@@ -64,9 +64,8 @@ function SignUpPet() {
                                     </Stack>
                                     <p className='color-lightPurple'>{state.petInpo}</p>{/* 캐릭터 설명 라벨 */}
                                 </Stack>
-                                <Button variant="primary" state={state}
-                                onClick={SelectBtnAct}
-                                >이 펫으로 할래요!</Button>
+                                <Button variant="primary"
+                                onClick={()=>{SelectBtnAct(state.petSelected.id, state.petSelected.name)}}>이 펫으로 할래요!</Button>
                             </Col>
                         </Row>
                     </Container>
@@ -79,24 +78,31 @@ function SignUpPet() {
     );
 }
 
-function SelectBtnAct(props){
-    const state = props
-    axios.post("api/user/choice-pet",{
-        "user_id" : "test@email.com",//추후 수정 : 로그인 되어있는 계정 정보 전송으로 변경
-        "pet_id" : state.petSelected.id,
-        "pet_name" : state.petSelected.name
+function SelectBtnAct(pet_id, pet_name){
+    console.log(pet_id, pet_name)
+    axios.post(`${serverUrl}/api/user/choice-pet`,{
+        "email" : "test@email.com",//추후 수정 : 로그인 되어있는 계정 정보 전송으로 변경
+        "species" : pet_id,
+        "nickname" : pet_name
+    }).then(Response=>{
+        console.log("yes")
+    }).catch(error=>{
+        console.log(error + "ㅋㅋ")
     })
 }
 
-function PetCircleImage(){
-    const state = useSelector((state)=>{return state})
+function PetCircleImage(props){
     const dispatch = useDispatch()
+    const {petName, petId} = props
     return(
         <Stack gap={1}>
             <Image src={'/thumbnail.png'} roundedCircle className='pet-image border-outline'
-            onClick={""}//todo 버튼 클릭으로 해당하는 state로 변경할 수 있는 장치?
+            onClick={()=>{
+                dispatch(selectPetId(petId))
+                dispatch(selectPetName(petName))
+            }}//todo 버튼 클릭으로 해당하는 state로 변경할 수 있는 장치?
             />
-            <p className='pet-image color-lightPurple'>{state.petName}</p>
+            <p className='pet-image color-lightPurple'>{petName}</p>
         </Stack>
     )
 }
