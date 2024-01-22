@@ -31,6 +31,8 @@ const petName = createSlice({//펫 이름
   }
 })
 
+export const {} = petName.actions
+
 const petInpo = createSlice({//펫 설명
   name : 'petName',
   initialState : [
@@ -41,8 +43,21 @@ const petInpo = createSlice({//펫 설명
   }
 })
 
+const petSelected = createSlice({
+  name : "petSelected",
+  initialState : { id : "petid" ,name : "petname"},
+  reducers:{
+    selectPetId(state, action){
+      state.id = action.payload
+    },
+    selectPetName(state, action){
+      state.name = action.payload
+    }
+  }
+})
+
+export const {selectPetId, selectPetName} = petSelected.actions
 //함수또한 내보내야 요청가능
-export const {} = petName.actions
 
 export default configureStore({// 내보낼 state 작성 문법은 아래와 같음
   reducer: { 
@@ -50,6 +65,7 @@ export default configureStore({// 내보낼 state 작성 문법은 아래와 같
     petName : petName.reducer,
     petId : petId.reducer,
     petInpo : petInpo.reducer,
-    
+    petSelected : petSelected.reducer,
+
   }
 }) 
