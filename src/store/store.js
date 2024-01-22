@@ -1,20 +1,12 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit'
 
-const petImages = createSlice({//이미지경로
+const petImages = createSlice({//펫 이미지경로
     name : 'petImages', 
     initialState : ['path',], //state 정보(핵심)
     //state 수정, 추가할 때 함수를 생성해서 여기서 실행시킴 외부파일에서는 그냥 해당함수 실행을 요청만함
     reducers : { 
     }
 }) 
-
-//signUp email state 가져오기 부분 수정 예정
-// const userId = createSlice({
-//   name : 'petInpo',
-//   initialState : {},
-//   reducers : {
-//   }
-// }) 
 
 const petId = createSlice({//펫 정보
   name : 'petId',

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { serverUrl } from "../serverConfig"
 import { Form, Col, Row, Button, Image, Container, Navbar, Stack } from 'react-bootstrap';
 import { useDispatch, useSelector } from "react-redux"
-import {  } from "../store/store"//수정할 함수 import 해야함
+import { selectPetId, selectPetName } from "../store/store"//수정할 함수 import 해야함
 
 function SignUpPet() {
 
@@ -56,7 +56,10 @@ function SignUpPet() {
                                             펫 이름
                                         </Form.Label>
                                         <Col sm="8">
-                                            <Form.Control type="text" placeholder={state.petName} />
+                                            <Form.Control type="text" placeholder={state.petName} 
+                                            onChange={(e)=>{
+                                                dispatch(selectPetName(e.target.value))
+                                            }} />
                                         </Col>
                                     </Stack>
                                     <p className='color-lightPurple'>{state.petInpo}</p>{/* 캐릭터 설명 라벨 */}
