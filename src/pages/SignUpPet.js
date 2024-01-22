@@ -61,7 +61,7 @@ function SignUpPet() {
                                     </Stack>
                                     <p className='color-lightPurple'>{state.petInpo}</p>{/* 캐릭터 설명 라벨 */}
                                 </Stack>
-                                <Button variant="primary"
+                                <Button variant="primary" state={state}
                                 onClick={SelectBtnAct}
                                 >이 펫으로 할래요!</Button>
                             </Col>
@@ -76,8 +76,13 @@ function SignUpPet() {
     );
 }
 
-function SelectBtnAct(){
-    axios.post("",)
+function SelectBtnAct(props){
+    const state = props
+    axios.post("api/user/choice-pet",{
+        "user_id" : "test@email.com",//추후 수정 : 로그인 되어있는 계정 정보 전송으로 변경
+        "pet_id" : state.petSelected.id,
+        "pet_name" : state.petSelected.name
+    })
 }
 
 function PetCircleImage(){
