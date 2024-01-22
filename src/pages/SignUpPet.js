@@ -4,7 +4,9 @@ import serverUrl from "../serverConfig"
 import { Form, Col, Row, Button, Image, Container, Navbar, Stack } from 'react-bootstrap';
 import { useDispatch, useSelector } from "react-redux"
 import { selectPetId, selectPetName } from "../store/store"//수정할 함수 import 해야함
-
+//todo 선택 안한 상태의 기본이미지, 캐릭터 설명 설정
+//todo 선택했을 시 css 효과 및 로직 수정 : 새로운 캐릭터 설정시 버튼 전체를 원래 css 로 변경후 선택된 image css로 변경
+//Todo 모든 post 버튼에 로딩 css 로직 추가
 function SignUpPet() {
 
     const state = useSelector((state)=>{return state})//store에 있는 state 가져옴
@@ -87,7 +89,7 @@ function SelectBtnAct(pet_id, pet_name){
     }).then(Response=>{
         console.log("yes")
     }).catch(error=>{
-        console.log(error + "ㅋㅋ")
+        console.log(error)
     })
 }
 
