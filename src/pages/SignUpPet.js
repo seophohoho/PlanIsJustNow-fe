@@ -27,9 +27,9 @@ function SignUpPet() {
             <h1 className='page-title'>펫 선택하기</h1>
 
             <body>
-                <div className='center'>
+                <div className='center From'>
                     <Container fluid>
-                        <Row>
+                        <Row className='center'>
                             <Col md="7">
                             <Stack direction="vertical" gap={1} className="margin-bottom-20">
                                 {chunkArray(state.petName, 4).map((petNamesChunk, chunkIndex) => (

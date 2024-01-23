@@ -2,6 +2,11 @@
   display: flex;
 }
 
+.text-center{
+  text-align: center !important;
+  margin: auto !important
+}
+
 .border-outline{
   border: 3px solid rgb(90, 100, 255) !important;
 }
@@ -63,16 +68,23 @@ input[type="number"]::-webkit-inner-spin-button {
   font-weight: 800;
 }
 
+.color-red{
+  color: red;
+}
+
 .form{
   width: 60% !important;
 }
 
 .form-Control{
-  background: #eee;
+  background: #eee !important;
 }
 
 .form-control::placeholder {
   color: rgb(200, 200, 250) !important;
+}
+.w-30p{
+  width: 30% !important;
 }
 
 .page-title{
