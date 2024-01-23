@@ -63,12 +63,12 @@ function InputComponent(props){
         inputTitle.map(function(notUse, i){
           return(
               <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
-                  <Col>
-                    <Form.Label column>{/** label칸 */}
+                  <Col sm={3}>
+                    <Form.Label column className='float-display'>{/** label칸 */}
                       <p className='color-darkBlue'><span>*</span> { inputTitle[i] }</p> 
                     </Form.Label>
                   </Col>
-                  <Col className='mb-3'>{/** input칸 */}
+                  <Col className='mb-3' sm={5}>{/** input칸 */}
                     <Form.Control type={ inputType[i] } placeholder={ placeholder[i] } maxLength={i === 1 ? 6 : 20} className={classNames[i]} 
                     value={i===0 ? email : i===1 ? authCode : i===2 ? password : i===3 ? passwordConfirm : i===4 ? nickname : ""}
                     onInput={(e) => {
@@ -106,10 +106,11 @@ function InputComponent(props){
                       {i === 2 ? passwordMessage : i === 3 ? passwordConfirmMessage : i === 4 ? nickNameMessage : ''}
                     </label>
                   </Col>
-                  <Col>
+                  <Col sm={4}>
                     {
                       btnMessage[i]===false ? null : <Button as="input" type="button" value={ btnMessage[i] }
                       disabled={i === 1 ? isButtonDisabled : ""}//i가 인증보내기 칸이고 state또한 일치하면 버튼활성화
+                      className="float-display"
                       onClick={() => {
                         if (i === 0) {
                           btnEmail(email).then(copy=>{
