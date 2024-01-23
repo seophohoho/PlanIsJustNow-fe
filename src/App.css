@@ -2,6 +2,17 @@
   display: flex;
 }
 
+a:link{  
+  color: rgb(200, 200, 250) !important;
+  text-decoration:underline;
+}
+a:visited{
+  color: rgb(200, 200, 250) !important;
+  text-decoration:underline;
+}
+a:active{
+  color: rgb(86, 86, 208) !important;
+}
 
 .text-center{
   margin: auto !important
