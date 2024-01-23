@@ -68,7 +68,17 @@ function Login() {
                 </Form>
             </div>
         </body>
-        <footer></footer>
+        <footer>
+            <Stack>
+                <Col>
+                    <p>ID 혹은 비밀번호를 잃어버리셨나요?</p>
+                </Col>
+                <Col>
+                    <p><a href='#'>ID찾기</a>/<a href='#'>비밀번호 찾기</a></p>
+                </Col>
+            </Stack>
+
+        </footer>
     </div>
   );
 }
