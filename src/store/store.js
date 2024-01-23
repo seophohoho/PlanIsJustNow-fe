@@ -6,7 +6,7 @@ const petImages = createSlice({//펫 이미지경로
     //state 수정, 추가할 때 함수를 생성해서 여기서 실행시킴 외부파일에서는 그냥 해당함수 실행을 요청만함
     reducers : { 
     }
-}) 
+})
 
 const petId = createSlice({//펫 정보
   name : 'petId',
@@ -39,8 +39,8 @@ const petSelected = createSlice({
   name : "petSelected",
   initialState : { id : -1 ,name : "petname"},
   reducers:{
-    selectPetId(state, action){
-      console.log(state.id = action.payload)
+    selectPetId(state, action){// 파라미터 설명 : state는 현재 본인이 담고있는 state를 가리킴, action은 요청시 외부에서 전달받은 데이터
+      console.log(state.id = action.payload) // action.payload : 전달받은 데이터를 이용할 때 payload를 작성하여 사용
     },
     selectPetName(state, action){
       console.log(state.name = action.payload)
