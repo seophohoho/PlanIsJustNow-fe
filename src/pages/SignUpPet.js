@@ -94,7 +94,7 @@ function PetCircleImage(props){
     return (
         <Stack gap={1}>
             <Image
-                src={'/thumbnail.png'}
+                src={'/thumbnail.png'} // 이미지 디자인 완성시 -> state.petImages[i]로 변경 chunkIndex props로 받아와서 i에 적용
                 roundedCircle
                 className={selectedStyle}
                 onClick={props.onClick}
