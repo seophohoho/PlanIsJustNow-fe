@@ -71,10 +71,10 @@ function Login() {
         <footer>
             <Stack>
                 <Col>
-                    <p>ID 혹은 비밀번호를 잃어버리셨나요?</p>
+                    <p className='color-violet'>ID 혹은 비밀번호를 잃어버리셨나요?</p>
                 </Col>
                 <Col>
-                    <p><a href='#'>ID찾기</a>/<a href='#'>비밀번호 찾기</a></p>
+                    <p className='color-violet'><a href='#'>ID 찾기</a>/<a href='#'>비밀번호 찾기</a></p>
                 </Col>
             </Stack>
 
