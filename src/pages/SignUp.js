@@ -52,7 +52,7 @@ function Signup() {
 
       <body>
         <div className='App'>
-          <Form className='form'>
+          <Form className='text-center'>
             {
               <InputComponent
               inputTitle={inputTitle}
