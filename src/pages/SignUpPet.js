@@ -51,7 +51,7 @@ function SignUpPet() {
                                 ))}
                             </Stack>
                             </Col>
-                            {chunkArray(state.petName, 4).map((petNamesChunk, chunkIndex) => (
+                            {chunkArray(state.petName, 12).map((petNamesChunk, chunkIndex) => (
                                 <PetInfo
                                     key={chunkIndex}
                                     petName={state.petName[chunkIndex]}
