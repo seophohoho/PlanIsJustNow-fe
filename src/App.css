@@ -1,8 +1,31 @@
 .App {
   display: flex;
-  justify-content: center;
-  
 }
+
+.border-outline{
+  border: 3px solid rgb(90, 100, 255) !important;
+}
+
+.border-outline{
+  border: 3px solid rgb(90, 100, 255) !important;
+}
+.border-outline:hover{
+  border: 3px solid rgb(90, 100, 255) !important;
+  cursor:pointer
+}
+.border-outline:focus{
+  border: 3px solid rgb(35, 45, 150) !important;
+}
+.border-outline:active{
+  border: 3px solid rgb(35, 45, 150) !important;
+}
+
+
+.pet-image{
+  width: 100px;
+  text-align: center;
+}
+
 input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
@@ -17,13 +40,22 @@ input[type="number"]::-webkit-inner-spin-button {
 .impo-margin-zero{
   margin: 0px !important;
 }
+.margin-bottom-10{
+  margin-bottom: 10px !important;
+}
 
 .float-display{
   float: left;
 }
 
+.color-lightPurple{
+  color: rgb(90, 100, 255);
+  font-weight: 800;
+}
+
 .color-violet {
   color: rgb(200, 200, 250) !important;
+  font-weight: 800;
 }
 
 .form{
@@ -53,10 +85,13 @@ input[type="number"]::-webkit-inner-spin-button {
   display: inline !important;
   width: 100px;
 }
+.margin-bottom-20{
+  margin-bottom: 20px;
+}
 
 .color-darkBlue{
-  color: rgb(35, 45, 150);
-  font-weight: 800;
+  color: rgb(35, 45, 150) !important;
+  font-weight: 800 !important;
 }
 
 .input-bgSet{
