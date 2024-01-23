@@ -51,25 +51,14 @@ function SignUpPet() {
                                 ))}
                             </Stack>
                             </Col>
-                            <Col md="5">{/* 완성후 component로 전환 */}
-                                <Stack className='center margin-bottom-10'>
-                                    <Image src="/700x460.png" fluid/>
-                                    <Stack direction='horizontal' gap={2}  className='center margin-bottom-10'>
-                                        <Form.Label column sm="4" className='color-darkBlue'>
-                                            펫 이름
-                                        </Form.Label>
-                                        <Col sm="8">
-                                            <Form.Control type="text" placeholder={state.petName}//todo 펫 선택시 입력칸 싹비우기 추가
-                                            onChange={(e)=>{
-                                                dispatch(selectPetName(e.target.value))
-                                            }} />
-                                        </Col>
-                                    </Stack>
-                                    <p className='color-lightPurple'>{state.petInpo}</p>{/* 캐릭터 설명 라벨 */}
-                                </Stack>
-                                <Button variant="primary" className='font-bold'
-                                onClick={()=>{SelectBtnAct(state.petSelected.id, state.petSelected.name)}}>이 펫으로 할래요!</Button>
-                            </Col>
+                            {chunkArray(state.petName, 4).map((petNamesChunk, chunkIndex) => (
+                                <PetInfo
+                                    key={chunkIndex}
+                                    petName={state.petName[chunkIndex]}
+                                    petInpo={state.petInpo[chunkIndex]}
+                                    onClick={() => { SelectBtnAct(state.petSelected.id, state.petSelected.name); }}
+                                />
+                            ))}
                         </Row>
                     </Container>
                 </div>
@@ -95,7 +84,6 @@ function SelectBtnAct(pet_id, pet_name){
 }
 
 function PetCircleImage(props){
-    const dispatch = useDispatch();
     const { petName, petId, isSelected } = props;
 
     // isSelected 상태에 따라 동적으로 스타일 적용
@@ -114,6 +102,34 @@ function PetCircleImage(props){
             <p className='pet-image color-lightPurple'>{petName}</p>
         </Stack>
     )
+}
+
+function PetInfo(props) {
+    const { petName, petInpo, onClick } = props;
+    const dispatch = useDispatch();
+    return (
+        <Col md="5">
+            <Stack className='center margin-bottom-10'>
+                <Image src="/700x460.png" fluid />
+                <Stack direction='horizontal' gap={2} className='center margin-bottom-10'>
+                    <Form.Label column sm="4" className='color-darkBlue'>
+                        펫 이름
+                    </Form.Label>
+                    <Col sm="8">
+                        <Form.Control
+                            type="text"
+                            placeholder={petName}
+                            onChange={(e) => { dispatch(selectPetName(e.target.value)); }}
+                        />
+                    </Col>
+                </Stack>
+                <p className='color-lightPurple'>{petInpo}</p>
+            </Stack>
+            <Button variant="primary" className='font-bold' onClick={onClick}>
+                이 펫으로 할래요!
+            </Button>
+        </Col>
+    );
 }
 
 // 배열을 지정된 크기의 묶음으로 나누는 함수
