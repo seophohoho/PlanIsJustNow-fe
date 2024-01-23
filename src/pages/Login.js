@@ -8,8 +8,18 @@ import InputComponent from '../components/SignUpComponents.js';
 function Login() {
   return(
     <div>
-        <header></header>
-        <body></body>
+        <header>
+            <Navbar expand="md" className="bg-body-tertiary">
+                <Container>
+                    <Navbar.Brand href="#">
+                        <img src='/logo192.png'width={"50px"}></img>
+                    </Navbar.Brand>
+                </Container>
+            </Navbar>
+        </header>
+        <body>
+            
+        </body>
         <footer></footer>
     </div>
   );
