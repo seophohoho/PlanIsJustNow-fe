@@ -16,7 +16,7 @@ function Signup() {
     "비밀번호 재입력",
     "닉네임을 입력하세요"
   ]);
-  const [classNames, setClassNames] = useState(["","","","",""])
+  const [classNames, setClassNames] = useState(["form-Control","form-Control","form-Control","form-Control","form-Control"])
   const [btnMessage,setBtnMessage] = useState(["인증번호 전송","확인",false,false,false]);
   //회원가입 정보 저장
   const [email, setEmail] = useState("")
@@ -95,7 +95,7 @@ function Signup() {
                   <div className=''>
                     <p className='color-violet impo-margin-zero'>100px*100px 권장</p>
                     <p className='color-violet'>PNG, JPNG, JPEG가 지원됩니다.</p>
-                    <Form.Control type="file" accept='.png, .jpng, .jpeg' className=''/>{/**파일 선택한 파일 서버로 post후 서버에서 해당 id 이미지 받아오느 걸로 */}
+                    <Form.Control type="file" accept='.png, .jpng, .jpeg' className='form-Control'/>{/**파일 선택한 파일 서버로 post후 서버에서 해당 id 이미지 받아오느 걸로 */}
                   </div>
                 </Col>
               </Row>
