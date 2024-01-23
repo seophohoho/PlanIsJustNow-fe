@@ -17,7 +17,7 @@ const petId = createSlice({//펫 정보
 
 const petName = createSlice({//펫 이름
   name : 'petName',
-  initialState : ['햄톨이',],
+  initialState : ['햄톨이', "","","","","","","","","","",""],
   reducers:{
 
   }
