@@ -3,6 +3,7 @@ import { useState } from 'react';
 import serverUrl from "../serverConfig"
 import { Form, Col, Row, Button, Image, Container, Navbar, Stack } from 'react-bootstrap';
 import { useDispatch, useSelector } from "react-redux"
+import { Link } from 'react-router-dom';
 
 function Login() {//로딩기능 구현 우선 후 할거없으면 pupeteer 프레임워크 확인
     const [isLoading, setLoading] = useState(false);
