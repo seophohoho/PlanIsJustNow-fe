@@ -65,8 +65,8 @@ function Login() {//로딩기능 구현 우선 후 할거없으면 pupeteer 프�
                                 .catch((error) => {
                                     console.error(error);
                                     setLoading(false);
-                                })
-                            }}>{isLoading ? 'Loading…' : '확인'}
+                                })  
+                            }}>{isLoading ? 'Login…' : '확인'}
                         </Button>
                     </div>
                 </Form>
@@ -74,13 +74,18 @@ function Login() {//로딩기능 구현 우선 후 할거없으면 pupeteer 프�
         </body>
         <footer>
             <Stack>
+                <p className='color-violet'>계정이 아직 없으신가요? <a href='#'>회원가입</a>하기</p>
+            </Stack>
+            <hr className='hr-1'></hr>
+            <Stack>
                 <Col>
-                    <p className='color-violet'>ID 혹은 비밀번호를 잃어버리셨나요?</p>
+                    <p className='color-violet'>ID 또는 비밀번호를 잃어버리셨나요?</p>
                 </Col>
                 <Col>
                     <p className='color-violet'><a href='#'>ID 찾기</a>/<a href='#'>비밀번호 찾기</a></p>
                 </Col>
             </Stack>
+            
 
         </footer>
     </div>
