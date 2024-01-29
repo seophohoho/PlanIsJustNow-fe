@@ -20,6 +20,7 @@ function InputComponent(props){
   const [nickNameMessage, setNickNameMessage] = useState('')
   
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const [isLoading, setLoading] = useState(false);
   
   useEffect(()=>{
     const passwordRegex = /^[a-z\d!@*&-_]{8,20}$/;
