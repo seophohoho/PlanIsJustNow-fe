@@ -20,7 +20,8 @@ function InputComponent(props){
   const [nickNameMessage, setNickNameMessage] = useState('')
   
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-  const [isLoading, setLoading] = useState(false);
+  const [isEmailLoading, setIsEmailLoading] = useState(false);
+  const [isAuthLoading, setIsAuthLoading] = useState(false);
   
   useEffect(()=>{
     const passwordRegex = /^[a-z\d!@*&-_]{8,20}$/;
@@ -113,6 +114,7 @@ function InputComponent(props){
                       disabled={i === 1 ? isButtonDisabled : ""}//i가 인증보내기 칸이고 state또한 일치하면 버튼활성화
                       className="float-display"
                       onClick={() => {
+                        //todo i에 따른 로딩 state 연동하기(2개의 state 필요)
                         if (i === 0) {
                           btnEmail(email).then(copy=>{
                             setIsButtonDisabled(copy);
@@ -171,13 +173,9 @@ async function btnEmail(email) {
   if (emailRegex.test(email)) {
     try {
       const Response = await axios.post(`${serverUrl}/api/auth/mail`, {"email": email});
-
       if (Response.status === 200) {
         alert("인증메일이 발송됐어요!");
         return false;
-      } else if (Response.status === 409) {
-        alert("이미 사용중인 이메일입니다!");
-        return true;
       }
     } catch (error) {
       alert(error + ": 메일발송에 실패했습니다. 잠시후 다시 시도해주세요");
