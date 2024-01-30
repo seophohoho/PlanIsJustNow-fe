@@ -4,7 +4,9 @@ import '../App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import InputComponent from '../components/SignUpComponents.js'; 
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Form, Col, Row, Button, Container, Navbar, Image } from 'react-bootstrap';
+
 
 function Signup() {
   const [inputTitle, setInputTitle] = useState(["e-mail","인증번호","비밀번호","비밀번호 확인","닉네임"])
@@ -35,6 +37,8 @@ function Signup() {
   const [isAuthCode, setIsAuthCode] = useState(false)
   const [isPassword, setIsPassword] = useState(false)
   const [isNickName, setIsNickName] = useState(false)
+  
+  const navigate = useNavigate();
 
   return (
     <div>
@@ -110,12 +114,18 @@ function Signup() {
                     })
                       .then((response) => {
                         console.log(response);
-                        if (response.status === 200) {alert("회원가입이 완료되었습니다!!")
-                          //로그인 페이지로 이동시키는 로직
+                        //todo 로딩 state 연동하기(1개의 state 필요)
+                        if (response.status === 200) {
+                          alert("회원가입이 완료되었습니다!!")
+                          navigate('/');
+                        }
+                        if (response.status === 409){
+                          alert("이미 사용중인 이메일 계정입니다!")
                         }
                       })
                       .catch((error) => {
                         console.error(error);
+                        alert("서버에 문제가 발생했습니다. 나중에 잠시 후 다시 시도해주세요")
                       });
                 }}/>
               </div>
