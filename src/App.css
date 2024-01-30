@@ -109,6 +109,9 @@ input[type="number"]::-webkit-inner-spin-button {
 .w-30p{
   width: 30% !important;
 }
+.w-max{
+  width: 100% !important;
+}
 
 .page-title{
   text-align: center;
