@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom';
 
 function Login() {//로딩기능 구현 우선 후 할거없으면 pupeteer 프레임워크 확인
     const [isLoading, setLoading] = useState(false);
+    const [userId, setUserId] = useState("");
+    const [userPassword, setUserPassword] = useState("")
 
   return(
     <div className='text-center'>
@@ -36,13 +38,16 @@ function Login() {//로딩기능 구현 우선 후 할거없으면 pupeteer 프�
                                     type="text" 
                                     className='form-Control'
                                     placeholder='example123@gmail.com'
+                                    onChange={(e)=>{
+                                        setUserId(e.target.value)
+                                    }}
                                 />
                             </Col>
                     </Form.Group>
                     <Form.Group as={Row} className="mb-4" controlId="formHorizontalEmail">
                             <Col sm={4}>
                                 <Form.Label column>{/** label칸 */}
-                                <p className='color-darkBlue'><span className='color-red'>*</span> {"Password"}</p> 
+                                <p className='color-darkBlue'><span className='color-red w-max'>*</span> {"Password"}</p> 
                                 </Form.Label>
                             </Col>
                             <Col className='mb-3' sm={8}>{/** input칸 */}
@@ -50,6 +55,9 @@ function Login() {//로딩기능 구현 우선 후 할거없으면 pupeteer 프�
                                     type="password" 
                                     className='form-Control'
                                     placeholder='비밀번호를 입력하세요'
+                                    onChange={(e)=>{
+                                        setUserPassword(e.target.value)
+                                    }}
                                 />
                             </Col>
                     </Form.Group>
@@ -57,17 +65,24 @@ function Login() {//로딩기능 구현 우선 후 할거없으면 pupeteer 프�
                         <Button type="button" disabled={isLoading}
                             onClick={()=>{
                                 if(!isLoading){setLoading(true)}
-                                axios.post(`${serverUrl}/api/account/login`, {//url body 수정
-
+                                console.log(userId, userPassword)
+                                axios.post(`${serverUrl}/api/account/signin`, {
+                                    "email" : userId,
+                                    "password" : userPassword,
                                 })
                                 .then((response) => {
-                                    setLoading(false);//성공하면 풀어줄 이유가 없지않나? 나중에 판단
+                                    if(response.status === 200){
+                                        console.log(response.status)
+                                        alert("로그인 성공 status: 200")
+                                        setLoading(false);//성공하면 풀어줄 이유가 없지않나? 나중에 판단
+                                    }
                                 })
                                 .catch((error) => {
                                     console.error(error);
+                                    
                                     setLoading(false);
                                 })  
-                            }}>{isLoading ? 'Login…' : '확인'}
+                            }}>{isLoading ? '확인' : '확인'}
                         </Button>
                     </div>
                 </Form>
@@ -91,6 +106,10 @@ function Login() {//로딩기능 구현 우선 후 할거없으면 pupeteer 프�
         </footer>
     </div>
   );
+}
+
+function postLoginInpo(){
+
 }
 
 export default Login;
