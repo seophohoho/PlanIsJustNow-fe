@@ -2,6 +2,7 @@ import { Routes, Route, Link } from 'react-router-dom';
 import Signup from './pages/SignUp';
 import SignUpPet from './pages/SignUpPet';
 import Login from './pages/Login'
+import CalendarMain from './pages/CalenderMain';
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Login/>}/>
         <Route path='/signup' element={ <Signup/> }/>
+        <Route path='/Calender' element={<CalendarMain/>}/>
         <Route path="*" element={ <div>잘못된 경로입니다!</div> } />
       </Routes>
     </>
