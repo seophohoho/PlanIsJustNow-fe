@@ -111,21 +111,24 @@ function InputComponent(props){
                   <Col sm={4}>
                     {
                       btnMessage[i]===false ? null : <Button as="input" type="button" value={ btnMessage[i] }
-                      disabled={i === 1 ? isButtonDisabled : ""}//i가 인증보내기 칸이고 state또한 일치하면 버튼활성화
+                      disabled={i === 0 ? isEmailLoading : i === 1 ? isButtonDisabled : ""}//i가 인증보내기 칸이고 state또한 일치하면 버튼활성화
                       className="float-display"
                       onClick={() => {
                         //todo i에 따른 로딩 state 연동하기(2개의 state 필요)
                         if (i === 0) {
+                          setIsEmailLoading(true)//로딩 추가됨 나중에 테스트
                           btnEmail(email).then(copy=>{
                             setIsButtonDisabled(copy);
                             setIsEmail(!copy);
+                            setIsEmailLoading(copy);//로딩 추가됨 나중에 테스트
                           if(isPassword && isNickName){setIsNextButtonDisabled(false)}
                           })
                         };
                         if(i===1){
+                          setIsButtonDisabled(true)//로딩 추가됨 나중에 테스트
                           btnAuth(email, authCode).then(copy=>{
-                            setIsAuthCode(copy)
-                            setIsInputDisabled(!copy)
+                            setIsAuthCode(copy);
+                            setIsInputDisabled(!copy);
                             if(isPassword && isNickName){setIsNextButtonDisabled(false)}
                           })
                         }
