@@ -7,7 +7,7 @@ import { Form, Col, Row, Container, Navbar } from 'react-bootstrap';
 const CalendarMain = () => {
   
   const events = [
-    { title: 'Sample Event', date: "2024-02-02" },//date는 클릭된 이벤트의 날자 state를 가져와서 적용 title은 일정의 일부분을 가져옴
+    { title: '물 999L 마시기', date: "2024-02-02" },//date는 클릭된 이벤트의 날자 state를 가져와서 적용 title은 일정의 일부분을 가져옴
     // more events...
   ]
 
@@ -25,7 +25,7 @@ const CalendarMain = () => {
         <body>
             <Container>
                 <Row>
-                    <Col>
+                    <Col sm={7}>
                         <FullCalendar
                         plugins={[dayGridPlugin]} 
                         initialView="dayGridMonth" 
@@ -39,7 +39,7 @@ const CalendarMain = () => {
                          locale="en"
                         />
                     </Col>
-                    <Col>
+                    <Col sm={5}>
                         
                     </Col>
                 </Row>
