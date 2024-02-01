@@ -1,0 +1,42 @@
+a{
+    text-decoration: none !important;
+    color: rgb(35, 45, 150);
+    font-weight: 800;
+}
+
+.fc-button-primary {
+    background-color: white !important;
+    border-color: white !important;
+    color: rgb(35, 45, 150) !important;
+    padding: 0px !important;
+    margin: auto !important;
+}
+
+ 
+.fc-daygrid-day-top{
+    display: block !important;
+}
+.fc-toolbar-chunk{
+    margin: auto;
+    color: rgb(35, 45, 150);
+}
+.fc-toolbar-title{
+    padding-top: 25px;
+    padding-bottom: 15px;
+    font-weight: 800 !important;
+}
+
+.fc-direction-ltr{
+    border: 3px solid rgb(35, 45, 150) !important;
+    border-radius: 10px !important;
+    margin-top: 20px;
+}
+
+.fc-view-harness{
+
+}
+
+.color-darkBlue{
+    color: rgb(35, 45, 150) !important;
+    font-weight: 800 !important;
+  }
