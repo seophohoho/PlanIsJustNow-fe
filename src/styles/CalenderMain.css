@@ -12,6 +12,11 @@ a{
     margin: auto !important;
 }
 
+.fc-event-title-container,
+.fc-event-title{
+    background-color: rgb(86, 86, 208);
+    font-size: 0.8em;
+} 
  
 .fc-daygrid-day-top{
     display: block !important;
