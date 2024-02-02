@@ -2,7 +2,7 @@ import React from 'react';
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import '../styles/CalenderMain.css'
-import { Form, Col, Row, Container, Navbar } from 'react-bootstrap';
+import { Form, Col, Row, Container, Navbar, Stack, Image } from 'react-bootstrap';
 
 const CalendarMain = () => {
   
@@ -40,7 +40,28 @@ const CalendarMain = () => {
                         />
                     </Col>
                     <Col sm={5}>
-                        
+                        <Stack>{/**나중에 줄바꿈 되는 모든 div에 클래스 적용  white-space:nowrap;*/}
+                            <Stack direction='horizontal' className='m-top-20' gap={3}>
+                                <Image src="/logo192.png" roundedCircle className='input-bgSet float-display w-25 '/> 
+                                <div>
+                                    <p>김아무개</p>{/*폰트, 줄바꿈, 공간 나중에, 받아온거 리덕스로 적용*/}
+                                    <p>#123456</p>
+                                </div>
+                                <Stack direction='horizontal' className='fc-direction-ltr'>{/*스크롤 지원, 버튼x, 튀어나간 요소 배경에 비치치않게 state로 친구 수에 따라 늘어나도록 */}
+                                    <p>친구목록</p>
+                                    <Stack>{/* todo 여기는 컴포넌트화 해서 map으로 */}
+                                        <Image src="/logo192.png" roundedCircle className='input-bgSet float-display w-25 '/>
+                                        <p>이름</p>
+                                    </Stack>
+                                </Stack>
+                            </Stack>
+                            <Stack direction='horizontal' className='fc-direction-ltr'>
+                                {/**고정된 크기, 스크롤 지원 일정 생성버튼은 일정들 맨 아래에 내부일정 또한 컴포넌트화 해서 map으로 */}
+                            </Stack>
+                            <Stack direction='horizontal' className='fc-direction-ltr'>
+                                {/**펫 공간 위 아래, 고정된 크기 위쪽만 좀 생성   */}
+                            </Stack>
+                        </Stack>
                     </Col>
                 </Row>
             </Container>
