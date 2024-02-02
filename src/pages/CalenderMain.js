@@ -26,7 +26,7 @@ const CalendarMain = () => {
             <Container>
                 <Row>
                     <Col sm={7}>
-                        <FullCalendar
+                        <FullCalendar /*오늘 색-> 연보라, 클릭된날 색->? 클릭이벤트 좀따 살펴보기*/
                         plugins={[dayGridPlugin]} 
                         initialView="dayGridMonth" 
                         events={events} /*events 배열은 달력에 표시될 이벤트 목록이다.*/
@@ -49,9 +49,9 @@ const CalendarMain = () => {
                                 </div>
                                 <Stack direction='horizontal' className='fc-direction-ltr'>{/*스크롤 지원, 버튼x, 튀어나간 요소 배경에 비치치않게 state로 친구 수에 따라 늘어나도록 */}
                                     <p>친구목록</p>
-                                    <Stack>{/* todo 여기는 컴포넌트화 해서 map으로 */}
-                                        <Image src="/logo192.png" roundedCircle className='input-bgSet float-display w-25 '/>
-                                        <p>이름</p>
+                                    <Stack className='text-center'>{/* todo 여기는 컴포넌트화 해서 map으로 */}
+                                        <Image src="/logo192.png" roundedCircle className='input-bgSet float-display w-25 m-auto '/>
+                                        <Form.Label className=''>이름</Form.Label>
                                     </Stack>
                                 </Stack>
                             </Stack>
