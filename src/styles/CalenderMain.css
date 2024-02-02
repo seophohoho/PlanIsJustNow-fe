@@ -3,6 +3,18 @@ a{
     color: rgb(35, 45, 150);
     font-weight: 800;
 }
+.space-rap{
+    white-space:nowrap;
+}
+
+.m-top-20{
+    margin-top: 20px;
+}
+
+[aria-labelledby="fc-dom-157"],
+[aria-labelledby="fc-dom-169"]{
+    border-radius: 8px !important;
+}
 
 .fc-button-primary {
     background-color: white !important;
@@ -35,10 +47,6 @@ a{
     border: 3px solid rgb(35, 45, 150) !important;
     border-radius: 10px !important;
     margin-top: 20px;
-}
-
-.fc-view-harness{
-
 }
 
 .color-darkBlue{
