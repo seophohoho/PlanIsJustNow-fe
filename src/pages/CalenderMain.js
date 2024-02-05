@@ -2,13 +2,14 @@ import React from 'react';
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import '../styles/CalenderMain.css'
-import { Form, Col, Row, Container, Navbar, Stack, Image } from 'react-bootstrap';
+import { Form, Col, Row, Container, Navbar, Stack, Image, Button } from 'react-bootstrap';
 
 const CalendarMain = () => {
   
   const events = [
-    { title: '물 999L 마시기', date: "2024-02-02" },//date는 클릭된 이벤트의 날자 state를 가져와서 적용 title은 일정의 일부분을 가져옴
-    // more events...
+    { title: '물 999L 마시기', date: "2024-02-02", end: "2024-02-08" },//date는 클릭된 이벤트의 날자 state를 가져와서 적용 title은 일정의 일부분을 가져옴
+    { title: '물 1ml 마시기', start: "2024-02-11", end: "2024-02-14"},//end는 +1일 추가하여 적용해야함, 추측이지만 12시 기준이라 그런듯 공식 Docs에도 주의하라고만 써져있음
+    { title: '스쾃999회', date: "2024-02-03", end: "2024-02-04"},
   ]
 
   return (
@@ -26,7 +27,7 @@ const CalendarMain = () => {
             <Container>
                 <Row className="justify-content-md-center"  >
                     <Col xs lg="7">
-                        <FullCalendar /*오늘 색-> 연보라, 클릭된날 색->? 클릭이벤트 좀따 살펴보기*/
+                        <FullCalendar /*오늘 색-> 연보라, 클릭된날 색->? 클릭이벤트는 추후 살펴보기*/
                         plugins={[dayGridPlugin]} 
                         initialView="dayGridMonth" 
                         events={events} /*events 배열은 달력에 표시될 이벤트 목록이다.*/
@@ -36,7 +37,7 @@ const CalendarMain = () => {
                             center:'title',
                             right:'next'
                          }}
-                         locale="en"
+                         locale="en"//지역설정, 시간관련 메소드 사용할시 해당지역으로 설정됨 주의!
                         />
                     </Col>
                     <Col md="auto">
@@ -57,12 +58,23 @@ const CalendarMain = () => {
                             </Stack>
                             <Stack direction='horizontal' className='fc-direction-ltr-2v'>
                                 {/**고정된 크기, 스크롤 지원 일정 생성버튼은 일정들 맨 아래에 내부일정 또한 컴포넌트화 해서 map으로 */}
-                                <div className='h-225'>
-
+                                <div className='h-225 w-max'>
+                                    <Stack>
+                                        <Row>{/**여기서 부터 컴포넌트화 */}
+                                            <Col sm={1}><input type='checkbox'></input></Col>
+                                            <Col sm={8}>Variable width content</Col>
+                                            <Col sm={1}>
+                                            <input type='checkbox'></input>
+                                            </Col>
+                                            <Col sm={2}>
+                                                <Button>...</Button> {/**디자인 초기화 아니면 다른요소 제작 후 클릭이벤트 구현 */}
+                                            </Col>
+                                        </Row>
+                                    </Stack>
                                 </div>
                             </Stack>
                             <Stack direction='horizontal' className='fc-direction-ltr'>
-                                {/**펫 공간 위 아래, 고정된 크기 위쪽만 좀 생성   */}
+                                {/**펫 공간 위 아래, 고정된 크기 위쪽만, 생성 Stack으로 위아래 */}
                                 <div className='h-200'>
                                     
                                 </div>
@@ -72,7 +84,7 @@ const CalendarMain = () => {
                 </Row>
             </Container>
         </body>
-        <footer>
+        <footer>{/**sticky footer bar or sticky header bar */}
 
         </footer>
      </div>
