@@ -14,8 +14,13 @@ p{
 .space-rap{
     white-space:nowrap;
 }
+
 .m-auto{
     margin: auto;
+}
+
+.m-right-zero{
+    margin-right: 0px !important;
 }
 
 .m-top-20{
@@ -60,7 +65,17 @@ p{
     margin-top: 20px;
 }
 
+.fc-direction-ltr-2v{
+    border: 3px solid rgb(90, 100, 255) !important;
+    border-radius: 10px !important;
+    margin-top: 20px;
+}
+
 .color-darkBlue{
     color: rgb(35, 45, 150) !important;
     font-weight: 800 !important;
   }
+
+.w-100{
+    width: 100px;
+}
