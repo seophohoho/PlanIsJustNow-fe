@@ -77,5 +77,11 @@ p{
   }
 
 .w-100{
-    width: 100px;
+    width: 400px !important;
+}
+
+
+
+.h-500{
+    height: 200em;
 }
