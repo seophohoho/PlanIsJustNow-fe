@@ -72,12 +72,8 @@ p{
     font-weight: 800 !important;
 }
 
-.w-100{
-    width: 400px !important;
-}
-
-.h-500{
-    height: 200em;
+.w-50{
+    width: 50px
 }
 
 .section {
@@ -87,6 +83,7 @@ p{
   }
   
   .section__item {
+    width: auto;
     display: flex;
     align-items: center;
     flex: 0 0 auto;

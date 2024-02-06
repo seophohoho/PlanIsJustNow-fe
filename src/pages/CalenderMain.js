@@ -50,20 +50,20 @@ const CalendarMain = () => {
                                 </div>
                                 <div direction='horizontal' className='fc-direction-ltr m-auto section'>{/*스크롤 지원, 버튼x, 튀어나간 요소 배경에 비치치않게, state로 친구 수에 따라 늘어나도록 */}
                                     <p className='section__item'>친구목록</p>
-                                    <Stack className='text-center section__item'>{/* todo 여기는 컴포넌트화 해서 map으로 */}
-                                        <Image src="/logo192.png" roundedCircle className='input-bgSet float-display w-25 m-auto '/>
+                                    <Stack className='section__item w-50'>{/* todo 여기는 컴포넌트화 해서 map으로 */}
+                                        <Image src="/logo192.png" roundedCircle className='input-bgSet w-50'/>
                                         <Form.Label className=''>이름</Form.Label>
                                     </Stack>{/**네브바쪽으로 옮길까? 충돌 무시도 있을것 같은데 살펴보자 이미지 너무커! */}
-                                    <Stack className='text-center section__item'>{/* todo 여기는 컴포넌트화 해서 map으로 */}
-                                        <Image src="/logo192.png" roundedCircle className='input-bgSet float-display w-25  '/>
+                                    <Stack className='section__item w-50'>{/* todo 여기는 컴포넌트화 해서 map으로 */}
+                                        <Image src="/logo192.png" roundedCircle className='input-bgSet w-50  '/>
                                         <Form.Label className=''>이름</Form.Label>
                                     </Stack>
-                                    <Stack className='text-center section__item'>{/* todo 여기는 컴포넌트화 해서 map으로 */}
-                                        <Image src="/logo192.png" roundedCircle className='input-bgSet float-display w-25 m-auto '/>
+                                    <Stack className='section__item w-50'>{/* todo 여기는 컴포넌트화 해서 map으로 */}
+                                        <Image src="/logo192.png" roundedCircle className='input-bgSet w-50 '/>
                                         <Form.Label className=''>이름</Form.Label>
                                     </Stack>
-                                    <Stack className='text-center section__item'>{/* todo 여기는 컴포넌트화 해서 map으로 */}
-                                        <Image src="/logo192.png" roundedCircle className='input-bgSet float-display w-25 m-auto '/>
+                                    <Stack className='section__item w-50'>{/* todo 여기는 컴포넌트화 해서 map으로 */}
+                                        <Image src="/logo192.png" roundedCircle className='input-bgSet w-50'/>
                                         <Form.Label className=''>이름</Form.Label>
                                     </Stack>
                                     
