@@ -11,10 +11,6 @@ p{
     text-align: center;
 }
 
-.space-rap{
-    white-space:nowrap;
-}
-
 .m-auto{
     margin: auto;
 }
@@ -74,14 +70,31 @@ p{
 .color-darkBlue{
     color: rgb(35, 45, 150) !important;
     font-weight: 800 !important;
-  }
+}
 
 .w-100{
     width: 400px !important;
 }
 
-
-
 .h-500{
     height: 200em;
 }
+
+.section {
+    display: flex;
+    gap: 2px;
+    max-width: 250px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scroll-padding: 1rem;
+  }
+  
+  .section__item {
+    display: flex;
+    justify-content: center;
+    white-space: nowrap;
+    align-items: center;
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
