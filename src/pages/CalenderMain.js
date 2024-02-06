@@ -15,7 +15,7 @@ const CalendarMain = () => {
   return (
     <div>
          <header>
-            <Navbar expand="md" className="bg-body-tertiary">
+            <Navbar expand="md" className="bg-body-tertiary">{/**추후 Navbar도 컴포넌트화 해서 다른페이지에 적용시키기 */}
                 <Container>
                     <Navbar.Brand href="#">
                         <img src='/logo192.png'width={"50px"}></img>
@@ -48,33 +48,39 @@ const CalendarMain = () => {
                                     <p>홍길동</p>{/*폰트, 줄바꿈, 공간 나중에, 받아온거 리덕스로 적용*/}
                                     <p>#123456</p>
                                 </div>
-                                <Stack direction='horizontal' className='fc-direction-ltr m-auto'>{/*스크롤 지원, 버튼x, 튀어나간 요소 배경에 비치치않게, state로 친구 수에 따라 늘어나도록 */}
-                                    <p>친구목록</p>
-                                    <Stack className='text-center'>{/* todo 여기는 컴포넌트화 해서 map으로 */}
+                                <div direction='horizontal' className='fc-direction-ltr m-auto section'>{/*스크롤 지원, 버튼x, 튀어나간 요소 배경에 비치치않게, state로 친구 수에 따라 늘어나도록 */}
+                                    <p className='section__item'>친구목록</p>
+                                    <Stack className='text-center section__item'>{/* todo 여기는 컴포넌트화 해서 map으로 */}
+                                        <Image src="/logo192.png" roundedCircle className='input-bgSet float-display w-25 m-auto '/>
+                                        <Form.Label className=''>이름</Form.Label>
+                                    </Stack>{/**네브바쪽으로 옮길까? 충돌 무시도 있을것 같은데 살펴보자 이미지 너무커! */}
+                                    <Stack className='text-center section__item'>{/* todo 여기는 컴포넌트화 해서 map으로 */}
+                                        <Image src="/logo192.png" roundedCircle className='input-bgSet float-display w-25  '/>
+                                        <Form.Label className=''>이름</Form.Label>
+                                    </Stack>
+                                    <Stack className='text-center section__item'>{/* todo 여기는 컴포넌트화 해서 map으로 */}
                                         <Image src="/logo192.png" roundedCircle className='input-bgSet float-display w-25 m-auto '/>
                                         <Form.Label className=''>이름</Form.Label>
                                     </Stack>
-                                </Stack>
+                                    <Stack className='text-center section__item'>{/* todo 여기는 컴포넌트화 해서 map으로 */}
+                                        <Image src="/logo192.png" roundedCircle className='input-bgSet float-display w-25 m-auto '/>
+                                        <Form.Label className=''>이름</Form.Label>
+                                    </Stack>
+                                    
+                                    
+                                    
+                                </div>
                             </Stack>
                             <Stack direction='horizontal' className='fc-direction-ltr-2v'>
                                 {/**고정된 크기, 스크롤 지원 일정 생성버튼은 일정들 맨 아래에 내부일정 또한 컴포넌트화 해서 map으로 */}
                                 <div className='h-225 w-max'>
                                     <Stack>
-                                        <Row>{/**여기서 부터 컴포넌트화 */}
-                                            <Col sm={1}><input type='checkbox'></input></Col>
-                                            <Col sm={8}>Variable width content</Col>
-                                            <Col sm={1}>
-                                            <input type='checkbox'></input>
-                                            </Col>
-                                            <Col sm={2}>
-                                                <Button>...</Button> {/**디자인 초기화 아니면 다른요소 제작 후 클릭이벤트 구현 */}
-                                            </Col>
-                                        </Row>
+                                        <Schedule/>      
                                     </Stack>
                                 </div>
                             </Stack>
                             <Stack direction='horizontal' className='fc-direction-ltr'>
-                                {/**펫 공간 위 아래, 고정된 크기 위쪽만, 생성 Stack으로 위아래 */}
+                                {/**펫 공간 위 아래, 고정된 크기 위쪽만, 생성 Stack으로 위 아래 */}
                                 <div className='h-200'>
                                     
                                 </div>
@@ -91,4 +97,18 @@ const CalendarMain = () => {
    );
 }
 
+function Schedule(){
+    return(
+        <Row>{/**여기서 부터 컴포넌트화 */}
+            <Col sm={1}><input type='checkbox'></input></Col>
+            <Col sm={8}>sample</Col>
+            <Col sm={1}>
+            <input type='checkbox'></input>
+            </Col>
+            <Col sm={2}>
+                <Button>...</Button> {/**디자인 초기화 아니면 다른요소 제작 후 클릭이벤트 구현 */}
+            </Col>
+        </Row>
+    )
+}
 export default CalendarMain
