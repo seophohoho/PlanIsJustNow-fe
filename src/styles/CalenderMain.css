@@ -79,15 +79,15 @@ p{
 
 .section {
     display: flex;
-    max-width: 250px;
     overflow-x: auto;
-  }
+    
+}
   
 .section__item {
     width: auto;
     display: flex;
     align-items: center;
-    flex: 0 0 auto;
+    flex: 0 0 70px;
 }
 
 ::-webkit-scrollbar { 
@@ -100,9 +100,7 @@ p{
 ::-webkit-scrollbar-button { 
     display: block;
     width: 2px;
- }
-
- .p-zero{
-    padding: 0px;
-  }
-
+}
+.max-w-250{
+    max-height: 100px;
+}
