@@ -78,11 +78,10 @@ p{
 }
 
 .section {
+    position: relative;
     display: flex;
     overflow-x: auto;
-    
 }
-  
 .section__item {
     width: auto;
     display: flex;
@@ -90,17 +89,47 @@ p{
     flex: 0 0 70px;
 }
 
-::-webkit-scrollbar { 
-    height: 7px;
+.section-schedule {
+    display: flex;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
-::-webkit-scrollbar-thumb { 
+.section__item-schedule{
+    width: auto;
+    display: flex;
+    align-items: center;
+    flex: 0 0 70px;
+}
+
+.section-schedule::-webkit-scrollbar { 
+    width: 6px;
+}
+.section-schedule::-webkit-scrollbar-thumb { 
     background-color: #dfdfdf;
     border-radius: 10px;
 }
-::-webkit-scrollbar-button { 
+.section-schedule::-webkit-scrollbar-button { 
+    display: block;
+    height: 2px;
+}
+
+.section::-webkit-scrollbar { 
+    height: 6px;
+}
+.section::-webkit-scrollbar-thumb { 
+    background-color: #dfdfdf;
+    border-radius: 10px;
+}
+.section::-webkit-scrollbar-button { 
     display: block;
     width: 2px;
 }
+
 .max-w-250{
     max-height: 100px;
+}   
+
+.sticky{
+    position: sticky; /* sticky로 설정합니다. */
+    left: 0;
 }

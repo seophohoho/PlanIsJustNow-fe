@@ -50,7 +50,7 @@ const CalendarMain = () => {
                                     <p>#123456</p>
                                 </div>
                                 <div direction='horizontal' className='fc-direction-ltr m-auto section max-w-250'>{/*map으로 친구 수에 따라 늘어나도록 */}
-                                    <p className='section__item'>친구목록</p>
+                                    <p className='section__item sticky'>친구목록</p>
                                     <Stack className='section__item'>{/* todo 여기는 컴포넌트화 해서 map으로 */}
                                         <Image src="/logo192.png" roundedCircle className='input-bgSet w-50'/>
                                         <Form.Label className=''>이름</Form.Label>
@@ -67,9 +67,6 @@ const CalendarMain = () => {
                                         <Image src="/logo192.png" roundedCircle className='input-bgSet w-50'/>
                                         <Form.Label className=''>이름</Form.Label>
                                     </Stack>
-                                    
-                                    
-                                    
                                 </div>
                             </Stack>
                             <Stack direction='horizontal' className='fc-direction-ltr-2v section-schedule'>
@@ -82,12 +79,6 @@ const CalendarMain = () => {
                                         <Schedule/>
                                         <Schedule/>
                                         <Schedule/>
-                                        <Schedule/>
-                                        <Schedule/>
-                                        <Schedule/>
-                                        <Schedule/>
-                                        <Schedule/>
-                                        
                                     </Stack>
                                 </div>
                             </Stack>
@@ -111,8 +102,8 @@ const CalendarMain = () => {
 
 function Schedule(){
     return(
-        <Row className='section__item-schedule'>{/*추후 구조화된 폴더로 이동 */}
-            <Col sm={2} className='text-center'><input type='checkbox' ></input></Col>
+        <Row className='section__item-schedule'>{/*추후 구조화된 폴더로 이동,리덕스 연결 */}
+            <Col sm={2} className='text-center'><input type='checkbox'/></Col>
             <Col sm={7} className='m-auto'>sample</Col>
             <Col sm={1} className='m-auto'>
                 <input type="checkbox" id="cb1"/>
