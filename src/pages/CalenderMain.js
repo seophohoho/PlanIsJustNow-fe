@@ -2,7 +2,7 @@ import React from 'react';
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import '../styles/CalenderMain.css'
-import { Form, Col, Row, Container, Navbar, Stack, Image, Button } from 'react-bootstrap';
+import { Form, Col, Row, Container, Navbar, Stack, Image, Button, Dropdown, DropdownButton, SplitButton } from 'react-bootstrap';
 
 const CalendarMain = () => {
   
@@ -109,7 +109,11 @@ function Schedule(){
                 <input type="checkbox" id="cb1"/>
             </Col>
             <Col sm={2} className='m-auto'>
-                <Button>...</Button> {/**디자인 초기화 아니면 다른요소 제작 후 클릭이벤트 구현 */}
+                <DropdownButton drop="start" variant="secondary">{/**디자인 초기화 아니면 다른요소 제작 후 클릭이벤트 구현 */}
+                    <Dropdown.Item eventKey="1">일정 수정</Dropdown.Item>
+                    <Dropdown.Divider />
+                    <Dropdown.Item eventKey="2">삭제</Dropdown.Item>
+                </DropdownButton>             
             </Col>
         </Row>
     )
