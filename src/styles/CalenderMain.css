@@ -7,6 +7,7 @@ a{
 p{
     margin-bottom: 0px;
 }
+
 .text-center{
     text-align: center;
 }
@@ -82,9 +83,26 @@ p{
     overflow-x: auto;
   }
   
-  .section__item {
+.section__item {
     width: auto;
     display: flex;
     align-items: center;
     flex: 0 0 auto;
+}
+
+::-webkit-scrollbar { 
+    height: 7px;
+}
+::-webkit-scrollbar-thumb { 
+    background-color: #dfdfdf;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-button { 
+    display: block;
+    width: 2px;
+ }
+
+ .p-zero{
+    padding: 0px;
   }
+
