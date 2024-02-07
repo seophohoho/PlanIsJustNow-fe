@@ -26,12 +26,13 @@ const CalendarMain = () => {
         <body>
             <Container>
                 <Row className="justify-content-md-center"  >
-                    <Col xs lg="7">
+                    <Col lg="7">
                         <FullCalendar /*오늘 색-> 연보라, 클릭된날 색->? 클릭이벤트는 추후 살펴보기*/
                         plugins={[dayGridPlugin]} 
                         initialView="dayGridMonth" 
                         events={events} /*events 배열은 달력에 표시될 이벤트 목록이다.*/
                         contentHeight="auto"
+                        contentWidth="500"
                         headerToolbar={{
                             left:'prev',
                             center:'title',
@@ -40,7 +41,7 @@ const CalendarMain = () => {
                          locale="en"//지역설정, 시간관련 메소드 사용할시 해당지역으로 설정됨 주의!
                         />
                     </Col>
-                    <Col md="auto">
+                    <Col lg="5">
                         <Stack>{/**나중에 줄바꿈 되는 모든 div에 클래스 적용  white-space:nowrap;*/}
                             <Stack direction='horizontal' className='m-top-20' gap={3}>
                                 <Image src="/logo192.png" roundedCircle className='input-bgSet float-display image-w'/> {/**여기도 컴포넌트화 */}
@@ -48,7 +49,7 @@ const CalendarMain = () => {
                                     <p>홍길동</p>{/*폰트, 줄바꿈, 공간 나중에, 받아온거 리덕스로 적용*/}
                                     <p>#123456</p>
                                 </div>
-                                <div direction='horizontal' className='fc-direction-ltr m-auto section'>{/*map으로 친구 수에 따라 늘어나도록 */}
+                                <div direction='horizontal' className='fc-direction-ltr m-auto section max-w-250'>{/*map으로 친구 수에 따라 늘어나도록 */}
                                     <p className='section__item'>친구목록</p>
                                     <Stack className='section__item w-50'>{/* todo 여기는 컴포넌트화 해서 map으로 */}
                                         <Image src="/logo192.png" roundedCircle className='input-bgSet w-50'/>
@@ -71,12 +72,22 @@ const CalendarMain = () => {
                                     
                                 </div>
                             </Stack>
-                            <Stack direction='horizontal' className='fc-direction-ltr-2v'>
+                            <Stack direction='horizontal' className='fc-direction-ltr-2v section'>
                                 {/**고정된 크기, 스크롤 지원 일정 생성버튼은 일정들 맨 아래에 내부일정 또한 컴포넌트화 해서 map으로 */}
                                 <div className='h-225 w-max'>
                                     <Stack>
                                         <Schedule/>
-                                        <Schedule/>  
+                                        <Schedule/>
+                                        <Schedule/>
+                                        <Schedule/>
+                                        <Schedule/>
+                                        <Schedule/>
+                                        <Schedule/>
+                                        <Schedule/>
+                                        <Schedule/>
+                                        <Schedule/>
+                                        <Schedule/>
+                                        
                                     </Stack>
                                 </div>
                             </Stack>
@@ -100,7 +111,7 @@ const CalendarMain = () => {
 
 function Schedule(){
     return(
-        <Row>{/**여기서 부터 컴포넌트화 */}
+        <Row>{/**여기서 부터 컴포넌트화, 추후 구조화된 폴더로 이동 */}
             <Col sm={1}></Col>
             <Col sm={1} className='m-auto p-zero'><input type='checkbox'></input></Col>
             <Col sm={7} className='m-auto'>sample</Col>
