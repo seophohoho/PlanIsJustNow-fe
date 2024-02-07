@@ -72,7 +72,7 @@ const CalendarMain = () => {
                                     
                                 </div>
                             </Stack>
-                            <Stack direction='horizontal' className='fc-direction-ltr-2v section'>
+                            <Stack direction='horizontal' className='fc-direction-ltr-2v section-schedule'>
                                 {/**고정된 크기, 스크롤 지원 일정 생성버튼은 일정들 맨 아래에 내부일정 또한 컴포넌트화 해서 map으로 */}
                                 <div className='h-225 w-max'>
                                     <Stack>
@@ -111,9 +111,8 @@ const CalendarMain = () => {
 
 function Schedule(){
     return(
-        <Row>{/**여기서 부터 컴포넌트화, 추후 구조화된 폴더로 이동 */}
-            <Col sm={1}></Col>
-            <Col sm={1} className='m-auto p-zero'><input type='checkbox'></input></Col>
+        <Row className='section__item-schedule'>{/*추후 구조화된 폴더로 이동 */}
+            <Col sm={2} className='text-center'><input type='checkbox' ></input></Col>
             <Col sm={7} className='m-auto'>sample</Col>
             <Col sm={1} className='m-auto'>
                 <input type="checkbox" id="cb1"/>
