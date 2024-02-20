@@ -1,0 +1,135 @@
+a{
+    text-decoration: none !important;
+    color: rgb(35, 45, 150);
+    font-weight: 800;
+}
+
+p{
+    margin-bottom: 0px;
+}
+
+.text-center{
+    text-align: center;
+}
+
+.m-auto{
+    margin: auto;
+}
+
+.m-right-zero{
+    margin-right: 0px !important;
+}
+
+.m-top-20{
+    margin-top: 20px;
+}
+
+[aria-labelledby="fc-dom-157"],
+[aria-labelledby="fc-dom-169"]{
+    border-radius: 8px !important;
+}
+
+.fc-button-primary {
+    background-color: white !important;
+    border-color: white !important;
+    color: rgb(35, 45, 150) !important;
+    padding: 0px !important;
+    margin: auto !important;
+}
+
+.fc-event-title-container,
+.fc-event-title{
+    background-color: rgb(86, 86, 208);
+    font-size: 0.8em;
+} 
+ 
+.fc-daygrid-day-top{
+    display: block !important;
+}
+.fc-toolbar-chunk{
+    margin: auto;
+    color: rgb(35, 45, 150);
+}
+.fc-toolbar-title{
+    padding-top: 25px;
+    padding-bottom: 15px;
+    font-weight: 800 !important;
+}
+
+.fc-direction-ltr{
+    border: 3px solid rgb(35, 45, 150) !important;
+    border-radius: 10px !important;
+    margin-top: 20px;
+}
+
+.fc-direction-ltr-2v{
+    border: 3px solid rgb(90, 100, 255) !important;
+    border-radius: 10px !important;
+    margin-top: 20px;
+}
+
+.color-darkBlue{
+    color: rgb(35, 45, 150) !important;
+    font-weight: 800 !important;
+}
+
+.w-50{
+    width: 50px
+}
+
+.section {
+    position: relative;
+    display: flex;
+    overflow-x: auto;
+}
+.section__item {
+    width: auto;
+    display: flex;
+    align-items: center;
+    flex: 0 0 70px;
+}
+
+.section-schedule {
+    display: flex;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.section__item-schedule{
+    width: auto;
+    display: flex;
+    align-items: center;
+    flex: 0 0 70px;
+}
+
+.section-schedule::-webkit-scrollbar { 
+    width: 6px;
+}
+.section-schedule::-webkit-scrollbar-thumb { 
+    background-color: #dfdfdf;
+    border-radius: 10px;
+}
+.section-schedule::-webkit-scrollbar-button { 
+    display: block;
+    height: 2px;
+}
+
+.section::-webkit-scrollbar { 
+    height: 6px;
+}
+.section::-webkit-scrollbar-thumb { 
+    background-color: #dfdfdf;
+    border-radius: 10px;
+}
+.section::-webkit-scrollbar-button { 
+    display: block;
+    width: 2px;
+}
+
+.max-w-250{
+    max-height: 100px;
+}   
+
+.sticky{
+    position: sticky; /* sticky로 설정합니다. */
+    left: 0;
+}

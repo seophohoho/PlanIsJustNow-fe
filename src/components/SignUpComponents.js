@@ -20,6 +20,8 @@ function InputComponent(props){
   const [nickNameMessage, setNickNameMessage] = useState('')
   
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const [isEmailLoading, setIsEmailLoading] = useState(false);
+  const [isAuthLoading, setIsAuthLoading] = useState(false);
   
   useEffect(()=>{
     const passwordRegex = /^[a-z\d!@*&-_]{8,20}$/;
@@ -63,12 +65,12 @@ function InputComponent(props){
         inputTitle.map(function(notUse, i){
           return(
               <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
-                  <Col>
-                    <Form.Label column>{/** label칸 */}
+                  <Col sm={3}>
+                    <Form.Label column className='float-display'>{/** label칸 */}
                       <p className='color-darkBlue'><span>*</span> { inputTitle[i] }</p> 
                     </Form.Label>
                   </Col>
-                  <Col className='mb-3'>{/** input칸 */}
+                  <Col className='mb-3' sm={5}>{/** input칸 */}
                     <Form.Control type={ inputType[i] } placeholder={ placeholder[i] } maxLength={i === 1 ? 6 : 20} className={classNames[i]} 
                     value={i===0 ? email : i===1 ? authCode : i===2 ? password : i===3 ? passwordConfirm : i===4 ? nickname : ""}
                     onInput={(e) => {
@@ -106,22 +108,27 @@ function InputComponent(props){
                       {i === 2 ? passwordMessage : i === 3 ? passwordConfirmMessage : i === 4 ? nickNameMessage : ''}
                     </label>
                   </Col>
-                  <Col>
+                  <Col sm={4}>
                     {
                       btnMessage[i]===false ? null : <Button as="input" type="button" value={ btnMessage[i] }
-                      disabled={i === 1 ? isButtonDisabled : ""}//i가 인증보내기 칸이고 state또한 일치하면 버튼활성화
+                      disabled={i === 0 ? isEmailLoading : i === 1 ? isButtonDisabled : ""}//i가 인증보내기 칸이고 state또한 일치하면 버튼활성화
+                      className="float-display"
                       onClick={() => {
+                        //todo i에 따른 로딩 state 연동하기(2개의 state 필요)
                         if (i === 0) {
+                          setIsEmailLoading(true)//로딩 추가됨 나중에 테스트
                           btnEmail(email).then(copy=>{
                             setIsButtonDisabled(copy);
                             setIsEmail(!copy);
+                            setIsEmailLoading(copy);//로딩 추가됨 나중에 테스트
                           if(isPassword && isNickName){setIsNextButtonDisabled(false)}
                           })
                         };
                         if(i===1){
+                          setIsButtonDisabled(true)//로딩 추가됨 나중에 테스트
                           btnAuth(email, authCode).then(copy=>{
-                            setIsAuthCode(copy)
-                            setIsInputDisabled(!copy)
+                            setIsAuthCode(copy);
+                            setIsInputDisabled(!copy);
                             if(isPassword && isNickName){setIsNextButtonDisabled(false)}
                           })
                         }
@@ -169,13 +176,9 @@ async function btnEmail(email) {
   if (emailRegex.test(email)) {
     try {
       const Response = await axios.post(`${serverUrl}/api/auth/mail`, {"email": email});
-
       if (Response.status === 200) {
         alert("인증메일이 발송됐어요!");
         return false;
-      } else if (Response.status === 409) {
-        alert("이미 사용중인 이메일입니다!");
-        return true;
       }
     } catch (error) {
       alert(error + ": 메일발송에 실패했습니다. 잠시후 다시 시도해주세요");

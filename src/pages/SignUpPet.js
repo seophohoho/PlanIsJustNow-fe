@@ -11,7 +11,7 @@ function SignUpPet() {
 
     const state = useSelector((state)=>{return state})//store에 있는 state 가져옴
     const dispatch = useDispatch()//state변경 함수 사용할때 둘러야함
-
+    const [selectedPetIndex, setSelectedPetIndex] = useState(null);
     return (
         <div>
             <header>
@@ -27,48 +27,38 @@ function SignUpPet() {
             <h1 className='page-title'>펫 선택하기</h1>
 
             <body>
-                <div className='center'>
+                <div className='center From'>
                     <Container fluid>
-                        <Row>
+                        <Row className='center'>
                             <Col md="7">
-                                <Stack direction='horizontal' gap={1} className='margin-bottom-20'>
-                                    <PetCircleImage petName={state.petName[0]} petId={state.petId[0]}/>
-                                    <PetCircleImage/>
-                                    <PetCircleImage/>
-                                    <PetCircleImage/>
-                                </Stack>
-                                <Stack direction='horizontal' gap={1} className='margin-bottom-20'>
-                                    <PetCircleImage/>
-                                    <PetCircleImage/>
-                                    <PetCircleImage/>
-                                    <PetCircleImage/>
-                                </Stack>
-                                <Stack direction='horizontal' gap={1} className='margin-bottom-20'>
-                                    <PetCircleImage/>
-                                    <PetCircleImage/>
-                                    <PetCircleImage/>
-                                    <PetCircleImage/>
-                                </Stack>
-                            </Col>
-                            <Col md="5">{/* 완성후 component로 전환 */}
-                                <Stack className='center margin-bottom-10'>
-                                    <Image src="/700x460.png" fluid/>
-                                    <Stack direction='horizontal' gap={2}  className='center margin-bottom-10'>
-                                        <Form.Label column sm="4" className='color-darkBlue'>
-                                            펫 이름
-                                        </Form.Label>
-                                        <Col sm="8">
-                                            <Form.Control type="text" placeholder={state.petName}//todo 펫 선택시 입력칸 싹비우기 추가
-                                            onChange={(e)=>{
-                                                dispatch(selectPetName(e.target.value))
-                                            }} />
-                                        </Col>
+                            <Stack direction="vertical" gap={1} className="margin-bottom-20">
+                                {chunkArray(state.petName, 4).map((petNamesChunk, chunkIndex) => (
+                                    <Stack key={chunkIndex} direction="horizontal" gap={1} className="margin-bottom-20">
+                                        {petNamesChunk.map((petName, index) => (
+                                            <PetCircleImage
+                                                key={index}
+                                                petName={petName}
+                                                petId={state.petId[chunkIndex * 4 + index]}
+                                                isSelected={(chunkIndex * 4 + index) === selectedPetIndex}
+                                                onClick={() => {
+                                                    setSelectedPetIndex(chunkIndex * 4 + index);
+                                                    dispatch(selectPetId(state.petId[chunkIndex * 4 + index]));
+                                                    dispatch(selectPetName(petName));
+                                                }}
+                                            />
+                                        ))}
                                     </Stack>
-                                    <p className='color-lightPurple'>{state.petInpo}</p>{/* 캐릭터 설명 라벨 */}
-                                </Stack>
-                                <Button variant="primary"
-                                onClick={()=>{SelectBtnAct(state.petSelected.id, state.petSelected.name)}}>이 펫으로 할래요!</Button>
+                                ))}
+                            </Stack>
                             </Col>
+                            {chunkArray(state.petName, 12).map((petNamesChunk, chunkIndex) => (
+                                <PetInfo
+                                    key={chunkIndex}
+                                    petName={state.petName[chunkIndex]}
+                                    petInpo={state.petInpo[chunkIndex]}
+                                    onClick={() => { SelectBtnAct(state.petSelected.id, state.petSelected.name); }}
+                                />
+                            ))}
                         </Row>
                     </Container>
                 </div>
@@ -94,26 +84,61 @@ function SelectBtnAct(pet_id, pet_name){
 }
 
 function PetCircleImage(props){
-    const dispatch = useDispatch()
-    const {petName, petId} = props
-    return(
+    const { petName, petId, isSelected } = props;
+
+    // isSelected 상태에 따라 동적으로 스타일 적용
+    const selectedStyle = isSelected
+        ? "pet-image border-outline-select"
+        : "pet-image border-outline";
+
+    return (
         <Stack gap={1}>
-            <Image src={'/thumbnail.png'} roundedCircle className='pet-image border-outline'
-            onClick={()=>{
-                dispatch(selectPetId(petId))
-                dispatch(selectPetName(petName))
-            }}//todo 버튼 클릭으로 해당하는 state로 변경할 수 있는 장치?
+            <Image
+                src={'/thumbnail.png'} // 이미지 디자인 완성시 -> state.petImages[i]로 변경 chunkIndex props로 받아와서 i에 적용
+                roundedCircle
+                className={selectedStyle}
+                onClick={props.onClick}
             />
             <p className='pet-image color-lightPurple'>{petName}</p>
         </Stack>
     )
 }
 
-function PetInpoComponent(){
-    return(
-        <>
-        </>
-    )
+function PetInfo(props) {
+    const { petName, petInpo, onClick } = props;
+    const dispatch = useDispatch();
+    return (
+        <Col md="5">
+            <Stack className='center margin-bottom-10'>
+                <Image src="/700x460.png" fluid />
+                <Stack direction='horizontal' gap={2} className='center margin-bottom-10'>
+                    <Form.Label column sm="4" className='color-darkBlue'>
+                        펫 이름
+                    </Form.Label>
+                    <Col sm="8">
+                        <Form.Control
+                            type="text"
+                            placeholder={petName}
+                            onChange={(e) => { dispatch(selectPetName(e.target.value)); }}
+                        />
+                    </Col>
+                </Stack>
+                <p className='color-lightPurple'>{petInpo}</p>
+            </Stack>
+            <Button variant="primary" className='font-bold' onClick={onClick}>
+                이 펫으로 할래요!
+            </Button>
+        </Col>
+    );
+}
+
+// 배열을 지정된 크기의 묶음으로 나누는 함수
+function chunkArray(arr, size) {
+    const result = [];
+    for (let i = 0; i < arr.length; i += size) {
+        result.push(arr.slice(i, i + size));
+    }
+    return result;
 }
 
 export default SignUpPet;
