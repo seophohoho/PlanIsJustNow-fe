@@ -132,4 +132,5 @@ p{
 .sticky{
     position: sticky; /* sticky로 설정합니다. */
     left: 0;
+    background-color: white;
 }
