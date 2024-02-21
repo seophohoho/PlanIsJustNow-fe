@@ -6,9 +6,10 @@ function PetSpaceComponent() {
         // Phaser 게임 인스턴스를 생성하고 설정합니다.
         const config = {
             type: Phaser.AUTO,
-            width: 696, // 너비를 조정하십시오.
-            height: 200, // 높이를 조정하십시오.
-            backgroundColor: '#4488aa',
+            width: 480, // 너비를 조정하십시오.
+            height: 150, // 높이를 조정하십시오.
+            
+            backgroundColor: '#eee',
             parent: 'phaser-container', // 게임을 렌더링할 요소의 ID를 지정합니다.
             scene: {
                 preload: preload,
@@ -38,7 +39,9 @@ function PetSpaceComponent() {
     }, []);
 
     return (
-        <div className='h-200' id='phaser-container'></div>
+        <div className='h-200' id='phaser-container'>
+            <div className='w-max h-25'>임시박스</div>
+        </div>
     );
 }
 
