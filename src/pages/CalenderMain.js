@@ -2,6 +2,7 @@ import React from 'react';
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import '../styles/CalenderMain.css'
+import PetSpaceComponent from '../components/PetSpaceComponent';
 import { Form, Col, Row, Container, Navbar, Stack, Image, Button, Dropdown, DropdownButton, SplitButton } from 'react-bootstrap';
 
 const CalendarMain = () => {
@@ -83,10 +84,7 @@ const CalendarMain = () => {
                                 </div>
                             </Stack>
                             <Stack direction='horizontal' className='fc-direction-ltr'>
-                                {/**펫 공간 위 아래, 고정된 크기 위쪽만, 생성 Stack으로 위 아래 */}
-                                <div className='h-200'>
-                                    
-                                </div>
+                                <PetSpaceComponent/>
                             </Stack>
                         </Stack>
                     </Col>
