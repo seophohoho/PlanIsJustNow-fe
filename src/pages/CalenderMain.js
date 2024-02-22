@@ -43,7 +43,7 @@ const CalendarMain = () => {
                         />
                     </Col>
                     <Col lg="5">
-                        <Stack>{/**나중에 줄바꿈 되는 모든 div에 클래스 적용  white-space:nowrap;*/}
+                        <Stack className='h-600'>{/**나중에 줄바꿈 되는 모든 div에 클래스 적용  white-space:nowrap;*/}
                             <Stack direction='horizontal' className='m-top-20' gap={3}>
                                 <Image src="/logo192.png" roundedCircle className='input-bgSet float-display image-w'/> {/**여기도 컴포넌트화 */}
                                 <div>
@@ -72,7 +72,7 @@ const CalendarMain = () => {
                             </Stack>
                             <Stack direction='horizontal' className='fc-direction-ltr-2v section-schedule'>
                                 {/**고정된 크기, 스크롤 지원 일정 생성버튼은 일정들 맨 아래에 내부일정 또한 컴포넌트화 해서 map으로 */}
-                                <div className='h-225 w-max'>
+                                <div className='h-max w-max'>
                                     <Stack>
                                         <Schedule/>
                                         <Schedule/>
@@ -83,7 +83,7 @@ const CalendarMain = () => {
                                     </Stack>
                                 </div>
                             </Stack>
-                            <Stack direction='horizontal' className='fc-direction-ltr'>
+                            <Stack direction='horizontal h-30p'>
                                 <PetSpaceComponent/>
                             </Stack>
                         </Stack>
