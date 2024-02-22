@@ -98,7 +98,7 @@ p{
     width: auto;
     display: flex;
     align-items: center;
-    flex: 0 0 70px;
+    flex: 0 0 50px;
 }
 
 .section-schedule::-webkit-scrollbar { 
