@@ -50,7 +50,7 @@ const CalendarMain = () => {
                                     <p>홍길동</p>{/*폰트, 줄바꿈, 공간 나중에, 받아온거 리덕스로 적용*/}
                                     <p>#123456</p>
                                 </div>
-                                <div direction='horizontal' className='fc-direction-ltr m-auto section max-w-250'>{/*map으로 친구 수에 따라 늘어나도록 */}
+                                <div direction='horizontal' className='fc-direction-ltr m-auto section max-h-100'>{/*map으로 친구 수에 따라 늘어나도록 */}
                                     <p className='section__item sticky'>친구목록</p>
                                     <Stack className='section__item'>{/* todo 여기는 컴포넌트화 해서 map으로 */}
                                         <Image src="/logo192.png" roundedCircle className='input-bgSet w-50'/>
