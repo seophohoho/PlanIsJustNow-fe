@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import Phaser from 'phaser';
+import { FOCUSABLE_SELECTOR } from '@testing-library/user-event/dist/utils';
 
 function PetSpaceComponent() {
     useEffect(() => {
@@ -14,22 +15,32 @@ function PetSpaceComponent() {
             scene: {
                 preload: preload,
                 create: create,
-                update: update
+                update: update,
+                extends:{
+                    test:null,
+                }
             }
         };
 
         const game = new Phaser.Game(config);
         // 게임 초기화를 위한 함수들
+
+        function init() {
+            
+        }
+
         function preload() {
-            // 필요한 리소스를 로드합니다.
+            //this.load.atlas('test','pet/kirby_0_walk.png',); json 필요.
         }
 
-        function create() {
-            // 게임 오브젝트를 생성하고 배치합니다.
+        function create(){
+            // this.test = this.add.sprite(5,5,'test');
         }
 
-        function update() {
-            // 게임 루프 업데이트를 수행합니다.
+        function update(){
+            const gameId = document.getElementById("phaser-container"); // Target div that wraps the phaser game
+            gameId.style.width = '100%'; // set width to 100%
+            gameId.style.height = '100%'; // set height to 100%
         }
 
         return () => {

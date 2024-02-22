@@ -154,10 +154,10 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .h-200{
-  height: 200px;
+  /* height: 200px; */
+  height: 100%;
 }
 
 .h-225{
   height: 225px;
 }
-
