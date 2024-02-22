@@ -2,7 +2,7 @@ import {Col, Row, Dropdown, DropdownButton} from "react-bootstrap"
 
 function Schedule(){
     return(
-        <Row className='section__item-schedule'>{/*추후 구조화된 폴더로 이동,리덕스 연결 */}
+        <Row className='section__item-schedule'>
             <Col sm={2} className='text-center'><input type='checkbox'/></Col>
             <Col sm={7} className='m-auto'>sample</Col>
             <Col sm={1} className='m-auto'>
