@@ -8,7 +8,7 @@ function PetSpaceComponent() {
         const config = {
             type: Phaser.AUTO,
             width: 480, // 너비를 조정하십시오.
-            height: 150, // 높이를 조정하십시오.
+            height: 225, // 높이를 조정하십시오.
             
             backgroundColor: '#eee',
             parent: 'phaser-container', // 게임을 렌더링할 요소의 ID를 지정합니다.
@@ -41,6 +41,8 @@ function PetSpaceComponent() {
             const gameId = document.getElementById("phaser-container"); // Target div that wraps the phaser game
             gameId.style.width = '100%'; // set width to 100%
             gameId.style.height = '100%'; // set height to 100%
+            gameId.style.borderRadius ="border: 3px solid rgb(35, 45, 150) !important; border-radius: 10px !important; margin-top: 20px;"
+        
         }
 
         return () => {
@@ -50,9 +52,8 @@ function PetSpaceComponent() {
     }, []);
 
     return (
-        <div className='h-200' id='phaser-container'>
-            <div className='w-max h-25'>임시박스</div>
-        </div>
+        <div className='fc-direction-ltr' id='phaser-container'>
+        </div>  
     );
 }
 
