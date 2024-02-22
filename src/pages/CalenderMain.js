@@ -2,7 +2,7 @@ import React from 'react';
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import '../styles/CalenderMain.css'
-import Schedule from '../components/Schedule';
+import Schedule from '../components/ScheduleComponent';
 import { Form, Col, Row, Container, Navbar, Stack, Image, Button, Dropdown, DropdownButton, SplitButton } from 'react-bootstrap';
 
 const CalendarMain = () => {
