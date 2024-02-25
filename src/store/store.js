@@ -48,6 +48,22 @@ const petSelected = createSlice({
   }
 })
 
+const events = createSlice({
+  name : "events",
+  initialState : {
+      "2024-01-30": [
+        {index:'', title: '생일 파티', end: '', important: '', time: '', },
+        // 해당 날짜의 다른 일정들
+      ],
+      "2024-02-05": [
+        { title: '회의', end: '' },
+        // 해당 날짜의 다른 일정들
+      ],
+      // 추가적인 날짜와 일정들
+  },
+  reducers:{}
+})
+
 export const {selectPetId, selectPetName} = petSelected.actions
 //함수또한 내보내야 요청가능
 
@@ -58,6 +74,6 @@ export default configureStore({// 내보낼 state 작성 문법은 아래와 같
     petId : petId.reducer,
     petInpo : petInpo.reducer,
     petSelected : petSelected.reducer,
-
+    events : events.reducer,
   }
 }) 
