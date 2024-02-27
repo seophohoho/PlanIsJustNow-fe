@@ -33,7 +33,6 @@ const CalendarMain = () => {
                         initialView="dayGridMonth" 
                         events={events} /*events 배열은 달력에 표시될 이벤트 목록이다.*/
                         contentHeight="auto"
-                        contentWidth="500"
                         headerToolbar={{
                             left:'prev',
                             center:'title',
