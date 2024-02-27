@@ -35,11 +35,15 @@ const CalendarMain = () => {
                         plugins={[interactionPlugin, dayGridPlugin]} 
                         initialView="dayGridMonth" 
                         selectable={true}
-                        selectAllow= {function (e) {
+                        selectAllow={function (e) {
                             if (e.end.getTime() / 1000 - e.start.getTime() / 1000 <= 86400) {
                                 return true;
                             }
-                         }}
+                        }}
+                        dateClick={function(info) {
+                            alert('Clicked on: ' + info.dateStr);
+                        }}
+                        allDay={true}
                         events={events} /*events 배열은 달력에 표시될 이벤트 목록이다.*/
                         contentHeight="auto"
                         headerToolbar={{
