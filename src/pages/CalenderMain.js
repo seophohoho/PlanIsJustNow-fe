@@ -1,17 +1,20 @@
 import React from 'react';
 import FullCalendar from '@fullcalendar/react'
+import interactionPlugin from '@fullcalendar/interaction'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import '../styles/CalenderMain.css'
 import Schedule from '../components/ScheduleComponent';
+import { useSelector } from 'react-redux';
 import { Form, Col, Row, Container, Navbar, Stack, Image, Button, Dropdown, DropdownButton, SplitButton } from 'react-bootstrap';
 
 const CalendarMain = () => {
-  
-  const events = [
-    { title: '물 999L 마시기', date: "2024-02-02", end: "2024-02-08" },//date는 클릭된 이벤트의 날자 state를 가져와서 적용 title은 일정의 일부분을 가져옴
-    { title: '물 1ml 마시기', start: "2024-02-11", end: "2024-02-14"},//end는 +1일 추가하여 적용해야함, 추측이지만 12시 기준이라 그런듯 공식 Docs에도 주의하라고만 써져있음
-    { title: '스쾃999회', date: "2024-02-03", end: "2024-02-04"},
-  ]
+    const state = useSelector((state)=> {return state})
+  //뷰에 보여지는 것은 중요표시 필터링을 한번 거치고 events로 변환
+    const events = [
+        { title: '물 999L 마시기', date: "2024-02-02", end: "2024-02-08" },//date는 클릭된 이벤트의 날자 state를 가져와서 적용 title은 일정의 일부분을 가져옴
+        { title: '물 1ml 마시기', start: "2024-02-11", end: "2024-02-14"},//end는 +1일 추가하여 적용해야함, 추측이지만 12시 기준이라 그런듯 공식 Docs에도 주의하라고만 써져있음
+        { title: '스쾃999회', date: "2024-02-03", end: "2024-02-04"},
+    ]
   {/**서버에 있는 모든 이벤트를 한번에 모아서 합친 후 events로 변환 */}
   return (
     <div>
@@ -29,8 +32,9 @@ const CalendarMain = () => {
                 <Row className="justify-content-md-center"  >
                     <Col lg="7">
                         <FullCalendar /*오늘 색-> 연보라, 클릭된날 색->? 클릭이벤트는 추후 살펴보기*/
-                        plugins={[dayGridPlugin]} 
+                        plugins={[interactionPlugin, dayGridPlugin]} 
                         initialView="dayGridMonth" 
+                        selectable={true}
                         events={events} /*events 배열은 달력에 표시될 이벤트 목록이다.*/
                         contentHeight="auto"
                         headerToolbar={{
@@ -73,10 +77,9 @@ const CalendarMain = () => {
                                 {/**고정된 크기, 스크롤 지원 일정 생성버튼은 일정들 맨 아래에 내부일정 또한 컴포넌트화 해서 map으로 */}
                                 <div className='h-225 w-max'>
                                     <Stack>
-                                        <Schedule/>
-                                        <Schedule/>
-                                        <Schedule/>
-                                        <Schedule/>
+                                        {/* { 달력 클릭 시 그 날짜를 반환하는 메소드가 있을 듯
+                                            state.events.map()
+                                        } */}
                                         <Schedule/>
                                         <Schedule/>
                                     </Stack>
