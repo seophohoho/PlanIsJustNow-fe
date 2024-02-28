@@ -2,20 +2,20 @@ import React from 'react';
 import FullCalendar from '@fullcalendar/react'
 import interactionPlugin from '@fullcalendar/interaction'
 import dayGridPlugin from '@fullcalendar/daygrid'
-import '../styles/CalenderMain.css'
+import '../styles/CalendarMain.css'
 import Schedule from '../components/ScheduleComponent';
 import { useSelector } from 'react-redux';
 import { Form, Col, Row, Container, Navbar, Stack, Image, Button, Dropdown, DropdownButton, SplitButton } from 'react-bootstrap';
 
 const CalendarMain = () => {
     const state = useSelector((state)=> {return state})
-  /*달력 뷰에 보여지는 것은 중요표시 필터링을 한번 거치고 events로 변환*/
+  /*달력 뷰에 보여지는 것은 addEvent를 이용해서 객체.important 여부 판단 후 삽입  */
     const events = [
         { title: '물 999L 마시기', date: "2024-02-02", end: "2024-02-08" },/* date는 클릭된 이벤트의 날자 state를 가져와서 적용 title은 일정의 일부분을 가져옴*/
         { title: '물 1ml 마시기', start: "2024-02-11", end: "2024-02-14"},/* end는 +1일 추가하여 적용해야함, 추측이지만 12시 기준이라 그런듯 공식 Docs에도 주의하라고만 써져있음*/
         { title: '스쾃999회', date: "2024-02-03", end: "2024-02-04"},
     ]
-    const selectDate = getDate();
+    console.log(calendar.getDate())
   {/**서버에 있는 모든 이벤트를 한번에 모아서 합친 후 events로 변환 */}
   return (
     <div>
@@ -32,7 +32,7 @@ const CalendarMain = () => {
             <Container>
                 <Row className="justify-content-md-center"  >
                     <Col lg="7">
-                        <FullCalendar /* 오늘 색-> 연보라, 클릭된날 색->? 클릭이벤트는 추후 살펴보기 */
+                        <FullCalendar /* 오늘 색-> 찐보라, 클릭된날 색-> 연보라 클릭이벤트는 추후 살펴보기 */
                         plugins={[interactionPlugin, dayGridPlugin]} 
                         initialView="dayGridMonth" 
                         selectable={true}
@@ -42,7 +42,7 @@ const CalendarMain = () => {
                             }
                         }}
                         dateClick={function(info) {/*클릭된 날짜 반환*/
-                            alert('Clicked on: ' + selectDate);
+                            alert('Clicked on: ' + info.dateStr);
                         }}
                         allDay={true}
                         events={events} /*events 배열은 달력에 표시될 이벤트 목록 */
@@ -96,7 +96,7 @@ const CalendarMain = () => {
                                 </div>
                             </Stack>
                             <Stack direction='horizontal' className='fc-direction-ltr'>
-                                {/* 브런치 분리! */}
+                                {/* 브런치 분리됨! */}
                                 <div className='h-200'>
                                     
                                 </div>
