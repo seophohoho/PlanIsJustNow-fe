@@ -1,5 +1,6 @@
 import React from 'react';
 import FullCalendar from '@fullcalendar/react'
+import momentPlugin from '@fullcalendar/moment';
 import interactionPlugin from '@fullcalendar/interaction'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import '../styles/CalendarMain.css'
@@ -15,8 +16,7 @@ const CalendarMain = () => {
         { title: '물 1ml 마시기', start: "2024-02-11", end: "2024-02-14"},/* end는 +1일 추가하여 적용해야함, 추측이지만 12시 기준이라 그런듯 공식 Docs에도 주의하라고만 써져있음*/
         { title: '스쾃999회', date: "2024-02-03", end: "2024-02-04"},
     ]
-    console.log(calendar.getDate())
-  {/**서버에 있는 모든 이벤트를 한번에 모아서 합친 후 events로 변환 */}
+
   return (
     <div>
          <header>
@@ -33,7 +33,7 @@ const CalendarMain = () => {
                 <Row className="justify-content-md-center"  >
                     <Col lg="7">
                         <FullCalendar /* 오늘 색-> 찐보라, 클릭된날 색-> 연보라 클릭이벤트는 추후 살펴보기 */
-                        plugins={[interactionPlugin, dayGridPlugin]} 
+                        plugins={[interactionPlugin, dayGridPlugin, momentPlugin]} 
                         initialView="dayGridMonth" 
                         selectable={true}
                         selectAllow={function (e) {/* 클릭 가능한 날짜를 하루로 고정 */
@@ -44,8 +44,13 @@ const CalendarMain = () => {
                         dateClick={function(info) {/*클릭된 날짜 반환*/
                             alert('Clicked on: ' + info.dateStr);
                         }}
-                        allDay={true}
-                        events={events} /*events 배열은 달력에 표시될 이벤트 목록 */
+                        datesSet={function(args) {
+                            /* 리액트에서 최상위 객체 오브젝트에 접근하려면 이렇게 해야함 */
+                            const view = args.view.calendar.currentData.currentDate;
+                            /*getMonth는 JavaScript에서 날짜의 월은 0(1월)부터 11(12월)까지 번호가 지정됨 +1을 해야 원본 값이 나옴*/
+                            console.log(view.getFullYear() + "-" + (view.getMonth() + 1) + "-" + view.getDate())
+                        }}
+                        events={events} /* events 배열은 달력에 표시될 이벤트 목록 */
                         contentHeight="auto"
                         headerToolbar={{
                             left:'prev',
@@ -90,7 +95,6 @@ const CalendarMain = () => {
                                         {/* { 달력 클릭 시 그 날짜를 반환하는 메소드가 있을 듯
                                             state.events.map()
                                         } */}
-                                        <Schedule/>
                                         <Schedule/>
                                     </Stack>
                                 </div>
