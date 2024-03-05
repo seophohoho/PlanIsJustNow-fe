@@ -48,15 +48,36 @@ const petSelected = createSlice({
   }
 })
 
+//전체 일정 보여주는 스케줄
+const dateSchedule = createSlice({
+  name : "dateSchedule",
+  initialState : {
+    "2024-03-05" : [
+      {title : "운동", end:"2024-03-07", time: "[20:00]"},
+      {title : "식사", end:"2024-03-05", time: "[17:00]"},
+    ],
+    "2024-03-07" : [
+      {title : "회의", end:"2024-03-14", time: "[12:00]"},
+      {title : "간식", end:"2024-03-18", time: "[15:51]"},
+    ]
+  } ,
+  reducers:{
+    scheduleinit(state, action){//state 초기화
+      return action.payload
+    }
+  }
+})
+
+//view에 나오는 스케줄
 const events = createSlice({
   name : "events",
   initialState : {
-      "2024-01-30": [
+      "2024-02-25": [
         {index:'', title: '생일 파티', end: '', important: '', time: '', },
         // 해당 날짜의 다른 일정들
       ],
       "2024-02-05": [
-        { title: '회의', end: '' },
+        { index:'', title: '회의', end: '', important: '', time: '', },
         // 해당 날짜의 다른 일정들
       ],
       // 추가적인 날짜와 일정들
@@ -64,10 +85,11 @@ const events = createSlice({
   reducers:{}
 })
 
+export const {scheduleinit} = dateSchedule.actions
 export const {selectPetId, selectPetName} = petSelected.actions
 //함수또한 내보내야 요청가능
 
-export default configureStore({// 내보낼 state 작성 문법은 아래와 같음
+export default configureStore({// 내보낼 state, 작성 문법은 아래와 같음
   reducer: { 
     petImages : petImages.reducer,
     petName : petName.reducer,
@@ -75,5 +97,6 @@ export default configureStore({// 내보낼 state 작성 문법은 아래와 같
     petInpo : petInpo.reducer,
     petSelected : petSelected.reducer,
     events : events.reducer,
+    dateSchedule :dateSchedule.reducer,
   }
 }) 
