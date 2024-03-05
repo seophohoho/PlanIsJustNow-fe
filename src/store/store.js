@@ -53,12 +53,14 @@ const dateSchedule = createSlice({
   name : "dateSchedule",
   initialState : {
     "2024-03-05" : [
-      {title : "운동", end:"2024-03-07", time: "[20:00]"},
-      {title : "식사", end:"2024-03-05", time: "[17:00]"},
+      {title : "운동", end:"2024-03-07", time: "[20:00]", important: true, complete : false},
+      {title : "식사", end:"2024-03-05", time: "[17:00]", important: false , complete : false},
     ],
     "2024-03-07" : [
-      {title : "회의", end:"2024-03-14", time: "[12:00]"},
-      {title : "간식", end:"2024-03-18", time: "[15:51]"},
+      {title : "회의", end:"2024-03-14", time: "[12:00]", important: true, complete : false},
+      {title : "간식", end:"2024-03-18", time: "[15:51]", important: false, complete : false},
+      {title : "후식", end:"2024-03-18", time: "[18:11]", important: true, complete : false},
+      {title : "공부", end:"2024-03-18", time: "[17:21]", important: false, complete : false},
     ]
   },
   reducers:{
