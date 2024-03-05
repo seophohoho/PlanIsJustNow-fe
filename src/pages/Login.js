@@ -65,21 +65,18 @@ function Login() {
                         <Button type="button" disabled={isLoading}
                             onClick={()=>{
                                 if(!isLoading){setLoading(true)}
-                                console.log(userId, userPassword)
                                 axios.post(`${serverUrl}/api/account/signin`, {
                                     "email" : userId,
                                     "password" : userPassword,
                                 })
                                 .then((response) => {
                                     if(response.status === 200){
-                                        console.log(response.status)
                                         alert("로그인 성공 status: 200")
                                         setLoading(false);//성공하면 풀어줄 이유가 없지않나? 나중에 판단
                                     }
                                 })
                                 .catch((error) => {
                                     console.error(error);
-                                    
                                     setLoading(false);
                                 })  
                             }}>{isLoading ? '확인' : '확인'}

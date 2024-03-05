@@ -71,7 +71,6 @@ function SignUpPet() {
 }
 
 function SelectBtnAct(pet_id, pet_name){
-    console.log(pet_id, pet_name)
     axios.post(`${serverUrl}/api/user/choice-pet`,{
         "email" : "test@email.com",//추후 수정 : 로그인 되어있는 계정 정보 전송으로 변경
         "species" : pet_id,

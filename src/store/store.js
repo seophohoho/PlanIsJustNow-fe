@@ -60,7 +60,7 @@ const dateSchedule = createSlice({
       {title : "회의", end:"2024-03-14", time: "[12:00]"},
       {title : "간식", end:"2024-03-18", time: "[15:51]"},
     ]
-  } ,
+  },
   reducers:{
     scheduleinit(state, action){//state 초기화
       return action.payload

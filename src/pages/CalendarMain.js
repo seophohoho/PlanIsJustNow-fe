@@ -51,7 +51,6 @@ const CalendarMain = () => {
                         dateClick={function(data) {/*클릭된 날짜 반환*/
                             alert('Clicked on: ' + data.dateStr);
                             setClickedDate(data.dateStr)
-                                
                         }}
                         datesSet={function(args) {
                             /* 달력 초기화 시 작동 TODO: axios 일정관련 함수 또한 여기서 실행  */
@@ -63,12 +62,7 @@ const CalendarMain = () => {
                             /*처음 axios에서 받은 값을 초기화 후 해당값에서 아래 값으로 접근해서 map으로 나열*/
                             const currentDate = moment().format('YYYY-MM-DD');
                             
-                            console.log(currentDate)
-                            console.log(state.dateSchedule[currentDate])
-
                             setClickedDate(currentDate);
-
-                            
                         }}
                         events={events} /* events 배열은 달력에 표시될 이벤트 목록 */
                         contentHeight="auto"
