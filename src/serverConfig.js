@@ -1,3 +1,3 @@
-const serverUrl = "http://118.45.36.126:999"
+const serverUrl = "http://36.38.61.149:998"
 
 export default serverUrl;
