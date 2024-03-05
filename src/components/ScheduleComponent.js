@@ -7,8 +7,8 @@ function Schedule(props){
     return(
         <Row className='section__item-schedule'>
             <Col sm={1} className='text-center'><input type='checkbox'/></Col>
-            <Col sm={1} className='m-auto'>{ state.dateSchedule[clickedDate][i].time }</Col>
-            <Col sm={6} className='m-auto'>{ state.dateSchedule[clickedDate][i].title }</Col>
+            <Col sm={1} className='m-auto color-darkBlue p-zero'>{ state.dateSchedule[clickedDate][i].time }</Col>
+            <Col sm={6} className='m-auto color-darkBlue'>{ state.dateSchedule[clickedDate][i].title }</Col>
             <Col sm={1} className='m-auto'>
                 <input type="checkbox" id="cb1"/>
             </Col>
