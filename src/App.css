@@ -157,3 +157,6 @@ input[type="number"]::-webkit-inner-spin-button {
   height: 225px;
 }
 
+.p-zero{
+  padding: 0px !important;
+}
