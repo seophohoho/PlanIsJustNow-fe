@@ -1,11 +1,14 @@
 import {Modal, Form, Button} from "react-bootstrap"
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import { TimePicker } from 'antd';
+import { TimePicker, DatePicker, Space } from 'antd';
 import { useSelector } from "react-redux"
 
 function ScheduleAddModal(props){
     const {show, handleClose} = props
+    
+    const { RangePicker } = DatePicker;
+
     dayjs.extend(customParseFormat);
     const onChange = (time, timeString) => {
         console.log(time, timeString);
@@ -29,7 +32,7 @@ function ScheduleAddModal(props){
                 controlId="ControlInput2"
               >
                 <Form.Label>날짜</Form.Label>
-                <Form.Control/>
+                <RangePicker inputReadOnly={true}/>
               </Form.Group>
               <Form.Group>
                 <label for="ControlInput3" className="">시간 선택</label>
