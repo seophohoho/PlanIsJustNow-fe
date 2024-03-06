@@ -61,13 +61,11 @@ const CalendarMain = () => {
                             /*getMonth는 JavaScript에서 날짜의 월은 0(1월)부터 11(12월)까지 번호가 지정됨 +1을 해야 원본 값이 나옴*/
                             /*처음 axios에서 받은 값을 초기화 후 해당값에서 아래 값으로 접근해서 map으로 나열*/
                             const currentDate = moment().format('YYYY-MM-DD');
-                            
                             setClickedDate(currentDate);
                         }}
                         events={events} /* events 배열은 달력에 표시될 이벤트 목록 */
                         contentHeight="auto"
                         headerToolbar={{
-
                             left:'prev',
                             center:'title',
                             right:'next'
@@ -80,11 +78,11 @@ const CalendarMain = () => {
                             <Stack direction='horizontal' className='m-top-20' gap={3}>
                                 <Image src="/logo192.png" roundedCircle className='input-bgSet float-display image-w'/> {/**여기도 컴포넌트화 */}
                                 <div>
-                                    <p>홍길동</p>{/*폰트, 줄바꿈, 공간 나중에, 받아온거 리덕스 데이터바인딩*/}
-                                    <p>#123456</p>
+                                    <p className='color-darkBlue'>홍길동</p>{/*폰트, 줄바꿈, 공간 나중에, 받아온거 리덕스 데이터바인딩*/}
+                                    <p className='color-violet'>#123456</p>
                                 </div>
                                 <div direction='horizontal' className='fc-direction-ltr m-auto section max-h-100'>{/*map으로 친구 수에 따라 늘어나도록 */}
-                                    <p className='section__item sticky'>친구목록</p>
+                                    <p className='section__item sticky color-darkBlue'>친구목록</p>
                                     <Stack className='section__item'>{/* todo 여기는 컴포넌트화 해서 map으로 */}
                                         <Image src="/logo192.png" roundedCircle className='input-bgSet w-50'/>
                                         <Form.Label className=''>이름</Form.Label>
@@ -106,6 +104,7 @@ const CalendarMain = () => {
                             <Stack direction='horizontal' className='fc-direction-ltr-2v section-schedule'>
                                 {/**고정된 크기, 스크롤 지원 일정 생성버튼은 일정들 맨 아래에 내부일정 또한 컴포넌트화 해서 map으로 */}
                                 <div className='h-225 w-max'>
+                                    {/*여기에 title 부착 sticky로, 된다면 일정 추가 버튼도 여기에?*/}
                                     <Stack>
                                         {/*비동기 문제 &&로 해결*/
                                             state.dateSchedule[clickedDate] && state.dateSchedule[clickedDate].map(function(notUse, i){
