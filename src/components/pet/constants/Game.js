@@ -1,4 +1,5 @@
 import { PetSpaceScene } from "../scene/PetSpaceScene";
+import * as Phaser from 'phaser';
 
 const CANVAS_WIDTH = 480;
 const CANVAS_HEIGHT = 225;
@@ -22,7 +23,9 @@ export const config = {
     scene: [PetSpaceScene]
 };
 
-export const petList = ['kirby'];
+export const petList = [
+    'kirby'
+];
 
 export const petNatureList = {
     0:[0,1,2],

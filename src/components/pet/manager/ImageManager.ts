@@ -5,7 +5,8 @@ export class ImageManager{
 
     loadPetImage(){
         for(let i=0;i<=BEHAVIOR_SIZE;i++){
-            this.phaser.load.atlas(`${petList[0]}_0_${i}`,`pet/kirby/${petList[0]}_0_${i}.png`,`pet/kirby/${petList[0]}_0_${i}.json`);
+            this.phaser.load.atlas(`${petList[0]}_0_${i}`,`../sprite/kirby/${petList[0]}_0_${i}.png`,`../sprite/kirby/${petList[0]}_0_${i}.json`);
+            // this.phaser.add.sprite(0,0,`${petList[0]}_0_${i}`);
         }
     }
     createSprite(key:string):Phaser.GameObjects.Sprite{

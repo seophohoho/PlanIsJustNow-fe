@@ -2,5 +2,9 @@
     "compilerOptions": {
       "target": "es5"
     },
-    "include": ["**/*.ts"]
+    "include": [
+      "./src/components/pet/Pet.ts",
+      "./src/components/pet/manager/*.ts",
+      "./src/components/pet/scene/*.ts",
+    ]
 }

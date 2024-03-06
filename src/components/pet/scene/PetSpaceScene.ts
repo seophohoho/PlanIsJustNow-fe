@@ -31,12 +31,9 @@ export class PetSpaceScene extends Phaser.Scene{
         } catch(error){
             console.error(error);
         }
-        for(let i=0;i<=BEHAVIOR_SIZE;i++){
-            this.pet.setSprite(this.imagemanager.createSprite(this.pet.getPetInfo()));
-        }
     }
 
     update(){
-
+        
     }
 }
