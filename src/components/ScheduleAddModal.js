@@ -1,11 +1,18 @@
 import {Modal, Form, Button} from "react-bootstrap"
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+import { TimePicker } from 'antd';
 import { useSelector } from "react-redux"
 
 function ScheduleAddModal(props){
     const {show, handleClose} = props
+    dayjs.extend(customParseFormat);
+    const onChange = (time, timeString) => {
+        console.log(time, timeString);
+    };
     return (
-      <> 
-        <Modal show={show} onHide={handleClose}>
+      <> {/*todo 올바른 form control 할당 버튼 디자인 변경*/}
+        <Modal show={show} onHide={handleClose} className="p-400" >
           <Modal.Header closeButton>
             <Modal.Title>일정 추가</Modal.Title>
           </Modal.Header>
@@ -13,30 +20,26 @@ function ScheduleAddModal(props){
             <Form>
               <Form.Group 
                 className="mb-3" 
-                controlId="exampleForm.ControlInput1">
+                controlId="ControlInput1">
                 <Form.Label>일정</Form.Label>
                 <Form.Control/>
               </Form.Group>
               <Form.Group
                 className="mb-3"
-                controlId="exampleForm.ControlTextarea1"
+                controlId="ControlInput2"
               >
                 <Form.Label>날짜</Form.Label>
                 <Form.Control/>
               </Form.Group>
-              <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlTextarea1"
-              >
-                <Form.Label>시간</Form.Label>
-                <Form.Control/>
+              <Form.Group>
+                <label for="ControlInput3" className="">시간 선택</label>
+                <TimePicker id="ControlInput3" onChange={onChange} defaultOpenValue={dayjs('00:00', 'HH:mm')} format="HH:mm" inputReadOnly={true}/>
               </Form.Group>
               <Form.Group
                 className="mb-3"
-                controlId="exampleForm.ControlTextarea1"
+                controlId="ControlInput4"
               >
-                <Form.Label>중요여부</Form.Label>
-                <Form.Control/>
+                <Form.Label>중요여부</Form.Label> {/*checkbox*/}
               </Form.Group>
             </Form>
           </Modal.Body>
