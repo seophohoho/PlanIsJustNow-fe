@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^5.3.1",
+    "@djthoms/pretty-checkbox": "^3.1.0",
     "@fullcalendar/daygrid": "^6.1.10",
     "@fullcalendar/interaction": "^6.1.11",
     "@fullcalendar/moment": "^6.1.11",
