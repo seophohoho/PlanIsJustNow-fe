@@ -1,8 +1,9 @@
 import { PetSpaceScene } from "../scene/PetSpaceScene";
+import {InitScene} from "../scene/InitScene";
 import * as Phaser from 'phaser';
 
-const CANVAS_WIDTH = 480;
-const CANVAS_HEIGHT = 225;
+export const CANVAS_WIDTH = 480;
+export const CANVAS_HEIGHT = 225;
 
 export const config = {
     type: Phaser.AUTO,
@@ -20,7 +21,7 @@ export const config = {
     
     backgroundColor: '#486870',
     parent: 'phaser-container', // 게임을 렌더링할 요소의 ID를 지정합니다.
-    scene: [PetSpaceScene]
+    scene: [InitScene,PetSpaceScene],
 };
 
 export const petList = [

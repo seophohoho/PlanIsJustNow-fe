@@ -4,36 +4,28 @@ import { ImageManager } from '../manager/ImageManager';
 import axios from 'axios';
 import EventManager, { EVENTS } from '../manager/EventManager';
 import { Pet } from '../Pet';
-import { BEHAVIOR_SIZE } from '../constants/Game';
+import { BEHAVIOR_SIZE, petList } from '../constants/Game';
 
 export class PetSpaceScene extends Phaser.Scene{
     constructor(){
-        super('PetSpaceScene');
-        this.imagemanager = new ImageManager(this);
+        super({key:'PetSpaceScene'});
     }
-
-    private imagemanager:ImageManager;
+    private test:number = 0;
+    private im:ImageManager;
     private pet:Pet=null;
 
-    init(){
-        EventManager.onEvent(EVENTS.SET_PET,(data)=>{this.pet.setData(data[0]);});
-    }
-
-    preload(){
-        this.imagemanager.loadPetImage();
-    }
-
-    async create(){
-        try{
-            const res = await axios.post(`${serverUrl}/api/user/has-pet`,{"email":"seop0937@gmail.com"});
-            const data = res.data.data[0];
-            EventManager.triggerEvent(EVENTS.SET_PET,data);
-        } catch(error){
-            console.error(error);
-        }
+    create(data:object){
+        this.im = data['im'];
+        this.pet = data['pet'];
     }
 
     update(){
-        
+        if(this.pet){
+            if(this.test === 0){
+                this.pet.startAnimation(); 
+                this.test++;
+            }
+        }
+
     }
 }

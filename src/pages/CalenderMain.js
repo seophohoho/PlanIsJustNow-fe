@@ -4,9 +4,15 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import '../styles/CalenderMain.css'
 import PetSpaceComponent from '../components/PetSpaceComponent';
 import { Form, Col, Row, Container, Navbar, Stack, Image, Button, Dropdown, DropdownButton, SplitButton } from 'react-bootstrap';
+import { useDispatch, useSelector } from "react-redux"
+import { test } from "../store/store"//수정할 함수 import 해야함
 
 const CalendarMain = () => {
-  
+  const state = useSelector(state =>{
+    return state;
+  })
+  const dispatch = useDispatch();
+
   const events = [
     { title: '물 999L 마시기', date: "2024-02-02", end: "2024-02-08" },//date는 클릭된 이벤트의 날자 state를 가져와서 적용 title은 일정의 일부분을 가져옴
     { title: '물 1ml 마시기', start: "2024-02-11", end: "2024-02-14"},//end는 +1일 추가하여 적용해야함, 추측이지만 12시 기준이라 그런듯 공식 Docs에도 주의하라고만 써져있음

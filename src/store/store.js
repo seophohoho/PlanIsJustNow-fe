@@ -23,6 +23,19 @@ const petName = createSlice({//펫 이름
   }
 })
 
+const inGamePetId = createSlice({
+  name : 'inGamePetId',
+  initialState : 0,
+  reducers:{
+    //함수 정의하면 됨.
+    test(state,action){
+      state = action.payload;
+      console.log(state);
+    }
+  }
+
+})
+
 export const {} = petName.actions
 
 const petInpo = createSlice({//펫 설명
@@ -49,6 +62,7 @@ const petSelected = createSlice({
 })
 
 export const {selectPetId, selectPetName} = petSelected.actions
+export const {test} = inGamePetId.actions
 //함수또한 내보내야 요청가능
 
 export default configureStore({// 내보낼 state 작성 문법은 아래와 같음
@@ -58,6 +72,6 @@ export default configureStore({// 내보낼 state 작성 문법은 아래와 같
     petId : petId.reducer,
     petInpo : petInpo.reducer,
     petSelected : petSelected.reducer,
-
+    inGamePetId: inGamePetId.reducer,
   }
 }) 
