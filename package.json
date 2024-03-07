@@ -5,7 +5,6 @@
   "dependencies": {
     "@ant-design/icons": "^5.3.1",
     "@djthoms/pretty-checkbox": "^3.1.0",
-    "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fullcalendar/daygrid": "^6.1.10",
     "@fullcalendar/interaction": "^6.1.11",
     "@fullcalendar/moment": "^6.1.11",
