@@ -4,5 +4,10 @@ export const enum MaxFrame{
     RUN = 15 
 }
 
-export const FRAME_RATE = 8;
+export const enum FrameRate{
+    STAY = 4,
+    WALK = 8,
+    RUN = 16
+}
+
 export const DELAY_RATE = 0;

@@ -1,6 +1,6 @@
 import { BEHAVIOR_SIZE, petList, petNatureList } from "../constants/Game";
 import {CANVAS_WIDTH,CANVAS_HEIGHT} from "../constants/Game";
-import {DELAY_RATE, FRAME_RATE, MaxFrame} from "../constants/MaxFrame";
+import {MaxFrame,FrameRate,DELAY_RATE} from "../constants/MaxFrame";
 
 export class ImageManager{
     constructor(private phaser:Phaser.Scene){}
@@ -24,73 +24,73 @@ export class ImageManager{
             prefix:`${petList[0]}_0_0-`,
             suffix:"",
             start:0,
-            end:MaxFrame.STAY/2,
+            end:Math.floor(MaxFrame.STAY/2),
         });
         console.log(petStayFrameRight);
         const petStayFrameLeft = this.phaser.anims.generateFrameNames(`${petList[0]}_0_0`,{
             prefix:`${petList[0]}_0_0-`,
             suffix:"",
-            start:MaxFrame.STAY/2+1,
+            start:Math.floor(MaxFrame.STAY/2)+1,
             end:MaxFrame.STAY,
         });
         const petWalkFrameRight = this.phaser.anims.generateFrameNames(`${petList[0]}_0_1`,{
             prefix:`${petList[0]}_0_1-`,
             suffix:"",
             start:0,
-            end:MaxFrame.WALK/2,
+            end:Math.floor(MaxFrame.WALK/2),
         });
         const petWalkFrameleft = this.phaser.anims.generateFrameNames(`${petList[0]}_0_1`,{
             prefix:`${petList[0]}_0_1-`,
             suffix:"",
-            start:MaxFrame.WALK/2+1,
+            start:Math.floor(MaxFrame.WALK/2)+1,
             end:MaxFrame.WALK,
         });
         const petRunFrameRight = this.phaser.anims.generateFrameNames(`${petList[0]}_0_2`,{
             prefix:`${petList[0]}_0_2-`,
             suffix:"",
             start:0,
-            end:MaxFrame.RUN/2,
+            end:Math.floor(MaxFrame.RUN/2),
         });
         const petRunFrameLeft = this.phaser.anims.generateFrameNames(`${petList[0]}_0_2`,{
             prefix:`${petList[0]}_0_2-`,
             suffix:"",
-            start:MaxFrame.RUN/2+1,
+            start:Math.floor(MaxFrame.RUN/2)+1,
             end:MaxFrame.RUN,
         });
         this.createAnimation(
             `${petList[0]}_0_0_r`,
             petStayFrameRight,
-            FRAME_RATE,
+            FrameRate.STAY,
             DELAY_RATE
         );
         this.createAnimation(
             `${petList[0]}_0_0_l`,
             petStayFrameLeft,
-            FRAME_RATE,
+            FrameRate.STAY,
             DELAY_RATE
         );
         this.createAnimation(
             `${petList[0]}_0_1_r`,
             petWalkFrameRight,
-            FRAME_RATE,
+            FrameRate.WALK,
             DELAY_RATE
         );
         this.createAnimation(
             `${petList[0]}_0_1_l`,
             petWalkFrameleft,
-            FRAME_RATE,
+            FrameRate.WALK,
             DELAY_RATE
         );
         this.createAnimation(
             `${petList[0]}_0_2_r`,
             petRunFrameRight,
-            FRAME_RATE,
+            FrameRate.RUN,
             DELAY_RATE
         );
         this.createAnimation(
             `${petList[0]}_0_2_l`,
             petRunFrameLeft,
-            FRAME_RATE,
+            FrameRate.RUN,
             DELAY_RATE
         );
     }
@@ -104,7 +104,7 @@ export class ImageManager{
             key: name,
             frames: frames,
             frameRate: frameRate,
-            repeat: -1,
+            repeat: 0,
             delay:delay,
             yoyo:false
         });
