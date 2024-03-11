@@ -25,12 +25,12 @@ function ScheduleAddModal(props){
     const title = "일정수정";//임시, 재활용 할려면 비슷한 형식으로 해야할 듯
     //title state에 따라 바뀌게?? 초기값, 확인버튼의 동작 이벤트 등등
 
-    //수정의 경우 기존 데이터가 입력되어있는 형태여야 함
+    //수정의 경우 기존 데이터가 입력되어있는 형태여야 함-!-
     //추가의 경우 완전 비어있는 상태
     //이벤트 조건 함수 해당일의 important가 3개 초과이면 안됨
     //모달의 확인 버튼을 누를때 해당 조건을 모두 판단하고 state를 변경하는 식으로
     //일정의 각 항목의 정보를 나타내는 title 필요 sticky로
-    //
+    //complete의 경우 모달로 확인 사실을 확정하고 disable 하는 방식으로
 
     return (
       <> {/*todo 올바른 form control 할당 버튼 디자인 변경*/}
@@ -48,7 +48,7 @@ function ScheduleAddModal(props){
                 </Form.Label>
                 <Form.Control 
                     className="schedule-title m-left-13p"
-                    value={ state.dateSchedule[clickedDate][i].title }/>{/*글자 50자 제한 필요*/}
+                    defaultValue={ state.dateSchedule[clickedDate][i].title }/>{/*글자 50자 제한 필요*/}
               </Form.Group>
 
               <Form.Group className="mb-4">
@@ -94,7 +94,7 @@ function ScheduleAddModal(props){
             <Button variant="secondary" onClick={handleClose}>
               취소
             </Button>
-            <Button variant="primary" onClick={handleClose}>
+            <Button variant="primary" onClick={handleClose/*스케줄 업데이트*/}>
               확인
             </Button>
           </Modal.Footer>
