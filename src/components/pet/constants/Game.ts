@@ -32,12 +32,18 @@ export const petNatureList = {
     0:[0,1,2],
     1:[0,1,2],
     2:[0,1,2],
+};
+
+export const enum MAX_BEHAVIOR_COUNT{
+    STAY=10,
+    WALK=6,
+    RUN=4,
 }
 
 export const BEHAVIOR_SIZE = 2;
 
-export const enum BEHAVIOR{
-    STAY=0,
-    WALK=1,
-    RUN=2
+export const BEHAVIOR = {
+    0:'stay',
+    1:'walk',
+    2:'run',
 }

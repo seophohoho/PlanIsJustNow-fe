@@ -1,5 +1,5 @@
 import { Pet } from './Pet'
-import { BEHAVIOR } from './constants/Game';
+import { BEHAVIOR, MAX_BEHAVIOR_COUNT } from './constants/Game';
 
 export class Behavior{
     constructor(
@@ -15,29 +15,46 @@ export class Behavior{
 
     private timerEvent:Phaser.Time.TimerEvent;
     
-    private currentBehavior:BEHAVIOR;
-    private lastBehavior:BEHAVIOR;
+    private currentBehavior:number=0;
+    private lastBehavior:number;
 
-    isFinish:boolean;
+    private currentDirection:string='l';
+    private lastDirection:string;
+
+    private behaviorGoalCount:number;
+
+    isFinish:boolean=true;
 
     setBehavior(){
         if(this.isFinish){
+            this.isFinish = false;
             this.lastBehavior = this.currentBehavior;
-            this.currentBehavior = this.getRandomBehavior(BEHAVIOR);
-    
-            this.behaviorGoalCount = Phaser.Math.Between(5,10);
-            this.info['behavior'] = Phaser.Math.Between(1,BEHAVIOR_SIZE);
-            const randomDirection = Phaser.Math.Between(0,1);
-    
-            if(randomDirection == 1){this.info['direction'] = 'r'}
-            else{this.info['direction'] = 'l'}
-            this.startAnimation();
-            this.isBehaviorFinish = false;
+            this.currentBehavior = Number(this.getRandomBehavior(BEHAVIOR));
+
+            this.behaviorGoalCount = this.getRandomBehaviorGoalCount(this.currentBehavior);
+            
+            this.lastDirection = this.currentDirection;
+            this.currentDirection = this.getRandomDirection();
+
+            this.pet.startAnimation(this.lastBehavior,this.currentBehavior,this.behaviorGoalCount,this.currentDirection);
         }
     }
-    getRandomBehavior(enumeration:BEHAVIOR){
+
+    getRandomBehavior(enumeration:typeof BEHAVIOR){
         const values = Object.keys(enumeration);
         const enumKey = values[Math.floor(Math.random() * values.length)];
-        return enumeration[enumKey];
+        return enumKey;
+    }
+
+    getRandomBehaviorGoalCount(behavior:number){
+        if(behavior === 0){return Math.floor((Math.random() * MAX_BEHAVIOR_COUNT.STAY+1) + 5);}
+        if(behavior === 1){return Math.floor((Math.random() * MAX_BEHAVIOR_COUNT.WALK+1) + 1);}
+        if(behavior === 2){return Math.floor((Math.random() * MAX_BEHAVIOR_COUNT.RUN+1) + 1);}
+    }
+
+    getRandomDirection(){
+        const randomBit = Math.floor((Math.random() * 2) + 0);
+        if(randomBit){return 'r';}
+        else{return 'l';}
     }
 }
