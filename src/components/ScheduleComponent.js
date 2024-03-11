@@ -13,6 +13,8 @@ function Schedule(props){
     const [show, setShow] = useState(false);
     const handleClose = () => {setShow(false);}
     const handleShow = () => {setShow(true);}
+
+    const ScheduleState = state.dateSchedule[clickedDate][i];
     
     const items = [
         { //임시로 일정 추가로 할당, issue: 현재 <label> 바깥 태그(li) 클릭 시 이벤트가 발생하지 않는 문제 존재
@@ -28,17 +30,31 @@ function Schedule(props){
     return(
         <Row className='section__item-schedule'>
             <ScheduleAddModal show={show} handleClose={handleClose} i={i} clickedDate={clickedDate}/>
-            <Col sm={1} className='text-center'><Checkbox className="margin-left" icon={<i className="zmdi zmdi-check"/>} onChange={(e)=>{}} defaultChecked={state.dateSchedule[clickedDate][i].complete}/></Col>
-            <Col sm={2} 
-                className={state.dateSchedule[clickedDate][i].complete ? 'm-auto color-darkBlue cancel_line' : 'm-auto color-darkBlue'}>{ "[" + state.dateSchedule[clickedDate][i].time + "]" }</Col>
+            <Col sm={1} className='text-center'>
+                <Checkbox
+                className="margin-left"
+                icon={<i className="zmdi zmdi-check"/>}
+                onChange={(e)=>{/* state 변경 complete */}}
+                defaultChecked={ScheduleState.complete}
+                disabled={ScheduleState.complete}
+                />
+            </Col>
+            <Col sm={2} className='m-auto color-darkBlue'>
+                { "[" + ScheduleState.time + "]" }
+            </Col>
             {/*말 줄임 표시 추후 추가 50자 제한, 툴팁 형태로 전체 표현 고민*/}
-            <Col sm={6} 
-                className={state.dateSchedule[clickedDate][i].complete ? 'm-auto color-darkBlue p-zero cancel_line' : 'm-auto color-darkBlue p-zero'}>{ state.dateSchedule[clickedDate][i].title }</Col>
+            <Col sm={6} className={ScheduleState.complete ? 'm-auto color-darkBlue p-zero cancel_line' : 'm-auto color-darkBlue p-zero'}>
+                { ScheduleState.title }
+            </Col>
             <Col sm={1} className='m-auto'>
-                {state.dateSchedule[clickedDate][i].important ? <StarTwoTone twoToneColor="orange"/> : "" }
+                {ScheduleState.important ? <StarTwoTone twoToneColor="orange"/> : "" }
             </Col>
             <Col sm={2} className='m-auto'>
-                <Dropdown className='cursor-pointer' menu={{items}} trigger={['click']}>
+                <Dropdown 
+                className={ScheduleState.complete ? '' : 'cursor-pointer'}
+                menu={{items}} 
+                trigger={['click']} 
+                disabled={ScheduleState.complete}>
                     <EllipsisOutlined/>
                 </Dropdown>
             </Col>
