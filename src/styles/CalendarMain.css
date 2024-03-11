@@ -137,3 +137,7 @@ p{
 .margin-left{
     margin-left: 10px;
 }   
+
+.cancel_line{
+    text-decoration: line-through;
+}
