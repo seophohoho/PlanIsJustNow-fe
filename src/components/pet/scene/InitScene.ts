@@ -13,10 +13,6 @@ export class InitScene extends Phaser.Scene{
 
     private im:ImageManager;
     private pet:Pet;
-    
-    init(){
-        //Event register.
-    }
 
     preload(){
        this.im.loadPetImage();
@@ -24,7 +20,7 @@ export class InitScene extends Phaser.Scene{
     }
 
     async create(){
-        this.pet = new Pet(this.time);
+        this.pet = new Pet();
         try{
             const res = await axios.post(`${serverUrl}/api/user/has-pet`,{"email":"seop0937@gmail.com"});
             const data = res.data.data[0];

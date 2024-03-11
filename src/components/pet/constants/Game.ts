@@ -35,3 +35,9 @@ export const petNatureList = {
 }
 
 export const BEHAVIOR_SIZE = 2;
+
+export const enum BEHAVIOR{
+    STAY=0,
+    WALK=1,
+    RUN=2
+}

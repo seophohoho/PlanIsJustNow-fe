@@ -1,6 +1,7 @@
 export const enum EVENTS {
     SET_PET = "set-pet",
     INIT_FINISH = "init-finish",
+    BEHAVIOR_FINISH = "behavior-finish",
 }
 
 class EventManager extends Phaser.Events.EventEmitter {
@@ -9,6 +10,7 @@ class EventManager extends Phaser.Events.EventEmitter {
         this.registeredEvents = {
             [EVENTS.SET_PET]: new Phaser.Events.EventEmitter(),
             [EVENTS.INIT_FINISH]: new Phaser.Events.EventEmitter(),
+            [EVENTS.BEHAVIOR_FINISH]: new Phaser.Events.EventEmitter(),
         };
     }
 

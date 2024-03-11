@@ -1,28 +1,21 @@
-import { petList } from "./constants/Game";
+import { BEHAVIOR_SIZE, petList } from "./constants/Game";
 
 export class Pet{
-    constructor(
-        private phaserTime:Phaser.Time.Clock,
-    ){
-        this.timerEvent = this.phaserTime.addEvent({
-            delay:500,
-            callback:this.startAnimation.bind(this),
-            loop:true
-        });
-    }
-
-    private timerEvent:Phaser.Time.TimerEvent;
+    constructor(){}
+    
     /*0-stay 1-walk 2-run*/
     private sprites:Array<Phaser.GameObjects.Sprite>=[];
+    
     private lastBehavior:number=0;
-    private behaviorCount:number=0;
-    private behaviorGoalCount:number=0;
     private lastDirection:boolean=false;
+
+    private isBehaviorFinish:boolean = true;
+
+    private behaviorGoalCount:number = 0;
+
     private info:object={
         posX:null,
         posY:null,
-        behavior:1,
-        direction:'r',
         petId:null,
         natureId:null,
         nickname:null,
@@ -62,35 +55,20 @@ export class Pet{
     getPetInfo(){
         return this.info['petInfo'].petId;
     }
-    startBehavior(){
-        if(this.behaviorCount != this.behaviorGoalCount){
-            this.startAnimation();
-        }
-        else{
-            this.timerEvent.paused = false;
-        }
-    }
-    setBehavior(id:number,direction:number){
-        this.behaviorGoalCount = Phaser.Math.Between(1,6);
-        this.lastBehavior = this.info['behavior'];
-        this.lastDirection = this.info['direction'];
+    setBehavior(){
 
-        if(direction == 1){this.info['direction'] = 'r'}
-        else{this.info['direction'] = 'l'}
-
-        this.info['behavior'] = id;
     }
     startAnimation(){
-        this.setBehavior(Phaser.Math.Between(0,2),Phaser.Math.Between(0,1));
         this.sprites[this.lastBehavior].anims.stop();
         this.sprites[this.lastBehavior].visible = false;
         this.sprites[this.info['behavior']].visible = true;
         
         const animationKey = `${petList[this.info['petId']]}_${this.setEvolution()}_${this.info['behavior']}_${this.info['direction']}`;
+        
+        this.sprites[this.info['behavior']].anims.repeat = this.behaviorGoalCount;
         this.sprites[this.info['behavior']].anims.play(animationKey)
         this.sprites[this.info['behavior']].on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
-            this.timerEvent.paused = true;
-            this.behaviorCount++;
+            this.isBehaviorFinish = true;
         }, this);
     }
 }
