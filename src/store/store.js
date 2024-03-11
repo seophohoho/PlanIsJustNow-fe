@@ -52,15 +52,17 @@ const petSelected = createSlice({
 const dateSchedule = createSlice({
   name : "dateSchedule",
   initialState : {
-    "2024-03-05" : [
-      {title : "운동", end:"2024-03-07", time: "[20:00]", important: true, complete : false},
-      {title : "식사", end:"2024-03-05", time: "[17:00]", important: false , complete : false},
+    "2024-03-11" : [
+      {title : "운동", end:"2024-03-15", time: "20:00", important: true, complete : false},
+      {title : "식사", end:"2024-03-16", time: "17:00", important: false , complete : true},
     ],
-    "2024-03-07" : [
-      {title : "회의", end:"2024-03-14", time: "[12:00]", important: true, complete : false},
-      {title : "간식", end:"2024-03-18", time: "[15:51]", important: false, complete : false},
-      {title : "후식", end:"2024-03-18", time: "[18:11]", important: true, complete : false},
-      {title : "공부", end:"2024-03-18", time: "[17:21]", important: false, complete : false},
+    "2024-03-12" : [
+      {title : "회의", end:"2024-03-17", time: "12:00", important: true, complete : false},
+      {title : "간식", end:"2024-03-18", time: "15:51", important: false, complete : true},
+      {title : "후식", end:"2024-03-19", time: "18:11", important: true, complete : true},
+      {title : "공부", end:"2024-03-20", time: "17:21", important: false, complete : true},
+      {title : "공부", end:"2024-03-21", time: "17:23", important: false, complete : false},
+
     ]
   },
   reducers:{
@@ -70,7 +72,7 @@ const dateSchedule = createSlice({
   }
 })
 
-//view에 나오는 스케줄
+//calendar view에 나오는 스케줄
 const events = createSlice({
   name : "events",
   initialState : {
