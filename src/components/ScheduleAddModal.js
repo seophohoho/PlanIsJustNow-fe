@@ -48,7 +48,7 @@ function ScheduleAddModal(props){
                 </Form.Label>
                 <Form.Control 
                     className="schedule-title m-left-13p"
-                    value="gdgd"/>{/*글자 50자 제한 필요*/}
+                    value={ state.dateSchedule[clickedDate][i].title }/>{/*글자 50자 제한 필요*/}
               </Form.Group>
 
               <Form.Group className="mb-4">
@@ -59,7 +59,7 @@ function ScheduleAddModal(props){
                     inputReadOnly={true} 
                     onChange={onChange} 
                     defaultOpenValue={dayjs('YYYY-MM-DD')}
-                    defaultValue={[dayjs('2024-10-10', 'YYYY-MM-DD'), dayjs('2024-10-20', 'YYYY-MM-DD')]}
+                    defaultValue={[dayjs(clickedDate, 'YYYY-MM-DD'), dayjs(state.dateSchedule[clickedDate][i].end, 'YYYY-MM-DD')]}
                     />
               </Form.Group>
 
@@ -71,7 +71,7 @@ function ScheduleAddModal(props){
                     inputReadOnly={true} 
                     onChange={onChange} 
                     defaultOpenValue={dayjs('HH:mm')}
-                    defaultValue={dayjs('10:00','HH:mm')}
+                    defaultValue={dayjs(state.dateSchedule[clickedDate][i].time,'HH:mm')}
                     format="HH:mm"
                     />
               </Form.Group>
@@ -84,7 +84,7 @@ function ScheduleAddModal(props){
                     icon={<i className="zmdi zmdi-star mdc-text-amber"/>}
                     shape="curve"
                     onChange={checkBoxHandler}
-                    defaultChecked={true} 
+                    defaultChecked={state.dateSchedule[clickedDate][i].important} 
                     />
               </Form.Group>
             </Form>
