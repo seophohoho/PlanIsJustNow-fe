@@ -12,6 +12,7 @@ import Schedule from '../components/ScheduleComponent';
 import { scheduleInit } from '../store/store';
 import { useSelector, useDispatch } from 'react-redux';
 import { Form, Col, Row, Container, Navbar, Stack, Image, Button, Dropdown, DropdownButton, SplitButton } from 'react-bootstrap';
+import PetSpaceComponent from '../components/PetSpaceComponent';
 
 const CalendarMain = () => {
     const state = useSelector((state)=> {return state});
@@ -117,10 +118,7 @@ const CalendarMain = () => {
                                 </div>
                             </Stack>
                             <Stack direction='horizontal' className='fc-direction-ltr'>
-                                {/* 브런치 분리됨! */}
-                                <div className='h-200'>
-                                    
-                                </div>
+                                <PetSpaceComponent></PetSpaceComponent>
                             </Stack>
                         </Stack>
                     </Col>

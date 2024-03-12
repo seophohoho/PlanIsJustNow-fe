@@ -15,6 +15,7 @@
     "@testing-library/user-event": "^13.5.0",
     "antd": "^5.15.0",
     "axios": "^1.6.5",
+    "phaser": "^3.80.1",
     "bootstrap": "^5.3.2",
     "http-proxy-middleware": "^2.0.6",
     "material-icons": "^1.13.12",
@@ -25,7 +26,10 @@
     "react-redux": "^9.1.0",
     "react-router-dom": "^6.21.3",
     "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "@types/node": "^20.11.24",
+    "@types/react": "^18.2.63",
+    "@types/react-dom": "^18.2.20"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -50,5 +54,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "typescript": "^4.9.5"
   }
 }
