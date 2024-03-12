@@ -23,7 +23,7 @@ function ScheduleAddModal(props){
     const checkBoxHandler = function(e){console.log(e.target.checked)}
     
     const title = "일정수정";//임시, 재활용 할려면 비슷한 형식으로 해야할 듯
-    //title state에 따라 바뀌게?? 초기값, 확인버튼의 동작 이벤트 등등
+    //title state에 따라 바뀌게?? 초기값, 확인버튼의 동작 이벤트를 다르게 해야함 등등
 
     //수정의 경우 기존 데이터가 입력되어있는 형태여야 함-!-
     //추가의 경우 완전 비어있는 상태
@@ -31,6 +31,14 @@ function ScheduleAddModal(props){
     //모달의 확인 버튼을 누를때 해당 조건을 모두 판단하고 state를 변경하는 식으로
     //일정의 각 항목의 정보를 나타내는 title 필요 sticky로
     //complete의 경우 모달로 확인 사실을 확정하고 disable 하는 방식으로
+
+
+    /*
+    확인 누를때, 체크박스 -> 컨펌 모달 확인 후 확정 형식으로(disable) , 변경 내용은 
+    임시로 state에 저장후 전달 payload에 index, clickedDate, title...등 객체형으로 확인버튼만 
+    add의 경우 edit의 경우
+    체크박스는 complete만 보내기 어차피 1회
+    */
 
     return (
       <> {/*todo 올바른 form control 할당 버튼 디자인 변경*/}
@@ -55,7 +63,7 @@ function ScheduleAddModal(props){
                 <Form.Label htmlFor="ControlInput2" className="color-darkBlue">날짜</Form.Label>
                 <RangePicker 
                     className="m-left-38p"
-                    id="ControlInput2" 
+                    id="ControlInput2"
                     inputReadOnly={true} 
                     onChange={onChange} 
                     defaultOpenValue={dayjs('YYYY-MM-DD')}
@@ -77,7 +85,7 @@ function ScheduleAddModal(props){
               </Form.Group>
 
               <Form.Group className="mb-4" controlId="ControlInput4">
-                <Form.Label className="color-darkBlue">중요여부</Form.Label> {/*checkbox*/}
+                <Form.Label className="color-darkBlue">중요여부</Form.Label>
                 <Checkbox 
                     animation="tada" 
                     className="m-left-80p" 
@@ -94,7 +102,7 @@ function ScheduleAddModal(props){
             <Button variant="secondary" onClick={handleClose}>
               취소
             </Button>
-            <Button variant="primary" onClick={handleClose/*스케줄 업데이트*/}>
+            <Button variant="primary" onClick={handleClose/* dispatch(edit or add)*/}>
               확인
             </Button>
           </Modal.Footer>
