@@ -1,3 +1,4 @@
+src/store/store.js
 import { configureStore, createSlice } from '@reduxjs/toolkit'
 
 const petImages = createSlice({//펫 이미지경로
