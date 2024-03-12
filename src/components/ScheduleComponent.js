@@ -13,7 +13,7 @@ function Schedule(props){
     const {i, clickedDate} = props
 
     const [confirmShow, setConfirmShow] = useState(false);
-    const confirmHandleClose = ()=>{setConfirmShow(false)}
+    const confirmHandleClose = ()=>{setConfirmShow(false);}
     const confirmHandler = (e)=>{setConfirmShow(e)};
 
     const [show, setShow] = useState(false);
@@ -32,7 +32,8 @@ function Schedule(props){
           label: <label className="color-violet">일정 삭제</label>,
           key: '1',
         }
-      ];
+    ];
+
     return(
         <Row className='section__item-schedule'>
             <ConfirmModal confirmShow={confirmShow} confirmHandleClose={confirmHandleClose} i={i} clickedDate={clickedDate}></ConfirmModal>
@@ -44,6 +45,7 @@ function Schedule(props){
                 icon={<i className="zmdi zmdi-check"/>}
                 onChange={(e)=>{ confirmHandler(e.target.checked) }}
                 defaultChecked={ScheduleState.complete}
+                checked={ScheduleState.complete}
                 disabled={ScheduleState.complete}
                 />
             </Col>
