@@ -1,14 +1,20 @@
 import {Col, Row, Button} from "react-bootstrap"
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import { EllipsisOutlined, StarTwoTone } from '@ant-design/icons';
 import { Dropdown } from 'antd';
 import { useState } from "react";
 import { Checkbox } from "pretty-checkbox-react";
 import ScheduleAddModal from "./ScheduleAddModal";
+import ConfirmModal from "./ConfirmModal";
 
 function Schedule(props){
     const state = useSelector((state)=> state)/*자주 쓰는거 변수로 줄여야겠음 */
+    const dispatch = useDispatch();
     const {i, clickedDate} = props
+
+    const [confirmShow, setConfirmShow] = useState(false);
+    const confirmHandleClose = ()=>{setConfirmShow(false)}
+    const confirmHandler = (e)=>{setConfirmShow(e)};
 
     const [show, setShow] = useState(false);
     const handleClose = () => {setShow(false);}
@@ -29,12 +35,14 @@ function Schedule(props){
       ];
     return(
         <Row className='section__item-schedule'>
+            <ConfirmModal confirmShow={confirmShow} confirmHandleClose={confirmHandleClose} i={i} clickedDate={clickedDate}></ConfirmModal>
             <ScheduleAddModal show={show} handleClose={handleClose} i={i} clickedDate={clickedDate}/>
+
             <Col sm={1} className='text-center'>
                 <Checkbox
                 className="margin-left"
                 icon={<i className="zmdi zmdi-check"/>}
-                onChange={(e)=>{/* state 변경 complete */}}
+                onChange={(e)=>{ confirmHandler(e.target.checked) }}
                 defaultChecked={ScheduleState.complete}
                 disabled={ScheduleState.complete}
                 />
