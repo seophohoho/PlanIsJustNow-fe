@@ -9,7 +9,7 @@ import moment from 'moment';
 import 'moment/locale/ko'
 import '../styles/CalendarMain.css'
 import Schedule from '../components/ScheduleComponent';
-import { scheduleinit } from '../store/store';
+import { scheduleInit } from '../store/store';
 import { useSelector, useDispatch } from 'react-redux';
 import { Form, Col, Row, Container, Navbar, Stack, Image, Button, Dropdown, DropdownButton, SplitButton } from 'react-bootstrap';
 
@@ -17,7 +17,7 @@ const CalendarMain = () => {
     const state = useSelector((state)=> {return state});
     const [clickedDate, setClickedDate] = useState("");
     const dispatch = useDispatch();
-  /*달력 뷰에 보여지는 것은 addEvent를 이용해서 객체.important 여부 판단 후 삽입  */
+  /*달력 뷰에 보여지는 것은 addEvent를 이용해서 객체.important 여부 판단 후 삽입 완료된 일정은 impotant가 자동으로 false가 되어야함  */
     const events = [
         { title: '물 999L 마시기', date: "2024-03-02", end: "2024-03-08" },/* date는 클릭된 이벤트의 날자 state를 가져와서 적용 title은 일정의 일부분을 가져옴*/
         { title: '물 1ml 마시기', start: "2024-03-11", end: "2024-03-14"},/* end는 +1일 추가하여 적용해야함, 추측이지만 12시 기준이라 그런듯 공식 Docs에도 주의하라고만 써져있음*/
@@ -54,7 +54,7 @@ const CalendarMain = () => {
                         }}
                         datesSet={function(args) {
                             /* 달력 초기화 시 작동 TODO: axios 일정관련 함수 또한 여기서 실행  */
-                            dispatch(scheduleinit(/*axios*/));
+                            dispatch(scheduleInit(/*axios*/));
                             
                             /* 리액트에서 최상위 객체 오브젝트에 접근하려면 이렇게 해야함 */
                             const view = args.view.calendar.currentData.currentDate;
