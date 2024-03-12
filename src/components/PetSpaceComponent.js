@@ -11,7 +11,7 @@ function PetSpaceComponent() {
     }, []);
 
     return (
-        <div className='fc-direction-ltr' id='phaser-container'></div>  
+        <div id='phaser-container'></div>  
     );
 }
 
