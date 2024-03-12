@@ -3,21 +3,26 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@fullcalendar/core": "^6.1.11",
+    "@ant-design/icons": "^5.3.1",
+    "@djthoms/pretty-checkbox": "^3.1.0",
     "@fullcalendar/daygrid": "^6.1.10",
+    "@fullcalendar/interaction": "^6.1.11",
+    "@fullcalendar/moment": "^6.1.11",
     "@fullcalendar/react": "^6.1.10",
     "@reduxjs/toolkit": "^2.0.1",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "antd": "^5.15.0",
+    "axios": "^1.6.5",
+    "phaser": "^3.80.1",
+    "bootstrap": "^5.3.2",
+    "http-proxy-middleware": "^2.0.6",
+    "material-icons": "^1.13.12",
+    "pretty-checkbox-react": "^3.2.0",
     "@types/node": "^20.11.24",
     "@types/react": "^18.2.63",
     "@types/react-dom": "^18.2.20",
-    "axios": "^1.6.5",
-    "bootstrap": "^5.3.2",
-    "dts-dom": "^3.7.0",
-    "http-proxy-middleware": "^2.0.6",
-    "phaser": "^3.80.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.9.2",
     "react-dom": "^18.2.0",
@@ -50,7 +55,7 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {
+    "devDependencies": {
     "typescript": "^4.9.5"
   }
 }
