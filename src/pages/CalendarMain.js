@@ -117,9 +117,7 @@ const CalendarMain = () => {
                                     </Stack>
                                 </div>
                             </Stack>
-                            <Stack direction='horizontal' className='fc-direction-ltr'>
-                                <PetSpaceComponent></PetSpaceComponent>
-                            </Stack>
+                            <PetSpaceComponent></PetSpaceComponent>
                         </Stack>
                     </Col>
                 </Row>
