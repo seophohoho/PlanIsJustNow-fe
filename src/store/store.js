@@ -48,11 +48,11 @@ const petSelected = createSlice({
   }
 })
 
-//전체 일정 보여주는 스케줄
+//전체 일정 보여주는 스케줄 추후에 완전히 비워야함
 const dateSchedule = createSlice({
   name : "dateSchedule",
   initialState : {
-    "2024-03-11" : [
+    "2024-03-13" : [
       {title : "운동", end:"2024-03-15", time: "20:00", important: true, complete : false},
       {title : "식사", end:"2024-03-16", time: "17:00", important: false , complete : true},
     ],
@@ -60,14 +60,24 @@ const dateSchedule = createSlice({
       {title : "회의", end:"2024-03-17", time: "12:00", important: true, complete : false},
       {title : "간식", end:"2024-03-18", time: "15:51", important: false, complete : true},
       {title : "후식", end:"2024-03-19", time: "18:11", important: true, complete : true},
-      {title : "공부", end:"2024-03-20", time: "17:21", important: false, complete : true},
+      {title : "가나다라마바사", end:"2024-03-20", time: "17:21", important: false, complete : true},
       {title : "공부", end:"2024-03-21", time: "17:23", important: false, complete : false},
 
     ]
   },
   reducers:{
-    scheduleinit(state, action){//state 초기화
-      return action.payload
+    scheduleInit(state, action){//state 초기화
+      return state
+    },
+    scheduleEdit(state, action){//add?
+      state.title = action.payload//payload 객체로
+      state.end = action.payload//
+      state.time = action.payload//
+      state.important = action.payload//
+    },
+    scheduleComplete(state, action){
+      state.complete = action.payload//
+      state.important = false// 완료된 일정은 자동으로 제외
     }
   }
 })
@@ -77,11 +87,9 @@ const events = createSlice({
   name : "events",
   initialState : {
       "2024-02-25": [
-        {index:'', title: '생일 파티', end: '', important: '', time: '', },
         // 해당 날짜의 다른 일정들
       ],
       "2024-02-05": [
-        { index:'', title: '회의', end: '', important: '', time: '', },
         // 해당 날짜의 다른 일정들
       ],
       // 추가적인 날짜와 일정들
@@ -89,7 +97,7 @@ const events = createSlice({
   reducers:{}
 })
 
-export const {scheduleinit} = dateSchedule.actions
+export const {scheduleInit, scheduleComplete} = dateSchedule.actions
 export const {selectPetId, selectPetName} = petSelected.actions
 //함수또한 내보내야 요청가능
 
