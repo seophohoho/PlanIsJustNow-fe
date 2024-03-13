@@ -25,7 +25,10 @@ function ScheduleAddModal(props){
             <Button variant="secondary" onClick={confirmHandleClose}>
               취소
             </Button>
-            <Button variant="primary" onClick={dispatch(scheduleComplete(true))/* dispatch(complete 변경, payload로 true 전달)*/}>
+            <Button variant="primary" onClick={()=>{
+              confirmHandleClose();
+              dispatch(scheduleComplete({clickedDate: clickedDate, index: i, package: true }))
+              }}>
               확인
             </Button>
           </Modal.Footer>
