@@ -11,7 +11,8 @@ function App() {
         <Route path='/' element={<Login/>}/>
         <Route path='/signup' element={ <Signup/> }/>
         <Route path='/Calendar' element={<CalendarMain/>}/>
-        <Route path="*" element={ <div>잘못된 경로입니다!</div> } />
+          <Route path='/signup-pet' element={<SignUpPet/>}/>
+          <Route path="*" element={ <div>잘못된 경로입니다!</div> } />
       </Routes>
     </>
   );
