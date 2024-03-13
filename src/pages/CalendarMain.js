@@ -123,7 +123,7 @@ const CalendarMain = () => {
                 </Row>
             </Container>
         </body>
-        <footer>{/*sticky Navbar로 결정 */}
+        <footer className='h-200'>{/*sticky Navbar로 결정 */}
 
         </footer>
      </div>
