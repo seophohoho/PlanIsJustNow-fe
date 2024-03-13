@@ -76,8 +76,8 @@ const dateSchedule = createSlice({
       state.important = action.payload//
     },
     scheduleComplete(state, action){
-      state.complete = action.payload//
-      state.important = false// 완료된 일정은 자동으로 제외
+      state[action.payload.clickedDate][action.payload.index].complete = action.payload.package
+      state[action.payload.clickedDate][action.payload.index].important = false 
     }
   }
 })
