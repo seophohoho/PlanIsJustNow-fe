@@ -44,7 +44,6 @@ function Schedule(props){
                 className="margin-left"
                 icon={<i className="zmdi zmdi-check"/>}
                 onChange={(e)=>{ confirmHandler(e.target.checked) }}
-                defaultChecked={ScheduleState.complete}
                 checked={ScheduleState.complete}
                 disabled={ScheduleState.complete}
                 />
