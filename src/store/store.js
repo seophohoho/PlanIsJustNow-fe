@@ -59,7 +59,7 @@ const dateSchedule = createSlice({
     "2024-03-12" : [
       {title : "회의", end:"2024-03-17", time: "12:00", important: true, complete : false},
       {title : "간식", end:"2024-03-18", time: "15:51", important: false, complete : true},
-      {title : "후식", end:"2024-03-19", time: "18:11", important: true, complete : true},
+      {title : "후식", end:"2024-03-19", time: "18:11", important: true, complete : false},
       {title : "가나다라마바사", end:"2024-03-20", time: "17:21", important: false, complete : true},
       {title : "공부", end:"2024-03-21", time: "17:23", important: false, complete : false},
 
@@ -69,15 +69,20 @@ const dateSchedule = createSlice({
     scheduleInit(state, action){//state 초기화
       return state
     },
-    scheduleEdit(state, action){//add?
-      state.title = action.payload//payload 객체로
-      state.end = action.payload//
-      state.time = action.payload//
-      state.important = action.payload//
+    scheduleStateEdit(state, action){//아래 post로 전부 보내야함
+      const scheduleState = state[action.payload.clickedDate][action.payload.index]
+      
+      scheduleState.title = action.payload.title
+      scheduleState.end = action.payload.end
+      scheduleState.time = action.payload.time
+      scheduleState.important = action.payload.important
     },
     scheduleComplete(state, action){
-      state[action.payload.clickedDate][action.payload.index].complete = action.payload.package
-      state[action.payload.clickedDate][action.payload.index].important = false 
+      const scheduleState = state[action.payload.clickedDate][action.payload.index]
+      
+      scheduleState.complete = action.payload.package
+      scheduleState.important = false 
+
     }
   }
 })
@@ -97,7 +102,7 @@ const events = createSlice({
   reducers:{}
 })
 
-export const {scheduleInit, scheduleComplete} = dateSchedule.actions
+export const {scheduleInit, scheduleComplete, scheduleStateEdit} = dateSchedule.actions
 export const {selectPetId, selectPetName} = petSelected.actions
 //함수또한 내보내야 요청가능
 
