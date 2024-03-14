@@ -35,7 +35,7 @@ export const petNatureList = {
 };
 
 export const enum MAX_BEHAVIOR_COUNT{
-    STAY=10,
+    STAY=20,
     WALK=6,
     RUN=4,
 }

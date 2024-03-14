@@ -1,5 +1,5 @@
-import { Pet } from './Pet'
-import { BEHAVIOR, MAX_BEHAVIOR_COUNT } from './constants/Game';
+import {Pet} from './Pet'
+import {BEHAVIOR, MAX_BEHAVIOR_COUNT} from './constants/Game';
 
 export class Behavior{
     constructor(
@@ -42,18 +42,17 @@ export class Behavior{
 
     getRandomBehavior(enumeration:typeof BEHAVIOR){
         const values = Object.keys(enumeration);
-        const enumKey = values[Math.floor(Math.random() * values.length)];
-        return enumKey;
+        return values[Math.floor(Math.random() * values.length)];
     }
 
     getRandomBehaviorGoalCount(behavior:number){
-        if(behavior === 0){return Math.floor((Math.random() * MAX_BEHAVIOR_COUNT.STAY+1) + 5);}
+        if(behavior === 0){return Math.floor((Math.random() * MAX_BEHAVIOR_COUNT.STAY+1) + 10);}
         if(behavior === 1){return Math.floor((Math.random() * MAX_BEHAVIOR_COUNT.WALK+1) + 1);}
         if(behavior === 2){return Math.floor((Math.random() * MAX_BEHAVIOR_COUNT.RUN+1) + 1);}
     }
 
     getRandomDirection(){
-        const randomBit = Math.floor((Math.random() * 2) + 0);
+        const randomBit = Math.floor((Math.random() * 2));
         if(randomBit){return 'r';}
         else{return 'l';}
     }

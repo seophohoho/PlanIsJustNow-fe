@@ -1,5 +1,5 @@
 export const enum MaxFrame{
-    STAY = 7,
+    STAY = 10,
     WALK = 19,
     RUN = 15 
 }

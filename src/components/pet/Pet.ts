@@ -1,4 +1,4 @@
-import { BEHAVIOR_SIZE, petList } from "./constants/Game";
+import {BEHAVIOR_SIZE, CANVAS_WIDTH, petList} from "./constants/Game";
 import EventManager, { EVENTS } from "./manager/EventManager";
 
 export class Pet{
@@ -6,6 +6,8 @@ export class Pet{
     
     /*0-stay 1-walk 2-run*/
     private sprites:Array<Phaser.GameObjects.Sprite>=[];
+
+    private moveDistance:number;
 
     private info:object={
         posX:null,
@@ -63,6 +65,23 @@ export class Pet{
         
         this.sprites[currentBehavior].anims.repeat = behaviorCount;
         this.sprites[currentBehavior].anims.play(animationKey);
+
+        // Set up animation event for each frame
+        this.sprites[currentBehavior].on(Phaser.Animations.Events.ANIMATION_UPDATE, () => {
+            if(currentBehavior === 0){this.moveDistance = 0;}
+            if(currentBehavior === 1){this.moveDistance = 2;}
+            if(currentBehavior === 2){this.moveDistance = 4;}
+
+            if (direction === 'l'){
+                this.info['posX'] -= this.moveDistance;
+                this.sprites[currentBehavior].x = this.info['posX'];
+            }
+            else {
+                this.info['posX'] += this.moveDistance;
+                this.sprites[currentBehavior].x = this.info['posX'];
+            }
+        });
+
         this.sprites[currentBehavior].on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
             EventManager.triggerEvent(EVENTS.BEHAVIOR_FINISH);
         }, this);
