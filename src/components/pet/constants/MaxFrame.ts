@@ -5,7 +5,7 @@ export const enum MaxFrame{
 }
 
 export const enum FrameRate{
-    STAY = 4,
+    STAY = 1,
     WALK = 8,
     RUN = 16
 }

@@ -7,7 +7,7 @@ export class Behavior{
         private pet:Pet,
     ){
         this.timerEvent = this.phaserTime.addEvent({
-            delay:100,
+            delay:10,
             callback:this.setBehavior.bind(this),
             loop:true
         });
@@ -46,7 +46,7 @@ export class Behavior{
     }
 
     getRandomBehaviorGoalCount(behavior:number){
-        if(behavior === 0){return Math.floor((Math.random() * MAX_BEHAVIOR_COUNT.STAY+1) + 10);}
+        if(behavior === 0){return Math.floor((Math.random() * MAX_BEHAVIOR_COUNT.STAY+1) + 30);}
         if(behavior === 1){return Math.floor((Math.random() * MAX_BEHAVIOR_COUNT.WALK+1) + 1);}
         if(behavior === 2){return Math.floor((Math.random() * MAX_BEHAVIOR_COUNT.RUN+1) + 1);}
     }
