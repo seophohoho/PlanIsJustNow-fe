@@ -52,16 +52,16 @@ const petSelected = createSlice({
 const dateSchedule = createSlice({
   name : "dateSchedule",
   initialState : {
-    "2024-03-13" : [
+    "2024-03-15" : [
       {title : "운동", end:"2024-03-15", time: "20:00", important: true, complete : false},
-      {title : "식사", end:"2024-03-16", time: "17:00", important: false , complete : true},
+      {title : "식사", end:"2024-03-17", time: "17:00", important: false , complete : true},
     ],
-    "2024-03-12" : [
-      {title : "회의", end:"2024-03-17", time: "12:00", important: true, complete : false},
-      {title : "간식", end:"2024-03-18", time: "15:51", important: false, complete : true},
-      {title : "후식", end:"2024-03-19", time: "18:11", important: true, complete : false},
-      {title : "가나다라마바사", end:"2024-03-20", time: "17:21", important: false, complete : true},
-      {title : "공부", end:"2024-03-21", time: "17:23", important: false, complete : false},
+    "2024-03-17" : [
+      {title : "회의", end:"2024-03-19", time: "12:00", important: true, complete : false},
+      {title : "간식", end:"2024-03-20", time: "15:51", important: false, complete : true},
+      {title : "후식", end:"2024-03-21", time: "18:11", important: true, complete : false},
+      {title : "가나다라마바사", end:"2024-03-22", time: "17:21", important: false, complete : true},
+      {title : "공부", end:"2024-03-23", time: "17:23", important: false, complete : false},
 
     ]
   },
