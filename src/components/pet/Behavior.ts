@@ -35,7 +35,6 @@ export class Behavior{
             
             this.lastDirection = this.currentDirection;
             this.currentDirection = this.getRandomDirection();
-
             this.pet.startAnimation(this.lastBehavior,this.currentBehavior,this.behaviorGoalCount,this.currentDirection);
         }
     }

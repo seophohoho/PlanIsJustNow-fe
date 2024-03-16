@@ -26,7 +26,6 @@ export class ImageManager{
             start:0,
             end:Math.floor(MaxFrame.STAY/2),
         });
-        console.log(petStayFrameRight);
         const petStayFrameLeft = this.phaser.anims.generateFrameNames(`${petList[0]}_0_0`,{
             prefix:`${petList[0]}_0_0-`,
             suffix:"",

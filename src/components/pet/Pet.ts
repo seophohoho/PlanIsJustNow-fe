@@ -11,6 +11,7 @@ export class Pet {
 
     private moveDistance:string;
     private moveDuration:number;
+    private completeDelay:number;
 
     private info: object = {
         posX: CANVAS_WIDTH / 2,
@@ -76,37 +77,33 @@ export class Pet {
         this.sprites[currentBehavior].anims.repeat = behaviorCount;
         this.sprites[currentBehavior].anims.play(animationKey)
 
-        // currentBehavior가 0인 경우 위치를 변경하지 않음
-        if (currentBehavior === 0) {
-            EventManager.triggerEvent(EVENTS.BEHAVIOR_FINISH);
-            return;
-        }
-
         if(currentBehavior === 0){
-            this.moveDistance = direction === 'l' ? '0' : '0';
-            this.moveDuration = 5000;
+            this.moveDistance = direction === 'l' ? '-=0' : '+=0';
+            this.moveDuration = 1000;
+            this.completeDelay = 1000;
         }
         if(currentBehavior === 1){
             this.moveDistance = direction === 'l' ? '-=32' : '+=32';
             this.moveDuration = 1000;
+            this.completeDelay = 0;
+
         }
         if(currentBehavior === 2){
             this.moveDistance = direction === 'l' ? '-=48' : '+=48';
             this.moveDuration = 300;
+            this.completeDelay = 0;
         }
-        
+
         for (let i = 0; i < this.sprites.length; i++) {
             const sprite = this.sprites[i];
             const moveTween = sprite.scene.tweens.add({
                 targets: sprite,
                 x: this.moveDistance,
                 duration:this.moveDuration,
+                completeDelay:this.completeDelay,
                 onUpdate: () => {
-                    if (sprite.x < 28) {
-                        sprite.x = 28;
-                    } else if (sprite.x > CANVAS_WIDTH-28) {
-                        sprite.x = CANVAS_WIDTH-28;
-                    }
+                    if (sprite.x < 28) {sprite.x = 28;} 
+                    else if (sprite.x > CANVAS_WIDTH-28) {sprite.x = CANVAS_WIDTH-28;}
                 },
                 onComplete: () => {
                     EventManager.triggerEvent(EVENTS.BEHAVIOR_FINISH);
