@@ -56,6 +56,54 @@ export class ImageManager{
             start:Math.floor(MaxFrame.RUN/2)+1,
             end:MaxFrame.RUN,
         });
+        const petNapFrameRight = this.phaser.anims.generateFrameNames(`${petList[0]}_0_3`,{
+            prefix:`${petList[0]}_0_3-`,
+            suffix:"",
+            start:0,
+            end:Math.floor(MaxFrame.NAP/2),
+        });
+        const petNapFrameLeft = this.phaser.anims.generateFrameNames(`${petList[0]}_0_3`,{
+            prefix:`${petList[0]}_0_3-`,
+            suffix:"",
+            start:Math.floor(MaxFrame.NAP/2)+1,
+            end:MaxFrame.NAP,
+        });
+        const petSleepFrameRight = this.phaser.anims.generateFrameNames(`${petList[0]}_0_4`,{
+            prefix:`${petList[0]}_0_4-`,
+            suffix:"",
+            start:0,
+            end:Math.floor(MaxFrame.SLEEP/2),
+        });
+        const petSleepFrameLeft = this.phaser.anims.generateFrameNames(`${petList[0]}_0_4`,{
+            prefix:`${petList[0]}_0_4-`,
+            suffix:"",
+            start:Math.floor(MaxFrame.SLEEP/2)+1,
+            end:MaxFrame.SLEEP,
+        });
+        const petBoastFrameRight = this.phaser.anims.generateFrameNames(`${petList[0]}_0_5`,{
+            prefix:`${petList[0]}_0_5-`,
+            suffix:"",
+            start:0,
+            end:Math.floor(MaxFrame.BOAST/2),
+        });
+        const petBoastFrameLeft = this.phaser.anims.generateFrameNames(`${petList[0]}_0_5`,{
+            prefix:`${petList[0]}_0_5-`,
+            suffix:"",
+            start:Math.floor(MaxFrame.BOAST/2)+1,
+            end:MaxFrame.BOAST,
+        });
+        const petSneezeFrameRight = this.phaser.anims.generateFrameNames(`${petList[0]}_0_6`,{
+            prefix:`${petList[0]}_0_6-`,
+            suffix:"",
+            start:0,
+            end:Math.floor(MaxFrame.SNEEZE/2),
+        });
+        const petSneezeFrameLeft = this.phaser.anims.generateFrameNames(`${petList[0]}_0_6`,{
+            prefix:`${petList[0]}_0_6-`,
+            suffix:"",
+            start:Math.floor(MaxFrame.SNEEZE/2)+1,
+            end:MaxFrame.SNEEZE,
+        });
         this.createAnimation(
             `${petList[0]}_0_0_r`,
             petStayFrameRight,
@@ -90,6 +138,54 @@ export class ImageManager{
             `${petList[0]}_0_2_l`,
             petRunFrameLeft,
             FrameRate.RUN,
+            DELAY_RATE
+        );
+        this.createAnimation(
+            `${petList[0]}_0_3_r`,
+            petNapFrameRight,
+            FrameRate.NAP,
+            DELAY_RATE
+        );
+        this.createAnimation(
+            `${petList[0]}_0_3_l`,
+            petNapFrameLeft,
+            FrameRate.NAP,
+            DELAY_RATE
+        );
+        this.createAnimation(
+            `${petList[0]}_0_4_r`,
+            petSleepFrameRight,
+            FrameRate.SLEEP,
+            DELAY_RATE
+        );
+        this.createAnimation(
+            `${petList[0]}_0_4_l`,
+            petSleepFrameLeft,
+            FrameRate.SLEEP,
+            DELAY_RATE
+        );
+        this.createAnimation(
+            `${petList[0]}_0_5_r`,
+            petBoastFrameRight,
+            FrameRate.BOAST,
+            DELAY_RATE
+        );
+        this.createAnimation(
+            `${petList[0]}_0_5_l`,
+            petBoastFrameLeft,
+            FrameRate.BOAST,
+            DELAY_RATE
+        );
+        this.createAnimation(
+            `${petList[0]}_0_6_r`,
+            petSneezeFrameRight,
+            FrameRate.SNEEZE,
+            DELAY_RATE
+        );
+        this.createAnimation(
+            `${petList[0]}_0_6_l`,
+            petSneezeFrameLeft,
+            FrameRate.SNEEZE,
             DELAY_RATE
         );
     }

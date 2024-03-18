@@ -48,6 +48,10 @@ export class Behavior{
         if(behavior === 0){return Math.floor((Math.random() * MAX_BEHAVIOR_COUNT.STAY+1) + 30);}
         if(behavior === 1){return Math.floor((Math.random() * MAX_BEHAVIOR_COUNT.WALK+1) + 1);}
         if(behavior === 2){return Math.floor((Math.random() * MAX_BEHAVIOR_COUNT.RUN+1) + 1);}
+        if(behavior === 3){return Math.floor((Math.random() * MAX_BEHAVIOR_COUNT.NAP+1) + 1);}
+        if(behavior === 4){return Math.floor((Math.random() * MAX_BEHAVIOR_COUNT.SLEEP+1) + 1);}
+        if(behavior === 5){return Math.floor((Math.random() * MAX_BEHAVIOR_COUNT.BOAST+1) + 1);}
+        if(behavior === 6){return Math.floor((Math.random() * MAX_BEHAVIOR_COUNT.SNEEZE+1) + 1);}
     }
 
     getRandomDirection(){

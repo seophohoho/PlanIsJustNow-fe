@@ -29,21 +29,29 @@ export const petList = [
 ];
 
 export const petNatureList = {
-    0:[0,1,2],
-    1:[0,1,2],
-    2:[0,1,2],
+    0:[0,1,2,3,4,5,6],
+    1:[0,1,2,3,4,5,6],
+    2:[0,1,2,3,4,5,6],
 };
 
 export const enum MAX_BEHAVIOR_COUNT{
     STAY=100,
     WALK=6,
     RUN=4,
+    NAP=1,
+    SLEEP=20,
+    BOAST=3,
+    SNEEZE=3,
 }
 
-export const BEHAVIOR_SIZE = 2;
+export const BEHAVIOR_SIZE = 7;
 
 export const BEHAVIOR = {
     0:'stay',
     1:'walk',
     2:'run',
+    3:'nap',
+    4:'sleep',
+    5:'boast',
+    6:'sneeze',
 }

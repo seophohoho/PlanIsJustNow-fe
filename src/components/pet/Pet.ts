@@ -9,7 +9,8 @@ export class Pet {
     private sprites: Array<Phaser.GameObjects.Sprite> = [];
     private container: Phaser.GameObjects.Container; // 컨테이너를 저장할 변수 추가
 
-    private moveDistance:string;
+    private moveDistanceX:string;
+    private moveDistanceY:string;
     private moveDuration:number;
     private completeDelay:number;
 
@@ -78,27 +79,54 @@ export class Pet {
         this.sprites[currentBehavior].anims.play(animationKey)
 
         if(currentBehavior === 0){
-            this.moveDistance = direction === 'l' ? '-=0' : '+=0';
+            this.moveDistanceX = direction === 'l' ? '-=0' : '+=0';
+            this.moveDistanceY = direction === 'l' ? '-=0' : '+=0';
             this.moveDuration = 1000;
             this.completeDelay = 1000;
         }
         if(currentBehavior === 1){
-            this.moveDistance = direction === 'l' ? '-=32' : '+=32';
+            this.moveDistanceX = direction === 'l' ? '-=32' : '+=32';
+            this.moveDistanceY = direction === 'l' ? '-=0' : '+=0';
             this.moveDuration = 1000;
             this.completeDelay = 0;
-
         }
         if(currentBehavior === 2){
-            this.moveDistance = direction === 'l' ? '-=48' : '+=48';
+            this.moveDistanceX = direction === 'l' ? '-=48' : '+=48';
+            this.moveDistanceY = direction === 'l' ? '-=0' : '+=0';
             this.moveDuration = 300;
             this.completeDelay = 0;
+        }
+        if(currentBehavior === 3){
+            this.moveDistanceX = direction === 'l' ? '-=0' : '+=0';
+            this.moveDistanceY = direction === 'l' ? '-=0' : '+=0';
+            this.moveDuration = 1000;
+            this.completeDelay = 1000;
+        }
+        if(currentBehavior === 4){
+            this.moveDistanceX = direction === 'l' ? '-=0' : '+=0';
+            this.moveDistanceY = direction === 'l' ? '-=0' : '+=0';
+            this.moveDuration = 1000;
+            this.completeDelay = 0;
+        }
+        if(currentBehavior === 5){
+            this.moveDistanceX = direction === 'l' ? '-=32' : '+=32';
+            this.moveDistanceY = direction === 'l' ? '-=0' : '+=0';
+            this.moveDuration = 1000;
+            this.completeDelay = 1000;
+        }
+        if(currentBehavior === 6){
+            this.moveDistanceX = direction === 'l' ? '-=0' : '+=0';
+            this.moveDistanceY = direction === 'l' ? '-=0' : '+=0';
+            this.moveDuration = 1000;
+            this.completeDelay = 1000;
         }
 
         for (let i = 0; i < this.sprites.length; i++) {
             const sprite = this.sprites[i];
             const moveTween = sprite.scene.tweens.add({
                 targets: sprite,
-                x: this.moveDistance,
+                x: this.moveDistanceX,
+                y: this.moveDistanceY,
                 duration:this.moveDuration,
                 completeDelay:this.completeDelay,
                 onUpdate: () => {
