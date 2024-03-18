@@ -25,7 +25,7 @@ export const config = {
 };
 
 export const petList = [
-    'kirby'
+    'kirby',
 ];
 
 export const petNatureList = {
