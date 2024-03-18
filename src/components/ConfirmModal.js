@@ -18,7 +18,7 @@ function ScheduleAddModal(props){
           </Modal.Header>
 
           <Modal.Body>
-            <p>한번 결정하면 일정 완료를 결정하시면 이전 상태로 돌아갈 수 없습니다!</p>
+            <p>일정 완료를 결정하시면 이전 상태로 돌아갈 수 없습니다!</p>
           </Modal.Body>
 
           <Modal.Footer>
