@@ -13,15 +13,16 @@ function ScheduleAddModal(props){
   const dispatch = useDispatch();
   const {show, handleClose, i, clickedDate} = props;
   const { RangePicker } = DatePicker;
-
+  const ScheduleState = state.dateSchedule[clickedDate][i];
+  
   const tempSchedule = {
-    clickedDate: "",
-    index: "", 
-    title : "", 
-    end: "", 
-    time: "", 
-    important: false, 
-    complete : false
+    clickedDate: clickedDate,
+    index: i, 
+    title : ScheduleState.title, 
+    end: ScheduleState.end, 
+    time: ScheduleState.time, 
+    important: ScheduleState.important, 
+    complete : ScheduleState.complete
   }
 
   dayjs.extend(customParseFormat);
@@ -32,19 +33,24 @@ function ScheduleAddModal(props){
   function TimePickerHandler(notuse, picks){
     tempSchedule.time = picks
   };
-  
+  function checkBoxHandler(e){
+    tempSchedule.important = e.target.checked;
+  };
+  function titleHandler(e){
+    tempSchedule.title = e.target.value;
+  }
 
   const confirmHandler = function(e){
     /*+조건 검사*/
     tempSchedule.clickedDate = clickedDate;
     tempSchedule.index = i;
-    
-    dispatch()
+
+    dispatch(scheduleStateEdit(tempSchedule))
     console.log(tempSchedule)
     handleClose();
   };
 
-  const checkBoxHandler = function(e){/* e.target.checked을 임시 state에 전달 */}
+  
   
   const title = "일정수정";//임시, 재활용 하려면 비슷한 형식으로 해야할 듯
   //title state에 따라 바뀌게?? 초기값, 확인버튼의 동작 이벤트를 다르게 해야함 등등
@@ -71,7 +77,9 @@ function ScheduleAddModal(props){
               </Form.Label>
               <Form.Control 
                   className="schedule-title m-left-13p"
-                  defaultValue={ state.dateSchedule[clickedDate][i].title }/>{/*글자 50자 제한 필요*/}
+                  defaultValue={ state.dateSchedule[clickedDate][i].title }
+                  onChange={titleHandler}
+              />{/*글자 50자 제한 필요*/}
             </Form.Group>
 
             <Form.Group className="mb-4">
