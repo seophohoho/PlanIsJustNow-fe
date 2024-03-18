@@ -121,7 +121,7 @@ const CalendarMain = () => {
                                                 <p>중요</p>
                                             </Col>
                                             <Col sm={2} className='m-auto color-darkBlue p-zero text-center'>
-                                                더보기
+                                                <Button onClick="">추가</Button >
                                             </Col>
                                         </Row>
                                         {/*비동기 문제 &&로 해결*/
