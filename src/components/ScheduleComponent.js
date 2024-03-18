@@ -39,7 +39,7 @@ function Schedule(props){
             <ConfirmModal confirmShow={confirmShow} confirmHandleClose={confirmHandleClose} i={i} clickedDate={clickedDate}></ConfirmModal>
             <ScheduleAddModal show={show} handleClose={handleClose} i={i} clickedDate={clickedDate}/>
 
-            <Col sm={1} className='text-center'>
+            <Col sm={2} className='text-center'>
                 <Checkbox
                 className="margin-left"
                 icon={<i className="zmdi zmdi-check"/>}
@@ -52,13 +52,13 @@ function Schedule(props){
                 { "[" + ScheduleState.time + "]" }
             </Col>
             {/*말 줄임 표시 추후 추가 50자 제한, 툴팁 형태로 전체 표현 고민*/}
-            <Col sm={6} className={ScheduleState.complete ? 'm-auto color-darkBlue p-zero cancel_line' : 'm-auto color-darkBlue p-zero'}>
+            <Col sm={5} className={ScheduleState.complete ? 'm-auto color-darkBlue p-zero cancel_line' : 'm-auto color-darkBlue p-zero'}>
                 { ScheduleState.title }
             </Col>
             <Col sm={1} className='m-auto'>
                 {ScheduleState.important ? <StarTwoTone twoToneColor="orange"/> : "" }
             </Col>
-            <Col sm={2} className='m-auto'>
+            <Col sm={2} className='m-auto text-center' >
                 <Dropdown 
                 className={ScheduleState.complete ? '' : 'cursor-pointer'}
                 menu={{items}} 
