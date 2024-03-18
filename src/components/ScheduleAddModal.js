@@ -14,14 +14,34 @@ function ScheduleAddModal(props){
   const {show, handleClose, i, clickedDate} = props;
   const { RangePicker } = DatePicker;
 
+  const tempSchedule = {
+    clickedDate: "",
+    index: "", 
+    title : "", 
+    end: "", 
+    time: "", 
+    important: false, 
+    complete : false
+  }
+
   dayjs.extend(customParseFormat);
-  const timePickerHandler = (time, timeString) => {
-      console.log(time, timeString);
+
+  function DatePickerHandler(notuse, picks){
+    tempSchedule.end = picks
   };
+  function TimePickerHandler(notuse, picks){
+    tempSchedule.time = picks
+  };
+  
 
   const confirmHandler = function(e){
+    /*+조건 검사*/
+    tempSchedule.clickedDate = clickedDate;
+    tempSchedule.index = i;
+    
+    dispatch()
+    console.log(tempSchedule)
     handleClose();
-    /*조건 검사*/
   };
 
   const checkBoxHandler = function(e){/* e.target.checked을 임시 state에 전달 */}
@@ -55,14 +75,14 @@ function ScheduleAddModal(props){
             </Form.Group>
 
             <Form.Group className="mb-4">
-              <Form.Label htmlFor="ControlInput2" className="color-darkBlue">날짜</Form.Label>
-              <RangePicker 
-                  className="m-left-38p"
+              <Form.Label htmlFor="ControlInput2" className="color-darkBlue">종료일자</Form.Label>
+              <DatePicker 
+                  className="m-left-59p"
                   id="ControlInput2"
                   inputReadOnly={true} 
-                  onChange={timePickerHandler}//datePickerHandler추가 후 변경 
+                  onChange={DatePickerHandler}//datePickerHandler추가 후 변경 
                   defaultOpenValue={dayjs('YYYY-MM-DD')}
-                  defaultValue={[dayjs(clickedDate, 'YYYY-MM-DD'), dayjs(state.dateSchedule[clickedDate][i].end, 'YYYY-MM-DD')]}
+                  defaultValue={[dayjs(state.dateSchedule[clickedDate][i].end, 'YYYY-MM-DD')]}
                   />
             </Form.Group>
 
@@ -72,7 +92,7 @@ function ScheduleAddModal(props){
                   className="m-left-60p" 
                   id="ControlInput3" 
                   inputReadOnly={true} 
-                  onChange={timePickerHandler} 
+                  onChange={TimePickerHandler} 
                   defaultOpenValue={dayjs('HH:mm')}
                   defaultValue={dayjs(state.dateSchedule[clickedDate][i].time,'HH:mm')}
                   format="HH:mm"
@@ -94,12 +114,12 @@ function ScheduleAddModal(props){
         </Modal.Body>
 
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            취소
-          </Button>
-          <Button variant="primary" 
+        <Button variant="primary" 
           onClick={confirmHandler}>
             확인
+          </Button>
+          <Button variant="secondary" onClick={handleClose}>
+            취소
           </Button>
         </Modal.Footer>
       </Modal>
