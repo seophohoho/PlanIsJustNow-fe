@@ -4,7 +4,7 @@ import { scheduleComplete } from "../store/store"
 import "@djthoms/pretty-checkbox"
 
 
-function ScheduleAddModal(props){
+function ConfirmModal(props){
     const state = useSelector(state => state)
     const dispatch = useDispatch(state=> state)
     const {confirmShow, confirmHandleClose, i, clickedDate} = props;
@@ -38,4 +38,4 @@ function ScheduleAddModal(props){
   }
   
 
-export default ScheduleAddModal
+export default ConfirmModal
