@@ -4,7 +4,7 @@ import { EllipsisOutlined, StarTwoTone } from '@ant-design/icons';
 import { Dropdown } from 'antd';
 import { useState } from "react";
 import { Checkbox } from "pretty-checkbox-react";
-import ScheduleAddModal from "./ScheduleAddModal";
+import ScheduleEditModal from "./ScheduleEditModal";
 import ConfirmModal from "./ConfirmModal";
 
 function Schedule(props){
@@ -37,7 +37,7 @@ function Schedule(props){
     return(
         <Row className='section__item-schedule'>
             <ConfirmModal confirmShow={confirmShow} confirmHandleClose={confirmHandleClose} i={i} clickedDate={clickedDate}></ConfirmModal>
-            <ScheduleAddModal show={show} handleClose={handleClose} i={i} clickedDate={clickedDate}/>
+            <ScheduleEditModal show={show} handleClose={handleClose} i={i} clickedDate={clickedDate}/>
 
             <Col sm={2} className='text-center'>
                 <Checkbox
