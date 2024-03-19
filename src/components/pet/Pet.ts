@@ -12,7 +12,7 @@ export class Pet {
     private moveDistanceX:string;
     private moveDistanceY:string;
     private moveDuration:number;
-    private completeDelay:number;
+    private completeDelay:number; 
 
     private info: object = {
         posX: CANVAS_WIDTH / 2,
@@ -53,6 +53,10 @@ export class Pet {
     getData() {
         return this.info;
     }
+    
+    getNatureId(){
+        return this.info['natureId'];
+    }
 
     setContainer(container: Phaser.GameObjects.Container) {
         this.container = container; // 컨테이너 설정
@@ -84,37 +88,37 @@ export class Pet {
             this.moveDuration = 1000;
             this.completeDelay = 1000;
         }
-        if(currentBehavior === 1){
+        else if(currentBehavior === 1){
             this.moveDistanceX = direction === 'l' ? '-=32' : '+=32';
             this.moveDistanceY = direction === 'l' ? '-=0' : '+=0';
             this.moveDuration = 1000;
             this.completeDelay = 0;
         }
-        if(currentBehavior === 2){
+        else if(currentBehavior === 2){
             this.moveDistanceX = direction === 'l' ? '-=48' : '+=48';
             this.moveDistanceY = direction === 'l' ? '-=0' : '+=0';
             this.moveDuration = 300;
             this.completeDelay = 0;
         }
-        if(currentBehavior === 3){
+        else if(currentBehavior === 3){
             this.moveDistanceX = direction === 'l' ? '-=0' : '+=0';
+            this.moveDistanceY = direction === 'l' ? '-=0' : '+=0';
+            this.moveDuration = 1000;
+            this.completeDelay = 5000;
+        }
+        else if(currentBehavior === 4){
+            this.moveDistanceX = direction === 'l' ? '-=0' : '+=0';
+            this.moveDistanceY = direction === 'l' ? '-=0' : '+=0';
+            this.moveDuration = 500;
+            this.completeDelay = 5000;
+        }
+        else if(currentBehavior === 5){
+            this.moveDistanceX = direction === 'l' ? '-=64' : '+=64';
             this.moveDistanceY = direction === 'l' ? '-=0' : '+=0';
             this.moveDuration = 1000;
             this.completeDelay = 1000;
         }
-        if(currentBehavior === 4){
-            this.moveDistanceX = direction === 'l' ? '-=0' : '+=0';
-            this.moveDistanceY = direction === 'l' ? '-=0' : '+=0';
-            this.moveDuration = 1000;
-            this.completeDelay = 0;
-        }
-        if(currentBehavior === 5){
-            this.moveDistanceX = direction === 'l' ? '-=32' : '+=32';
-            this.moveDistanceY = direction === 'l' ? '-=0' : '+=0';
-            this.moveDuration = 1000;
-            this.completeDelay = 1000;
-        }
-        if(currentBehavior === 6){
+        else if(currentBehavior === 6){
             this.moveDistanceX = direction === 'l' ? '-=0' : '+=0';
             this.moveDistanceY = direction === 'l' ? '-=0' : '+=0';
             this.moveDuration = 1000;
@@ -129,6 +133,7 @@ export class Pet {
                 y: this.moveDistanceY,
                 duration:this.moveDuration,
                 completeDelay:this.completeDelay,
+                ease:'Linear',
                 onUpdate: () => {
                     if (sprite.x < 28) {sprite.x = 28;} 
                     else if (sprite.x > CANVAS_WIDTH-28) {sprite.x = CANVAS_WIDTH-28;}
