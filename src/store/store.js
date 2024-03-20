@@ -69,13 +69,62 @@ const dateSchedule = createSlice({
     scheduleInit(state, action){//state 초기화
       return state
     },
-    scheduleStateEdit(state, action){//아래 post로 전부 보내야함
+    scheduleStateAdd(state, action){
+      const scheduleState = { 
+        title : action.payload.title,
+        end: action.payload.end,
+        time: action.payload.time,
+        important: action.payload.important, 
+        complete : false 
+      }
+
+      // 같은 날짜에 important가 true인 일정의 개수를 계산.
+      const clickedDate = action.payload.clickedDate;
+      const importantCount = state[clickedDate] ? state[clickedDate].filter(item => item.important).length : 0;
+      
+      //중요표시는 3개까지, 일정은 1글자 이상 입력 제어
+      if((importantCount === 3 && action.payload.important === true) || action.payload.title.length === 0){
+        if(action.payload.title.length === 0){
+          alert("일정을 입력해 주세요!")
+        }
+        else{
+            alert("중요 표시는 3개를 초과하여 등록할 수 없습니다!")
+        }
+      }
+      else{
+        // 새로운 날짜가 주어진 경우, 해당 날짜에 대한 새로운 배열을 생성하고 일정을 추가
+        // 이미 해당 날짜에 일정이 있다면, 새로운 일정을 해당 배열에 추가합니다.
+        if (!state[clickedDate]) {
+          state[clickedDate] = [scheduleState];
+        } 
+        else{
+          state[clickedDate].push(scheduleState);
+        }
+      }
+    },
+    scheduleStateEdit(state, action){//아래 post로 전부 보내야함 axios 함수도 여기서 관리?
       const scheduleState = state[action.payload.clickedDate][action.payload.index]
       
-      scheduleState.title = action.payload.title
-      scheduleState.end = action.payload.end
-      scheduleState.time = action.payload.time
-      scheduleState.important = action.payload.important
+      // 같은 날짜에 important가 true인 일정의 개수를 계산.
+      const clickedDate = action.payload.clickedDate;
+      const importantCount = state[clickedDate] ? state[clickedDate].filter(item => item.important).length : 0;
+      //중요표시가 3개 + 전달 받은 중요가 true일때만  
+      if((importantCount === 3 && action.payload.important === true) || action.payload.title.length === 0){
+        if(action.payload.title.length === 0){
+          alert("일정을 입력해 주세요!")
+        }
+        else{
+            alert("중요 표시는 3개를 초과하여 등록할 수 없습니다!")
+        }
+        
+      }
+      else{
+        scheduleState.title = action.payload.title
+        scheduleState.end = action.payload.end
+        scheduleState.time = action.payload.time
+        scheduleState.important = action.payload.important
+      }
+
     },
     scheduleComplete(state, action){
       const scheduleState = state[action.payload.clickedDate][action.payload.index]
@@ -91,18 +140,27 @@ const dateSchedule = createSlice({
 const events = createSlice({
   name : "events",
   initialState : {
-      "2024-02-25": [
-        // 해당 날짜의 다른 일정들
-      ],
-      "2024-02-05": [
-        // 해당 날짜의 다른 일정들
-      ],
-      // 추가적인 날짜와 일정들
+      
   },
   reducers:{}
 })
 
-export const {scheduleInit, scheduleComplete, scheduleStateEdit} = dateSchedule.actions
+//add modal handler
+const addShow = createSlice({
+  name : "addShow",
+  initialState : {show: false},
+  reducers:{
+    addHandleClose(state, action){
+      state.show = false;
+    },
+    addHandleShow(state, action){
+      state.show = true;
+    }
+  }
+})
+
+export const {addHandleClose, addHandleShow} = addShow.actions
+export const {scheduleInit, scheduleComplete, scheduleStateEdit, scheduleStateAdd} = dateSchedule.actions
 export const {selectPetId, selectPetName} = petSelected.actions
 //함수또한 내보내야 요청가능
 
@@ -115,5 +173,7 @@ export default configureStore({// 내보낼 state, 작성 문법은 아래와 �
     petSelected : petSelected.reducer,
     events : events.reducer,
     dateSchedule :dateSchedule.reducer,
+    addShow : addShow.reducer,
+    
   }
 }) 
