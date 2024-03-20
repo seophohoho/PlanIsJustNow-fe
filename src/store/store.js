@@ -58,8 +58,8 @@ const dateSchedule = createSlice({
     ],
     "2024-03-19" : [
       {title : "회의", end:"2024-03-20", time: "12:00", important: true, complete : false},
-      {title : "간식", end:"2024-03-21", time: "15:51", important: false, complete : true},
-      {title : "후식", end:"2024-03-22", time: "18:11", important: true, complete : false},
+      {title : "간식", end:"2024-03-21", time: "15:51", important: false, complete : false},
+      {title : "후식", end:"2024-03-22", time: "18:11", important: false, complete : false},
       {title : "가나다라마바사", end:"2024-03-25", time: "17:21", important: false, complete : true},
       {title : "공부", end:"2024-03-24", time: "17:23", important: false, complete : false},
 
@@ -96,9 +96,12 @@ const dateSchedule = createSlice({
         // 이미 해당 날짜에 일정이 있다면, 새로운 일정을 해당 배열에 추가합니다.
         if (!state[clickedDate]) {
           state[clickedDate] = [scheduleState];
-        } 
-        else{
-          state[clickedDate].push(scheduleState);
+        } else {
+          if (scheduleState.important) {
+            state[clickedDate].unshift(scheduleState);
+          } else {
+            state[clickedDate].push(scheduleState);
+          }
         }
       }
     },
@@ -119,10 +122,22 @@ const dateSchedule = createSlice({
         
       }
       else{
-        scheduleState.title = action.payload.title
-        scheduleState.end = action.payload.end
-        scheduleState.time = action.payload.time
-        scheduleState.important = action.payload.important
+        if (!scheduleState.important) {
+          // 기존의 important가 false였으나 true로 변경되는 경우, 최상단으로 이동
+          state[clickedDate].splice(action.payload.index, 1); // 기존 위치에서 제거
+          state[clickedDate].unshift(scheduleState); // 최상단에 추가
+          scheduleState.title = action.payload.title
+          scheduleState.end = action.payload.end
+          scheduleState.time = action.payload.time
+          scheduleState.important = action.payload.important
+        } else {
+          // important가 true로 변경되지 않는 경우, 기존 위치에서 업데이트만 수행
+          scheduleState.title = action.payload.title
+          scheduleState.end = action.payload.end
+          scheduleState.time = action.payload.time
+          scheduleState.important = action.payload.important
+        }
+        
       }
 
     },
@@ -142,7 +157,11 @@ const events = createSlice({
   initialState : {
       
   },
-  reducers:{}
+  reducers:{
+    initializeEvent(state, action){
+
+    }
+  }
 })
 
 //add modal handler
