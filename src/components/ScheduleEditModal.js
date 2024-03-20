@@ -12,7 +12,6 @@ function ScheduleEditModal(props){
   const state = useSelector(state => state)
   const dispatch = useDispatch();
   const {show, handleClose, i, clickedDate} = props;
-  const { RangePicker } = DatePicker;
   const ScheduleState = state.dateSchedule[clickedDate][i];
   
   const tempSchedule = {
@@ -41,7 +40,6 @@ function ScheduleEditModal(props){
   }
 
   const confirmHandler = function(e){
-    /*+조건 검사*/
     tempSchedule.clickedDate = clickedDate;
     tempSchedule.index = i;
 
@@ -76,6 +74,7 @@ function ScheduleEditModal(props){
                   일정
               </Form.Label>
               <Form.Control 
+                  type='input'
                   className="schedule-title m-left-13p"
                   defaultValue={ state.dateSchedule[clickedDate][i].title }
                   onChange={titleHandler}
