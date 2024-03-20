@@ -145,6 +145,9 @@ const dateSchedule = createSlice({
       }
 
     },
+    scheduleDelete(state, action){
+      state[action.payload.clickedDate].splice(action.payload.index, 1); //제거
+    },
     scheduleComplete(state, action){
       const scheduleState = state[action.payload.clickedDate][action.payload.index]
       
@@ -183,7 +186,7 @@ const addShow = createSlice({
 })
 
 export const {addHandleClose, addHandleShow} = addShow.actions
-export const {scheduleInit, scheduleComplete, scheduleStateEdit, scheduleStateAdd} = dateSchedule.actions
+export const {scheduleInit, scheduleComplete, scheduleStateEdit, scheduleStateAdd, scheduleDelete} = dateSchedule.actions
 export const {selectPetId, selectPetName} = petSelected.actions
 //함수또한 내보내야 요청가능
 
