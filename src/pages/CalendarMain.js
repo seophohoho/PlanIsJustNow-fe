@@ -4,26 +4,30 @@ import FullCalendar from '@fullcalendar/react'
 import momentPlugin from '@fullcalendar/moment';
 import interactionPlugin from '@fullcalendar/interaction'
 import dayGridPlugin from '@fullcalendar/daygrid'
-import { formatDate } from '@fullcalendar/core'
 import moment from 'moment';
 import 'moment/locale/ko'
 import '../styles/CalendarMain.css'
+import ScheduleAddModal from '../components/ScheduleAddModal';
 import Schedule from '../components/ScheduleComponent';
-import { scheduleInit } from '../store/store';
+import { scheduleInit, addHandleShow } from '../store/store';
 import { useSelector, useDispatch } from 'react-redux';
-import { Form, Col, Row, Container, Navbar, Stack, Image, Button, Dropdown, DropdownButton, SplitButton } from 'react-bootstrap';
+import { Form, Col, Row, Container, Navbar, Stack, Image, Button } from 'react-bootstrap';
 import PetSpaceComponent from '../components/PetSpaceComponent';
 
 const CalendarMain = () => {
     const state = useSelector((state)=> {return state});
     const [clickedDate, setClickedDate] = useState("");
     const dispatch = useDispatch();
+
+    const modalShow = ()=>{
+        dispatch(addHandleShow())
+    }
   /*달력 뷰에 보여지는 것은 addEvent를 이용해서 객체.important 여부 판단 후 삽입 완료된 일정은 impotant가 자동으로 false가 되어야함  */
     const events = [
-        { title: '물 999L 마시기', date: "2024-03-02", end: "2024-03-08" },/* date는 클릭된 이벤트의 날자 state를 가져와서 적용 title은 일정의 일부분을 가져옴*/
-        { title: '물 1ml 마시기', start: "2024-03-11", end: "2024-03-14"},/* end는 +1일 추가하여 적용해야함, 추측이지만 12시 기준이라 그런듯 공식 Docs에도 주의하라고만 써져있음*/
-        { title: '스쾃999회', date: "2024-03-03", end: "2024-03-04"},
+        //{ title: '물 마시기', date: "2024-03-02", end: "2024-03-08" }
+        /* end는 +1일 추가하여 적용해야함, 추측이지만 12시 기준이라 그런듯 공식 Docs에도 주의하라고만 써져있음*/
     ]
+
 
   return (
     <div>
@@ -37,10 +41,11 @@ const CalendarMain = () => {
             </Navbar>
         </header>
         <body>
+            <ScheduleAddModal clickedDate={clickedDate}></ScheduleAddModal>
             <Container>
                 <Row className="justify-content-md-center"  >
                     <Col lg="7">
-                        <FullCalendar /* 오늘 색-> 찐보라, 클릭된날 색-> 연보라 클릭이벤트는 추후 살펴보기 */
+                        <FullCalendar
                         plugins={[interactionPlugin, dayGridPlugin, momentPlugin]} 
                         initialView="dayGridMonth" 
                         selectable={true}
@@ -57,7 +62,7 @@ const CalendarMain = () => {
                             /* 달력 초기화 시 작동 TODO: axios 일정관련 함수 또한 여기서 실행  */
                             dispatch(scheduleInit(/*axios*/));
                             
-                            /* 리액트에서 최상위 객체 오브젝트에 접근하려면 이렇게 해야함 */
+                            /* fullcalendar 리액트에서 최상위 객체 오브젝트에 접근하려면 이렇게 해야함 */
                             const view = args.view.calendar.currentData.currentDate;
                             /*getMonth는 JavaScript에서 날짜의 월은 0(1월)부터 11(12월)까지 번호가 지정됨 +1을 해야 원본 값이 나옴*/
                             /*처음 axios에서 받은 값을 초기화 후 해당값에서 아래 값으로 접근해서 map으로 나열*/
@@ -121,7 +126,7 @@ const CalendarMain = () => {
                                                 <p>중요</p>
                                             </Col>
                                             <Col sm={2} className='m-auto color-darkBlue p-zero text-center'>
-                                                <Button onClick="">추가</Button >
+                                                <Button onClick={modalShow}>+</Button >
                                             </Col>
                                         </Row>
                                         {/*비동기 문제 &&로 해결*/
