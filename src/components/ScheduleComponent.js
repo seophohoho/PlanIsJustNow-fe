@@ -1,4 +1,4 @@
-import {Col, Row, Button} from "react-bootstrap"
+import {Col, Row} from "react-bootstrap"
 import { useSelector, useDispatch } from "react-redux"
 import { EllipsisOutlined, StarTwoTone } from '@ant-design/icons';
 import { Dropdown } from 'antd';
@@ -16,15 +16,15 @@ function Schedule(props){
     const confirmHandleClose = ()=>{setConfirmShow(false);}
     const confirmHandler = (e)=>{setConfirmShow(e)};
 
-    const [show, setShow] = useState(false);
-    const handleClose = () => {setShow(false);}
-    const handleShow = () => {setShow(true);}
+    const [editShow, setEditShow] = useState(false);
+    const editHandleClose = () => {setEditShow(false);}
+    const editHandleShow = () => {setEditShow(true);}
 
     const ScheduleState = state.dateSchedule[clickedDate][i];
     
     const items = [
         { //임시로 일정 추가로 할당, issue: 현재 <label> 바깥 태그(li) 클릭 시 이벤트가 발생하지 않는 문제 존재
-          label: <label className="color-violet" onClick={handleShow}>일정 수정</label>,
+          label: <label className="color-violet" onClick={editHandleShow}>일정 수정</label>,
           key: '0',
         },
         {type: 'divider'},
@@ -37,8 +37,7 @@ function Schedule(props){
     return(
         <Row className='section__item-schedule'>
             <ConfirmModal confirmShow={confirmShow} confirmHandleClose={confirmHandleClose} i={i} clickedDate={clickedDate}></ConfirmModal>
-            <ScheduleEditModal show={show} handleClose={handleClose} i={i} clickedDate={clickedDate}/>
-
+            <ScheduleEditModal show={editShow} handleClose={editHandleClose} i={i} clickedDate={clickedDate}/>
             <Col sm={2} className='text-center'>
                 <Checkbox
                 className="margin-left"
@@ -61,8 +60,8 @@ function Schedule(props){
             <Col sm={2} className='m-auto text-center' >
                 <Dropdown 
                 className={ScheduleState.complete ? '' : 'cursor-pointer'}
-                menu={{items}} 
-                trigger={['click']} 
+                menu={{items}}
+                trigger={['click']}
                 disabled={ScheduleState.complete}>
                     <EllipsisOutlined/>
                 </Dropdown>
