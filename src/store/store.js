@@ -122,7 +122,7 @@ const dateSchedule = createSlice({
         
       }
       else{
-        if (!scheduleState.important) {
+        if (action.payload.important) {
           // 기존의 important가 false였으나 true로 변경되는 경우, 최상단으로 이동
           state[clickedDate].splice(action.payload.index, 1); // 기존 위치에서 제거
           state[clickedDate].unshift(scheduleState); // 최상단에 추가
@@ -131,6 +131,10 @@ const dateSchedule = createSlice({
           scheduleState.time = action.payload.time
           scheduleState.important = action.payload.important
         } else {
+          if(scheduleState.important != action.payload.important){
+            state[clickedDate].splice(action.payload.index, 1); // 기존 위치에서 제거
+            state[clickedDate].push(scheduleState); // 최상단에 추가
+          }
           // important가 true로 변경되지 않는 경우, 기존 위치에서 업데이트만 수행
           scheduleState.title = action.payload.title
           scheduleState.end = action.payload.end
