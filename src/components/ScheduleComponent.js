@@ -4,6 +4,7 @@ import { EllipsisOutlined, StarTwoTone } from '@ant-design/icons';
 import { Dropdown } from 'antd';
 import { useState } from "react";
 import { Checkbox } from "pretty-checkbox-react";
+import { scheduleDelete } from "../store/store";
 import ScheduleEditModal from "./ScheduleEditModal";
 import ConfirmModal from "./ConfirmModal";
 
@@ -20,6 +21,11 @@ function Schedule(props){
     const editHandleClose = () => {setEditShow(false);}
     const editHandleShow = () => {setEditShow(true);}
 
+    function scheduleDeleteHandler(){
+        /* confirm 추가 */
+        dispatch(scheduleDelete({index : i, clickedDate : clickedDate}))
+    }
+
     const ScheduleState = state.dateSchedule[clickedDate][i];
     
     const items = [
@@ -29,7 +35,7 @@ function Schedule(props){
         },
         {type: 'divider'},
         {
-          label: <label className="color-violet">일정 삭제</label>,
+          label: <label className="color-violet" onClick={scheduleDeleteHandler}>일정 삭제</label>,
           key: '1',
         }
     ];
