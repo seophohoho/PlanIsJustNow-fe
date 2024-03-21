@@ -26,10 +26,13 @@ const CalendarMain = () => {
     
         Object.keys(state.dateSchedule).forEach(date => {
             state.dateSchedule[date].forEach(event => {
+                //end가 베타적으로 작동하기 때문에 캘린더 뷰에는 하루를 추가하여 표시
+                const end = moment(event.end, "YYYY-MM-DD").add(1, 'days');
+                const newEnd = end.format("YYYY-MM-DD");
             if (event.important) {
                 const eventState = {
                     title: event.title,
-                    end: event.end,
+                    end: newEnd,
                     date: date,
                 };
                 newImportantEvents.push(eventState);
@@ -59,7 +62,8 @@ const CalendarMain = () => {
                     const eventState = { 
                         title : event.title,
                         end : event.end,
-                        date: date
+                        start: date,
+                        allDay : false,
                     }
                     setImportantEvents([...importantEvents, eventState]);
                     console.log(importantEvents)
@@ -97,6 +101,7 @@ const CalendarMain = () => {
                         dateClick={function(data) {/*클릭된 날짜 반환*/
                             setClickedDate(data.dateStr)
                         }}
+                        nextDayThreshold={'00:00'}
                         datesSet={function(args) {
                             /* 달력 초기화 시 작동 TODO: axios 일정관련 초기화 함수 또한 여기서 실행  */
                             dispatch(scheduleInit(/*axios*/));
@@ -111,12 +116,12 @@ const CalendarMain = () => {
                         }}
                         events={importantEvents} /* events 배열은 달력에 표시될 이벤트 목록 */
                         contentHeight="auto"
+                        allDaySlot={true}   
                         headerToolbar={{
                             left:'prev',
                             center:'title',
                             right:'next'
                          }}
-                         nextDayThreshold='00:00'
                          locale="en"/* 지역설정, 시간관련 메소드 사용할시 해당지역으로 설정됨 주의! */
                         />
                     </Col>
