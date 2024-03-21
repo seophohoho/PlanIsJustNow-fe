@@ -9,7 +9,7 @@ import 'moment/locale/ko'
 import '../styles/CalendarMain.css'
 import ScheduleAddModal from '../components/ScheduleAddModal';
 import Schedule from '../components/ScheduleComponent';
-import { scheduleInit, addHandleShow, filterImportantEvents } from '../store/store';
+import { scheduleInit, addHandleShow } from '../store/store';
 import { useSelector, useDispatch } from 'react-redux';
 import { Form, Col, Row, Container, Navbar, Stack, Image, Button } from 'react-bootstrap';
 import PetSpaceComponent from '../components/PetSpaceComponent';
@@ -45,10 +45,6 @@ const CalendarMain = () => {
     
     const modalShow = ()=>{
         dispatch(addHandleShow())
-    }
-
-    const eventsInitHandler = () =>{
-        dispatch(filterImportantEvents())
     }
     //state로 안해서 실시간 반영이 안되는 것이었음;;
     const [importantEvents, setImportantEvents] = useState([]);

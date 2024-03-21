@@ -183,7 +183,6 @@ export default configureStore({// 내보낼 state, 작성 문법은 아래와 �
     petId : petId.reducer,
     petInpo : petInpo.reducer,
     petSelected : petSelected.reducer,
-    events : events.reducer,
     dateSchedule :dateSchedule.reducer,
     addShow : addShow.reducer,
     
