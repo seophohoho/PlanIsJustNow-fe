@@ -42,8 +42,8 @@ export class Behavior{
         let totalProbability = 0;
         let range = [];
 
-        for(const behavior in BEHAVIOR_RATE[1]){
-            const probability = BEHAVIOR_RATE[1][behavior];
+        for(const behavior in BEHAVIOR_RATE[natureId]){
+            const probability = BEHAVIOR_RATE[natureId][behavior];
             totalProbability += probability;
             range.push({ behavior, end: totalProbability });
         }
