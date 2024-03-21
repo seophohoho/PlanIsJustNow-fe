@@ -52,18 +52,18 @@ const petSelected = createSlice({
 const dateSchedule = createSlice({
   name : "dateSchedule",
   initialState : {
-    "2024-03-18" : [
-      {title : "운동", end:"2024-03-19", time: "20:00", important: true, complete : false},
+    "2024-03-17" : [
+      {title : "운동", end:"2024-03-18", time: "20:00", important: true, complete : false},
       {title : "식사", end:"2024-03-20", time: "17:00", important: false , complete : true},
     ],
     "2024-03-19" : [
       {title : "회의", end:"2024-03-20", time: "12:00", important: true, complete : false},
       {title : "간식", end:"2024-03-21", time: "15:51", important: false, complete : false},
-      {title : "후식", end:"2024-03-22", time: "18:11", important: false, complete : false},
+      {title : "후식", end:"2024-03-22", time: "18:11", important: true, complete : false},
       {title : "가나다라마바사", end:"2024-03-25", time: "17:21", important: false, complete : true},
       {title : "공부", end:"2024-03-24", time: "17:23", important: false, complete : false},
 
-    ]
+    ],
   },
   reducers:{
     scheduleInit(state, action){//state 초기화
@@ -119,7 +119,6 @@ const dateSchedule = createSlice({
         else{
             alert("중요 표시는 3개를 초과하여 등록할 수 없습니다!")
         }
-        
       }
       else{
         if (action.payload.important) {
@@ -141,7 +140,6 @@ const dateSchedule = createSlice({
           scheduleState.time = action.payload.time
           scheduleState.important = action.payload.important
         }
-        
       }
 
     },
@@ -154,22 +152,10 @@ const dateSchedule = createSlice({
       scheduleState.complete = action.payload.package
       scheduleState.important = false 
 
-    }
+    },
   }
 })
 
-//calendar view에 나오는 스케줄
-const events = createSlice({
-  name : "events",
-  initialState : {
-      
-  },
-  reducers:{
-    initializeEvent(state, action){
-
-    }
-  }
-})
 
 //add modal handler
 const addShow = createSlice({
