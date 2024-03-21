@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import FullCalendar from '@fullcalendar/react'
 import momentPlugin from '@fullcalendar/moment';
 import interactionPlugin from '@fullcalendar/interaction'
@@ -9,25 +9,65 @@ import 'moment/locale/ko'
 import '../styles/CalendarMain.css'
 import ScheduleAddModal from '../components/ScheduleAddModal';
 import Schedule from '../components/ScheduleComponent';
-import { scheduleInit, addHandleShow } from '../store/store';
+import { scheduleInit, addHandleShow, filterImportantEvents } from '../store/store';
 import { useSelector, useDispatch } from 'react-redux';
 import { Form, Col, Row, Container, Navbar, Stack, Image, Button } from 'react-bootstrap';
 import PetSpaceComponent from '../components/PetSpaceComponent';
+
+
 
 const CalendarMain = () => {
     const state = useSelector((state)=> {return state});
     const [clickedDate, setClickedDate] = useState("");
     const dispatch = useDispatch();
 
+    useEffect(() => {
+        const newImportantEvents = [];
+    
+        Object.keys(state.dateSchedule).forEach(date => {
+            state.dateSchedule[date].forEach(event => {
+            if (event.important) {
+                const eventState = {
+                    title: event.title,
+                    end: event.end,
+                    date: date,
+                };
+                newImportantEvents.push(eventState);
+            }
+            });
+        });
+    
+        setImportantEvents(newImportantEvents);
+    }, [state.dateSchedule]); // state.dateSchedule가 변경될 때마다 이 함수를 다시 실행
+    
     const modalShow = ()=>{
         dispatch(addHandleShow())
     }
-  /*달력 뷰에 보여지는 것은 addEvent를 이용해서 객체.important 여부 판단 후 삽입 완료된 일정은 impotant가 자동으로 false가 되어야함  */
-    const events = [
-        //{ title: '물 마시기', date: "2024-03-02", end: "2024-03-08" }
-        /* end는 +1일 추가하여 적용해야함, 추측이지만 12시 기준이라 그런듯 공식 Docs에도 주의하라고만 써져있음*/
-    ]
 
+    const eventsInitHandler = () =>{
+        dispatch(filterImportantEvents())
+    }
+    //state로 안해서 실시간 반영이 안되는 것이었음;;
+    const [importantEvents, setImportantEvents] = useState([]);
+
+  /*달력 뷰에 보여지는 것은 addEvent를 이용해서 객체.important 여부 판단 후 삽입 완료된 일정은 impotant가 자동으로 false가 되어야함  */
+    const ImportantEventsComponent = () => {
+        Object.keys(state.dateSchedule).forEach(date => {
+            console.log(date)
+            state.dateSchedule[date].forEach(event => {
+                if (event.important){
+                    const eventState = { 
+                        title : event.title,
+                        end : event.end,
+                        date: date
+                    }
+                    setImportantEvents([...importantEvents, eventState]);
+                    console.log(importantEvents)
+                }
+                
+            });
+        });
+    }
 
   return (
     <div>
@@ -55,27 +95,28 @@ const CalendarMain = () => {
                             }
                         }}
                         dateClick={function(data) {/*클릭된 날짜 반환*/
-                            alert('Clicked on: ' + data.dateStr);
                             setClickedDate(data.dateStr)
                         }}
                         datesSet={function(args) {
-                            /* 달력 초기화 시 작동 TODO: axios 일정관련 함수 또한 여기서 실행  */
+                            /* 달력 초기화 시 작동 TODO: axios 일정관련 초기화 함수 또한 여기서 실행  */
                             dispatch(scheduleInit(/*axios*/));
                             
-                            /* fullcalendar 리액트에서 최상위 객체 오브젝트에 접근하려면 이렇게 해야함 */
+                            /*  리액트에서 fullcalendar 최상위 객체 오브젝트에 접근하려면 이렇게 해야함 */
                             const view = args.view.calendar.currentData.currentDate;
                             /*getMonth는 JavaScript에서 날짜의 월은 0(1월)부터 11(12월)까지 번호가 지정됨 +1을 해야 원본 값이 나옴*/
                             /*처음 axios에서 받은 값을 초기화 후 해당값에서 아래 값으로 접근해서 map으로 나열*/
                             const currentDate = moment().format('YYYY-MM-DD');
                             setClickedDate(currentDate);
+                            ImportantEventsComponent()
                         }}
-                        events={events} /* events 배열은 달력에 표시될 이벤트 목록 */
+                        events={importantEvents} /* events 배열은 달력에 표시될 이벤트 목록 */
                         contentHeight="auto"
                         headerToolbar={{
                             left:'prev',
                             center:'title',
                             right:'next'
                          }}
+                         nextDayThreshold='00:00'
                          locale="en"/* 지역설정, 시간관련 메소드 사용할시 해당지역으로 설정됨 주의! */
                         />
                     </Col>
@@ -108,9 +149,7 @@ const CalendarMain = () => {
                                 </div>
                             </Stack>
                             <Stack direction='horizontal' className='fc-direction-ltr-2v'>
-                                {/**고정된 크기, 스크롤 지원 일정 생성버튼은 일정들 맨 아래에 내부일정 또한 컴포넌트화 해서 map으로 */}
                                 <div className='h-225 w-max section-schedule'>
-                                    {/*여기에 title 부착 sticky로, 된다면 일정 추가 버튼도 여기에?*/}
                                     <Stack className=''>
                                         <Row className='section__item-schedule sticky-schedule'>
                                             <Col sm={2} className='m-auto color-darkBlue text-center'>
@@ -145,7 +184,7 @@ const CalendarMain = () => {
                 </Row>
             </Container>
         </body>
-        <footer className='h-200'>{/*sticky Navbar로 결정 */}
+        <footer className='h-200'>{/*footer 메뉴 취소, sticky Navbar로 결정 */}
 
         </footer>
      </div>
