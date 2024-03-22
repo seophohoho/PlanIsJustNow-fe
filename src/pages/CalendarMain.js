@@ -13,8 +13,7 @@ import { scheduleInit, addHandleShow } from '../store/store';
 import { useSelector, useDispatch } from 'react-redux';
 import { Form, Col, Row, Container, Navbar, Stack, Image, Button } from 'react-bootstrap';
 import PetSpaceComponent from '../components/PetSpaceComponent';
-
-
+import NavbarComponent from '../components/NavbarComponent';
 
 const CalendarMain = () => {
     const state = useSelector((state)=> {return state});
@@ -72,13 +71,7 @@ const CalendarMain = () => {
   return (
     <div>
          <header>
-            <Navbar expand="md" className="bg-body-tertiary">{/**추후 Navbar도 컴포넌트화 해서 다른페이지에 적용시키기 */}
-                <Container>
-                    <Navbar.Brand href="#">
-                        <img src='/logo192.png'width={"50px"}></img>
-                    </Navbar.Brand>
-                </Container>
-            </Navbar>
+            <NavbarComponent></NavbarComponent>
         </header>
         <body>
             <ScheduleAddModal clickedDate={clickedDate}></ScheduleAddModal>
