@@ -28,8 +28,8 @@ function Schedule(props){
 
     const ScheduleState = state.dateSchedule[clickedDate][i];
     
-    const items = [
-        { //임시로 일정 추가로 할당, issue: 현재 <label> 바깥 태그(li) 클릭 시 이벤트가 발생하지 않는 문제 존재
+    const defaultItems = [
+        { //issue: 현재 <label> 바깥 태그(li) 클릭 시 이벤트가 발생하지 않는 문제 존재
           label: <label className="color-violet" onClick={editHandleShow}>일정 수정</label>,
           key: '0',
         },
@@ -38,7 +38,16 @@ function Schedule(props){
           label: <label className="color-violet" onClick={scheduleDeleteHandler}>일정 삭제</label>,
           key: '1',
         }
-    ];
+    ]
+
+    const completItems = [
+        {
+          label: <label className="color-violet" onClick={scheduleDeleteHandler}>일정 삭제</label>,
+          key: '1',
+        }
+    ]
+    
+    
 
     return(
         <Row className='section__item-schedule'>
@@ -65,12 +74,12 @@ function Schedule(props){
             </Col>
             <Col sm={2} className='m-auto text-center' >
                 <Dropdown 
-                className={ScheduleState.complete ? '' : 'cursor-pointer'}
-                menu={{items}}
-                trigger={['click']}
-                disabled={ScheduleState.complete}>
+                    className={ScheduleState.complete ? '' : 'cursor-pointer'}
+                    menu={{items : ScheduleState.complete ? completItems :  defaultItems}}
+                    trigger={['click']}
+                    >
                     <EllipsisOutlined/>
-                </Dropdown>
+                </Dropdown> 
             </Col>
         </Row>
     )
