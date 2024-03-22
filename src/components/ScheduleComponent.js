@@ -75,6 +75,8 @@ function Schedule(props){
             <Col sm={2} className='m-auto text-center' >
                 <Dropdown 
                     className={ScheduleState.complete ? '' : 'cursor-pointer'}
+                    //item이라는 고정된 key에 대응하는 value를 보내야함 default: menu={{item}}
+                    //두가지 버전의 dropdown을 보내려면 아래와 같이 item에 대응하는 value로 보내면됨
                     menu={{items : ScheduleState.complete ? completItems :  defaultItems}}
                     trigger={['click']}
                     >
