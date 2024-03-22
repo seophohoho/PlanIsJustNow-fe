@@ -50,7 +50,7 @@ const CalendarMain = () => {
     const [importantEvents, setImportantEvents] = useState([]);
 
   /*달력 뷰에 보여지는 것은 addEvent를 이용해서 객체.important 여부 판단 후 삽입 완료된 일정은 impotant가 자동으로 false가 되어야함  */
-    const ImportantEventsComponent = () => {
+    const ImportantEventsHandler = () => {
         Object.keys(state.dateSchedule).forEach(date => {
             console.log(date)
             state.dateSchedule[date].forEach(event => {
@@ -108,7 +108,7 @@ const CalendarMain = () => {
                             /*처음 axios에서 받은 값을 초기화 후 해당값에서 아래 값으로 접근해서 map으로 나열*/
                             const currentDate = moment().format('YYYY-MM-DD');
                             setClickedDate(currentDate);
-                            ImportantEventsComponent()
+                            ImportantEventsHandler()
                         }}
                         events={importantEvents} /* events 배열은 달력에 표시될 이벤트 목록 */
                         contentHeight="auto"
