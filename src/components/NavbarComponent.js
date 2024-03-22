@@ -11,6 +11,11 @@ const NavbarComponent = () => {
                 <Navbar.Brand href="#">
                     <img src='/logo192.png'width={"50px"}></img>
                 </Navbar.Brand>
+                {/* image는 ant-design으로 */}
+                <div>
+                    <p className='color-darkBlue'>홍길동</p>{/*폰트, 줄바꿈, 공간 나중에, 받아온거 리덕스 데이터바인딩*/}
+                    <p className='color-violet'>#123456</p>
+                </div>
             </Container>
         </Navbar>
     )
