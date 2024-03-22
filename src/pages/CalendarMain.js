@@ -116,34 +116,8 @@ const CalendarMain = () => {
                     </Col>
                     <Col lg="5">
                         <Stack>{/**나중에 줄바꿈 되는 모든 div에 클래스 적용  white-space:nowrap; <-- 스케줄 컴포넌트에 적용해보기 */}
-                            <Stack direction='horizontal' className='m-top-20' gap={3}>
-                                <Image src="/logo192.png" roundedCircle className='input-bgSet float-display image-w'/> {/**여기도 컴포넌트화 */}
-                                <div>
-                                    <p className='color-darkBlue'>홍길동</p>{/*폰트, 줄바꿈, 공간 나중에, 받아온거 리덕스 데이터바인딩*/}
-                                    <p className='color-violet'>#123456</p>
-                                </div>
-                                <div direction='horizontal' className='fc-direction-ltr m-auto section max-h-100'>{/*map으로 친구 수에 따라 늘어나도록 */}
-                                    <p className='section__item sticky color-darkBlue'>친구목록</p>
-                                    <Stack className='section__item'>{/* todo 여기는 컴포넌트화 해서 map으로 */}
-                                        <Image src="/logo192.png" roundedCircle className='input-bgSet w-50'/>
-                                        <Form.Label className=''>이름</Form.Label>
-                                    </Stack>
-                                    <Stack className='section__item'>{/* todo 여기는 컴포넌트화 해서 map으로 */}
-                                        <Image src="/logo192.png" roundedCircle className='input-bgSet w-50'/>
-                                        <Form.Label className=''>이름</Form.Label>
-                                    </Stack>
-                                    <Stack className='section__item'>{/* todo 여기는 컴포넌트화 해서 map으로 */}
-                                        <Image src="/logo192.png" roundedCircle className='input-bgSet w-50 '/>
-                                        <Form.Label className=''>이름</Form.Label>
-                                    </Stack>
-                                    <Stack className='section__item'>{/* todo 여기는 컴포넌트화 해서 map으로 */}
-                                        <Image src="/logo192.png" roundedCircle className='input-bgSet w-50'/>
-                                        <Form.Label className=''>이름</Form.Label>
-                                    </Stack>
-                                </div>
-                            </Stack>
                             <Stack direction='horizontal' className='fc-direction-ltr-2v'>
-                                <div className='h-225 w-max section-schedule'>
+                                <div className='h-342 w-max section-schedule'>
                                     <Stack className=''>
                                         <Row className='section__item-schedule sticky-schedule'>
                                             <Col sm={2} className='m-auto color-darkBlue text-center'>
