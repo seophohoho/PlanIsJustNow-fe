@@ -52,52 +52,127 @@ const petSelected = createSlice({
 const dateSchedule = createSlice({
   name : "dateSchedule",
   initialState : {
-    "2024-03-13" : [
-      {title : "운동", end:"2024-03-15", time: "20:00", important: true, complete : false},
-      {title : "식사", end:"2024-03-16", time: "17:00", important: false , complete : true},
+    "2024-03-17" : [
+      {title : "운동", end:"2024-03-18", time: "20:00", important: true, complete : false},
+      {title : "식사", end:"2024-03-20", time: "17:00", important: false , complete : true},
     ],
-    "2024-03-12" : [
-      {title : "회의", end:"2024-03-17", time: "12:00", important: true, complete : false},
-      {title : "간식", end:"2024-03-18", time: "15:51", important: false, complete : true},
-      {title : "후식", end:"2024-03-19", time: "18:11", important: true, complete : true},
-      {title : "가나다라마바사", end:"2024-03-20", time: "17:21", important: false, complete : true},
-      {title : "공부", end:"2024-03-21", time: "17:23", important: false, complete : false},
+    "2024-03-19" : [
+      {title : "회의", end:"2024-03-20", time: "12:00", important: true, complete : false},
+      {title : "간식", end:"2024-03-21", time: "15:51", important: false, complete : false},
+      {title : "후식", end:"2024-03-22", time: "18:11", important: true, complete : false},
+      {title : "가나다라마바사", end:"2024-03-25", time: "17:21", important: false, complete : true},
+      {title : "공부", end:"2024-03-24", time: "17:23", important: false, complete : false},
 
-    ]
+    ],
   },
   reducers:{
     scheduleInit(state, action){//state 초기화
       return state
     },
-    scheduleEdit(state, action){//add?
-      state.title = action.payload//payload 객체로
-      state.end = action.payload//
-      state.time = action.payload//
-      state.important = action.payload//
+    scheduleStateAdd(state, action){
+      const scheduleState = { 
+        title : action.payload.title,
+        end: action.payload.end,
+        time: action.payload.time,
+        important: action.payload.important, 
+        complete : false 
+      }
+
+      // 같은 날짜에 important가 true인 일정의 개수를 계산.
+      const clickedDate = action.payload.clickedDate;
+      const importantCount = state[clickedDate] ? state[clickedDate].filter(item => item.important).length : 0;
+      
+      //중요표시는 3개까지, 일정은 1글자 이상 입력 제어
+      if((importantCount === 3 && action.payload.important === true) || action.payload.title.length === 0){
+        if(action.payload.title.length === 0){
+          alert("일정을 입력해 주세요!")
+        }
+        else{
+            alert("중요 표시는 3개를 초과하여 등록할 수 없습니다!")
+        }
+      }
+      else{
+        // 새로운 날짜가 주어진 경우, 해당 날짜에 대한 새로운 배열을 생성하고 일정을 추가
+        // 이미 해당 날짜에 일정이 있다면, 새로운 일정을 해당 배열에 추가합니다.
+        if (!state[clickedDate]) {
+          state[clickedDate] = [scheduleState];
+        } else {
+          if (scheduleState.important) {
+            state[clickedDate].unshift(scheduleState);
+          } else {
+            state[clickedDate].push(scheduleState);
+          }
+        }
+      }
+    },
+    scheduleStateEdit(state, action){//아래 post로 전부 보내야함 axios 함수도 여기서 관리?
+      const scheduleState = state[action.payload.clickedDate][action.payload.index]
+      
+      // 같은 날짜에 important가 true인 일정의 개수를 계산.
+      const clickedDate = action.payload.clickedDate;
+      const importantCount = state[clickedDate] ? state[clickedDate].filter(item => item.important).length : 0;
+      //중요표시가 3개 + 전달 받은 중요가 true일때만  
+      if((importantCount === 3 && action.payload.important === true) || action.payload.title.length === 0){
+        if(action.payload.title.length === 0){
+          alert("일정을 입력해 주세요!")
+        }
+        else{
+            alert("중요 표시는 3개를 초과하여 등록할 수 없습니다!")
+        }
+      }
+      else{
+        if (action.payload.important) {
+          // 기존의 important가 false였으나 true로 변경되는 경우, 최상단으로 이동
+          state[clickedDate].splice(action.payload.index, 1); // 기존 위치에서 제거
+          state[clickedDate].unshift(scheduleState); // 최상단에 추가
+          scheduleState.title = action.payload.title
+          scheduleState.end = action.payload.end
+          scheduleState.time = action.payload.time
+          scheduleState.important = action.payload.important
+        } else {
+          if(scheduleState.important != action.payload.important){
+            state[clickedDate].splice(action.payload.index, 1); // 기존 위치에서 제거
+            state[clickedDate].push(scheduleState); // 최상단에 추가
+          }
+          // important가 true로 변경되지 않는 경우, 기존 위치에서 업데이트만 수행
+          scheduleState.title = action.payload.title
+          scheduleState.end = action.payload.end
+          scheduleState.time = action.payload.time
+          scheduleState.important = action.payload.important
+        }
+      }
+
+    },
+    scheduleDelete(state, action){
+      state[action.payload.clickedDate].splice(action.payload.index, 1); //제거
     },
     scheduleComplete(state, action){
-      state.complete = action.payload//
-      state.important = false// 완료된 일정은 자동으로 제외
+      const scheduleState = state[action.payload.clickedDate][action.payload.index]
+      
+      scheduleState.complete = action.payload.package
+      scheduleState.important = false 
+
+    },
+  }
+})
+
+
+//add modal handler
+const addShow = createSlice({
+  name : "addShow",
+  initialState : {show: false},
+  reducers:{
+    addHandleClose(state, action){
+      state.show = false;
+    },
+    addHandleShow(state, action){
+      state.show = true;
     }
   }
 })
 
-//calendar view에 나오는 스케줄
-const events = createSlice({
-  name : "events",
-  initialState : {
-      "2024-02-25": [
-        // 해당 날짜의 다른 일정들
-      ],
-      "2024-02-05": [
-        // 해당 날짜의 다른 일정들
-      ],
-      // 추가적인 날짜와 일정들
-  },
-  reducers:{}
-})
-
-export const {scheduleInit, scheduleComplete} = dateSchedule.actions
+export const {addHandleClose, addHandleShow} = addShow.actions
+export const {scheduleInit, scheduleComplete, scheduleStateEdit, scheduleStateAdd, scheduleDelete} = dateSchedule.actions
 export const {selectPetId, selectPetName} = petSelected.actions
 //함수또한 내보내야 요청가능
 
@@ -108,7 +183,8 @@ export default configureStore({// 내보낼 state, 작성 문법은 아래와 �
     petId : petId.reducer,
     petInpo : petInpo.reducer,
     petSelected : petSelected.reducer,
-    events : events.reducer,
     dateSchedule :dateSchedule.reducer,
+    addShow : addShow.reducer,
+    
   }
 }) 

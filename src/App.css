@@ -154,11 +154,11 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .h-200{
-  height: 100%;
+  height: 200px;
 }
 
-.h-225{
-  height: 225px;
+.h-342{
+  height: 342px;
 }
 
 .h-600{
@@ -195,9 +195,9 @@ input[type="number"]::-webkit-inner-spin-button {
   margin-left: 60%;
 }
 
-.m-left-38p{
-  margin-left: 38%;
-}
+.m-left-59p{
+  margin-left: 59%;
+} 
 
 .mdc-text-amber {
   color: #ffc107;

@@ -89,13 +89,16 @@ p{
     flex: 0 0 70px;
 }
 
+
 .section-schedule {
+    position: relative;
     display: flex;
     overflow-x: hidden;
     overflow-y: auto;
+    border-radius: 10px;
 }
 .section__item-schedule{
-    width: auto;
+    height: auto;
     display: flex;
     align-items: center;
     flex: 0 0 50px;
@@ -133,6 +136,14 @@ p{
     position: sticky; /* sticky로 설정합니다. */
     left: 0;
     background-color: white;
+}
+
+.sticky-schedule{
+    position: sticky; /* sticky로 설정합니다. */
+    top: 0px;
+    background-color: white;
+    z-index: 2;
+    border-bottom: 2px solid rgb(90, 100, 255) !important;
 }
 .margin-left{
     margin-left: 10px;
