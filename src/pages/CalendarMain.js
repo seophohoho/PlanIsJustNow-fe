@@ -25,13 +25,9 @@ const CalendarMain = () => {
     
         Object.keys(state.dateSchedule).forEach(date => {
             state.dateSchedule[date].forEach(event => {
-                //end가 베타적으로 작동하기 때문에 캘린더 뷰에는 하루를 추가하여 표시
-                const end = moment(event.end, "YYYY-MM-DD").add(1, 'days');
-                const newEnd = end.format("YYYY-MM-DD");
             if (event.important) {
                 const eventState = {
                     title: event.title,
-                    end: newEnd,
                     date: date,
                 };
                 newImportantEvents.push(eventState);
@@ -56,7 +52,6 @@ const CalendarMain = () => {
                 if (event.important){
                     const eventState = { 
                         title : event.title,
-                        end : event.end,
                         start: date,
                         allDay : false,
                     }
