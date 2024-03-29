@@ -14,11 +14,19 @@ const NavbarComponent = () => {
                     <img src='/logo192.png'width={"50px"}></img>
                 </Navbar.Brand>
                 {/* image는 ant-design으로 */}
-                <Stack className='user_profill'>
-                    <Avatar className='' size={64} icon={<UserOutlined />} />
-                    <p className='color-darkBlue'>홍길동</p>{/*폰트, 줄바꿈, 공간 나중에, 받아온거 리덕스 데이터바인딩*/}
-                    <p className='color-violet'>#Email@example.com</p>
-                </Stack>
+                <Navbar.Text>
+                    <Stack direction="horizontal" gap={2}>
+                        <Avatar className='' size={64} icon={<UserOutlined />} />
+                        <Stack gap={0} className='m-auto'>
+                            <Navbar.Text className='color-darkBlue '>
+                            홍길동
+                            </Navbar.Text>
+                            <Navbar.Text className='color-violet'>
+                                #Email@example.com
+                            </Navbar.Text>
+                        </Stack>
+                    </Stack>
+                </Navbar.Text>
                     
             </Container>
         </Navbar>
