@@ -20,15 +20,11 @@ function ScheduleAddModal(props){
   const tempSchedule = {
     clickedDate: clickedDate,
     title : "",
-    end: clickedDate, 
     time: currentTime,
     important: false,
   }
   dayjs.extend(customParseFormat);
 
-  function DatePickerHandler(notuse, picks){
-    tempSchedule.end = picks
-  };
   function TimePickerHandler(notuse, picks){
     tempSchedule.time = picks
   };
@@ -81,19 +77,7 @@ function ScheduleAddModal(props){
                   maxLength={50}/*글자 50자 제한*/
               />
             </Form.Group>
-
-            <Form.Group className="mb-4">
-              <Form.Label htmlFor="ControlInput2" className="color-darkBlue">종료일자</Form.Label>
-              <DatePicker 
-                  className="m-left-59p"
-                  id="ControlInput2"
-                  inputReadOnly={true} 
-                  onChange={DatePickerHandler}//datePickerHandler추가 후 변경 
-                  defaultOpenValue={dayjs('YYYY-MM-DD')}
-                  defaultValue={[dayjs(clickedDate, 'YYYY-MM-DD')]}
-                  />
-            </Form.Group>
-
+            
             <Form.Group className="mb-5">
               <label htmlFor="ControlInput3" className="color-darkBlue">시간 선택</label>
               <TimePicker 

@@ -53,15 +53,15 @@ const dateSchedule = createSlice({
   name : "dateSchedule",
   initialState : {
     "2024-03-17" : [
-      {title : "운동", end:"2024-03-18", time: "20:00", important: true, complete : false},
-      {title : "식사", end:"2024-03-20", time: "17:00", important: false , complete : true},
+      {title : "운동", time: "20:00", important: true, complete : false},
+      {title : "식사", time: "17:00", important: false , complete : true},
     ],
     "2024-03-19" : [
-      {title : "회의", end:"2024-03-20", time: "12:00", important: true, complete : false},
-      {title : "간식", end:"2024-03-21", time: "15:51", important: false, complete : false},
-      {title : "후식", end:"2024-03-22", time: "18:11", important: true, complete : false},
-      {title : "가나다라마바사", end:"2024-03-25", time: "17:21", important: false, complete : true},
-      {title : "공부", end:"2024-03-24", time: "17:23", important: false, complete : false},
+      {title : "회의", time: "12:00", important: true, complete : false},
+      {title : "간식", time: "15:51", important: false, complete : false},
+      {title : "후식", time: "18:11", important: true, complete : false},
+      {title : "가나다라마바사", time: "17:21", important: false, complete : true},
+      {title : "공부", time: "17:23", important: false, complete : false},
 
     ],
   },
@@ -72,7 +72,6 @@ const dateSchedule = createSlice({
     scheduleStateAdd(state, action){
       const scheduleState = { 
         title : action.payload.title,
-        end: action.payload.end,
         time: action.payload.time,
         important: action.payload.important, 
         complete : false 
@@ -126,7 +125,6 @@ const dateSchedule = createSlice({
           state[clickedDate].splice(action.payload.index, 1); // 기존 위치에서 제거
           state[clickedDate].unshift(scheduleState); // 최상단에 추가
           scheduleState.title = action.payload.title
-          scheduleState.end = action.payload.end
           scheduleState.time = action.payload.time
           scheduleState.important = action.payload.important
         } else {
@@ -136,7 +134,6 @@ const dateSchedule = createSlice({
           }
           // important가 true로 변경되지 않는 경우, 기존 위치에서 업데이트만 수행
           scheduleState.title = action.payload.title
-          scheduleState.end = action.payload.end
           scheduleState.time = action.payload.time
           scheduleState.important = action.payload.important
         }

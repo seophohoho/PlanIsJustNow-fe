@@ -18,7 +18,6 @@ function ScheduleEditModal(props){
     clickedDate: clickedDate,
     index: i, 
     title : ScheduleState.title, 
-    end: ScheduleState.end, 
     time: ScheduleState.time, 
     important: ScheduleState.important, 
     complete : ScheduleState.complete
@@ -26,9 +25,6 @@ function ScheduleEditModal(props){
 
   dayjs.extend(customParseFormat);
 
-  function DatePickerHandler(notuse, picks){
-    tempSchedule.end = picks
-  };
   function TimePickerHandler(notuse, picks){
     tempSchedule.time = picks
   };
@@ -79,18 +75,6 @@ function ScheduleEditModal(props){
                   defaultValue={ state.dateSchedule[clickedDate][i].title }
                   onChange={titleHandler}
               />{/*글자 50자 제한 필요*/}
-            </Form.Group>
-
-            <Form.Group className="mb-4">
-              <Form.Label htmlFor="ControlInput2" className="color-darkBlue">종료일자</Form.Label>
-              <DatePicker 
-                  className="m-left-59p"
-                  id="ControlInput2"
-                  inputReadOnly={true} 
-                  onChange={DatePickerHandler}//datePickerHandler추가 후 변경 
-                  defaultOpenValue={dayjs('YYYY-MM-DD')}
-                  defaultValue={[dayjs(state.dateSchedule[clickedDate][i].end, 'YYYY-MM-DD')]}
-                  />
             </Form.Group>
 
             <Form.Group className="mb-5">
