@@ -8,6 +8,10 @@ p{
     margin-bottom: 0px;
 }
 
+span{
+    padding: 0px !important;
+}
+
 .text-center{
     text-align: center;
 }
@@ -155,9 +159,4 @@ p{
 .daySchedule-font{
     color: #dfdfdf;
     font-size: small;
-}
-
-.user_profill{
-    display: inline;
-    margin-left: auto;
 }
