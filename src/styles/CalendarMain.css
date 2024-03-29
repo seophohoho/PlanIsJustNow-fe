@@ -156,3 +156,8 @@ p{
     color: #dfdfdf;
     font-size: small;
 }
+
+.user_profill{
+    display: inline;
+    margin-left: auto;
+}
