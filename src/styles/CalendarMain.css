@@ -39,7 +39,6 @@ p{
 
 .fc-event-title-container,
 .fc-event-title{
-    background-color: rgb(86, 86, 208);
     font-size: 0.8em;
 } 
  
@@ -151,4 +150,9 @@ p{
 
 .cancel_line{
     text-decoration: line-through;
+}
+
+.daySchedule-font{
+    color: #dfdfdf;
+    font-size: small;
 }
