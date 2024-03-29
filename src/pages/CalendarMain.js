@@ -84,6 +84,22 @@ const CalendarMain = () => {
                         dateClick={function(data) {/*클릭된 날짜 반환*/
                             setClickedDate(data.dateStr)
                         }}
+                        dayCellContent={(e) => {
+                            const dateStr = moment(e.date).format('YYYY-MM-DD');
+                            const eventsForDay = state.dateSchedule[dateStr] || [];
+                            return (
+                              <>
+                                {(eventsForDay.length > 0) ? 
+                                <>{/*일정이 있을 때 날짜와 일정 수 표기*/}
+                                    {e.dayNumberText}
+                                    <span className='daySchedule-font'>외{eventsForDay.length}개</span>
+                                </>:
+                                <>{/*일정이 없을 때 날짜만 표기*/}
+                                {e.dayNumberText}
+                                </>}
+                              </>
+                            );
+                          }}
                         nextDayThreshold={'00:00'}
                         datesSet={function(args) {
                             /* 달력 초기화 시 작동 TODO: axios 일정관련 초기화 함수 또한 여기서 실행  */
