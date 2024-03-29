@@ -86,7 +86,8 @@ const CalendarMain = () => {
                         }}
                         dayCellContent={(e) => {
                             const dateStr = moment(e.date).format('YYYY-MM-DD');
-                            const eventsForDay = state.dateSchedule[dateStr] || [];
+                            const eventsForDay = state.dateSchedule[dateStr] ? state.dateSchedule[dateStr].filter(event => !event.important) : [];
+
                             return (
                               <>
                                 {(eventsForDay.length > 0) ? 
