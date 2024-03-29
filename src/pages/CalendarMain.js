@@ -53,7 +53,6 @@ const CalendarMain = () => {
                     const eventState = { 
                         title : event.title,
                         start: date,
-                        allDay : false,
                     }
                     setImportantEvents([...importantEvents, eventState]);
                     console.log(importantEvents)
@@ -100,7 +99,9 @@ const CalendarMain = () => {
                         }}
                         events={importantEvents} /* events 배열은 달력에 표시될 이벤트 목록 */
                         contentHeight="auto"
-                        allDaySlot={true}   
+                        allDaySlot={true}
+                        eventColor='rgb(86, 86, 208)'//events 블럭 색
+                        eventDisplay='block'
                         headerToolbar={{
                             left:'prev',
                             center:'title',
