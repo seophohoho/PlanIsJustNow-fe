@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Container, Navbar, Stack, Image} from 'react-bootstrap';
+import { Container, Navbar, Stack, Nav } from 'react-bootstrap';
 import { UserOutlined } from '@ant-design/icons';
 import { Avatar, Space } from 'antd';
 
@@ -12,8 +12,15 @@ const NavbarComponent = () => {
             <Container>
                 <Navbar.Brand href="#">
                     <img src='/logo192.png'width={"50px"}></img>
+                    <span>PETTODO</span>
                 </Navbar.Brand>
-                {/* image는 ant-design으로 */}
+                <Navbar.Collapse id="basic-navbar-nav">
+                <Nav className="me-auto">{/*추후 아이콘 추가*/}
+                    <Nav.Link href="/calendar">Home</Nav.Link>
+                    <Nav.Link href="/calendar">Frends</Nav.Link>
+                    <Nav.Link href="/calendar">Petdex</Nav.Link>
+                </Nav>
+                </Navbar.Collapse>
                 <Navbar.Text>
                     <Stack direction="horizontal" gap={2}>
                         <Avatar className='' size={64} icon={<UserOutlined />} />
@@ -25,9 +32,9 @@ const NavbarComponent = () => {
                                 #Email@example.com
                             </Navbar.Text>
                         </Stack>
+                        <span>로그아웃</span>{/*임시*/}
                     </Stack>
                 </Navbar.Text>
-                    
             </Container>
         </Navbar>
     )
