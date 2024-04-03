@@ -3,6 +3,7 @@ import Signup from './pages/SignUp';
 import SignUpPet from './pages/SignUpPet';
 import Login from './pages/Login'
 import CalendarMain from './pages/CalendarMain';
+import FriendBoard from './pages/FriendsBoard'
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Route path='/' element={<Login/>}/>
         <Route path='/signup' element={ <Signup/> }/>
         <Route path='/Calendar' element={<CalendarMain/>}/>
+        <Route path='/friend-board' element={<FriendBoard/>}/>
         <Route path='/signup-pet' element={<SignUpPet/>}/>
         <Route path="*" element={ <div>잘못된 경로입니다!</div> }/>
       </Routes>

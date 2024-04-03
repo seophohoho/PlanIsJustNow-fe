@@ -160,3 +160,12 @@ span{
     color: #dfdfdf;
     font-size: small;
 }
+
+.ant-tabs-nav-list{
+    margin: auto;
+}
+
+.tab-w{
+    width: 200px !important;
+    text-align: center !important
+}
