@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Container, Navbar, Stack, Nav } from 'react-bootstrap';
 import { UserOutlined } from '@ant-design/icons';
-import { Avatar, Space } from 'antd';
+import { Avatar } from 'antd';
 
 const NavbarComponent = () => {
 
@@ -11,8 +11,8 @@ const NavbarComponent = () => {
         <Navbar expand="md" className="bg-body-tertiary">{/**추후 Navbar도 컴포넌트화 해서 다른페이지에 적용시키기 */}
             <Container>
                 <Navbar.Brand href="#">
-                    <img src='/logo192.png'width={"50px"}></img>
-                    <span>PETTODO</span>
+                    <img src='/logo192.png'width={"50px"} className='m-auto'></img>
+                    <h1 style={{display: "inline"}} className=''>PETTODO</h1>
                 </Navbar.Brand>
                 <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">{/*추후 아이콘 추가*/}
@@ -26,7 +26,7 @@ const NavbarComponent = () => {
                         <Avatar className='' size={64} icon={<UserOutlined />} />
                         <Stack gap={0} className='m-auto'>
                             <Navbar.Text className='color-darkBlue '>
-                            홍길동
+                            홍길동{/*이름, 아이디, 모두 state에서 바인딩해야 함 로그아웃에 이벤트 넣어야함 로그인 화면으로 라우팅 하는 것도*/}
                             </Navbar.Text>
                             <Navbar.Text className='color-violet'>
                                 #Email@example.com
