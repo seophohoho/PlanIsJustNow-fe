@@ -161,11 +161,18 @@ span{
     font-size: small;
 }
 
+/* tab 디자인! */
 .ant-tabs-nav-list{
     margin: auto;
 }
 
-.tab-w{
-    width: 200px !important;
-    text-align: center !important
+.ant-tabs-tab{
+    width: 400px !important;
+    text-align: center !important;
+    color: rgb(35, 45, 150) !important;
+    font-size: 20px !important;
+    font-weight: 800;
+}
+.ant-tabs-tab-btn{
+    margin: auto;
 }
