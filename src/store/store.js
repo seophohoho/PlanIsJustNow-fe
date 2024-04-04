@@ -168,6 +168,28 @@ const addShow = createSlice({
   }
 })
 
+const friendList = createSlice({
+  name : "friendsList",
+  initialState : {
+    "userList" : [
+      {userName : "홍일동", userEmail : "example1@email.com"},
+      {userName : "홍이동", userEmail : "example2@email.com"},
+      {userName : "홍삼동", userEmail : "example3@email.com"},
+
+    ],
+    "userRequest":[
+      {userName : "홍사동", userEmail : "example4@email.com"},
+      {userName : "홍오동", userEmail : "example5@email.com"},
+      {userName : "홍육동", userEmail : "example6@email.com"},
+      {userName : "홍칠동", userEmail : "example7@email.com"},
+      {userName : "홍팔동", userEmail : "example8@email.com"},
+    ]
+  },
+  reducers: {
+
+  }
+})
+
 export const {addHandleClose, addHandleShow} = addShow.actions
 export const {scheduleInit, scheduleComplete, scheduleStateEdit, scheduleStateAdd, scheduleDelete} = dateSchedule.actions
 export const {selectPetId, selectPetName} = petSelected.actions
@@ -182,6 +204,7 @@ export default configureStore({// 내보낼 state, 작성 문법은 아래와 �
     petSelected : petSelected.reducer,
     dateSchedule :dateSchedule.reducer,
     addShow : addShow.reducer,
+    friendList : friendList.reducer,
     
   }
 }) 
