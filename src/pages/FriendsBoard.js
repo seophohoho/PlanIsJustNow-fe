@@ -1,5 +1,5 @@
 import { useState } from "react";
-import {Col, Row, Stack, Button} from "react-bootstrap"
+import {Col, Row, Stack, Button, ThemeProvider} from "react-bootstrap"
 import { useSelector, useDispatch } from "react-redux"
 import { Tabs, Avatar } from 'antd';
 import { TeamOutlined, UserAddOutlined, UserOutlined } from '@ant-design/icons';
@@ -10,7 +10,7 @@ function TabChildrenComponent(props){
   const state = useSelector((state)=>state)
   const {i, index, user} = props
   return(
-    <Row className='section__item-schedule'>
+    <Row className='section__item-schedule' minBreakpoint="xs" >
           <Col sm={3} className='text-center impo-margin-zero p-zero'>
           </Col>
           <Col sm={1} className='color-darkBlue text-right'>
@@ -19,7 +19,7 @@ function TabChildrenComponent(props){
           <Col sm={2} className='m-auto color-darkBlue p-zero'>
           <p className='color-darkBlue text-left'>{user.userName}</p>
         <p className='color-violet text-left'>{user.userEmail}</p></Col>
-          <Col sm={3}>
+          <Col sm="auto">
             <Button className=''>{i === 0 ? "살펴보기" : "친구수락"}</Button>
             <Button className='margin-left'>{i === 0 ? "친구삭제" : "거절하기"}</Button>
           </Col>
@@ -39,7 +39,8 @@ function FriendBoard() {
       <header>
         <NavbarComponent/>
       </header>
-      <body>
+      <body className="beak-point">
+      <ThemeProvider minBreakpoint="xs">
       <Tabs
         className="m-auto text-center"
         defaultActiveKey="0"/*tab 최초 시작지점*/
@@ -63,6 +64,7 @@ function FriendBoard() {
           };
         })}
       />
+      </ThemeProvider>
       </body>
       <footer>
 
