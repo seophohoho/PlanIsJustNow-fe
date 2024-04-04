@@ -53,8 +53,8 @@ function FriendBoard() {
             <Stack gap={3}>{/*redux state와 i에 따라 map*/}
               {i === 0 ? 
                 <Form.Group as={Row} className="mb-4">
-                        <Col sm={4}></Col>
-                        <Col className='mb-3 m-auto' sm={4}>{/** input칸 */}
+                        <Col sm={3}></Col>
+                        <Col className='mb-3 m-auto' sm={3}>{/** input칸 */}
                         <Form.Control
                                 type="eamil" 
                                 className='form-Control'
