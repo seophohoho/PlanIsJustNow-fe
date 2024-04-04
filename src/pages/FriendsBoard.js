@@ -19,8 +19,8 @@ function TabChildrenComponent(props){
             <p className='color-violet text-left'>#Email@example.com</p>
           </Col>
           <Col sm={3}>
-            <Button className='m-auto'>살펴보기</Button>
-            <Button className='m-auto'>친구삭제</Button>
+            <Button className=''>살펴보기</Button>
+            <Button className='margin-left'>친구삭제</Button>
           </Col>
           <Col sm={3}>
           </Col>
