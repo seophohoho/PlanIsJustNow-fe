@@ -1,5 +1,5 @@
 import { useState } from "react";
-import {Col, Row, Stack, Button, ThemeProvider} from "react-bootstrap"
+import {Col, Row, Stack, Button, Form} from "react-bootstrap"
 import { useSelector, useDispatch } from "react-redux"
 import { Tabs, Avatar } from 'antd';
 import { TeamOutlined, UserAddOutlined, UserOutlined } from '@ant-design/icons';
@@ -10,7 +10,7 @@ function TabChildrenComponent(props){
   const state = useSelector((state)=>state)
   const {i, index, user} = props
   return(
-    <Row className='section__item-schedule' minBreakpoint="xs" >
+    <Row className='section__item-schedule'>
           <Col sm={3} className='text-center impo-margin-zero p-zero'>
           </Col>
           <Col sm={1} className='color-darkBlue text-right'>
@@ -51,9 +51,24 @@ function FriendBoard() {
             label: tabTitle[i],
             children: 
             <Stack gap={3}>{/*redux state와 i에 따라 map*/}
-              {i === 0 ? <Col sm="auto">
-                <input type="password"></input>
-              </Col> : ""}
+              {i === 0 ? 
+                <Form.Group as={Row} className="mb-4">
+                        <Col sm={4}></Col>
+                        <Col className='mb-3 m-auto' sm={4}>{/** input칸 */}
+                        <Form.Control
+                                type="eamil" 
+                                className='form-Control'
+                                placeholder='friend@gmail.com'
+                                onChange={(e)=>{
+                                }}
+                            />
+                        </Col>
+                        <Col sm="auto">
+                          <Button>친구요청</Button>
+                        </Col>
+                        <Col sm={3}></Col>
+                </Form.Group>
+              : ""}
               {
                   state.friendList[i === 0 ? "userList" : "userRequest"].map((user, index) => {
                     return (
