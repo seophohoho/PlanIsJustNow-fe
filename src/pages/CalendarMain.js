@@ -35,17 +35,6 @@ const CalendarMain = () => {
             });
         });
     
-        setImportantEvents(newImportantEvents);
-    }, [state.dateSchedule]); // state.dateSchedule가 변경될 때마다 이 함수를 다시 실행
-    
-    const modalShow = ()=>{
-        dispatch(addHandleShow())
-    }
-    //state로 안해서 실시간 반영이 안되는 것이었음;;
-    const [importantEvents, setImportantEvents] = useState([]);
-
-  /*달력 뷰에 보여지는 것은 addEvent를 이용해서 객체.important 여부 판단 후 삽입 완료된 일정은 impotant가 자동으로 false가 되어야함  */
-    const ImportantEventsHandler = () => {
         Object.keys(state.dateSchedule).forEach(date => {
             console.log(date)
             state.dateSchedule[date].forEach(event => {
@@ -60,6 +49,18 @@ const CalendarMain = () => {
                 
             });
         });
+        setImportantEvents(newImportantEvents);
+    }, [state.dateSchedule]); // state.dateSchedule가 변경될 때마다 이 함수를 다시 실행
+    
+    const modalShow = ()=>{
+        dispatch(addHandleShow())
+    }
+    //state로 안해서 실시간 반영이 안되는 것이었음;;
+    const [importantEvents, setImportantEvents] = useState([]);
+
+  /*달력 뷰에 보여지는 것은 addEvent를 이용해서 객체.important 여부 판단 후 삽입 완료된 일정은 impotant가 자동으로 false가 되어야함  */
+    const ImportantEventsHandler = () => {
+        
     }
 
   return (
@@ -112,7 +113,6 @@ const CalendarMain = () => {
                             /*처음 axios에서 받은 값을 초기화 후 해당값에서 아래 값으로 접근해서 map으로 나열*/
                             const currentDate = moment().format('YYYY-MM-DD');
                             setClickedDate(currentDate);
-                            ImportantEventsHandler()
                         }}
                         events={importantEvents} /* events 배열은 달력에 표시될 이벤트 목록 */
                         contentHeight="auto"
