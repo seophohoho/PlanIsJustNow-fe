@@ -1,17 +1,30 @@
 import { useState } from "react";
-import {Col, Row, Stack} from "react-bootstrap"
+import {Col, Row, Stack, Button} from "react-bootstrap"
 import { useSelector, useDispatch } from "react-redux"
-import { EllipsisOutlined, StarTwoTone } from '@ant-design/icons';
-import { Tabs } from 'antd';
-import { TeamOutlined, UserAddOutlined } from '@ant-design/icons';
+import { Tabs, Avatar } from 'antd';
+import { TeamOutlined, UserAddOutlined, UserOutlined } from '@ant-design/icons';
 import { scheduleDelete } from "../store/store";
 import NavbarComponent from "../components/NavbarComponent";
 
 function TabChildrenComponent(props){ 
   return(
-    <div>
-      {props.i === 0 ? <span>hello1</span> : <span>hello2</span>}
-    </div>
+    <Row className='section__item-schedule'>
+          <Col sm={3} className='text-center impo-margin-zero p-zero'>
+          </Col>
+          <Col sm={1} className='color-darkBlue text-right'>
+            <Avatar className='' size={64} icon={<UserOutlined/>} />
+          </Col>
+          <Col sm={2} className='m-auto color-darkBlue p-zero'>
+            <p className='color-darkBlue text-left'>홍길동</p>{/*이름, 아이디, 모두 state에서 바인딩해야 함 로그아웃에 이벤트 넣어야함 로그인 화면으로 라우팅 하는 것도*/}
+            <p className='color-violet text-left'>#Email@example.com</p>
+          </Col>
+          <Col sm={3}>
+            <Button className='m-auto'>살펴보기</Button>
+            <Button className='m-auto'>친구삭제</Button>
+          </Col>
+          <Col sm={3}>
+          </Col>
+      </Row>
   );
 }
 
