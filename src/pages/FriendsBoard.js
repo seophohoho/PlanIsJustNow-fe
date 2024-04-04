@@ -40,7 +40,6 @@ function FriendBoard() {
         <NavbarComponent/>
       </header>
       <body className="beak-point">
-      <ThemeProvider minBreakpoint="xs">
       <Tabs
         className="m-auto text-center"
         defaultActiveKey="0"/*tab 최초 시작지점*/
@@ -52,6 +51,9 @@ function FriendBoard() {
             label: tabTitle[i],
             children: 
             <Stack gap={3}>{/*redux state와 i에 따라 map*/}
+              {i === 0 ? <Col sm="auto">
+                <input type="password"></input>
+              </Col> : ""}
               {
                   state.friendList[i === 0 ? "userList" : "userRequest"].map((user, index) => {
                     return (
@@ -64,7 +66,6 @@ function FriendBoard() {
           };
         })}
       />
-      </ThemeProvider>
       </body>
       <footer>
 
