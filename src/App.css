@@ -219,3 +219,11 @@ input[type="number"]::-webkit-inner-spin-button {
 .text-right{
   text-align: right
 }
+
+.bg-darkblue{
+  background-color: rgb(35, 45, 150) !important;
+}
+
+.font-weight-800{
+  font-weight: 800 !important;
+}
