@@ -17,7 +17,7 @@ const NavbarComponent = () => {
                 <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">{/*추후 아이콘 추가*/}
                     <Nav.Link href="/calendar">Home</Nav.Link>
-                    <Nav.Link href="/calendar">Frends</Nav.Link>
+                    <Nav.Link href="/Friend-board">Frends</Nav.Link>
                     <Nav.Link href="/calendar">Petdex</Nav.Link>
                 </Nav>
                 </Navbar.Collapse>
