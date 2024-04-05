@@ -11,7 +11,7 @@ import ScheduleAddModal from '../components/ScheduleAddModal';
 import Schedule from '../components/ScheduleComponent';
 import { scheduleInit, addHandleShow } from '../store/store';
 import { useSelector, useDispatch } from 'react-redux';
-import { Form, Col, Row, Container, Navbar, Stack, Image, Button } from 'react-bootstrap';
+import { Col, Row, Container, Stack, Button } from 'react-bootstrap';
 import PetSpaceComponent from '../components/PetSpaceComponent';
 import NavbarComponent from '../components/NavbarComponent';
 
@@ -22,7 +22,7 @@ const CalendarMain = () => {
 
     useEffect(() => {
         const newImportantEvents = [];
-    
+        //Object.keys 인자로 들어간 객채의 모든 key를 반환
         Object.keys(state.dateSchedule).forEach(date => {
             state.dateSchedule[date].forEach(event => {
             if (event.important) {
@@ -55,13 +55,8 @@ const CalendarMain = () => {
     const modalShow = ()=>{
         dispatch(addHandleShow())
     }
-    //state로 안해서 실시간 반영이 안되는 것이었음;;
     const [importantEvents, setImportantEvents] = useState([]);
 
-  /*달력 뷰에 보여지는 것은 addEvent를 이용해서 객체.important 여부 판단 후 삽입 완료된 일정은 impotant가 자동으로 false가 되어야함  */
-    const ImportantEventsHandler = () => {
-        
-    }
 
   return (
     <div>
@@ -130,7 +125,7 @@ const CalendarMain = () => {
                     <Col lg="5">
                         <Stack>{/**나중에 줄바꿈 되는 모든 div에 클래스 적용  white-space:nowrap; <-- 스케줄 컴포넌트에 적용해보기 */}
                             <Stack direction='horizontal' className='fc-direction-ltr-2v'>
-                                <div className='h-342 w-max section-schedule'>
+                                <div className='h-410 w-max section-schedule'>
                                     <Stack className=''>
                                         <Row className='section__item-schedule sticky-schedule'>
                                             <Col sm={2} className='m-auto color-darkBlue text-center'>
