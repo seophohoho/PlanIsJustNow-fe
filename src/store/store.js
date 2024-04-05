@@ -186,13 +186,23 @@ const friendList = createSlice({
     ]
   },
   reducers: {
+    friendDelete(state, action){/*payload ---> list: userlist or userRequest, index: there index*/
+      state[action.payload.list].splice(action.payload.index, 1); //제거
+    },
+    friendRefuse(state, action){
 
+    },
+    friendAccept(state, action){
+
+    },
+  
   }
 })
 
 export const {addHandleClose, addHandleShow} = addShow.actions
 export const {scheduleInit, scheduleComplete, scheduleStateEdit, scheduleStateAdd, scheduleDelete} = dateSchedule.actions
 export const {selectPetId, selectPetName} = petSelected.actions
+export const {friendDelete, friendRefuse, friendAccept } = friendList.actions
 //함수또한 내보내야 요청가능
 
 export default configureStore({// 내보낼 state, 작성 문법은 아래와 같음
