@@ -16,8 +16,8 @@ function TabChildrenComponent(props){
     dispatch(friendDelete({list, index}))
   }
 
-  function refuseHandler(){
-    dispatch(friendRefuse())
+  function refuseHandler(list, index){
+    dispatch(friendRefuse({list, index}))
   }
   function acceptHandler(){
     dispatch(friendAccept())
@@ -38,7 +38,7 @@ function TabChildrenComponent(props){
             >{i === 0 ? "살펴보기" : "친구수락"}</Button>
             
             <Button className='margin-left bg-darkblue font-weight-800'
-            onClick={() => i === 0 ? deleteHandler(list, index) : undefined}
+            onClick={() => i === 0 ? deleteHandler(list, index) : refuseHandler(list, index)}
             >{i === 0 ? "친구삭제" : "거절하기"}</Button>
           </Col>
           <Col sm={3}>

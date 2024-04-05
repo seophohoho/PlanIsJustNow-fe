@@ -190,7 +190,7 @@ const friendList = createSlice({
       state[action.payload.list].splice(action.payload.index, 1); //제거
     },
     friendRefuse(state, action){
-
+      state[action.payload.list].splice(action.payload.index, 1); //제거
     },
     friendAccept(state, action){
 
