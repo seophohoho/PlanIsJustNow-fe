@@ -146,6 +146,7 @@ function InputComponent(props){
 async function btnAuth(email, authCode){
   if (authCode.length === 6) {
       const response = await axios.post(`${serverUrl}/api/auth/check`, {
+        withCredentials: true,
         "email": email,
         "code": authCode
       }).then((response)=>{
