@@ -57,7 +57,7 @@ const dateSchedule = createSlice({
       {title : "식사", time: "17:00", important: false , complete : true},
     ],
     "2024-03-19" : [
-      {title : "회의", time: "12:00", important: true, complete : false},
+      {idx : "", title : "회의", time: "12:00", important: true, complete : false},
       {title : "간식", time: "15:51", important: false, complete : false},
       {title : "후식", time: "18:11", important: true, complete : false},
       {title : "가나다라마바사", time: "17:21", important: false, complete : true},
@@ -105,12 +105,19 @@ const dateSchedule = createSlice({
       }
     },
     scheduleStateEdit(state, action){//아래 post로 전부 보내야함 axios 함수도 여기서 관리?
-      const scheduleState = state[action.payload.clickedDate][action.payload.index]
-      
+      const scheduleState = { 
+        title : action.payload.title,
+        time: action.payload.time,
+        important: action.payload.important, 
+        complete : false 
+      }
+
       // 같은 날짜에 important가 true인 일정의 개수를 계산.
       const clickedDate = action.payload.clickedDate;
+      const editDate = action.payload.editDate;
       const importantCount = state[clickedDate] ? state[clickedDate].filter(item => item.important).length : 0;
-      //중요표시가 3개 + 전달 받은 중요가 true일때만  
+      
+      //중요표시는 3개까지, 일정은 1글자 이상 입력 제어
       if((importantCount === 3 && action.payload.important === true) || action.payload.title.length === 0){
         if(action.payload.title.length === 0){
           alert("일정을 입력해 주세요!")
@@ -120,25 +127,19 @@ const dateSchedule = createSlice({
         }
       }
       else{
-        if (action.payload.important) {
-          // 기존의 important가 false였으나 true로 변경되는 경우, 최상단으로 이동
-          state[clickedDate].splice(action.payload.index, 1); // 기존 위치에서 제거
-          state[clickedDate].unshift(scheduleState); // 최상단에 추가
-          scheduleState.title = action.payload.title
-          scheduleState.time = action.payload.time
-          scheduleState.important = action.payload.important
+        // 기존에 있던 값을 수정하는 방식이 아닌 edit된 값을 받아서 새로운 일정 추가
+        // 원래 있던 자리의 값은 제거
+        if (!state[editDate]) {
+          state[editDate] = [scheduleState];
         } else {
-          if(scheduleState.important != action.payload.important){
-            state[clickedDate].splice(action.payload.index, 1); // 기존 위치에서 제거
-            state[clickedDate].push(scheduleState); // 최상단에 추가
+          if (scheduleState.important) {
+            state[editDate].unshift(scheduleState);
+          } else {
+            state[editDate].push(scheduleState);
           }
-          // important가 true로 변경되지 않는 경우, 기존 위치에서 업데이트만 수행
-          scheduleState.title = action.payload.title
-          scheduleState.time = action.payload.time
-          scheduleState.important = action.payload.important
         }
+      state[action.payload.clickedDate].splice(action.payload.index, 1); //제거
       }
-
     },
     scheduleDelete(state, action){
       state[action.payload.clickedDate].splice(action.payload.index, 1); //제거
