@@ -25,6 +25,9 @@ function ScheduleEditModal(props){
 
   dayjs.extend(customParseFormat);
 
+  function DatePickerHandler(notUse, picks){
+    tempSchedule.clickedDate = picks;
+  }
   function TimePickerHandler(notuse, picks){
     tempSchedule.time = picks
   };
@@ -36,10 +39,14 @@ function ScheduleEditModal(props){
   }
 
   const confirmHandler = function(e){
-    tempSchedule.clickedDate = clickedDate;
+    //변경된 날짜 삽입
+    const editDate = clickedDate
     tempSchedule.index = i;
-
-    dispatch(scheduleStateEdit(tempSchedule))
+    //클릭된 날짜 복구
+    tempSchedule.clickedDate = clickedDate;
+    console.log(tempSchedule)
+    //클릭된 날짜와 변경된 날짜를 보냄
+    dispatch(scheduleStateEdit(tempSchedule, editDate))
     console.log(tempSchedule)
     handleClose();
   };
@@ -87,6 +94,18 @@ function ScheduleEditModal(props){
                   defaultOpenValue={dayjs('HH:mm')}
                   defaultValue={dayjs(state.dateSchedule[clickedDate][i].time,'HH:mm')}
                   format="HH:mm"
+                  />
+            </Form.Group>
+
+            <Form.Group className="mb-4">
+              <Form.Label htmlFor="ControlInput2" className="color-darkBlue">날짜</Form.Label>
+              <DatePicker 
+                  className="m-left-59p"
+                  id="ControlInput2"
+                  inputReadOnly={true} 
+                  onChange={DatePickerHandler}
+                  defaultOpenValue={dayjs('YYYY-MM-DD')}
+                  defaultValue={[dayjs(clickedDate, 'YYYY-MM-DD')]}
                   />
             </Form.Group>
 
