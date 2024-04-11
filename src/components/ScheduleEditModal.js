@@ -13,9 +13,10 @@ function ScheduleEditModal(props){
   const dispatch = useDispatch();
   const {show, handleClose, i, clickedDate} = props;
   const ScheduleState = state.dateSchedule[clickedDate][i];
-  
+
   const tempSchedule = {
     clickedDate: clickedDate,
+    editDate : "",
     index: i, 
     title : ScheduleState.title, 
     time: ScheduleState.time, 
@@ -26,7 +27,7 @@ function ScheduleEditModal(props){
   dayjs.extend(customParseFormat);
 
   function DatePickerHandler(notUse, picks){
-    tempSchedule.clickedDate = picks;
+    tempSchedule.editDate = picks;
   }
   function TimePickerHandler(notuse, picks){
     tempSchedule.time = picks
@@ -39,14 +40,10 @@ function ScheduleEditModal(props){
   }
 
   const confirmHandler = function(e){
-    //변경된 날짜 삽입
-    const editDate = clickedDate
     tempSchedule.index = i;
-    //클릭된 날짜 복구
-    tempSchedule.clickedDate = clickedDate;
     console.log(tempSchedule)
     //클릭된 날짜와 변경된 날짜를 보냄
-    dispatch(scheduleStateEdit(tempSchedule, editDate))
+    dispatch(scheduleStateEdit(tempSchedule))
     console.log(tempSchedule)
     handleClose();
   };
