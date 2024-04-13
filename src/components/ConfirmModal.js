@@ -2,13 +2,18 @@ import {Modal, Button} from "react-bootstrap"
 import { useSelector, useDispatch } from "react-redux"
 import { scheduleComplete } from "../store/store"
 import "@djthoms/pretty-checkbox"
+import { useState } from "react"
 
 
 function ConfirmModal(props){
     const state = useSelector(state => state)
     const dispatch = useDispatch(state=> state)
-    const {confirmShow, confirmHandleClose, i, clickedDate} = props;
-
+    const {confirmShow, confirmHandleClose, i, clickedDate, Message} = props;// 이벤트랑 title body도 전달해야할듯
+    function confirmEvent(){
+      confirmHandleClose();
+      dispatch(scheduleComplete({clickedDate: clickedDate, index: i, package: true }))
+     
+    }
     return (
       <> {/*todo 올바른 form control 할당 버튼 디자인 변경*/}
         <Modal show={confirmShow} onHide={confirmHandleClose} className="p-400" >
@@ -18,17 +23,14 @@ function ConfirmModal(props){
           </Modal.Header>
 
           <Modal.Body>
-            <p>일정 완료를 결정하시면 이전 상태로 돌아갈 수 없습니다!</p>
+            <p>{Message}</p>
           </Modal.Body>
 
           <Modal.Footer>
             <Button variant="secondary" onClick={confirmHandleClose}>
               취소
             </Button>
-            <Button variant="primary" onClick={()=>{
-              confirmHandleClose();
-              dispatch(scheduleComplete({clickedDate: clickedDate, index: i, package: true }))
-              }}>
+            <Button variant="primary" onClick={confirmEvent}>
               확인
             </Button>
           </Modal.Footer>

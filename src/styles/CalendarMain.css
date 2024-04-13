@@ -8,6 +8,10 @@ p{
     margin-bottom: 0px;
 }
 
+span{
+    padding: 0px !important;
+}
+
 .text-center{
     text-align: center;
 }
@@ -155,4 +159,24 @@ p{
 .daySchedule-font{
     color: #dfdfdf;
     font-size: small;
+}
+
+/* tab 디자인! */
+.ant-tabs-nav-list{
+    margin: auto;
+}
+
+.ant-tabs-tab{
+    width: 400px !important;
+    text-align: center !important;
+    color: rgb(35, 45, 150) !important;
+    font-size: 20px !important;
+    font-weight: 800;
+}
+.ant-tabs-tab-btn{
+    margin: auto;
+}
+/* calendar view event height */
+.fc-daygrid-day-events{
+    height: 44px;
 }

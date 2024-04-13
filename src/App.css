@@ -157,8 +157,8 @@ input[type="number"]::-webkit-inner-spin-button {
   height: 200px;
 }
 
-.h-342{
-  height: 342px;
+.h-410{
+  height: 410px;
 }
 
 .h-600{
@@ -210,4 +210,20 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .m-left-13p{
   margin-left: 13%;
+}
+
+.text-left{
+  text-align: left
+}
+
+.text-right{
+  text-align: right
+}
+
+.bg-darkblue{
+  background-color: rgb(35, 45, 150) !important;
+}
+
+.font-weight-800{
+  font-weight: 800 !important;
 }

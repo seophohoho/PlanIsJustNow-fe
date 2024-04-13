@@ -11,7 +11,7 @@ import ScheduleAddModal from '../components/ScheduleAddModal';
 import Schedule from '../components/ScheduleComponent';
 import { scheduleInit, addHandleShow } from '../store/store';
 import { useSelector, useDispatch } from 'react-redux';
-import { Form, Col, Row, Container, Navbar, Stack, Image, Button } from 'react-bootstrap';
+import { Col, Row, Container, Stack, Button } from 'react-bootstrap';
 import PetSpaceComponent from '../components/PetSpaceComponent';
 import NavbarComponent from '../components/NavbarComponent';
 
@@ -22,7 +22,7 @@ const CalendarMain = () => {
 
     useEffect(() => {
         const newImportantEvents = [];
-    
+        //Object.keys 인자로 들어간 객채의 모든 key를 반환
         Object.keys(state.dateSchedule).forEach(date => {
             state.dateSchedule[date].forEach(event => {
             if (event.important) {
@@ -35,17 +35,6 @@ const CalendarMain = () => {
             });
         });
     
-        setImportantEvents(newImportantEvents);
-    }, [state.dateSchedule]); // state.dateSchedule가 변경될 때마다 이 함수를 다시 실행
-    
-    const modalShow = ()=>{
-        dispatch(addHandleShow())
-    }
-    //state로 안해서 실시간 반영이 안되는 것이었음;;
-    const [importantEvents, setImportantEvents] = useState([]);
-
-  /*달력 뷰에 보여지는 것은 addEvent를 이용해서 객체.important 여부 판단 후 삽입 완료된 일정은 impotant가 자동으로 false가 되어야함  */
-    const ImportantEventsHandler = () => {
         Object.keys(state.dateSchedule).forEach(date => {
             console.log(date)
             state.dateSchedule[date].forEach(event => {
@@ -60,7 +49,14 @@ const CalendarMain = () => {
                 
             });
         });
+        setImportantEvents(newImportantEvents);
+    }, [state.dateSchedule]); // state.dateSchedule가 변경될 때마다 이 함수를 다시 실행
+    
+    const modalShow = ()=>{
+        dispatch(addHandleShow())
     }
+    const [importantEvents, setImportantEvents] = useState([]);
+
 
   return (
     <div>
@@ -112,7 +108,6 @@ const CalendarMain = () => {
                             /*처음 axios에서 받은 값을 초기화 후 해당값에서 아래 값으로 접근해서 map으로 나열*/
                             const currentDate = moment().format('YYYY-MM-DD');
                             setClickedDate(currentDate);
-                            ImportantEventsHandler()
                         }}
                         events={importantEvents} /* events 배열은 달력에 표시될 이벤트 목록 */
                         contentHeight="auto"
@@ -130,7 +125,7 @@ const CalendarMain = () => {
                     <Col lg="5">
                         <Stack>{/**나중에 줄바꿈 되는 모든 div에 클래스 적용  white-space:nowrap; <-- 스케줄 컴포넌트에 적용해보기 */}
                             <Stack direction='horizontal' className='fc-direction-ltr-2v'>
-                                <div className='h-342 w-max section-schedule'>
+                                <div className='h-410 w-max section-schedule'>
                                     <Stack className=''>
                                         <Row className='section__item-schedule sticky-schedule'>
                                             <Col sm={2} className='m-auto color-darkBlue text-center'>
