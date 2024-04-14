@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useState, useEffect } from 'react';
 import FullCalendar from '@fullcalendar/react'
 import momentPlugin from '@fullcalendar/moment';
@@ -14,11 +14,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Col, Row, Container, Stack, Button } from 'react-bootstrap';
 import PetSpaceComponent from '../components/PetSpaceComponent';
 import NavbarComponent from '../components/NavbarComponent';
+import serverUrl from '../serverConfig'
+import axios from 'axios'
+
 
 const CalendarMain = () => {
     const state = useSelector((state)=> {return state});
     const [clickedDate, setClickedDate] = useState("");
     const dispatch = useDispatch();
+
 
     useEffect(() => {
         const newImportantEvents = [];
@@ -98,10 +102,13 @@ const CalendarMain = () => {
                             );
                           }}
                         nextDayThreshold={'00:00'}
-                        datesSet={function(args) {
-                            /* 달력 초기화 시 작동 TODO: axios 일정관련 초기화 함수 또한 여기서 실행  */
-                            dispatch(scheduleInit(/*axios*/));
-                            
+                        datesSet={function(args) {  
+                            axios.get(`${serverUrl}/api/todolist/select`,{withCredentials: true})
+                            .then((response)=>{
+                                const copy = response.data
+                                console.log(copy.data)
+                                dispatch(scheduleInit(copy.data))
+                            }).catch((error)=>{console.log(error)})                          
                             /*  리액트에서 fullcalendar 최상위 객체 오브젝트에 접근하려면 이렇게 해야함 */
                             const view = args.view.calendar.currentData.currentDate;
                             /*getMonth는 JavaScript에서 날짜의 월은 0(1월)부터 11(12월)까지 번호가 지정됨 +1을 해야 원본 값이 나옴*/
