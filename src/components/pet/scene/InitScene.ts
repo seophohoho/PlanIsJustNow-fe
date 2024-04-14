@@ -24,7 +24,7 @@ export class InitScene extends Phaser.Scene{
         const container = this.add.container();
         this.pet.setContainer(container);
         try{
-            const res = await axios.post(`${serverUrl}/api/user/has-pet`,{"email":"seop0937@gmail.com"});
+            const res = await axios.get(`${serverUrl}/api/user/has-pet`,{withCredentials: true});
             console.log(res)
             const data = res.data.data[0];
             this.pet.setData(data);
