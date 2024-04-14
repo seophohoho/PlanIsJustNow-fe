@@ -51,23 +51,10 @@ const petSelected = createSlice({
 //전체 일정 보여주는 스케줄 추후에 완전히 비워야함
 const dateSchedule = createSlice({
   name : "dateSchedule",
-  initialState : {
-    "2024-03-17" : [
-      {title : "운동", time: "20:00", important: true, complete : false},
-      {title : "식사", time: "17:00", important: false , complete : true},
-    ],
-    "2024-03-19" : [
-      {idx : "", title : "회의", time: "12:00", important: true, complete : false},
-      {title : "간식", time: "15:51", important: false, complete : false},
-      {title : "후식", time: "18:11", important: true, complete : false},
-      {title : "가나다라마바사", time: "17:21", important: false, complete : true},
-      {title : "공부", time: "17:23", important: false, complete : false},
-
-    ],
-  },
+  initialState : {},
   reducers:{
     scheduleInit(state, action){//state 초기화
-      return state
+      return action.payload
     },
     scheduleStateAdd(state, action){
       const scheduleState = { 
