@@ -66,10 +66,9 @@ function Login() {
                             onClick={()=>{
                                 if(!isLoading){setLoading(true)}
                                 axios.post(`${serverUrl}/api/account/signin`, {
-                                    withCredentials: true,
                                     "email" : userId,
                                     "password" : userPassword,
-                                })
+                                },{withCredentials: true})
                                 .then((response) => {
                                     if(response.status === 200){
                                         alert("로그인 성공 status: 200")
