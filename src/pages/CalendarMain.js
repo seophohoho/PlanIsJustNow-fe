@@ -104,15 +104,12 @@ const CalendarMain = () => {
                           }}
                         nextDayThreshold={'00:00'}
                         datesSet={function(args) {  
-                            axios.get(`${serverUrl}/api/todolist/select`,{withCredentials: true})
+                            axios.get(`${serverUrl}/api/todolist/select`,
+                            {withCredentials: true})
                             .then((response)=>{
-                                if(response.status === 401){
-                                    navigate("/")
-                                }else{
-                                    const copy = response.data
-                                    console.log(copy.data)
-                                    dispatch(scheduleInit(copy.data))
-                                }
+                                const copy = response.data
+                                console.log(copy.data)
+                                dispatch(scheduleInit(copy.data))
                             }).catch((error) => {
                                 if(error.response){ // 런타임 에러방지 error.response가 있는지 먼저 확인함
                                     if(error.response.status === 401) { // 토큰 만료 리다이렉트
