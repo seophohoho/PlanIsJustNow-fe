@@ -8,13 +8,16 @@ import { addHandleClose, scheduleComplete, scheduleStateAdd } from "../store/sto
 import "@djthoms/pretty-checkbox"
 import { Checkbox } from "pretty-checkbox-react";
 import moment from 'moment';
+import axios from "axios";
+import serverUrl from "../serverConfig";
+import { useNavigate } from "react-router-dom";
 
 function ScheduleAddModal(props){
   const state = useSelector(state => state)
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { clickedDate } = props;
-  const currentTime = moment().format('HH:MM');
-
+  const currentTime = moment().format('HH:mm');
   
   /*초기화 상태*/
   const tempSchedule = {
@@ -22,6 +25,7 @@ function ScheduleAddModal(props){
     title : "",
     time: currentTime,
     important: false,
+    idx : ""
   }
   dayjs.extend(customParseFormat);
 
@@ -40,14 +44,29 @@ function ScheduleAddModal(props){
 
   const addConfirmHandler = function(e){
     tempSchedule.clickedDate = clickedDate;
-
-    dispatch(scheduleStateAdd(tempSchedule))
-
-    console.log(tempSchedule)
-    modalClose()
-  };
-
-  
+    console.log(currentTime)
+    axios.post(`${serverUrl}/api/todolist/add`, {
+      "title":tempSchedule.title,
+      "startDate": tempSchedule.clickedDate,
+      "time": tempSchedule.time,
+      "isImportant": tempSchedule.important ? 1 : 0 
+  }, {withCredentials: true})
+    .then(response => {
+        tempSchedule.idx = response.data.data
+        dispatch(scheduleStateAdd(tempSchedule));
+        console.log(tempSchedule.time + "!!!!time");
+        modalClose();
+    })
+    .catch(error => {
+      if(error.response.status === 401){//토큰 만료 리다이렉트
+        console.log("?" + error.status)
+        alert("로그인을 다시해주세요!")
+        navigate('/')
+        modalClose();
+      }
+        console.error('Error posting data:', error);
+    });
+};  
   
   const title = "일정추가";
 
