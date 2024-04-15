@@ -10,20 +10,24 @@ import ConfirmModal from "./ConfirmModal";
 import axios from "axios";
 import serverUrl from "../serverConfig";
 import { Navigate, useNavigate } from "react-router-dom";
+import dayjs from 'dayjs';
 
 function Schedule(props){
-    const state = useSelector((state)=> state)/*자주 쓰는거 변수로 줄여야겠음 */
+    const state = useSelector((state)=> state)/*자주 쓰는거 변수로 줄여야겠음 --> root로 가져오지마셈 나중에 수정*/
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const {i, clickedDate} = props
-
+    /* confirm modal control */
     const [confirmShow, setConfirmShow] = useState(false);
     const confirmHandleClose = ()=>{setConfirmShow(false);}
     const confirmHandler = (e)=>{setConfirmShow(e)};
-
+    /* edit modal control */
     const [editShow, setEditShow] = useState(false);
     const editHandleClose = () => {setEditShow(false);}
     const editHandleShow = () => {setEditShow(true);}
+    /* 일정완료 체크박스 당일 확인용 */
+    const today = dayjs().format('YYYY-MM-DD');
+    const isToday = dayjs(clickedDate).format('YYYY-MM-DD') === today;
 
     function scheduleDeleteHandler(){
         /* confirm 추가 */
@@ -100,7 +104,7 @@ function Schedule(props){
                 icon={<i className="zmdi zmdi-check"/>}
                 onChange={(e)=>{ confirmHandler(e.target.checked) }}
                 checked={ScheduleState.complete}
-                disabled={ScheduleState.complete}
+                disabled={!isToday || ScheduleState.complete}
                 />
             </Col>
             <Col sm={2} className='m-auto color-darkBlue'>
