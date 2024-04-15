@@ -23,8 +23,6 @@ const petName = createSlice({//펫 이름
   }
 })
 
-export const {} = petName.actions
-
 const petInpo = createSlice({//펫 설명
   name : 'petName',
   initialState : [
@@ -61,7 +59,8 @@ const dateSchedule = createSlice({
         title : action.payload.title,
         time: action.payload.time,
         important: action.payload.important, 
-        complete : false 
+        complete : false,
+        idx : action.payload.idx
       }
 
       // 같은 날짜에 important가 true인 일정의 개수를 계산.
@@ -74,7 +73,7 @@ const dateSchedule = createSlice({
           alert("일정을 입력해 주세요!")
         }
         else{
-            alert("중요 표시는 3개를 초과하여 등록할 수 없습니다!")
+          alert("중요 표시는 3개를 초과하여 등록할 수 없습니다!")
         }
       }
       else{
@@ -91,43 +90,46 @@ const dateSchedule = createSlice({
         }
       }
     },
-    scheduleStateEdit(state, action){//아래 post로 전부 보내야함 axios 함수도 여기서 관리?
-      const scheduleState = { 
-        title : action.payload.title,
-        time: action.payload.time,
-        important: action.payload.important, 
-        complete : false 
+    scheduleStateEdit(state, action) {
+      const { clickedDate, editDate, title, time, important, index } = action.payload;
+      const schedule = state[clickedDate][index];
+      const targetDate = editDate === "" ? clickedDate : editDate;
+    
+      if (title.length === 0) {
+        alert("일정을 입력해 주세요!");
+        return;
       }
-
-      // 같은 날짜에 important가 true인 일정의 개수를 계산.
-      const clickedDate = action.payload.clickedDate;
-      const editDate = action.payload.editDate;
-      const importantCount = state[clickedDate] ? state[clickedDate].filter(item => item.important).length : 0;
-      
-      //중요표시는 3개까지, 일정은 1글자 이상 입력 제어
-      if((importantCount === 3 && action.payload.important === true) || action.payload.title.length === 0){
-        if(action.payload.title.length === 0){
-          alert("일정을 입력해 주세요!")
-        }
-        else{
-            alert("중요 표시는 3개를 초과하여 등록할 수 없습니다!")
-        }
+    
+      const importantCount = state[targetDate]?.filter((item, idx) => idx !== index && item.important).length || 0;
+      if (importantCount >= 3 && important) {
+        alert("중요 표시는 3개를 초과하여 등록할 수 없습니다!");
+        return;
       }
-      else{
-        // 기존에 있던 값을 수정하는 방식이 아닌 edit된 값을 받아서 새로운 일정 추가
-        // 원래 있던 자리의 값은 제거
-        if (!state[editDate]) {
-          state[editDate] = [scheduleState];
+    
+      // 원본 일정을 제거
+      if (clickedDate === targetDate) {
+        state[clickedDate].splice(index, 1);
+        const newScheduleState = { ...schedule, title, time, important, complete: false };
+    
+        // 중요 여부에 따라 새로운 일정 추가
+        if (important) {
+          state[targetDate].unshift(newScheduleState);
         } else {
-          if (scheduleState.important) {
-            state[editDate].unshift(scheduleState);
-          } else {
-            state[editDate].push(scheduleState);
-          }
+          state[targetDate].push(newScheduleState);
         }
-      state[action.payload.clickedDate].splice(action.payload.index, 1); //제거
+      } else {
+        // 대상 날짜가 다른 경우, 먼저 기존 일정을 삭제하고 새 일정을 추가
+        state[clickedDate].splice(index, 1);
+        const newScheduleState = { ...schedule, title, time, important, complete: false };
+        state[targetDate] = state[targetDate] || [];
+        
+        if (important) {
+          state[targetDate].unshift(newScheduleState);
+        } else {
+          state[targetDate].push(newScheduleState);
+        }
       }
-    },
+    },    
     scheduleDelete(state, action){
       state[action.payload.clickedDate].splice(action.payload.index, 1); //제거
     },
@@ -135,8 +137,6 @@ const dateSchedule = createSlice({
       const scheduleState = state[action.payload.clickedDate][action.payload.index]
       
       scheduleState.complete = action.payload.package
-      scheduleState.important = false 
-
     },
   }
 })
