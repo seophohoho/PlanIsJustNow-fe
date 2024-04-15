@@ -16,13 +16,14 @@ import PetSpaceComponent from '../components/PetSpaceComponent';
 import NavbarComponent from '../components/NavbarComponent';
 import serverUrl from '../serverConfig'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 
 
 const CalendarMain = () => {
     const state = useSelector((state)=> {return state});
     const [clickedDate, setClickedDate] = useState("");
     const dispatch = useDispatch();
-
+    const navigate = useNavigate();
 
     useEffect(() => {
         const newImportantEvents = [];
@@ -105,14 +106,17 @@ const CalendarMain = () => {
                         datesSet={function(args) {  
                             axios.get(`${serverUrl}/api/todolist/select`,{withCredentials: true})
                             .then((response)=>{
-                                const copy = response.data
-                                console.log(copy.data)
-                                dispatch(scheduleInit(copy.data))
+                                if(response.status === 401){
+                                    navigate("/")
+                                }else{
+                                    const copy = response.data
+                                    console.log(copy.data)
+                                    dispatch(scheduleInit(copy.data))
+                                }
                             }).catch((error)=>{console.log(error)})                          
                             /*  리액트에서 fullcalendar 최상위 객체 오브젝트에 접근하려면 이렇게 해야함 */
                             const view = args.view.calendar.currentData.currentDate;
                             /*getMonth는 JavaScript에서 날짜의 월은 0(1월)부터 11(12월)까지 번호가 지정됨 +1을 해야 원본 값이 나옴*/
-                            /*처음 axios에서 받은 값을 초기화 후 해당값에서 아래 값으로 접근해서 map으로 나열*/
                             const currentDate = moment().format('YYYY-MM-DD');
                             setClickedDate(currentDate);
                         }}
