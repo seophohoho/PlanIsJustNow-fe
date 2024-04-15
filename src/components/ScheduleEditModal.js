@@ -6,11 +6,14 @@ import { useSelector,useDispatch } from "react-redux"
 import { scheduleStateEdit } from "../store/store";
 import "@djthoms/pretty-checkbox"
 import { Checkbox } from "pretty-checkbox-react";
-
+import axios from "axios";
+import serverUrl from "../serverConfig";
+import { useNavigate } from "react-router-dom";
 
 function ScheduleEditModal(props){
   const state = useSelector(state => state)
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const {show, handleClose, i, clickedDate} = props;
   const ScheduleState = state.dateSchedule[clickedDate][i];
 
@@ -21,7 +24,8 @@ function ScheduleEditModal(props){
     title : ScheduleState.title, 
     time: ScheduleState.time, 
     important: ScheduleState.important, 
-    complete : ScheduleState.complete
+    complete : ScheduleState.complete,
+    idx : ScheduleState.idx //undefine
   }
 
   dayjs.extend(customParseFormat);
@@ -41,11 +45,26 @@ function ScheduleEditModal(props){
 
   const confirmHandler = function(e){
     tempSchedule.index = i;
-    console.log(tempSchedule)
+
+    axios.post(`${serverUrl}/api/todolist/modify`,{
+      "idx": tempSchedule.idx,
+      "title": tempSchedule.title,
+      "startDate": tempSchedule.editDate === "" ? tempSchedule.clickedDate : tempSchedule.editDate,
+      "time": tempSchedule.time,
+      "isImportant": tempSchedule.important ? 1 : 0 
+
+    },{withCredentials: true})
+    .then((response)=>{
+        if(response.status == 401){
+          navigate("/")
+        }
+        else{
+          console.log(ScheduleState)
+          dispatch(scheduleStateEdit(tempSchedule))
+          handleClose();
+        }
+    })
     //클릭된 날짜와 변경된 날짜를 보냄
-    dispatch(scheduleStateEdit(tempSchedule))
-    console.log(tempSchedule)
-    handleClose();
   };
 
   
