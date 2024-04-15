@@ -10,14 +10,32 @@ function Login() {
     const [userId, setUserId] = useState("");
     const [userPassword, setUserPassword] = useState("")
     const navigate = useNavigate();
-
+    
+    useEffect(()=>{/*  */
+        axios.get(`${serverUrl}/api/user/has-pet`
+        ,{withCredentials: true})
+        .then((response) => {
+            // 응답 처리 로직
+            if (response.data.messageDetail === "nothing") {
+                alert("사용자의 펫이 정해지지 않은 상태입니다!");
+                navigate('/signup-pet'); // 펫 등록 페이지로 이동
+            } else if (response.data.messageDetail === "has") {
+                alert("이미 로그인 되어 있습니다!");
+                navigate('/calendar'); // 달력 페이지로 이동
+            }
+        })
+        .catch((error) => {
+            /*401 일어남*/
+        });
+    },[])//렌더링 최초 1회 
 
     function loginHandler(){
         if(!isLoading){setLoading(true)}
         axios.post(`${serverUrl}/api/account/signin`, {
             "email" : userId,
             "password" : userPassword,
-        },{withCredentials: true})
+        },
+        {withCredentials: true})
         .then((response) => {
             if(response.status === 200){
                 alert("로그인 성공 status: 200")
@@ -34,6 +52,7 @@ function Login() {
                 } else if (error.response.data.messageDetail === "Not matched error") {
                     alert("아이디 혹은 비밀번호가 일치하지 않습니다.");
                 } else {
+                    console.log(error.response.data)
                     alert("서버와 연결에 실패했습니다.");
                 }
             } else {
@@ -45,6 +64,7 @@ function Login() {
                 }
             }
         });
+        setLoading(false)
     }    
 
     return(
