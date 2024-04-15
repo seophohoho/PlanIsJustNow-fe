@@ -5,6 +5,7 @@ import momentPlugin from '@fullcalendar/moment';
 import interactionPlugin from '@fullcalendar/interaction'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import moment from 'moment';
+/*moment 업데이트 중단!!! -> dayjs로 변경 권장 */
 import 'moment/locale/ko'
 import '../styles/CalendarMain.css'
 import ScheduleAddModal from '../components/ScheduleAddModal';
@@ -17,7 +18,6 @@ import NavbarComponent from '../components/NavbarComponent';
 import serverUrl from '../serverConfig'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
-
 
 const CalendarMain = () => {
     const state = useSelector((state)=> {return state});
@@ -113,7 +113,27 @@ const CalendarMain = () => {
                                     console.log(copy.data)
                                     dispatch(scheduleInit(copy.data))
                                 }
-                            }).catch((error)=>{console.log(error)})                          
+                            }).catch((error) => {
+                                if(error.response){ // 런타임 에러방지 error.response가 있는지 먼저 확인함
+                                    if(error.response.status === 401) { // 토큰 만료 리다이렉트
+                                        console.log("Error status: " + error.response.status);
+                                        alert("로그인을 다시해주세요!");
+                                        navigate('/');
+                                    }
+                                    else{
+                                      alert("서버와 연결에 실패했습니다.");
+                                    }
+                                }
+                                else{
+                                    console.error("Error: ", error);
+                                    if(error.message) {
+                                      alert("에러: " + error.message);
+                                    }
+                                    else{
+                                      alert("알 수 없는 에러가 발생했습니다.");
+                                    }
+                                }
+                            });                          
                             /*  리액트에서 fullcalendar 최상위 객체 오브젝트에 접근하려면 이렇게 해야함 */
                             const view = args.view.calendar.currentData.currentDate;
                             /*getMonth는 JavaScript에서 날짜의 월은 0(1월)부터 11(12월)까지 번호가 지정됨 +1을 해야 원본 값이 나옴*/
@@ -122,7 +142,6 @@ const CalendarMain = () => {
                         }}
                         events={importantEvents} /* events 배열은 달력에 표시될 이벤트 목록 */
                         contentHeight="auto"
-                        allDaySlot={true}
                         eventColor='rgb(86, 86, 208)'//events 블럭 색
                         eventDisplay='block'
                         headerToolbar={{
