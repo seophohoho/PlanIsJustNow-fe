@@ -4,13 +4,17 @@ import { EllipsisOutlined, StarTwoTone } from '@ant-design/icons';
 import { Dropdown } from 'antd';
 import { useState } from "react";
 import { Checkbox } from "pretty-checkbox-react";
-import { scheduleDelete } from "../store/store";
+import { scheduleDelete, scheduleComplete } from "../store/store";
 import ScheduleEditModal from "./ScheduleEditModal";
 import ConfirmModal from "./ConfirmModal";
+import axios from "axios";
+import serverUrl from "../serverConfig";
+import { Navigate, useNavigate } from "react-router-dom";
 
 function Schedule(props){
     const state = useSelector((state)=> state)/*자주 쓰는거 변수로 줄여야겠음 */
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const {i, clickedDate} = props
 
     const [confirmShow, setConfirmShow] = useState(false);
@@ -23,8 +27,31 @@ function Schedule(props){
 
     function scheduleDeleteHandler(){
         /* confirm 추가 */
-        dispatch(scheduleDelete({index : i, clickedDate : clickedDate}))
+        axios.put(`${serverUrl}/api/todolist/delete`, {
+            "idx" : state.dateSchedule[clickedDate][i].idx
+        },{withCredentials: true})
+        .then((response)=>{
+            console.log(response)
+            dispatch(scheduleDelete({index : i, clickedDate : clickedDate}))
+        })
     }
+
+    function confirmEvent(){
+        confirmHandleClose();
+        axios.post(`${serverUrl}/api/todolist/complete`,
+        {idx : state.dateSchedule[clickedDate][i].idx},
+        {withCredentials: true})
+        .then((response)=>{
+          dispatch(scheduleComplete({clickedDate: clickedDate, index: i, package: true }))
+        })
+        .catch(error => {
+          if(error.response.status === 401){//토큰 만료 리다이렉트
+            console.log("?" + error.status)
+            alert("로그인을 다시해주세요!")
+            navigate('/')
+          }
+        })
+      }
 
     const ScheduleState = state.dateSchedule[clickedDate][i];
     
@@ -51,8 +78,22 @@ function Schedule(props){
 
     return(
         <Row className='section__item-schedule'>
-            <ConfirmModal confirmShow={confirmShow} confirmHandleClose={confirmHandleClose} i={i} clickedDate={clickedDate}></ConfirmModal>
-            <ScheduleEditModal show={editShow} handleClose={editHandleClose} i={i} clickedDate={clickedDate}/>
+            <ConfirmModal 
+                confirmShow={confirmShow} 
+                confirmHandleClose={confirmHandleClose} 
+                i={i} 
+                clickedDate={clickedDate} 
+                Message="한번 완료된 일정은 되돌릴 수 없습니다." 
+                eventHandler={confirmEvent}>
+            </ConfirmModal>
+            
+            <ScheduleEditModal 
+                show={editShow} 
+                handleClose={editHandleClose} 
+                i={i} 
+                clickedDate={clickedDate}
+            />
+
             <Col sm={2} className='text-center'>
                 <Checkbox
                 className="margin-left"
