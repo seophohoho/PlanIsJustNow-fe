@@ -1,16 +1,43 @@
 import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import serverUrl from "../serverConfig"
 import { Form, Col, Row, Button, Image, Container, Navbar, Stack } from 'react-bootstrap';
 import { useDispatch, useSelector } from "react-redux"
-import { Link, Navigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 
 function Login() {
     const [isLoading, setLoading] = useState(false);
     const [userId, setUserId] = useState("");
     const [userPassword, setUserPassword] = useState("")
+    const navigate = useNavigate();
 
-  return(
+    function loginHandler(){
+        if(!isLoading){setLoading(true)}
+        axios.post(`${serverUrl}/api/account/signin`, {
+            "email" : userId,
+            "password" : userPassword,
+        },{withCredentials: true})
+        .then((response) => {
+            if(response.status === 200){
+                alert("로그인 성공 status: 200")
+                navigate('/calendar')
+                setLoading(false);//성공하면 풀어줄 이유가 없지않나? 나중에 판단
+            }
+        })//response status 401 .then 추가
+        .catch((error) => {
+            if(error.response.status === 401){//토큰 만료 리다이렉트
+                console.log("?" + error.status)
+                alert("로그인을 다시해주세요!")
+                navigate('/')
+            }
+            else if(error.response.messageDetail === "Not matched error"){
+                alert("아이디 혹은 비밀번호가 일치하지 않습니다.")
+            }
+            setLoading(false);
+        })
+    }    
+
+    return(
     <div className='text-center'>
         <header>
             <Navbar expand="md" className="bg-body-tertiary">
@@ -63,23 +90,7 @@ function Login() {
                     </Form.Group>
                     <div className='center'>
                         <Button type="button" disabled={isLoading}
-                            onClick={()=>{
-                                if(!isLoading){setLoading(true)}
-                                axios.post(`${serverUrl}/api/account/signin`, {
-                                    "email" : userId,
-                                    "password" : userPassword,
-                                },{withCredentials: true})
-                                .then((response) => {
-                                    if(response.status === 200){
-                                        alert("로그인 성공 status: 200")
-                                        setLoading(false);//성공하면 풀어줄 이유가 없지않나? 나중에 판단
-                                    }
-                                })
-                                .catch((error) => {
-                                    console.error(error);
-                                    setLoading(false);
-                                })  
-                            }}>{isLoading ? '확인' : '확인'}
+                            onClick={loginHandler}>{isLoading ? '확인' : '확인'}
                         </Button>
                     </div>
                 </Form>
