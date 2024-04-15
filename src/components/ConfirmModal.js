@@ -3,17 +3,24 @@ import { useSelector, useDispatch } from "react-redux"
 import { scheduleComplete } from "../store/store"
 import "@djthoms/pretty-checkbox"
 import { useState } from "react"
+import serverUrl from "../serverConfig"
+import axios from "axios"
+import { Navigate, useNavigate } from "react-router-dom"
 
 
 function ConfirmModal(props){
     const state = useSelector(state => state)
     const dispatch = useDispatch(state=> state)
-    const {confirmShow, confirmHandleClose, i, clickedDate, Message} = props;// 이벤트랑 title body도 전달해야할듯
-    function confirmEvent(){
-      confirmHandleClose();
-      dispatch(scheduleComplete({clickedDate: clickedDate, index: i, package: true }))
-     
-    }
+    const navigate = useNavigate()
+    const {
+      confirmShow,
+      confirmHandleClose,
+      i,
+      clickedDate,
+      Message,
+      eventHandler
+    } = props;
+
     return (
       <> {/*todo 올바른 form control 할당 버튼 디자인 변경*/}
         <Modal show={confirmShow} onHide={confirmHandleClose} className="p-400" >
@@ -30,7 +37,7 @@ function ConfirmModal(props){
             <Button variant="secondary" onClick={confirmHandleClose}>
               취소
             </Button>
-            <Button variant="primary" onClick={confirmEvent}>
+            <Button variant="primary" onClick={eventHandler}>
               확인
             </Button>
           </Modal.Footer>
