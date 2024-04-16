@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import { Form, Col, Row, Button, Image, Container, Navbar, Stack } from 'react-bootstrap';
+import { Stack } from 'react-bootstrap';
 import chunkArray from '../function/chunkArray.js';
 import PetCircleImage from "./PetCircleImage.js";
 import { useState } from "react";

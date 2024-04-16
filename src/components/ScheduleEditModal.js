@@ -1,7 +1,7 @@
 import {Modal, Form, Button} from "react-bootstrap"
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import { TimePicker, DatePicker, Space } from 'antd';
+import { TimePicker, DatePicker } from 'antd';
 import { useSelector,useDispatch } from "react-redux"
 import { scheduleStateEdit } from "../store/store";
 import "@djthoms/pretty-checkbox"

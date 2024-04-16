@@ -1,11 +1,10 @@
-import { Routes, Route, Link, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import Signup from './pages/SignUp';
 import SignUpPet from './pages/SignUpPet';
 import Login from './pages/Login'
 import CalendarMain from './pages/CalendarMain';
 import FriendBoard from './pages/FriendsBoard';
 import Petdex from './pages/Petdex';
-import { Navigate } from 'react-router-dom';
 import axios from 'axios';
 import serverUrl from './serverConfig';
 import { useEffect } from 'react';

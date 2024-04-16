@@ -1,10 +1,7 @@
 import axios from 'axios';
-import { useState } from 'react';
 import serverUrl from "../serverConfig"
-import { Form, Col, Row, Button, Image, Container, Navbar, Stack } from 'react-bootstrap';
+import { Col, Row, Container, Navbar } from 'react-bootstrap';
 import { useDispatch, useSelector } from "react-redux"
-import { selectPetId, selectPetName } from "../store/store"//수정할 함수 import 해야함
-import PetCircleImage from '../components/PetCircleImage';
 import PetInfo from '../components/PetInpo';
 import PetListMapComponent from '../components/PetListMapComponent.js';
 import chunkArray from '../function/chunkArray.js';

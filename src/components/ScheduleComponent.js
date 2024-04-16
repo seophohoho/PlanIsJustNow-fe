@@ -9,7 +9,7 @@ import ScheduleEditModal from "./ScheduleEditModal";
 import ConfirmModal from "./ConfirmModal";
 import axios from "axios";
 import serverUrl from "../serverConfig";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import dayjs from 'dayjs';
 
 function Schedule(props){

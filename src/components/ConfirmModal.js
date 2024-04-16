@@ -1,11 +1,7 @@
 import {Modal, Button} from "react-bootstrap"
 import { useSelector, useDispatch } from "react-redux"
-import { scheduleComplete } from "../store/store"
 import "@djthoms/pretty-checkbox"
-import { useState } from "react"
-import serverUrl from "../serverConfig"
-import axios from "axios"
-import { Navigate, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 
 function ConfirmModal(props){
