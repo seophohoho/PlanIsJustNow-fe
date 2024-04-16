@@ -4,6 +4,9 @@ import serverUrl from "../serverConfig"
 import { Form, Col, Row, Button, Image, Container, Navbar, Stack } from 'react-bootstrap';
 import { useDispatch, useSelector } from "react-redux"
 import { selectPetId, selectPetName } from "../store/store"//수정할 함수 import 해야함
+import PetCircleImage from '../components/PetCircleImage';
+import PetInfo from '../components/PetInpo';
+
 //todo 선택 안한 상태의 기본이미지, 캐릭터 설명 설정
 //todo 선택했을 시 css 효과 및 로직 수정 : 새로운 캐릭터 설정시 버튼 전체를 원래 css 로 변경후 선택된 image css로 변경
 //Todo 모든 post 버튼에 로딩 css 로직 추가
@@ -82,54 +85,8 @@ function SelectBtnAct(pet_id, pet_name){
     })
 }
 
-function PetCircleImage(props){
-    const { petName, petId, isSelected } = props;
 
-    // isSelected 상태에 따라 동적으로 스타일 적용
-    const selectedStyle = isSelected
-        ? "pet-image border-outline-select"
-        : "pet-image border-outline";
 
-    return (
-        <Stack gap={1}>
-            <Image
-                src={'/thumbnail.png'} // 이미지 디자인 완성시 -> state.petImages[i]로 변경 chunkIndex props로 받아와서 i에 적용
-                roundedCircle
-                className={selectedStyle}
-                onClick={props.onClick}
-            />
-            <p className='pet-image color-lightPurple'>{petName}</p>
-        </Stack>
-    )
-}
-
-function PetInfo(props) {
-    const { petName, petInpo, onClick } = props;
-    const dispatch = useDispatch();
-    return (
-        <Col md="5">
-            <Stack className='center margin-bottom-10'>
-                <Image src="/700x460.png" fluid />
-                <Stack direction='horizontal' gap={2} className='center margin-bottom-10'>
-                    <Form.Label column sm="4" className='color-darkBlue'>
-                        펫 이름
-                    </Form.Label>
-                    <Col sm="8">
-                        <Form.Control
-                            type="text"
-                            placeholder={petName}
-                            onChange={(e) => { dispatch(selectPetName(e.target.value)); }}
-                        />
-                    </Col>
-                </Stack>
-                <p className='color-lightPurple'>{petInpo}</p>
-            </Stack>
-            <Button variant="primary" className='font-bold' onClick={onClick}>
-                이 펫으로 할래요!
-            </Button>
-        </Col>
-    );
-}
 
 // 배열을 지정된 크기의 묶음으로 나누는 함수
 function chunkArray(arr, size) {
