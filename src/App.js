@@ -11,7 +11,6 @@ import { useEffect } from 'react';
 
 function App() {
   const navigate = useNavigate();
-  /*모달 관련 버그있음 모든 모달을 닫는 로직 필요*/
   useEffect(()=>{//어느 페이지로 이동하든 
     axios.get(`${serverUrl}/api/user/has-pet`
     ,{withCredentials: true})
