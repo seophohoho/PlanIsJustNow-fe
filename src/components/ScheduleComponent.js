@@ -74,6 +74,7 @@ function Schedule(props){
                 if(error.response.status === 401) { // 토큰 만료 리다이렉트
                     console.log("Error status: " + error.response.status);
                     alert("로그인을 다시해주세요!");
+                    confirmHandleClose();/*모달 닫기*/
                     navigate('/');
                 }
                 else{
