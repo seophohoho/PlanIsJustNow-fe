@@ -6,21 +6,21 @@ import { useDispatch, useSelector } from "react-redux"
 import { selectPetId, selectPetName } from "../store/store"//수정할 함수 import 해야함
 import PetCircleImage from '../components/PetCircleImage';
 import PetInfo from '../components/PetInpo';
+import PetListMapComponent from '../components/PetListMapComponent.js';
+import chunkArray from '../function/chunkArray.js';
 
-//todo 선택 안한 상태의 기본이미지, 캐릭터 설명 설정
-//todo 선택했을 시 css 효과 및 로직 수정 : 새로운 캐릭터 설정시 버튼 전체를 원래 css 로 변경후 선택된 image css로 변경
 //Todo 모든 post 버튼에 로딩 css 로직 추가
 function SignUpPet() {
 
     const state = useSelector((state)=>{return state})//store에 있는 state 가져옴
     const dispatch = useDispatch()//state변경 함수 사용할때 둘러야함
-    const [selectedPetIndex, setSelectedPetIndex] = useState(null);
+    
     return (
         <div>
             <header>
                 <Navbar expand="md" className="bg-body-tertiary">
                     <Container>
-                        <Navbar.Brand href="#">
+                        <Navbar.Brand href="/calendar">
                             <img src='/logo192.png'width={"50px"}></img>
                         </Navbar.Brand>
                     </Container>
@@ -34,25 +34,7 @@ function SignUpPet() {
                     <Container fluid>
                         <Row className='center'>
                             <Col md="7">
-                            <Stack direction="vertical" gap={1} className="margin-bottom-20">
-                                {chunkArray(state.petName, 4).map((petNamesChunk, chunkIndex) => (
-                                    <Stack key={chunkIndex} direction="horizontal" gap={1} className="margin-bottom-20">
-                                        {petNamesChunk.map((petName, index) => (
-                                            <PetCircleImage
-                                                key={index}
-                                                petName={petName}
-                                                petId={state.petId[chunkIndex * 4 + index]}
-                                                isSelected={(chunkIndex * 4 + index) === selectedPetIndex}
-                                                onClick={() => {
-                                                    setSelectedPetIndex(chunkIndex * 4 + index);
-                                                    dispatch(selectPetId(state.petId[chunkIndex * 4 + index]));
-                                                    dispatch(selectPetName(petName));
-                                                }}
-                                            />
-                                        ))}
-                                    </Stack>
-                                ))}
-                            </Stack>
+                            <PetListMapComponent/>
                             </Col>
                             {chunkArray(state.petName, 12).map((petNamesChunk, chunkIndex) => (
                                 <PetInfo
@@ -86,15 +68,5 @@ function SelectBtnAct(pet_id, pet_name){
 }
 
 
-
-
-// 배열을 지정된 크기의 묶음으로 나누는 함수
-function chunkArray(arr, size) {
-    const result = [];
-    for (let i = 0; i < arr.length; i += size) {
-        result.push(arr.slice(i, i + size));
-    }
-    return result;
-}
 
 export default SignUpPet;
