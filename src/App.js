@@ -3,7 +3,8 @@ import Signup from './pages/SignUp';
 import SignUpPet from './pages/SignUpPet';
 import Login from './pages/Login'
 import CalendarMain from './pages/CalendarMain';
-import FriendBoard from './pages/FriendsBoard'
+import FriendBoard from './pages/FriendsBoard';
+import Petdex from './pages/Petdex';
 import { Navigate } from 'react-router-dom';
 import axios from 'axios';
 import serverUrl from './serverConfig';
@@ -47,6 +48,7 @@ function App() {
     <>
       <Routes>
         <Route path='/' element={<Login/>}/>
+        <Route path='/petdex' element={<Petdex/>}/>
         <Route path='/signup' element={ <Signup/> }/>
         <Route path='/Calendar' element={<CalendarMain/>}/>
         <Route path='/friend-board' element={<FriendBoard/>}/>
