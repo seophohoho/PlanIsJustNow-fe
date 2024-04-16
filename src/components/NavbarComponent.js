@@ -18,7 +18,7 @@ const NavbarComponent = () => {
                 <Nav className="me-auto">{/*추후 아이콘 추가*/}
                     <Nav.Link href="/user-page">MyPage</Nav.Link>
                     <Nav.Link href="/Friend-board">Friends</Nav.Link>
-                    <Nav.Link href="/calendar">Petdex</Nav.Link>
+                    <Nav.Link href="/petdex">Petdex</Nav.Link>
                 </Nav>
                 </Navbar.Collapse>
                 <Navbar.Text>
@@ -26,7 +26,7 @@ const NavbarComponent = () => {
                         <Avatar className='' size={64} icon={<UserOutlined />} />
                         <Stack gap={0} className='m-auto'>
                             <Navbar.Text className='color-darkBlue '>
-                            홍길동{/*이름, 아이디, 모두 state에서 바인딩해야 함 로그아웃에 이벤트 넣어야함 로그인 화면으로 라우팅 하는 것도*/}
+                                홍길동{/*펫이 있는가로 오는 데이터 기준? --> 오류생길듯 펫없으면 데이터 안오니*/}
                             </Navbar.Text>
                             <Navbar.Text className='color-violet'>
                                 #Email@example.com
