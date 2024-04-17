@@ -41,7 +41,7 @@ function App() {
           }
       }
     })
-  },[])//렌더링 최초 1회 
+  },[])// ignore Warnning: Check token validity on mount(redirect)
 
   return (
     <>
