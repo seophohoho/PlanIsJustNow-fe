@@ -4,7 +4,7 @@ import { UserOutlined } from '@ant-design/icons';
 import { Avatar } from 'antd';
 
 const NavbarComponent = () => {
-
+    //axios로 요청해서 필요한 정보만 받하서 state에 할당
     return(
         <Navbar expand="md" className="bg-body-tertiary">{/**추후 Navbar도 컴포넌트화 해서 다른페이지에 적용시키기 */}
             <Container>
@@ -30,7 +30,6 @@ const NavbarComponent = () => {
                                 #Email@example.com
                             </Navbar.Text>
                         </Stack>
-                        <span>로그아웃</span>{/*임시*/}
                     </Stack>
                 </Navbar.Text>
             </Container>

@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { friendDelete, friendRefuse, friendAccept } from "../store/store";
-import { TeamOutlined, UserAddOutlined, UserOutlined } from '@ant-design/icons';
-import {Col, Row, Stack, Button, Form} from "react-bootstrap"
+import { UserOutlined } from '@ant-design/icons';
+import { Col, Row, Button } from "react-bootstrap"
 import { useSelector, useDispatch } from "react-redux"
-import { Tabs, Avatar } from 'antd';
+import { Avatar } from 'antd';
 import ConfirmModal from "./ConfirmModal";
 
 function TabChildrenComponent(props){ 
@@ -12,13 +12,13 @@ function TabChildrenComponent(props){
     const dispatch = useDispatch();
 
     const [confirmShow, setConfirmShow] = useState(false);
-    const confirmHandler = (e)=>{console.log(e.target.value);}
     const confirmHandleClose = ()=>{setConfirmShow(false);}
+    
+    // axios 요청 결과에 따라 then, catch로 함수 동작 결정
     function deleteHandler(list, index){
         setConfirmShow(false)
         dispatch(friendDelete({list, index}));//친구목록삭제
     }
-  
     function refuseHandler(list, index){
       dispatch(friendRefuse({list, index}))
     }

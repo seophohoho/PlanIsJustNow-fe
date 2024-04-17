@@ -31,7 +31,7 @@ function SignUpPet() {
                     <Container fluid>
                         <Row className='center'>
                             <Col md="7">
-                            <PetListMapComponent/>
+                                <PetListMapComponent/>
                             </Col>
                             {chunkArray(state.petName, 12).map((petNamesChunk, chunkIndex) => (
                                 <PetInfo
