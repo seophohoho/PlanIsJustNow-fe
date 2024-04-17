@@ -1,4 +1,6 @@
 import {Col, Row} from "react-bootstrap"
+import React from 'react';
+import Marquee from 'react-fast-marquee';
 import { useSelector, useDispatch } from "react-redux"
 import { EllipsisOutlined, StarTwoTone } from '@ant-design/icons';
 import { Dropdown } from 'antd';
@@ -148,7 +150,10 @@ function Schedule(props){
             </Col>
             {/*말 줄임 표시 추후 추가 50자 제한, 툴팁 형태로 전체 표현 고민*/}
             <Col sm={5} className={ScheduleState.complete ? 'm-auto color-darkBlue p-zero cancel_line' : 'm-auto color-darkBlue p-zero'}>
+                
+            <Marquee pauseOnHover gradient={false}>
                 { ScheduleState.title }
+            </Marquee>
             </Col>
             <Col sm={1} className='m-auto'>
                 {ScheduleState.important ? <StarTwoTone twoToneColor="orange"/> : "" }
