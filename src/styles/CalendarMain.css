@@ -180,3 +180,7 @@ span{
 .fc-daygrid-day-events{
     height: 44px;
 }
+
+.Col-Max-width-195{
+    max-width: 195px;
+}
