@@ -25,7 +25,6 @@ export class InitScene extends Phaser.Scene{
         this.pet.setContainer(container);
         try{
             const res = await axios.get(`${serverUrl}/api/user/has-pet`,{withCredentials: true});
-            console.log(res)
             const data = res.data.data[0];
             this.pet.setData(data);
         } catch(error){
@@ -37,6 +36,8 @@ export class InitScene extends Phaser.Scene{
         }
 
         this.im.createSpriteAnimation();
+
         this.scene.launch('PetSpaceScene',{im:this.im,pet:this.pet});
+        this.scene.launch('PetUIScene',{im:this.im});
     }
 }

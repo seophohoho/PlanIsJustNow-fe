@@ -8,11 +8,91 @@ export class ImageManager{
     loadPetImage(){
         for(let i=0;i<=BEHAVIOR_SIZE;i++){
             this.phaser.load.atlas(`${petList[0]}_0_${i}`,`sprite/kirby/${petList[0]}_0_${i}.png`,`sprite/kirby/${petList[0]}_0_${i}.json`);
-        }
+        } 
     }
     loadBackgroundImage(){
-
+        
     }
+
+    createUI(){
+        const ui_1 = this.phaser.add.rectangle(-1,0,960,140,0xebeeff);
+        const ui_2 = this.phaser.add.circle(30,35,20,0xffffff);
+
+        const graphics = this.phaser.add.graphics();
+        graphics.lineStyle(2, 0x5a67f6);
+        graphics.strokeCircle(30, 35, 20);
+        graphics.strokeRect(-1,0,480,70);
+        
+        const nicknameConfig={
+            fontSize:18,
+            color: '#060f82',
+            fontStyle:'bold',
+            fontFamily:'ui-monospace',
+        }
+
+        const heartConfig={
+            fontSize:23,
+            fontFamily:'ui-monospace',
+        }
+
+        const friendShipConfig={
+            fontSize:13,
+            color: '#8d9df5',
+            fontStyle:'bold',
+            fontFamily:'ui-monospace',
+        }
+
+        // 텍스트와 이모지 추가
+        const nickname = this.phaser.add.text(
+            60,
+            10,
+            '펭귄',
+            nicknameConfig
+        );
+
+        const heart = this.phaser.add.text(
+            60,
+            35,
+            '❤️',
+            heartConfig
+        );
+
+        const friendship = this.phaser.add.text(
+            89,
+            30,
+            '0 / 25000',
+            friendShipConfig
+        );
+
+        heart.setAlign('center');
+        nickname.setAlign('center');
+        friendship.setAlign('center');
+
+        const healthBarOuter = this.phaser.add.graphics();
+        const healthBarInner_1 = this.phaser.add.graphics();
+        const healthBarInner_2 = this.phaser.add.graphics();
+    
+        healthBarOuter.lineStyle(2, 0x060f82);
+        healthBarOuter.strokeRoundedRect(90, 48, 200, 12,6); 
+
+        healthBarInner_1.fillStyle(0xffffff, 1);
+        healthBarInner_1.fillRoundedRect(90, 48, 200, 12,6);
+  
+        healthBarInner_2.fillStyle(0x060f82); 
+        healthBarInner_2.fillRoundedRect(90, 48, 200, 12,6);
+
+        // 체력 값을 기반으로 체력바 갱신하는 함수
+        const updateHealthBar = (currentHealth, maxHealth) => {
+            const healthWidth = (currentHealth / maxHealth) * 200;  // 최대 길이는 200
+            healthBarInner_2.clear();  // 이전 그래픽을 지우고 새로 그림
+            healthBarInner_2.fillStyle(0x060f82, 1);
+            healthBarInner_2.fillRoundedRect(90, 48, healthWidth, 12,6);
+        };
+
+        // 예시: 체력을 75%로 설정
+        updateHealthBar(190, 200);
+    }
+
     createSprite(key:string){
         const sprite = this.phaser.add.sprite(CANVAS_WIDTH/2,200,key);
         sprite.scale = 2;
