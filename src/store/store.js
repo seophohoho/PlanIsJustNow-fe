@@ -1,5 +1,65 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit'
+/*
+json object 만들 때 처음부터 2중으로 설계하는 것도 좋아보임
+dateSchedule을 년도->월->일 순으로 접근하게 구조를 변경하려했다가
+고칠게 너무 많아서 포기하게 됨
+*/
+const userPetData = createSlice({
+  name: "userPetData",
+  initialState:{
+    "data": [
+      {
+        "idx": 1,
+        "userId": {
+            "email": "testman@gmail.com",
+            "password": "$2a$10$MReG7/DP36f7ZFPxMNKEYu6lwjsBA./rrNq3OExhIqfftsUNTnq3K",
+            "nickname": "seophohoho",
+            "todolistFailureCount": 0
+        },
+        "petId": {
+            "petId": 0,
+            "species": "펫_1"
+        },
+        "natureId": {
+            "natureId": 0,
+            "name": "장난꾸러기"
+        },
+        "petName": "꼬부기",
+        "maxFriendship": 22616,
+        "currentFriendship": 0,
+        "runWayCount": 0
+      },
+      {
+        "idx": 2,
+        "userId": {
+            "email": "testman@gmail.com",
+            "password": "$2a$10$MReG7/DP36f7ZFPxMNKEYu6lwjsBA./rrNq3OExhIqfftsUNTnq3K",
+            "nickname": "seophohoho",
+            "todolistFailureCount": 0
+        },
+        "petId": {
+            "petId": 0,
+            "species": "펫_1"
+        },
+        "natureId": {
+            "natureId": 1,
+            "name": "활발한"
+        },
+        "petName": "꼬부기",
+        "maxFriendship": 15624,
+        "currentFriendship": 0,
+        "runWayCount": 0
+      },
+    ]
+  },
+  reducers:{
+    petdexInit(state, action){
+      return action.payload
+    }
+  }
+})
 
+/*아래 분리된 펫 정보 병합 필요!*/
 const petImages = createSlice({//펫 이미지경로
     name : 'petImages', 
     initialState : ['path',], //state 정보(핵심)
@@ -46,10 +106,10 @@ const petSelected = createSlice({
   }
 })
 
-//전체 일정 보여주는 스케줄 추후에 완전히 비워야함
+//전체 일정 데이터
 const dateSchedule = createSlice({
   name : "dateSchedule",
-initialState : {/*"2024-04-16":[{title:"테스트",time:"20:00",important: true,complete:false}]*/},
+  initialState : {/*"2024-04-16":[{title:"테스트",time:"20:00",important: true,complete:false}]*/},
   reducers:{
     scheduleInit(state, action){//state 초기화
       return action.payload
@@ -67,7 +127,7 @@ initialState : {/*"2024-04-16":[{title:"테스트",time:"20:00",important: true,
       const clickedDate = action.payload.clickedDate;
       const importantCount = state[clickedDate] ? state[clickedDate].filter(item => item.important).length : 0;
       
-      //중요표시는 3개까지, 일정은 1글자 이상 입력 제어
+      //중요표시는 3개까지, 일정은 1글자 이상 입력 require 제어
       if((importantCount === 3 && action.payload.important === true) || action.payload.title.length === 0){
         if(action.payload.title.length === 0){
           alert("일정을 입력해 주세요!")
@@ -78,7 +138,7 @@ initialState : {/*"2024-04-16":[{title:"테스트",time:"20:00",important: true,
       }
       else{
         // 새로운 날짜가 주어진 경우, 해당 날짜에 대한 새로운 배열을 생성하고 일정을 추가
-        // 이미 해당 날짜에 일정이 있다면, 새로운 일정을 해당 배열에 추가합니다.
+        // 이미 해당 날짜에 일정이 있다면, 새로운 일정을 해당 배열에 추가.
         if (!state[clickedDate]) {
           state[clickedDate] = [scheduleState];
         } else {
@@ -109,16 +169,17 @@ initialState : {/*"2024-04-16":[{title:"테스트",time:"20:00",important: true,
       // 원본 일정을 제거
       if (clickedDate === targetDate) {
         state[clickedDate].splice(index, 1);
+        //일정에 있는 기본 정보 + 변경된 값이 들어간 복사본 생성 
         const newScheduleState = { ...schedule, title, time, important, complete: false };
     
-        // 중요 여부에 따라 새로운 일정 추가
+        // 중요 여부에 따라 일정 추가 방식 
         if (important) {
           state[targetDate].unshift(newScheduleState);
         } else {
           state[targetDate].push(newScheduleState);
         }
       } else {
-        // 대상 날짜가 다른 경우, 먼저 기존 일정을 삭제하고 새 일정을 추가
+        // 대상 날짜가 다른 경우, 먼저 기존 일정을 삭제하고 변경된 새 일정을 추가
         state[clickedDate].splice(index, 1);
         const newScheduleState = { ...schedule, title, time, important, complete: false };
         state[targetDate] = state[targetDate] || [];
