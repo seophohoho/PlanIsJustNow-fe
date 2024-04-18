@@ -14,5 +14,6 @@ export class PetUIScene extends Phaser.Scene{
     create(data:object){
         this.im = data['im'];
         this.im.createUI();
+        this.im.createIcon();
     }
 }

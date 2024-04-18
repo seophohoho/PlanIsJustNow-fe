@@ -10,8 +10,18 @@ export class ImageManager{
             this.phaser.load.atlas(`${petList[0]}_0_${i}`,`sprite/kirby/${petList[0]}_0_${i}.png`,`sprite/kirby/${petList[0]}_0_${i}.json`);
         } 
     }
-    loadBackgroundImage(){
-        
+
+    loadIconImage(){
+        this.phaser.load.image('cutlery','../../pet-space/icon-cutlery.png');
+        this.phaser.load.image('hand','../../pet-space/icon-hand.png');
+    }
+
+    createIcon(){
+        const icon_hand = this.phaser.add.image(455,30,'hand');
+        const icon_cutlery = this.phaser.add.image(420,30,'cutlery');
+
+        icon_hand.setScale(0.6);
+        icon_cutlery.setScale(0.6);
     }
 
     createUI(){
@@ -42,6 +52,13 @@ export class ImageManager{
             fontFamily:'ui-monospace',
         }
 
+        const iconConfig={
+            fontSize:9,
+            color: '#8d9df5',
+            fontStyle:'bold',
+            fontFamily:'ui-monospace',
+        }
+
         // 텍스트와 이모지 추가
         const nickname = this.phaser.add.text(
             60,
@@ -64,9 +81,25 @@ export class ImageManager{
             friendShipConfig
         );
 
+        const icon_hand = this.phaser.add.text(
+            404,
+            50,
+            '쓰다듬기',
+            iconConfig
+        );
+
+        const icon_cutlery = this.phaser.add.text(
+            442,
+            50,
+            '먹이주기',
+            iconConfig
+        )
+
         heart.setAlign('center');
         nickname.setAlign('center');
         friendship.setAlign('center');
+        icon_hand.setAlign('center');
+        icon_cutlery.setAlign('center');
 
         const healthBarOuter = this.phaser.add.graphics();
         const healthBarInner_1 = this.phaser.add.graphics();
@@ -90,7 +123,7 @@ export class ImageManager{
         };
 
         // 예시: 체력을 75%로 설정
-        updateHealthBar(190, 200);
+        updateHealthBar(1000, 22334);
     }
 
     createSprite(key:string){

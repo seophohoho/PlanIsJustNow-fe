@@ -16,7 +16,7 @@ export class InitScene extends Phaser.Scene{
 
     preload(){
        this.im.loadPetImage();
-       this.im.loadBackgroundImage(); 
+       this.im.loadIconImage();
     }
 
     async create(){
