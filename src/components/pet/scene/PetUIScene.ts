@@ -3,6 +3,7 @@ import { ImageManager } from '../manager/ImageManager';
 export class PetUIScene extends Phaser.Scene{
     constructor(){
         super({key:'PetUIScene'});
+        
     };
 
     init(){

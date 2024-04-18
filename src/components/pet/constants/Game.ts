@@ -18,7 +18,6 @@ export const config = {
         target: 60,
         forceSetTimeOut: true
     },
-    resolution: window.devicePixelRatio, // 이 값을 추가
     backgroundColor: '#486870',
     parent: 'phaser-container', // 게임을 렌더링할 요소의 ID를 지정합니다.
     scene: [InitScene,PetSpaceScene,PetUIScene],

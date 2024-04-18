@@ -8,7 +8,16 @@ export class ImageManager{
     loadPetImage(){
         for(let i=0;i<=BEHAVIOR_SIZE;i++){
             this.phaser.load.atlas(`${petList[0]}_0_${i}`,`sprite/kirby/${petList[0]}_0_${i}.png`,`sprite/kirby/${petList[0]}_0_${i}.json`);
-        } 
+            this.phaser.textures.get(`${petList[0]}_0_${i}`).setFilter(Phaser.Textures.FilterMode.NEAREST);
+        }
+
+        this.phaser.load.once('complete', () => {
+            for(let i = 0; i <= BEHAVIOR_SIZE; i++) {
+                this.phaser.textures.get(`${petList[0]}_0_${i}`).setFilter(Phaser.Textures.FilterMode.NEAREST);
+            }
+        });
+
+        this.phaser.load.start();
     }
 
     loadIconImage(){
@@ -111,7 +120,7 @@ export class ImageManager{
         healthBarInner_1.fillStyle(0xffffff, 1);
         healthBarInner_1.fillRoundedRect(90, 48, 200, 12,6);
   
-        healthBarInner_2.fillStyle(0x060f82); 
+        healthBarInner_2.fillStyle(0x060f82,1); 
         healthBarInner_2.fillRoundedRect(90, 48, 200, 12,6);
 
         // 체력 값을 기반으로 체력바 갱신하는 함수
@@ -123,7 +132,7 @@ export class ImageManager{
         };
 
         // 예시: 체력을 75%로 설정
-        updateHealthBar(1000, 22334);
+        updateHealthBar(2000, 22334);
     }
 
     createSprite(key:string){
