@@ -20,7 +20,37 @@ function SignUpPet() {
         species: '', // idx
         nickname: ''
     });
-   
+
+    useEffect(() => {
+        const fetchPetInfo = async () => {
+            try {
+                const response = await axios.get(`${serverUrl}/api/user/all-pet-info`, { withCredentials: true });
+                dispatch(petListInit(response.data));
+            } catch (error) {
+                if (error.response) {
+                    if (error.response.status === 401) {
+                        console.log("Error status:", error.response.status);
+                        alert("로그인을 다시해주세요!");
+                        navigate('/');
+                    } else {
+                        alert("서버와 연결에 실패했습니다.");
+                    }
+                } else if (error.request) {
+                    // Handle case when there is no response received
+                    console.error("No response received:", error.request);
+                    alert("서버 응답이 없습니다.");
+                } else {
+                    // Handling errors thrown by handling code
+                    console.error("Error setting up request:", error.message);
+                    alert("요청 설정 중 오류가 발생했습니다: " + error.message);
+                }
+            }
+        };
+    
+        fetchPetInfo();
+    }, [dispatch, navigate]);  // Include dependencies used inside the effect
+    
+
     useEffect(() => {
         setInputNickname('');// 입력 필드를 빈 문자열로 설정
     }, [selectedPetIndex]);
