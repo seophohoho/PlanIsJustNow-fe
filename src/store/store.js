@@ -245,6 +245,7 @@ const friendList = createSlice({
   }
 })
 
+export const {petListInit} = petList.actions
 export const {addHandleClose, addHandleShow} = addShow.actions
 export const {scheduleInit, scheduleComplete, scheduleStateEdit, scheduleStateAdd, scheduleDelete} = dateSchedule.actions
 export const {friendDelete, friendRefuse, friendAccept } = friendList.actions
