@@ -46,12 +46,12 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path='/' element={<Login/>}/>
-        <Route path='/petdex' element={<Petdex/>}/>
+        <Route path='/' element={<Login/>}/> {/* nested route 필요 -> id,password 찾기 */}
+        <Route path='/petdex' element={<Petdex/>}/> {/* calendar -> nest? */}
         <Route path='/signup' element={ <Signup/> }/>
         <Route path='/Calendar' element={<CalendarMain/>}/>
-        <Route path='/friend-board' element={<FriendBoard/>}/>
-        <Route path='/signup-pet' element={<SignUpPet/>}/>
+        <Route path='/friend-board' element={<FriendBoard/>}/> {/* calendar -> nest? */}
+        <Route path='/signup-pet' element={<SignUpPet/>}/> {/* signup -> nest */}
         <Route path="*" element={ <div>잘못된 경로입니다!</div> }/>
       </Routes>
     </>
