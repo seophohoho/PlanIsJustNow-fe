@@ -4,16 +4,112 @@ import { Col, Row, Container, Navbar, Image, Stack, Form } from 'react-bootstrap
 import { useDispatch, useSelector } from "react-redux"
 import PetInfo from '../components/PetInpo';
 import PetListMapComponent from '../components/PetListMapComponent.js';
-import chunkArray from '../function/chunkArray.js';
 import InputFieldComponent from '../components/InputFieldComponent.js';
+import { petListInit } from '../store/store.js';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 //Todo 모든 post 버튼에 로딩 css 로직 추가
 function SignUpPet() {
     const state = useSelector((state)=>{return state.petList})//store에 있는 state 가져옴
     const dispatch = useDispatch()//state변경 함수 사용할때 둘러야함
-
+    const navigate = useNavigate()
     const [selectedPetIndex, setSelectedPetIndex] = useState(0); // 선택된 펫 인덱스의 초기값 설정
+    const [petPostData, setPetPostData] = useState({
+        species: '', // idx
+        nickname: ''
+    });
+    
+    useEffect(() => {
+        if (state.data.length > selectedPetIndex) {
+            setPetPostData({
+                species: state.data[selectedPetIndex].idx,
+                nickname: state.data[selectedPetIndex].species
+            });
+        }
+    }, [selectedPetIndex]);
+
+    useEffect(()=>{//mount시 펫 정보 초기화
+        axios.get(`${serverUrl}/api/user/all-pet-info`,
+        {withCredentials: true})
+        .then(response=>{
+            dispatch(petListInit(response))
+        })
+        .catch((error) => {
+            if(error.response){ // 런타임 에러방지 error.response가 있는지 먼저 확인함
+                if(error.response.status === 401) { // 토큰 만료 리다이렉트
+                    console.log("Error status: " + error.response.status);
+                    alert("로그인을 다시해주세요!");
+                    navigate('/');
+                }
+                else{
+                  alert("서버와 연결에 실패했습니다.");
+                }
+            }
+            else{
+                console.error("Error: ", error);
+                if(error.message) {
+                  alert("에러: " + error.message);
+                }
+                else{
+                  alert("알 수 없는 에러가 발생했습니다.");
+                }
+            }
+          })
+        //petlist init dispatch
+    },[])
+
+    const handleInputChange = (event) => {
+        const { value } = event.target;
+        setPetPostData(prevState => ({
+            ...prevState,
+            nickname: value  // 업데이트
+        }));
+
+        console.log(petPostData)
+    };
+
+    function SelectBtnAct(){
+        axios.post(`${serverUrl}/api/user/pet-signup`,
+        {withCredentials: true},
+        {
+            "species": petPostData.species, //pet idx 
+            "nickname": petPostData.nickname //pet name
+        }
+        ).then(response=>{
+            if(response){
+                if(response.messageTitle == "success"){
+                    alert("펫이 선택되었습니다!")
+                    navigate('/calendar')
+                }
+                else{
+                    alert("서버와 연결에 실패하였습니다.")
+                }
+            }
+            console.log("yes")
+        })
+        .catch((error) => {
+            if(error.response){ // 런타임 에러방지 error.response가 있는지 먼저 확인함
+                if(error.response.status === 401) { // 토큰 만료 리다이렉트
+                    console.log("Error status: " + error.response.status);
+                    alert("로그인을 다시해주세요!");
+                    navigate('/');
+                }
+                else{
+                  alert("서버와 연결에 실패했습니다.");
+                }
+            }
+            else{
+                console.error("Error: ", error);
+                if(error.message) {
+                  alert("에러: " + error.message);
+                }
+                else{
+                  alert("알 수 없는 에러가 발생했습니다.");
+                }
+            }
+          })
+    }
 
     return (
         <div>
@@ -38,11 +134,12 @@ function SignUpPet() {
                                     petList={state}
                                     selectedPetIndex={selectedPetIndex}
                                     onSelectPet={setSelectedPetIndex}
+                                    setPetPostData={setPetPostData}
                                 />
                             </Col>
                                 <PetInfo
                                     btnMessage="이 펫으로 할래요!"
-                                    ClickHandler={() => { SelectBtnAct(); }}
+                                    cilckHandler={() => { SelectBtnAct(); }}
                                 >
                                     <Image src="/700x460.png" fluid />
                                     <Stack direction='horizontal' gap={2} className='center margin-bottom-10'>
@@ -51,7 +148,7 @@ function SignUpPet() {
                                             <InputFieldComponent
                                                 type="text"
                                                 placeholder={state.data[selectedPetIndex].species}
-                                                onChangeHandler={""}
+                                                onChangeHandler={handleInputChange}
                                             />
                                         </Col>
                                     </Stack>
@@ -68,19 +165,6 @@ function SignUpPet() {
     );
 }
 
-//내부로 이동
-function SelectBtnAct(pet_id, pet_name){
-    axios.post(`${serverUrl}/api/user/pet-signup`,
-    {withCredentials: true},
-    {
-
-    }
-    ).then(Response=>{
-        console.log("yes")
-    }).catch(error=>{
-        console.log(error)
-    })
-}
 
 
 
