@@ -15,10 +15,16 @@ function SignUpPet() {
     const dispatch = useDispatch()//state변경 함수 사용할때 둘러야함
     const navigate = useNavigate()
     const [selectedPetIndex, setSelectedPetIndex] = useState(0); // 선택된 펫 인덱스의 초기값 설정
+    const [inputNickname, setInputNickname] = useState('');  // 입력 필드 상태
     const [petPostData, setPetPostData] = useState({
         species: '', // idx
         nickname: ''
     });
+
+    useEffect(() => {
+        setInputNickname('');// 입력 필드를 빈 문자열로 설정
+    }, [selectedPetIndex]);
+
     
     useEffect(() => {
         if (state.data.length > selectedPetIndex) {
@@ -60,16 +66,17 @@ function SignUpPet() {
     },[])
 
     const handleInputChange = (event) => {
-        const { value } = event.target;
+        const { value } = event.target;  // 사용자 입력값을 변수로 추출
+        setInputNickname(value);  // 로컬 상태 업데이트
         setPetPostData(prevState => ({
             ...prevState,
-            nickname: value  // 업데이트
+            nickname: value  // 전역 상태 업데이트
         }));
-
-        console.log(petPostData)
     };
+    
 
     function SelectBtnAct(){
+        console.log(petPostData)
         axios.post(`${serverUrl}/api/user/pet-signup`,
         {withCredentials: true},
         {
@@ -149,6 +156,7 @@ function SignUpPet() {
                                                 type="text"
                                                 placeholder={state.data[selectedPetIndex].species}
                                                 onChangeHandler={handleInputChange}
+                                                value={inputNickname}
                                             />
                                         </Col>
                                     </Stack>
