@@ -5,31 +5,38 @@ import PetCircleImage from "./PetCircleImage.js";
 import { useState } from "react";
 import { selectPetId, selectPetName } from "../store/store.js";
 
-function PetListMapComponent(){
-    const state = useSelector(state => state)
-    const dispatch = useDispatch();
-    const [selectedPetIndex, setSelectedPetIndex] = useState(null);
+function PetListMapComponent(props){
+    const { petList, onSelectPet, selectedPetIndex } = props
+
+    function petSelectHandler(chunkIndex, index) {
+        const listIndex = chunkIndex * 4 + index;
+        onSelectPet(listIndex);
+        const species = petList.data[listIndex].idx;
+        const nickname = petList.data[listIndex].species;
+
+        console.log(species, nickname)
+    }
 
     return(
         <>
         <Stack direction="vertical" gap={1} className="margin-bottom-20">
-            {chunkArray(state.petName, 4).map((petNamesChunk, chunkIndex) => (
-                <Stack key={chunkIndex} direction="horizontal" gap={1} className="margin-bottom-20">
-                    {petNamesChunk.map((petName, index) => (
-                        <PetCircleImage
-                            key={index}
-                            petName={petName}
-                            petId={state.petId[chunkIndex * 4 + index]}
-                            isSelected={(chunkIndex * 4 + index) === selectedPetIndex}
-                            onClick={() => {
-                                setSelectedPetIndex(chunkIndex * 4 + index);
-                                dispatch(selectPetId(state.petId[chunkIndex * 4 + index]));
-                                dispatch(selectPetName(petName));
-                            }}
-                        />
-                    ))}
-                </Stack>
-            ))}
+            {
+                chunkArray(petList.data, 4).map((petDataChunk, chunkIndex) => (
+                    <Stack direction="horizontal" gap={1} className="margin-bottom-20">
+                        {
+                            petDataChunk.map((petData, index) => (
+                                <PetCircleImage
+                                    key={index}
+                                    petName={petData.species}
+                                    isSelected={(chunkIndex * 4 + index) === selectedPetIndex}
+                                    imagePath={petData.path}
+                                    onClick={() => petSelectHandler(chunkIndex, index)}
+                                />
+                            ))
+                        }
+                    </Stack>
+                ))
+            }
         </Stack>
         </>
     )
