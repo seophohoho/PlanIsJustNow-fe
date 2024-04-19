@@ -44,7 +44,7 @@ function SignUpPet() {
                                     btnMessage="이 펫으로 할래요!"
                                     ClickHandler={() => { SelectBtnAct(); }}
                                 >
-                                    <Image src="/700x460.png" fluid />//경로필요
+                                    <Image src="/700x460.png" fluid />
                                     <Stack direction='horizontal' gap={2} className='center margin-bottom-10'>
                                         <Form.Label column sm="4" className='color-darkBlue'>펫 이름</Form.Label>   
                                         <Col sm="8">
@@ -55,7 +55,7 @@ function SignUpPet() {
                                             />
                                         </Col>
                                     </Stack>
-                                    <p className='color-lightPurple'>{state.data.info}</p>
+                                    <p className='color-lightPurple'>{state.data[selectedPetIndex].info}</p>
                                 </PetInfo>
                         </Row>
                     </Container>
