@@ -6,15 +6,15 @@ import { useState } from "react";
 import { selectPetId, selectPetName } from "../store/store.js";
 
 function PetListMapComponent(props){
-    const { petList, onSelectPet, selectedPetIndex } = props
+    const { petList, onSelectPet, selectedPetIndex, setPetPostData } = props
 
     function petSelectHandler(chunkIndex, index) {
         const listIndex = chunkIndex * 4 + index;
         onSelectPet(listIndex);
-        const species = petList.data[listIndex].idx;
-        const nickname = petList.data[listIndex].species;
-
-        console.log(species, nickname)
+        setPetPostData({
+            species : petList.data[listIndex].idx,
+            nickname : petList.data[listIndex].species
+        })
     }
 
     return(
