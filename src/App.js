@@ -1,16 +1,18 @@
-import { Routes, Route, Link, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import Signup from './pages/SignUp';
 import SignUpPet from './pages/SignUpPet';
 import Login from './pages/Login'
 import CalendarMain from './pages/CalendarMain';
-import FriendBoard from './pages/FriendsBoard'
-import { Navigate } from 'react-router-dom';
+import FriendBoard from './pages/FriendsBoard';
+import Petdex from './pages/Petdex';
 import axios from 'axios';
 import serverUrl from './serverConfig';
 import { useEffect } from 'react';
 
 function App() {
   const navigate = useNavigate();
+
+  //페이지마다 할당으로 변경 삭제 예정
   useEffect(()=>{//어느 페이지로 이동하든 
     axios.get(`${serverUrl}/api/user/has-pet`
     ,{withCredentials: true})
@@ -41,16 +43,17 @@ function App() {
           }
       }
     })
-  },[])//렌더링 최초 1회 
+  },[])// ignore Warnning: Check token validity on mount(redirect)
 
   return (
     <>
       <Routes>
-        <Route path='/' element={<Login/>}/>
+        <Route path='/' element={<Login/>}/> {/* nested route 필요 -> id,password 찾기 */}
+        <Route path='/petdex' element={<Petdex/>}/> {/* calendar -> nest? */}
         <Route path='/signup' element={ <Signup/> }/>
         <Route path='/Calendar' element={<CalendarMain/>}/>
-        <Route path='/friend-board' element={<FriendBoard/>}/>
-        <Route path='/signup-pet' element={<SignUpPet/>}/>
+        <Route path='/friend-board' element={<FriendBoard/>}/> {/* calendar -> nest? */}
+        <Route path='/signup-pet' element={<SignUpPet/>}/> {/* signup -> nest */}
         <Route path="*" element={ <div>잘못된 경로입니다!</div> }/>
       </Routes>
     </>

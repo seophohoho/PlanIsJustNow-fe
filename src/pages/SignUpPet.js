@@ -1,23 +1,137 @@
 import axios from 'axios';
-import { useState } from 'react';
 import serverUrl from "../serverConfig"
-import { Form, Col, Row, Button, Image, Container, Navbar, Stack } from 'react-bootstrap';
+import { Col, Row, Container, Navbar, Image, Stack, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from "react-redux"
-import { selectPetId, selectPetName } from "../store/store"//수정할 함수 import 해야함
-//todo 선택 안한 상태의 기본이미지, 캐릭터 설명 설정
-//todo 선택했을 시 css 효과 및 로직 수정 : 새로운 캐릭터 설정시 버튼 전체를 원래 css 로 변경후 선택된 image css로 변경
+import PetInfo from '../components/PetInpo';
+import PetListMapComponent from '../components/PetListMapComponent.js';
+import InputFieldComponent from '../components/InputFieldComponent.js';
+import { petListInit } from '../store/store.js';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 //Todo 모든 post 버튼에 로딩 css 로직 추가
 function SignUpPet() {
-
-    const state = useSelector((state)=>{return state})//store에 있는 state 가져옴
+    const state = useSelector((state)=>{return state.petList})//store에 있는 state 가져옴
     const dispatch = useDispatch()//state변경 함수 사용할때 둘러야함
-    const [selectedPetIndex, setSelectedPetIndex] = useState(null);
+    const navigate = useNavigate()
+    const [selectedPetIndex, setSelectedPetIndex] = useState(0); // 선택된 펫 인덱스의 초기값 설정
+
+    useEffect(()=>{
+        axios.get(`${serverUrl}/api/user/all-pet-info`,
+        {withCredentials: true})
+        .then(response=>{
+            console.log(response)
+            const copy = response.data
+            dispatch(petListInit(copy))
+            setSelectedPetIndex(0)
+        })
+        .catch((error) => {
+            console.log(error)
+
+            if(error.response){ // 런타임 에러방지 error.response가 있는지 먼저 확인함
+                if(error.response.status === 401) { // 토큰 만료 리다이렉트
+                    console.log("Error status: " + error.response.status);
+                    alert("로그인을 다시해주세요!");
+                    navigate('/');
+                }
+                else{
+                  alert("서버와 연결에 실패했습니다.");
+                }
+            }
+            else{
+                console.error("Error: ", error);
+                if(error.message) {
+                  alert("에러: " + error.message);
+                }
+                else{
+                  alert("알 수 없는 에러가 발생했습니다.");
+                }
+            }
+          })
+        //petlist init dispatch
+    },[])
+
+    
+    const [inputNickname, setInputNickname] = useState('');  // 입력 필드 상태
+    const [petPostData, setPetPostData] = useState({
+        species: '', // idx
+        nickname: ''
+    });
+    
+    useEffect(() => {
+        setInputNickname('');// 입력 필드를 빈 문자열로 설정
+    }, [selectedPetIndex, state.data]);
+
+    
+    useEffect(() => {
+        if (state.data.length > selectedPetIndex) {
+            setPetPostData({
+                species: state.data[selectedPetIndex].idx,
+                nickname: state.data[selectedPetIndex].species
+            });
+        }
+    }, [selectedPetIndex, state.data]);
+
+
+    const handleInputChange = (event) => {
+        const { value } = event.target;  // 사용자 입력값을 변수로 추출
+        setInputNickname(value);  // 로컬 상태 업데이트
+        setPetPostData(prevState => ({
+            ...prevState,
+            nickname: value  // 전역 상태 업데이트
+        }));
+    };
+    
+
+    function SelectBtnAct(){
+        console.log(petPostData)
+        axios.post(`${serverUrl}/api/user/pet-signup`,
+        {
+            "species": petPostData.species, //pet idx 
+            "nickname": petPostData.nickname //pet name
+        },
+        {withCredentials: true}
+        ).then(response=>{
+            if(response.data){
+                if(response.data.messageTitle == "success"){
+                    alert("펫이 선택되었습니다!")
+                    navigate('/calendar')
+                }
+                else{
+                    alert("서버와 연결에 실패하였습니다.")
+                }
+            }
+            console.log("yes")
+        })
+        .catch((error) => {
+            if(error.response){ // 런타임 에러방지 error.response가 있는지 먼저 확인함
+                if(error.response.status === 401) { // 토큰 만료 리다이렉트
+                    console.log("Error status: " + error.response.status);
+                    alert("로그인을 다시해주세요!");
+                    navigate('/');
+                }
+                else{
+                  alert("서버와 연결에 실패했습니다.");
+                }
+            }
+            else{
+                console.error("Error: ", error);
+                if(error.message) {
+                  alert("에러: " + error.message);
+                }
+                else{
+                  alert("알 수 없는 에러가 발생했습니다.");
+                }
+            }
+          })
+    }
+
     return (
         <div>
             <header>
                 <Navbar expand="md" className="bg-body-tertiary">
                     <Container>
-                        <Navbar.Brand href="#">
+                        <Navbar.Brand href="/calendar">
                             <img src='/logo192.png'width={"50px"}></img>
                         </Navbar.Brand>
                     </Container>
@@ -31,34 +145,31 @@ function SignUpPet() {
                     <Container fluid>
                         <Row className='center'>
                             <Col md="7">
-                            <Stack direction="vertical" gap={1} className="margin-bottom-20">
-                                {chunkArray(state.petName, 4).map((petNamesChunk, chunkIndex) => (
-                                    <Stack key={chunkIndex} direction="horizontal" gap={1} className="margin-bottom-20">
-                                        {petNamesChunk.map((petName, index) => (
-                                            <PetCircleImage
-                                                key={index}
-                                                petName={petName}
-                                                petId={state.petId[chunkIndex * 4 + index]}
-                                                isSelected={(chunkIndex * 4 + index) === selectedPetIndex}
-                                                onClick={() => {
-                                                    setSelectedPetIndex(chunkIndex * 4 + index);
-                                                    dispatch(selectPetId(state.petId[chunkIndex * 4 + index]));
-                                                    dispatch(selectPetName(petName));
-                                                }}
-                                            />
-                                        ))}
-                                    </Stack>
-                                ))}
-                            </Stack>
-                            </Col>
-                            {chunkArray(state.petName, 12).map((petNamesChunk, chunkIndex) => (
-                                <PetInfo
-                                    key={chunkIndex}
-                                    petName={state.petName[chunkIndex]}
-                                    petInpo={state.petInpo[chunkIndex]}
-                                    onClick={() => { SelectBtnAct(state.petSelected.id, state.petSelected.name); }}
+                                <PetListMapComponent
+                                    petList={state}
+                                    selectedPetIndex={selectedPetIndex}
+                                    onSelectPet={setSelectedPetIndex}
+                                    setPetPostData={setPetPostData}
                                 />
-                            ))}
+                            </Col>
+                                <PetInfo
+                                    btnMessage="이 펫으로 할래요!"
+                                    clickHandler={() => { SelectBtnAct(); }}
+                                >
+                                    <Image src="/700x460.png" fluid />
+                                    <Stack direction='horizontal' gap={2} className='center margin-bottom-10'>
+                                        <Form.Label column sm="4" className='color-darkBlue'>펫 이름</Form.Label>   
+                                        <Col sm="8">
+                                            <InputFieldComponent
+                                                type="text"
+                                                placeholder={state.data[selectedPetIndex].species}
+                                                onChangeHandler={handleInputChange}
+                                                value={inputNickname}
+                                            />
+                                        </Col>
+                                    </Stack>
+                                    <p className='color-lightPurple'>{state.data[selectedPetIndex].info}</p>
+                                </PetInfo>
                         </Row>
                     </Container>
                 </div>
@@ -68,76 +179,6 @@ function SignUpPet() {
             </footer>        
         </div>
     );
-}
-
-function SelectBtnAct(pet_id, pet_name){
-    axios.post(`${serverUrl}/api/user/choice-pet`,{
-        withCredentials: true,
-        "species" : pet_id,
-        "nickname" : pet_name
-    }).then(Response=>{
-        console.log("yes")
-    }).catch(error=>{
-        console.log(error)
-    })
-}
-
-function PetCircleImage(props){
-    const { petName, petId, isSelected } = props;
-
-    // isSelected 상태에 따라 동적으로 스타일 적용
-    const selectedStyle = isSelected
-        ? "pet-image border-outline-select"
-        : "pet-image border-outline";
-
-    return (
-        <Stack gap={1}>
-            <Image
-                src={'/thumbnail.png'} // 이미지 디자인 완성시 -> state.petImages[i]로 변경 chunkIndex props로 받아와서 i에 적용
-                roundedCircle
-                className={selectedStyle}
-                onClick={props.onClick}
-            />
-            <p className='pet-image color-lightPurple'>{petName}</p>
-        </Stack>
-    )
-}
-
-function PetInfo(props) {
-    const { petName, petInpo, onClick } = props;
-    const dispatch = useDispatch();
-    return (
-        <Col md="5">
-            <Stack className='center margin-bottom-10'>
-                <Image src="/700x460.png" fluid />
-                <Stack direction='horizontal' gap={2} className='center margin-bottom-10'>
-                    <Form.Label column sm="4" className='color-darkBlue'>
-                        펫 이름
-                    </Form.Label>
-                    <Col sm="8">
-                        <Form.Control
-                            type="text"
-                            placeholder={petName}
-                            onChange={(e) => { dispatch(selectPetName(e.target.value)); }}
-                        />
-                    </Col>
-                </Stack>
-                <p className='color-lightPurple'>{petInpo}</p>
-            </Stack>
-            <Button variant="primary" className='font-bold' onClick={onClick}>
-                이 펫으로 할래요!
-            </Button>
-        </Col>
-    );
-}
-
-// 배열을 지정된 크기의 묶음으로 나누는 함수
-function chunkArray(arr, size) {
-    const result = [];
-    for (let i = 0; i < arr.length; i += size) {
-        result.push(arr.slice(i, i + size));
-    }
-    return result;
 }
 
 export default SignUpPet;

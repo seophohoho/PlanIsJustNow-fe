@@ -7,12 +7,13 @@ function InputComponent(props){
   const {
     inputTitle, inputType, authCode,
     placeholder,classNames, email, passwordConfirm,
-    btnMessage, password, nickname, isEmail,
+    btnMessage, password, nickname,
     setEmail, setAuthCode, isNickName, setPasswordConfirm,
-    isPassword, isAuthCode, isInputDisabled, setIsInputDisabled,
+    isPassword, isInputDisabled, setIsInputDisabled,
     setIsNickName, setIsAuthCode,
     setIsEmail, setIsPassword,setIsNextButtonDisabled,
-    setPassword, setNickname} = props 
+    setPassword, setNickname
+  } = props 
  
   //유효성 메시지 상태저장
   const [passwordMessage, setPasswordMessage] = useState('')

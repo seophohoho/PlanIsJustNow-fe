@@ -1,9 +1,8 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import serverUrl from "../serverConfig"
-import { Form, Col, Row, Button, Image, Container, Navbar, Stack } from 'react-bootstrap';
-import { useDispatch, useSelector } from "react-redux"
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Form, Col, Row, Button, Container, Navbar, Stack } from 'react-bootstrap';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Login() {
     const [isLoading, setLoading] = useState(false);

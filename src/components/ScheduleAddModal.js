@@ -1,10 +1,9 @@
-import { useState } from "react";
 import {Modal, Form, Button} from "react-bootstrap"
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import { TimePicker, DatePicker } from 'antd';
+import { TimePicker } from 'antd';
 import { useSelector,useDispatch } from "react-redux"
-import { addHandleClose, scheduleComplete, scheduleStateAdd } from "../store/store";
+import { addHandleClose, scheduleStateAdd } from "../store/store";
 import "@djthoms/pretty-checkbox"
 import { Checkbox } from "pretty-checkbox-react";
 import moment from 'moment';

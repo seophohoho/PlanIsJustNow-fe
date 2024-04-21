@@ -1,4 +1,6 @@
 import {Col, Row} from "react-bootstrap"
+import React, { useEffect } from 'react';
+import Marquee from 'react-fast-marquee';
 import { useSelector, useDispatch } from "react-redux"
 import { EllipsisOutlined, StarTwoTone } from '@ant-design/icons';
 import { Dropdown } from 'antd';
@@ -9,14 +11,15 @@ import ScheduleEditModal from "./ScheduleEditModal";
 import ConfirmModal from "./ConfirmModal";
 import axios from "axios";
 import serverUrl from "../serverConfig";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import dayjs from 'dayjs';
 
 function Schedule(props){
+    const {i, clickedDate} = props
     const state = useSelector((state)=> state)/*자주 쓰는거 변수로 줄여야겠음 --> root로 가져오지마셈 나중에 수정*/
+    const ScheduleState = state.dateSchedule[clickedDate][i];
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const {i, clickedDate} = props
     /* confirm modal control */
     const [confirmShow, setConfirmShow] = useState(false);
     const confirmHandleClose = ()=>{setConfirmShow(false);}
@@ -28,6 +31,18 @@ function Schedule(props){
     /* 일정완료 체크박스 당일 확인용 */
     const today = dayjs().format('YYYY-MM-DD');
     const isToday = dayjs(clickedDate).format('YYYY-MM-DD') === today;
+    const [playMarquee, setPlayMarquee] = useState(false);
+
+    // ScheduleState.title이 변경될 때마다 실행
+    useEffect(() => {
+        // 제목 길이가 12자 초과면 Marquee를 재생
+        if (ScheduleState.title.length > 12) {
+            setPlayMarquee(true);
+        } else {
+            setPlayMarquee(false);
+        }
+    }, [ScheduleState.title]);
+
 
     function scheduleDeleteHandler(){
         /* confirm 추가 */
@@ -93,7 +108,6 @@ function Schedule(props){
         });
       }
 
-    const ScheduleState = state.dateSchedule[clickedDate][i];
     
     const defaultItems = [
         { //issue: 현재 <label> 바깥 태그(li) 클릭 시 이벤트가 발생하지 않는 문제 존재
@@ -147,8 +161,19 @@ function Schedule(props){
                 { "[" + ScheduleState.time + "]" }
             </Col>
             {/*말 줄임 표시 추후 추가 50자 제한, 툴팁 형태로 전체 표현 고민*/}
-            <Col sm={5} className={ScheduleState.complete ? 'm-auto color-darkBlue p-zero cancel_line' : 'm-auto color-darkBlue p-zero'}>
-                { ScheduleState.title }
+            <Col sm={5} className={ScheduleState.complete ? 'm-auto color-darkBlue p-zero cancel_line Col-Max-width-195' : 'm-auto color-darkBlue p-zero Col-Max-width-195'}>
+                {playMarquee ? (
+                <Marquee
+                    play={playMarquee}
+                    pauseOnHover
+                    delay={2}
+                    gradient={false}
+                >
+                    {ScheduleState.title}
+                </Marquee>
+            ) : (
+                <div>{ScheduleState.title}</div> // Marquee를 사용하지 않고 텍스트만 표시
+            )}
             </Col>
             <Col sm={1} className='m-auto'>
                 {ScheduleState.important ? <StarTwoTone twoToneColor="orange"/> : "" }

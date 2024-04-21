@@ -1,12 +1,10 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { Container, Navbar, Stack, Nav } from 'react-bootstrap';
 import { UserOutlined } from '@ant-design/icons';
 import { Avatar } from 'antd';
 
 const NavbarComponent = () => {
-
+    //axios로 요청해서 필요한 정보만 받하서 state에 할당
     return(
         <Navbar expand="md" className="bg-body-tertiary">{/**추후 Navbar도 컴포넌트화 해서 다른페이지에 적용시키기 */}
             <Container>
@@ -18,7 +16,7 @@ const NavbarComponent = () => {
                 <Nav className="me-auto">{/*추후 아이콘 추가*/}
                     <Nav.Link href="/user-page">MyPage</Nav.Link>
                     <Nav.Link href="/Friend-board">Friends</Nav.Link>
-                    <Nav.Link href="/calendar">Petdex</Nav.Link>
+                    <Nav.Link href="/petdex">Petdex</Nav.Link>
                 </Nav>
                 </Navbar.Collapse>
                 <Navbar.Text>
@@ -26,13 +24,12 @@ const NavbarComponent = () => {
                         <Avatar className='' size={64} icon={<UserOutlined />} />
                         <Stack gap={0} className='m-auto'>
                             <Navbar.Text className='color-darkBlue '>
-                            홍길동{/*이름, 아이디, 모두 state에서 바인딩해야 함 로그아웃에 이벤트 넣어야함 로그인 화면으로 라우팅 하는 것도*/}
+                                홍길동{/*펫이 있는가로 오는 데이터 기준? --> 오류생길듯 펫없으면 데이터 안오니*/}
                             </Navbar.Text>
                             <Navbar.Text className='color-violet'>
                                 #Email@example.com
                             </Navbar.Text>
                         </Stack>
-                        <span>로그아웃</span>{/*임시*/}
                     </Stack>
                 </Navbar.Text>
             </Container>
