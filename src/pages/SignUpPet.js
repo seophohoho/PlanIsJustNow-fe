@@ -15,45 +15,52 @@ function SignUpPet() {
     const dispatch = useDispatch()//state변경 함수 사용할때 둘러야함
     const navigate = useNavigate()
     const [selectedPetIndex, setSelectedPetIndex] = useState(0); // 선택된 펫 인덱스의 초기값 설정
+
+    useEffect(()=>{
+        axios.get(`${serverUrl}/api/user/all-pet-info`,
+        {withCredentials: true})
+        .then(response=>{
+            console.log(response)
+            const copy = response.data
+            dispatch(petListInit(copy))
+            setSelectedPetIndex(0)
+        })
+        .catch((error) => {
+            console.log(error)
+
+            if(error.response){ // 런타임 에러방지 error.response가 있는지 먼저 확인함
+                if(error.response.status === 401) { // 토큰 만료 리다이렉트
+                    console.log("Error status: " + error.response.status);
+                    alert("로그인을 다시해주세요!");
+                    navigate('/');
+                }
+                else{
+                  alert("서버와 연결에 실패했습니다.");
+                }
+            }
+            else{
+                console.error("Error: ", error);
+                if(error.message) {
+                  alert("에러: " + error.message);
+                }
+                else{
+                  alert("알 수 없는 에러가 발생했습니다.");
+                }
+            }
+          })
+        //petlist init dispatch
+    },[])
+
+    
     const [inputNickname, setInputNickname] = useState('');  // 입력 필드 상태
     const [petPostData, setPetPostData] = useState({
         species: '', // idx
         nickname: ''
     });
-
-    useEffect(() => {
-        const fetchPetInfo = async () => {
-            try {
-                const response = await axios.get(`${serverUrl}/api/user/all-pet-info`, { withCredentials: true });
-                dispatch(petListInit(response.data));
-            } catch (error) {
-                if (error.response) {
-                    if (error.response.status === 401) {
-                        console.log("Error status:", error.response.status);
-                        alert("로그인을 다시해주세요!");
-                        navigate('/');
-                    } else {
-                        alert("서버와 연결에 실패했습니다.");
-                    }
-                } else if (error.request) {
-                    // Handle case when there is no response received
-                    console.error("No response received:", error.request);
-                    alert("서버 응답이 없습니다.");
-                } else {
-                    // Handling errors thrown by handling code
-                    console.error("Error setting up request:", error.message);
-                    alert("요청 설정 중 오류가 발생했습니다: " + error.message);
-                }
-            }
-        };
     
-        fetchPetInfo();
-    }, [dispatch, navigate]);  // Include dependencies used inside the effect
-    
-
     useEffect(() => {
         setInputNickname('');// 입력 필드를 빈 문자열로 설정
-    }, [selectedPetIndex]);
+    }, [selectedPetIndex, state.data]);
 
     
     useEffect(() => {
@@ -63,7 +70,7 @@ function SignUpPet() {
                 nickname: state.data[selectedPetIndex].species
             });
         }
-    }, [selectedPetIndex]);
+    }, [selectedPetIndex, state.data]);
 
 
     const handleInputChange = (event) => {
@@ -79,14 +86,14 @@ function SignUpPet() {
     function SelectBtnAct(){
         console.log(petPostData)
         axios.post(`${serverUrl}/api/user/pet-signup`,
-        {withCredentials: true},
         {
             "species": petPostData.species, //pet idx 
             "nickname": petPostData.nickname //pet name
-        }
+        },
+        {withCredentials: true}
         ).then(response=>{
-            if(response){
-                if(response.messageTitle == "success"){
+            if(response.data){
+                if(response.data.messageTitle == "success"){
                     alert("펫이 선택되었습니다!")
                     navigate('/calendar')
                 }
@@ -147,7 +154,7 @@ function SignUpPet() {
                             </Col>
                                 <PetInfo
                                     btnMessage="이 펫으로 할래요!"
-                                    cilckHandler={() => { SelectBtnAct(); }}
+                                    clickHandler={() => { SelectBtnAct(); }}
                                 >
                                     <Image src="/700x460.png" fluid />
                                     <Stack direction='horizontal' gap={2} className='center margin-bottom-10'>
