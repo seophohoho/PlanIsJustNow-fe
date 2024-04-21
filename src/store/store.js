@@ -54,49 +54,17 @@ const userPetData = createSlice({
   },
   reducers:{
     petdexInit(state, action){
-      return action.payload
+      state = action.payload
     }
   }
 })
 
 const petList = createSlice({
-  name : 'petImages',
+  name : 'petList',
   initialState : {
-    "data": [
-      {
-          "idx": 0,
-          "info": "커여운 커비좀 보세요.",
-          "path": "/thumbnail.png",
-          "species": "커비"
-      },
-      {
-          "idx": 1,
-          "info": "테스트2",
-          "path": "/thumbnail.png",
-          "species": "하하하하하"
-      }
-      ,
-      {
-          "idx": 2,
-          "info": "테스트3",
-          "path": "/thumbnail.png",
-          "species": "피카"
-      },
-      {
-          "idx": 3,
-          "info": "테스트4",
-          "path": "/thumbnail.png",
-          "species": "꼬부기"
-      },
-      {
-          "idx": 4,
-          "info": "테스트5",
-          "path": "/thumbnail.png",
-          "species": "????"
-      }
-    ]
+   "data":[{},{}] 
   },
-  reducer:{
+  reducers:{
     petListInit(state, action){
       return action.payload
     }
@@ -256,8 +224,8 @@ export default configureStore({// 내보낼 state, 작성 문법은 아래와 �
     dateSchedule :dateSchedule.reducer,
     addShow : addShow.reducer,
     friendList : friendList.reducer,
-    petList : petList.reducer,
     userPetData : userPetData.reducer,
+    petList : petList.reducer,
     
   }
 }) 
