@@ -8,11 +8,133 @@ export class ImageManager{
     loadPetImage(){
         for(let i=0;i<=BEHAVIOR_SIZE;i++){
             this.phaser.load.atlas(`${petList[0]}_0_${i}`,`sprite/kirby/${petList[0]}_0_${i}.png`,`sprite/kirby/${petList[0]}_0_${i}.json`);
+            this.phaser.textures.get(`${petList[0]}_0_${i}`).setFilter(Phaser.Textures.FilterMode.NEAREST);
         }
-    }
-    loadBackgroundImage(){
 
+        this.phaser.load.once('complete', () => {
+            for(let i = 0; i <= BEHAVIOR_SIZE; i++) {
+                this.phaser.textures.get(`${petList[0]}_0_${i}`).setFilter(Phaser.Textures.FilterMode.NEAREST);
+            }
+        });
+
+        this.phaser.load.start();
     }
+
+    loadIconImage(){
+        this.phaser.load.image('cutlery','../../pet-space/icon-cutlery.png');
+        this.phaser.load.image('hand','../../pet-space/icon-hand.png');
+    }
+
+    createIcon(){
+        const icon_hand = this.phaser.add.image(455,30,'hand');
+        const icon_cutlery = this.phaser.add.image(420,30,'cutlery');
+
+        icon_hand.setScale(0.6);
+        icon_cutlery.setScale(0.6);
+    }
+
+    createUI(){
+        const ui_1 = this.phaser.add.rectangle(-1,0,960,140,0xebeeff);
+        const ui_2 = this.phaser.add.circle(30,35,20,0xffffff);
+
+        const graphics = this.phaser.add.graphics();
+        graphics.lineStyle(2, 0x5a67f6);
+        graphics.strokeCircle(30, 35, 20);
+        graphics.strokeRect(-1,0,480,70);
+        
+        const nicknameConfig={
+            fontSize:18,
+            color: '#060f82',
+            fontStyle:'bold',
+            fontFamily:'ui-monospace',
+        }
+
+        const heartConfig={
+            fontSize:23,
+            fontFamily:'ui-monospace',
+        }
+
+        const friendShipConfig={
+            fontSize:13,
+            color: '#8d9df5',
+            fontStyle:'bold',
+            fontFamily:'ui-monospace',
+        }
+
+        const iconConfig={
+            fontSize:9,
+            color: '#8d9df5',
+            fontStyle:'bold',
+            fontFamily:'ui-monospace',
+        }
+
+        // 텍스트와 이모지 추가
+        const nickname = this.phaser.add.text(
+            60,
+            10,
+            '펭귄',
+            nicknameConfig
+        );
+
+        const heart = this.phaser.add.text(
+            60,
+            35,
+            '❤️',
+            heartConfig
+        );
+
+        const friendship = this.phaser.add.text(
+            89,
+            30,
+            '0 / 25000',
+            friendShipConfig
+        );
+
+        const icon_hand = this.phaser.add.text(
+            404,
+            50,
+            '쓰다듬기',
+            iconConfig
+        );
+
+        const icon_cutlery = this.phaser.add.text(
+            442,
+            50,
+            '먹이주기',
+            iconConfig
+        )
+
+        heart.setAlign('center');
+        nickname.setAlign('center');
+        friendship.setAlign('center');
+        icon_hand.setAlign('center');
+        icon_cutlery.setAlign('center');
+
+        const healthBarOuter = this.phaser.add.graphics();
+        const healthBarInner_1 = this.phaser.add.graphics();
+        const healthBarInner_2 = this.phaser.add.graphics();
+    
+        healthBarOuter.lineStyle(2, 0x060f82);
+        healthBarOuter.strokeRoundedRect(90, 48, 200, 12,6); 
+
+        healthBarInner_1.fillStyle(0xffffff, 1);
+        healthBarInner_1.fillRoundedRect(90, 48, 200, 12,6);
+  
+        healthBarInner_2.fillStyle(0x060f82,1); 
+        healthBarInner_2.fillRoundedRect(90, 48, 200, 12,6);
+
+        // 체력 값을 기반으로 체력바 갱신하는 함수
+        const updateHealthBar = (currentHealth, maxHealth) => {
+            const healthWidth = (currentHealth / maxHealth) * 200;  // 최대 길이는 200
+            healthBarInner_2.clear();  // 이전 그래픽을 지우고 새로 그림
+            healthBarInner_2.fillStyle(0x060f82, 1);
+            healthBarInner_2.fillRoundedRect(90, 48, healthWidth, 12,6);
+        };
+
+        // 예시: 체력을 75%로 설정
+        updateHealthBar(2000, 22334);
+    }
+
     createSprite(key:string){
         const sprite = this.phaser.add.sprite(CANVAS_WIDTH/2,200,key);
         sprite.scale = 2;

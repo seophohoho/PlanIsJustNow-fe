@@ -1,5 +1,6 @@
 import { PetSpaceScene } from "../scene/PetSpaceScene";
 import {InitScene} from "../scene/InitScene";
+import {PetUIScene} from "../scene/PetUIScene"
 import * as Phaser from 'phaser';
 
 export const CANVAS_WIDTH = 480;
@@ -9,19 +10,17 @@ export const config = {
     type: Phaser.AUTO,
     width: CANVAS_WIDTH,
     height: CANVAS_HEIGHT,
-
     render: {
-        antialias: false,
+        antialias: true, // 안티앨리어싱 활성화
+        pixelArt: false // 픽셀 아트 게임이 아니라면 false로 설정
     },
-    pixelArt:true,
     fps:{
         target: 60,
         forceSetTimeOut: true
     },
-    
     backgroundColor: '#486870',
     parent: 'phaser-container', // 게임을 렌더링할 요소의 ID를 지정합니다.
-    scene: [InitScene,PetSpaceScene],
+    scene: [InitScene,PetSpaceScene,PetUIScene],
 };
 
 export const petList = [
