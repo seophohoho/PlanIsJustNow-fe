@@ -10,7 +10,8 @@ import chunkArray from '../function/chunkArray.js';
     페이지는 하나인데 props와 삼항 연산자로 데이터만 바꿔서 이용하는 것?
 */
 function Petdex(){
-    const state = useSelector((state)=>{return state})//store에 있는 state 가져옴
+    //redux userPetData에서 추출
+    const state = useSelector((state)=>{return state})
 
     return(
         <>
@@ -21,23 +22,26 @@ function Petdex(){
             <h1 className='page-title'>PETDEX</h1>
 
             <body>
-            <div className='center From'>
-                <Container fluid>
-                    <Row className='center'>
-                        <Col md="7">
-                            <PetListMapComponent/>
-                        </Col>
-                        {chunkArray(state.petName, 12).map((petNamesChunk, chunkIndex) => (
-                            <PetInfo
-                                key={chunkIndex}
-                                petName={state.petName[chunkIndex]}
-                                petInpo={state.petInpo[chunkIndex]}
-                                onClick={() => { }}
-                            />
-                        ))}
-                    </Row>
-                </Container>
-            </div>
+                <div className='center From'>
+                    <Container fluid>
+                        <Row className='center'>
+                            <Col md="7">
+                                <PetListMapComponent/>
+                            </Col>
+                            {/*map 구조를 바꿔야할 듯 들어오는 데이터의 index를 기준으로 기존에 있던 pet-select까지 싹다 고쳐야할 듯*/}
+                            {chunkArray(state.petName, 12).map((petNamesChunk, chunkIndex) => (
+                                <PetInfo
+                                    key={chunkIndex}
+                                    petName={state.petName[chunkIndex]}
+                                    petInpo={state.petInpo[chunkIndex]}
+                                    onClick={() => {}}
+                                >
+                                    <p>gd?</p>
+                                </PetInfo>
+                            ))}
+                        </Row>
+                    </Container>
+                </div>
             </body>
             <footer>
             </footer>
