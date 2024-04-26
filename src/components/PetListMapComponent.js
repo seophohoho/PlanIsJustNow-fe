@@ -6,18 +6,8 @@ import { useState } from "react";
 import { selectPetId, selectPetName } from "../store/store.js";
 
 function PetListMapComponent(props){
-    const { petList, onSelectPet, selectedPetIndex, setPetPostData } = props
+    const { petList, selectedPetIndex, setPetPostData, eventHandler } = props
 
-    function petSelectHandler(chunkIndex, index) {//handler 이름 변경 Choice? 기능도 몇개 추가
-        const listIndex = chunkIndex * 4 + index;
-        onSelectPet(listIndex);
-        setPetPostData({
-            species : petList.data[listIndex].idx,
-            nickname : petList.data[listIndex].species
-            /* 변경된 lastChoice 부분을 추가로 post, 여기서는 state만 업데이트 보내는 것은 부모에서
-            이동할 때 서버에서 get 하니 클라 쪽 업데이트는 필요 X*/
-        })
-    }
 
     return(
         <>
