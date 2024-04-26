@@ -28,13 +28,13 @@ export class Pet {
     }
 
     setEvolution(): number {
-        if (this.info['currentFriendship'] <= this.info['maxEvolutionFriendship_0']) {
+        if (this.info['currentFriendShip'] <= this.info['maxEvolutionFriendShip_0']) {
             return 0;
         }
-        if (this.info['currentFriendship'] <= this.info['maxEvolutionFriendship_1']) {
+        if (this.info['currentFriendShip'] <= this.info['maxEvolutionFriendShip_1']) {
             return 1;
         }
-        if (this.info['currentFriendship'] <= this.info['maxEvolutionFriendship_2']) {
+        if (this.info['currentFriendShip'] <= this.info['maxEvolutionFriendShip_2']) {
             return 2;
         }
     }
@@ -43,11 +43,11 @@ export class Pet {
         this.info['petId'] = data['petId'].petId;
         this.info['natureId'] = data['natureId'].natureId;
         this.info['nickname'] = data['petName'];
-        this.info['currentFriendship'] = data['currentFriendship'];
-        this.info['maxEvolutionFriendship_0'] = Math.floor(data['maxFriendship'] / 3);
-        this.info['maxEvolutionFriendship_1'] = this.info['maxEvolutionFriendship_0'] + Math.floor(data['maxFriendship'] / 3);
-        this.info['maxEvolutionFriendship_2'] = this.info['maxEvolutionFriendship_1'] + Math.floor(data['maxFriendship'] / 3);
-        this.info['maxFriendship'] = data['maxFriendship'];
+        this.info['currentFriendShip'] = data['currentFriendShip'];
+        this.info['maxEvolutionFriendShip_0'] = Math.floor(data['maxFriendShip'] / 3);
+        this.info['maxEvolutionFriendShip_1'] = this.info['maxEvolutionFriendShip_0'] + Math.floor(data['maxFriendShip'] / 3);
+        this.info['maxEvolutionFriendShip_2'] = this.info['maxEvolutionFriendShip_1'] + Math.floor(data['maxFriendShip'] / 3);
+        this.info['maxFriendShip'] = data['maxFriendShip'];
     }
 
     getData() {
@@ -77,7 +77,6 @@ export class Pet {
         this.sprites[lastBehavior].anims.stop();
         this.sprites[lastBehavior].visible = false;
         this.sprites[currentBehavior].visible = true;
-
         const animationKey = `${petList[this.info['petId']]}_${this.setEvolution()}_${currentBehavior}_${direction}`;
         this.sprites[currentBehavior].anims.repeat = behaviorCount;
         this.sprites[currentBehavior].anims.play(animationKey)

@@ -47,9 +47,7 @@ export class Behavior{
             totalProbability += probability;
             range.push({ behavior, end: totalProbability });
         }
-
-        console.log(range);
-
+        
         const randomNumber = Math.floor(Math.random() * totalProbability);
         const selectedBehavior = range.find((r) => randomNumber<r.end);
         return selectedBehavior.behavior;

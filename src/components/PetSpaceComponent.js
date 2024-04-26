@@ -4,7 +4,6 @@ import {config} from './pet/constants/Game'
 
 function PetSpaceComponent() {
     useEffect(() => {
-        console.log('????');
         const game = new Phaser.Game(config);
         return () => {
             game.destroy(true);
