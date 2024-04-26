@@ -11,8 +11,51 @@ import chunkArray from '../function/chunkArray.js';
 */
 function Petdex(){
     //redux userPetData에서 추출
-    const state = useSelector((state)=>{return state})
+    const state = useSelector((state)=>{return state.userPetData})
+    // 선택되어 있는 펫의 index를 기본값으로 설정해야함 아니면 그냥 기본값으로 둬도?
+    // 이미 선택된 펫의 값을 통해서 선택된 것은 버튼을 비활성화?
+    const [hasTrigger, setHasTrigger] = useState(false)
+    const [selectedPetIndex, setSelectedPetIndex] = useState(0);
+    const [petPostData, setPetPostData] = useState({
+        species: '', // idx
+        nickname: ''
+    });
+    const navigate = useNavigate()
 
+    useEffect(()=>{
+        setHasTrigger(false)
+        axios.get(`${serverUrl}/api/user/has-pet`
+        ,{withCredentials: true})
+        .then((response)=>{
+            if(response.data.messageDetail === "nothing"){
+                alert("사용자의 펫이 정해지지 않은 상태입니다!")
+                navigate('/signup-pet')//로그인 상태 + 펫
+            }
+        })
+        .catch((error) => {
+            if(error.response){ // 런타임 에러방지 error.response가 있는지 먼저 확인함
+                if(error.response.status === 401) { // 토큰 만료 리다이렉트
+                    console.log("Error status: " + error.response.status);
+                    alert("로그인을 다시해주세요!");
+                    navigate('/');
+                }
+                else{
+                alert("서버와 연결에 실패했습니다.");
+                }
+            }
+            else{
+                console.error("Error: ", error);
+                if(error.message) {
+                alert("에러: " + error.message);
+                }
+                else{
+                alert("알 수 없는 에러가 발생했습니다.");
+                }
+            }
+        })
+  },[hasTrigger])// ignore Warnning: Check token validity on mount(redirect)
+
+    
     return(
         <>
             <header>
