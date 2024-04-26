@@ -34,6 +34,10 @@ function Petdex(){
             if(response.data.messageDetail === "nothing"){
                 alert("사용자의 펫이 정해지지 않은 상태입니다!")
                 navigate('/signup-pet')//로그인 상태 + 펫
+            }else{
+                const copy = response.data//걍 직접 줘도 됨 나중에 제거
+                dispatch(petdexInit(copy))
+                setSelectedPetIndex(0)
             }
         })
         .catch((error) => {
