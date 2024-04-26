@@ -12,38 +12,38 @@ import { useEffect } from 'react';
 function App() {
   const navigate = useNavigate();
 
-  //페이지마다 할당으로 변경 삭제 예정
-  useEffect(()=>{//어느 페이지로 이동하든 
-    axios.get(`${serverUrl}/api/user/has-pet`
-    ,{withCredentials: true})
-    .then((response)=>{
-        if(response.data.messageDetail === "nothing"){
-          alert("사용자의 펫이 정해지지 않은 상태입니다!")
-          navigate('/signup-pet')//로그인 상태 + 펫
-        }
-    })
-    .catch((error) => {
-      if(error.response){ // 런타임 에러방지 error.response가 있는지 먼저 확인함
-          if(error.response.status === 401) { // 토큰 만료 리다이렉트
-              console.log("Error status: " + error.response.status);
-              alert("로그인을 다시해주세요!");
-              navigate('/');
-          }
-          else{
-            alert("서버와 연결에 실패했습니다.");
-          }
-      }
-      else{
-          console.error("Error: ", error);
-          if(error.message) {
-            alert("에러: " + error.message);
-          }
-          else{
-            alert("알 수 없는 에러가 발생했습니다.");
-          }
-      }
-    })
-  },[])// ignore Warnning: Check token validity on mount(redirect)
+  // //페이지마다 할당으로 변경 삭제 예정
+  // useEffect(()=>{//어느 페이지로 이동하든 
+  //   axios.get(`${serverUrl}/api/user/has-pet`
+  //   ,{withCredentials: true})
+  //   .then((response)=>{
+  //       if(response.data.messageDetail === "nothing"){
+  //         alert("사용자의 펫이 정해지지 않은 상태입니다!")
+  //         navigate('/signup-pet')//로그인 상태 + 펫
+  //       }
+  //   })
+  //   .catch((error) => {
+  //     if(error.response){ // 런타임 에러방지 error.response가 있는지 먼저 확인함
+  //         if(error.response.status === 401) { // 토큰 만료 리다이렉트
+  //             console.log("Error status: " + error.response.status);
+  //             alert("로그인을 다시해주세요!");
+  //             navigate('/');
+  //         }
+  //         else{
+  //           alert("서버와 연결에 실패했습니다.");
+  //         }
+  //     }
+  //     else{
+  //         console.error("Error: ", error);
+  //         if(error.message) {
+  //           alert("에러: " + error.message);
+  //         }
+  //         else{
+  //           alert("알 수 없는 에러가 발생했습니다.");
+  //         }
+  //     }
+  //   })
+  // },[])// ignore Warnning: Check token validity on mount(redirect)
 
   return (
     <>
