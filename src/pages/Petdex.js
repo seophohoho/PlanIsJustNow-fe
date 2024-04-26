@@ -1,9 +1,9 @@
 import NavbarComponent from "../components/NavbarComponent";
 import { Col, Row, Container,Image,Stack,Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from "react-redux"
+import { petdexInit } from "../store/store.js";
 import PetInfo from '../components/PetInpo';
 import PetListMapComponent from '../components/PetListMapComponent.js';
-import chunkArray from '../function/chunkArray.js';
 import { useEffect, useState } from "react";
 import axios from "axios";
 import serverUrl from "../serverConfig.js";
@@ -16,13 +16,13 @@ import { useNavigate } from "react-router-dom";
 function Petdex(){
     //redux userPetData에서 추출
     const state = useSelector((state)=>{return state.userPetData})
+    const dispatch = useDispatch()
     // 선택되어 있는 펫의 index를 기본값으로 설정해야함 아니면 그냥 기본값으로 둬도?
     // 이미 선택된 펫의 값을 통해서 선택된 것은 버튼을 비활성화?
     const [hasTrigger, setHasTrigger] = useState(false)
     const [selectedPetIndex, setSelectedPetIndex] = useState(0);
     const [petPostData, setPetPostData] = useState({
-        species: '', // idx
-        nickname: ''
+        idx: ''
     });
     const navigate = useNavigate()
 
@@ -123,10 +123,11 @@ function Petdex(){
                         <Row className='center'>
                             <Col md="7">
                                 <PetListMapComponent
-                                    petList={state}
+                                    petList={state.data}
                                     selectedPetIndex={selectedPetIndex}
                                     onSelectPet={setSelectedPetIndex}
                                     setPetPostData={setPetPostData}
+                                    eventHandler={petChoiceHandler}
                                 />
                             </Col>
                             <PetInfo
@@ -135,7 +136,7 @@ function Petdex(){
                                 clickHandler={() => {
                                     //disable하고 보낸 후 다시 useEffect 호출해야할듯
                                     setHasTrigger(true)
-
+                                    choiceHandler()
                                     //여기서 상태 연관된 상태 변환
                                 }/*post로 선택한 펫에 대한 정보 보내야할 듯(petPostData)*/}
                             >
@@ -143,7 +144,7 @@ function Petdex(){
                                 <Stack direction='horizontal' gap={2} className='center margin-bottom-10'>
                                     <Form.Label column sm="4" className='color-darkBlue'>펫 이름</Form.Label>   
                                     <Col sm="8">
-                                        <p>{state.data[selectedPetIndex].petName}</p>
+                                        <p>{state.data[selectedPetIndex].nickname}</p>
                                     </Col>
                                 </Stack>
                                 <p className='color-lightPurple'>{state.data[selectedPetIndex].info}</p>
