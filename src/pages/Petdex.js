@@ -76,17 +76,25 @@ function Petdex(){
                                     setPetPostData={setPetPostData}
                                 />
                             </Col>
-                            {/*map 구조를 바꿔야할 듯 들어오는 데이터의 index를 기준으로 기존에 있던 pet-select까지 싹다 고쳐야할 듯*/}
-                            {chunkArray(state.petName, 12).map((petNamesChunk, chunkIndex) => (
-                                <PetInfo
-                                    key={chunkIndex}
-                                    petName={state.petName[chunkIndex]}
-                                    petInpo={state.petInpo[chunkIndex]}
-                                    onClick={() => {}}
-                                >
-                                    <p>gd?</p>
-                                </PetInfo>
-                            ))}
+                            <PetInfo
+                                btnMessage="펫 적용하기"
+                                isDisabled={state.data[selectedPetIndex].lastChoice === 1}
+                                clickHandler={() => {
+                                    //disable하고 보낸 후 다시 useEffect 호출해야할듯
+                                    setHasTrigger(true)
+
+                                    //여기서 상태 연관된 상태 변환
+                                }/*post로 선택한 펫에 대한 정보 보내야할 듯(petPostData)*/}
+                            >
+                                <Image src="/700x460.png" fluid />
+                                <Stack direction='horizontal' gap={2} className='center margin-bottom-10'>
+                                    <Form.Label column sm="4" className='color-darkBlue'>펫 이름</Form.Label>   
+                                    <Col sm="8">
+                                        <p>{state.data[selectedPetIndex].petName}</p>
+                                    </Col>
+                                </Stack>
+                                <p className='color-lightPurple'>{state.data[selectedPetIndex].info}</p>
+                            </PetInfo>
                         </Row>
                     </Container>
                 </div>
