@@ -3,14 +3,19 @@ import { Form, Col, Button, Image, Stack } from 'react-bootstrap';
 import InputFieldComponent from "./InputFieldComponent";
 
 function PetInfo(props) {
-    const { clickHandler, children, btnMessage } = props;
+    const { clickHandler, children, btnMessage, isDisabled } = props;
     const dispatch = useDispatch();
     return (
         <Col md="5">
             <Stack className='center margin-bottom-10'>
                 {children}
             </Stack>
-            <Button variant="primary" className='font-bold' onClick={clickHandler}>
+            <Button 
+            variant="primary" 
+            className='font-bold' 
+            onClick={clickHandler}
+            {...(isDisabled !== undefined && { disabled: isDisabled })}
+            >
                 {btnMessage}
             </Button>
         </Col>
