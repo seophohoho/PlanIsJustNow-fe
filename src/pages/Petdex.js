@@ -1,9 +1,13 @@
 import NavbarComponent from "../components/NavbarComponent";
-import { Col, Row, Container } from 'react-bootstrap';
+import { Col, Row, Container,Image,Stack,Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from "react-redux"
 import PetInfo from '../components/PetInpo';
 import PetListMapComponent from '../components/PetListMapComponent.js';
 import chunkArray from '../function/chunkArray.js';
+import { useEffect, useState } from "react";
+import axios from "axios";
+import serverUrl from "../serverConfig.js";
+import { useNavigate } from "react-router-dom";
 
 /*
     재사용의 기준이 뭘까 모든 것을 component로 만들어서 블럭 형식으로 페이지 조립하는 것?
