@@ -26,6 +26,51 @@ function Petdex(){
     });
     const navigate = useNavigate()
 
+    function petChoiceHandler(chunkIndex, index) {//handler 이름 변경 Choice? 기능도 몇개 추가
+        const listIndex = chunkIndex * 4 + index;
+        setSelectedPetIndex(listIndex);
+        setPetPostData({
+            idx: state.data[listIndex].idx
+            /* 변경된 lastChoice 부분을 추가로 post, 여기서는 state만 업데이트 보내는 것은 부모에서
+            이동할 때 서버에서 get 하니 클라 쪽 업데이트는 필요 X*/
+        })
+    }
+    function choiceHandler(){
+        axios.post(`${serverUrl}/api/user/choice-pet`,
+        {
+            idx : petPostData.idx
+        },
+        {withCredentials: true})
+        .then((response)=>{
+            if(response.data.messageDetail === "nothing"){
+                alert("사용자의 펫이 정해지지 않은 상태입니다!")
+                navigate('/signup-pet')//로그인 상태 + 펫
+            }else{
+                alert("펫 적용 완료!")
+            }
+        })
+        .catch((error) => {
+            if(error.response){ // 런타임 에러방지 error.response가 있는지 먼저 확인함
+                if(error.response.status === 401) { // 토큰 만료 리다이렉트
+                    console.log("Error status: " + error.response.status);
+                    alert("로그인을 다시해주세요!");
+                    navigate('/');
+                }
+                else{
+                alert("서버와 연결에 실패했습니다.");
+                }
+            }
+            else{
+                console.error("Error: ", error);
+                if(error.message) {
+                alert("에러: " + error.message);
+                }
+                else{
+                alert("알 수 없는 에러가 발생했습니다.");
+                }
+            }
+        })
+    }
     useEffect(()=>{
         setHasTrigger(false)
         axios.get(`${serverUrl}/api/user/has-pet`
