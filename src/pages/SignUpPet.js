@@ -16,6 +16,17 @@ function SignUpPet() {
     const navigate = useNavigate()
     const [selectedPetIndex, setSelectedPetIndex] = useState(0); // 선택된 펫 인덱스의 초기값 설정
 
+    function petSelectHandler(chunkIndex, index) {//handler 이름 변경 Choice? 기능도 몇개 추가
+        const listIndex = chunkIndex * 4 + index;
+        setSelectedPetIndex(listIndex);
+        setPetPostData({
+            species : state.data[listIndex].idx,
+            nickname : state.data[listIndex].species
+            /* 변경된 lastChoice 부분을 추가로 post, 여기서는 state만 업데이트 보내는 것은 부모에서
+            이동할 때 서버에서 get 하니 클라 쪽 업데이트는 필요 X*/
+        })
+    }
+
     useEffect(()=>{
         axios.get(`${serverUrl}/api/user/all-pet-info`,
         {withCredentials: true})
@@ -146,11 +157,13 @@ function SignUpPet() {
                         <Row className='center'>
                             <Col md="7">
                                 <PetListMapComponent
-                                    petList={state}
+                                    petList={state.data}
                                     selectedPetIndex={selectedPetIndex}
                                     onSelectPet={setSelectedPetIndex}
                                     setPetPostData={setPetPostData}
+                                    eventHandler={petSelectHandler}
                                 />
+                                {console.log(state.data[selectedPetIndex])}
                             </Col>
                                 <PetInfo
                                     btnMessage="이 펫으로 할래요!"
