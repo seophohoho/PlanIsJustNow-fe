@@ -14,16 +14,16 @@ function PetListMapComponent(props){
         <Stack direction="vertical" gap={1} className="margin-bottom-20">
             {//petList.data 컴포넌트에서 이걸로 접근하는 건 좀 그런데 부모에서 그냥 확실한 값을 전달해야함
             // key 값이 같은거를 천운으로 생각해라
-                chunkArray(petList.data, 4).map((petDataChunk, chunkIndex) => (
-                    <Stack direction="horizontal" gap={1} className="margin-bottom-20">
+                chunkArray(petList, 4).map((petDataChunk, chunkIndex) => (
+                    <Stack direction="horizontal" gap={1} className="margin-bottom-20" key={chunkIndex+1}>
                         {
                             petDataChunk.map((petData, index) => (
                                 <PetCircleImage
                                     key={index}
-                                    petName={petData.species}
+                                    petName={petData.species ? petData.species : petData.nickname}
                                     isSelected={(chunkIndex * 4 + index) === selectedPetIndex}
                                     imagePath={petData.path}
-                                    onClick={() => petSelectHandler(chunkIndex, index)}
+                                    onClick={() => eventHandler(chunkIndex, index)}
                                 />
                             ))
                         }
