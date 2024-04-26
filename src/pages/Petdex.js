@@ -69,7 +69,12 @@ function Petdex(){
                     <Container fluid>
                         <Row className='center'>
                             <Col md="7">
-                                <PetListMapComponent/>
+                                <PetListMapComponent
+                                    petList={state}
+                                    selectedPetIndex={selectedPetIndex}
+                                    onSelectPet={setSelectedPetIndex}
+                                    setPetPostData={setPetPostData}
+                                />
                             </Col>
                             {/*map 구조를 바꿔야할 듯 들어오는 데이터의 index를 기준으로 기존에 있던 pet-select까지 싹다 고쳐야할 듯*/}
                             {chunkArray(state.petName, 12).map((petNamesChunk, chunkIndex) => (
