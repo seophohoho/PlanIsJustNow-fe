@@ -15,46 +15,14 @@ const userPetData = createSlice({
   name: "userPetData",
   initialState:{
     "data": [
-      {
-        "idx": 1,
-        "petId": {
-          "petId": 0,
-          "species": "펫_1"
-        },
-        "natureId": {
-          "natureId": 0,
-          "name": "장난꾸러기"
-        },
-        "petName": "꼬부기",
-        "maxFriendship": 22616,
-        "currentFriendship": 0,
-        "runWayCount": 0
-      },
-      {
-        "idx": 2,
-        "petId": {
-          "petId": 0,
-          "species": "펫_1"
-        },
-        "natureId": {
-          "natureId": 1,
-          "name": "활발한"
-        },
-        "petName": "꼬부기",
-        "maxFriendship": 15624,
-        "currentFriendship": 0,
-        "runWayCount": 0
-      },
+      {},
+      {},
     ],
-    "userId": {
-      "email": "testman@gmail.com",
-      "nickname": "seophohoho",
-      "todolistFailureCount": 0
-    }
+    "userId": {}
   },
   reducers:{
     petdexInit(state, action){
-      state = action.payload
+      return action.payload
     }
   }
 })
@@ -62,7 +30,7 @@ const userPetData = createSlice({
 const petList = createSlice({
   name : 'petList',
   initialState : {
-   "data":[{},{}] 
+   "data":[{},{}]
   },
   reducers:{
     petListInit(state, action){
@@ -213,6 +181,7 @@ const friendList = createSlice({
   }
 })
 
+export const {petdexInit} = userPetData.actions
 export const {petListInit} = petList.actions
 export const {addHandleClose, addHandleShow} = addShow.actions
 export const {scheduleInit, scheduleComplete, scheduleStateEdit, scheduleStateAdd, scheduleDelete} = dateSchedule.actions
