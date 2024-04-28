@@ -1,9 +1,10 @@
 import { useDispatch, useSelector } from "react-redux"
 import { Form, Col, Button, Image, Stack } from 'react-bootstrap';
 import InputFieldComponent from "./InputFieldComponent";
+import { useEffect } from "react";
 
 function PetInfo(props) {
-    const { clickHandler, children, btnMessage, isDisabled } = props;
+    const { clickHandler, children, btnMessage, isDisabled, setIsLastChoice } = props;
     const dispatch = useDispatch();
     return (
         <Col md="5">
@@ -13,9 +14,12 @@ function PetInfo(props) {
             <Button 
             variant="primary" 
             className='font-bold' 
-            onClick={clickHandler}
+            onClick={()=>{
+                setIsLastChoice(true)
+                clickHandler()
+            }}
             {...(isDisabled !== undefined && { disabled: isDisabled })}
-            >
+            >{console.log("start!", isDisabled)}
                 {btnMessage}
             </Button>
         </Col>
