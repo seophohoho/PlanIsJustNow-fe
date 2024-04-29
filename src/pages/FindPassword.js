@@ -4,7 +4,7 @@ import serverUrl from "../serverConfig"
 import { Form, Col, Row, Button, Container, Navbar, Stack } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 
-function Login() {
+function FindPassword() {
     
     return(
     <div className='text-center'>
@@ -31,4 +31,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default FindPassword;
