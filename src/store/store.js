@@ -27,6 +27,18 @@ const userPetData = createSlice({
   }
 })
 
+const targetPet = createSlice({
+  name : 'targetPet',
+  initialState : {
+    /* need initial format */
+  },
+  reducers:{
+    targetPetInit(state, action){
+      return action.payload
+    }
+  }
+})
+
 const petList = createSlice({
   name : 'petList',
   initialState : {
@@ -181,6 +193,7 @@ const friendList = createSlice({
   }
 })
 
+export const {targetPetInit} = targetPet.actions
 export const {petdexInit} = userPetData.actions
 export const {petListInit} = petList.actions
 export const {addHandleClose, addHandleShow} = addShow.actions
@@ -195,6 +208,6 @@ export default configureStore({// 내보낼 state, 작성 문법은 아래와 �
     friendList : friendList.reducer,
     userPetData : userPetData.reducer,
     petList : petList.reducer,
-    
+    targetPet : targetPet.reducer,
   }
 }) 

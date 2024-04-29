@@ -17,6 +17,7 @@ import PetSpaceComponent from '../components/PetSpaceComponent';
 import NavbarComponent from '../components/NavbarComponent';
 import serverUrl from '../serverConfig'
 import axios from 'axios'
+import { targetPetInit } from '../store/store';
 import { useNavigate } from 'react-router-dom';
 
 const CalendarMain = () => {
@@ -24,6 +25,12 @@ const CalendarMain = () => {
     const [clickedDate, setClickedDate] = useState("");
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    useEffect(()=>{
+        //바인딩 자체는 response -> data.data
+        //바인딩 -> 변수가 필요한 곳에 state 넣으면 됨 { state.targetPet.data.~~ }
+        dispatch(targetPetInit(/*axios response*/))
+    })
 
     useEffect(() => {
         const newImportantEvents = [];
