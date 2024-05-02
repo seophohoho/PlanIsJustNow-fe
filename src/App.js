@@ -1,19 +1,27 @@
+import { useEffect, lazy, Suspense } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
-import Signup from './pages/SignUp';
-import SignUpPet from './pages/SignUpPet';
-import Login from './pages/Login'
-import CalendarMain from './pages/CalendarMain';
-import FriendBoard from './pages/FriendsBoard';
-import Petdex from './pages/Petdex';
-import FindPassword from './pages/FindPassword';
 import axios from 'axios';
 import serverUrl from './serverConfig';
-import { useEffect } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css'
+import './index.css'
+import './styles/CalendarMain.css'
+
+const Signup = lazy(()=>import('./pages/SignUp'));
+const SignUpPet = lazy(()=>import('./pages/SignUpPet'));
+const Login = lazy(() => import('./pages/Login'));
+const CalendarMain = lazy(()=>import('./pages/CalendarMain'));
+const FriendBoard = lazy(()=>import('./pages/FriendsBoard'));
+const Petdex = lazy(()=>import('./pages/Petdex'));
+const FindPassword = lazy(()=>import('./pages/FindPassword'));
 
 function App() {
+  
   const navigate = useNavigate();
+
   return (
     <>
+    <Suspense fallback={<div>ㅇㅇ 로딩중임ㅇㅇ 로딩중임ㅇㅇ 로딩중임ㅇㅇ 로딩중임</div>}>
       <Routes>
         <Route path='/' element={<Login/>}/> {/* nested route -> id,password 찾기? */}
         <Route path='/reset-password' element={<FindPassword/>}></Route>
@@ -24,6 +32,7 @@ function App() {
         <Route path='/signup-pet' element={<SignUpPet/>}/> {/* signup -> nest? */}
         <Route path="*" element={ <div>잘못된 경로입니다!</div> }/>
       </Routes>
+      </Suspense>
     </>
   );
 }
