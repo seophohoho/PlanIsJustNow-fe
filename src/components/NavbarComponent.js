@@ -3,8 +3,10 @@ import { Container, Navbar, Stack, Nav } from 'react-bootstrap';
 import { UserOutlined } from '@ant-design/icons';
 import { Avatar } from 'antd';
 
-const NavbarComponent = () => {
-    //axios로 요청해서 필요한 정보만 받하서 state에 할당
+const NavbarComponent = (props) => {
+    const { userData } = props
+    console.log(userData)
+
     return(
         <Navbar expand="md" className="bg-body-tertiary">{/**추후 Navbar도 컴포넌트화 해서 다른페이지에 적용시키기 */}
             <Container>
@@ -21,13 +23,13 @@ const NavbarComponent = () => {
                 </Navbar.Collapse>
                 <Navbar.Text>
                     <Stack direction="horizontal" gap={2}>
-                        <Avatar className='' size={64} icon={<UserOutlined />} />
+                        <Avatar className='' size={64} src={userData.profileUrl} />
                         <Stack gap={0} className='m-auto'>
                             <Navbar.Text className='color-darkBlue '>
-                                홍길동{/*펫이 있는가로 오는 데이터 기준? --> 오류생길듯 펫없으면 데이터 안오니*/}
+                                {userData.nickname}
                             </Navbar.Text>
                             <Navbar.Text className='color-violet'>
-                                #Email@example.com
+                                {userData.userId}
                             </Navbar.Text>
                         </Stack>
                     </Stack>
