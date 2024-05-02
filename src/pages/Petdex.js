@@ -1,7 +1,7 @@
 import NavbarComponent from "../components/NavbarComponent";
 import { Col, Row, Container,Image,Stack,Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from "react-redux"
-import { petdexInit } from "../store/store.js";
+import { petdexInit, userDataInit } from "../store/store.js";
 import PetInfo from '../components/PetInpo';
 import PetListMapComponent from '../components/PetListMapComponent.js';
 import { useEffect, useState } from "react";
@@ -15,7 +15,8 @@ import { useNavigate } from "react-router-dom";
 */
 function Petdex(){
     //redux userPetData에서 추출
-    const state = useSelector((state)=>{return state.userPetData})
+    const petDataState = useSelector((state)=>{return state.userPetData})
+    const userDataState = useSelector((state)=>{return state.userData})
     const dispatch = useDispatch()
     // 선택되어 있는 펫의 index를 기본값으로 설정해야함 아니면 그냥 기본값으로 둬도?
     const [selectedPetIndex, setSelectedPetIndex] = useState(0);
@@ -28,13 +29,13 @@ function Petdex(){
     function petChoiceHandler(chunkIndex, index) {
         const listIndex = chunkIndex * 4 + index;
         setSelectedPetIndex(listIndex);
-        setIsLastChoice(state.data[listIndex].lastChoice === 1)
+        setIsLastChoice(petDataState.data[listIndex].lastChoice === 1)
         setPetPostData({
-            idx: state.data[listIndex].idx,
+            idx: petDataState.data[listIndex].idx,
         })
     }
 
-    function choiceHandler(){
+    function choiceHandler(){// 펫 적용 버튼 event
         axios.post(`${serverUrl}/api/user/choice-pet`,
         {
             idx : petPostData.idx
@@ -72,7 +73,7 @@ function Petdex(){
         petDataUpdate()
     }
     
-    function petDataUpdate(){
+    function petDataUpdate(){// 펫 도감 정보 다시 가져오기
         axios.get(`${serverUrl}/api/user/has-pet`
         ,{withCredentials: true})
         .then((response)=>{
@@ -81,6 +82,7 @@ function Petdex(){
                 navigate('/signup-pet')//로그인 상태 + 펫
             }else{
                 dispatch(petdexInit(response.data))
+                dispatch(userDataInit(response.userInfo))
             }
         })
         .catch((error) => {
@@ -107,7 +109,7 @@ function Petdex(){
     }
 
    
-    useEffect(()=>{
+    useEffect(()=>{ // 펫 도감 정보 초기화
         axios.get(`${serverUrl}/api/user/has-pet`
         ,{withCredentials: true})
         .then((response)=>{
@@ -120,7 +122,7 @@ function Petdex(){
             }
         })
         .catch((error) => {
-            if(error.response){ // 런타임 에러방지 error.response가 있는지 먼저 확인함
+            if(error.response){ // error.response가 있는지 먼저 확인함
                 if(error.response.status === 401) { // 토큰 만료 리다이렉트
                     console.log("Error status: " + error.response.status);
                     alert("로그인을 다시해주세요!");
@@ -140,13 +142,13 @@ function Petdex(){
                 }
             }
         })
-    },[])// ignore Warnning: Check token validity on mount(redirect)
+    },[])
 
     
     return(
         <>
             <header>
-                <NavbarComponent/>
+                <NavbarComponent userData={userDataState}/>
             </header>
 
             <h1 className='page-title'>PETDEX</h1>
@@ -157,7 +159,7 @@ function Petdex(){
                         <Row className='center'>
                             <Col md="7">
                                 <PetListMapComponent
-                                    petList={state.data}
+                                    petList={petDataState.data}
                                     selectedPetIndex={selectedPetIndex}
                                     onSelectPet={setSelectedPetIndex}
                                     setPetPostData={setPetPostData}
@@ -176,10 +178,10 @@ function Petdex(){
                                 <Stack direction='horizontal' gap={2} className='center margin-bottom-10'>
                                     <Form.Label column sm="4" className='color-darkBlue'>펫 이름</Form.Label>   
                                     <Col sm="8">
-                                        <p>{state.data[selectedPetIndex].nickname}</p>
+                                        <p>{petDataState.data[selectedPetIndex].nickname}</p>
                                     </Col>
-                                </Stack>{console.log(state)}
-                                <p className='color-lightPurple'>{state.data[selectedPetIndex].info}</p>
+                                </Stack>{console.log(petDataState)}
+                                <p className='color-lightPurple'>{petDataState.data[selectedPetIndex].info}</p>
                             </PetInfo>
                         </Row>
                     </Container>
