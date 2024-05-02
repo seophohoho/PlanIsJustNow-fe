@@ -111,7 +111,6 @@ function Signup() {
                       "email": email,
                       "password": password,
                       "nickname": nickname,
-                      "todolist_failure_count": 0
                     })
                       .then((response) => {
                         //todo 로딩 state 연동하기(1개의 state 필요)
