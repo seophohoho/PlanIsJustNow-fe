@@ -2,6 +2,7 @@ import { useEffect, lazy, Suspense } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import serverUrl from './serverConfig';
+import CalendarLoading from './components/CalendarLoading';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
 import './index.css'
@@ -21,8 +22,9 @@ function App() {
 
   return (
     <>
-    <Suspense fallback={<div>ㅇㅇ 로딩중임ㅇㅇ 로딩중임ㅇㅇ 로딩중임ㅇㅇ 로딩중임</div>}>
+    <Suspense fallback={<CalendarLoading/>}>
       <Routes>
+        <Route path='/test' element={<CalendarLoading/>}/>
         <Route path='/' element={<Login/>}/> {/* nested route -> id,password 찾기? */}
         <Route path='/reset-password' element={<FindPassword/>}></Route>
         <Route path='/Calendar' element={<CalendarMain/>}/>
