@@ -8,9 +8,23 @@ redux는 그냥 상태관리 도구다. 컴포넌트 재사용 목적으로 prop
 가능은 하지만 너무 맹목적이다. props와 같이 유연하게 쓰는 것이 더 올바르다.
 redux의 본질을 잊지 말자 -> 너무 아토믹하게 하면 뭐가뭔지 모르게 된다. 조심
 
-3항 연산자는 컴퓨터도 ㅈㄴ 싫어한다.
+3항 연산자는 컴퓨터도 싫어한다.
 퍼포먼스를 위해 앵간하면 줄여보자
 */
+const userData = createSlice({
+  name : "userData",
+  initialState:{
+    "profileUrl": "/thumbnail.png",
+    "nickname": "seophohoho",
+    "userId": "seophohoho@gmail.com"
+  },
+  reducers: {
+    userDataInit(state, action){
+      return action.payload
+    }
+  }
+})
+
 const userPetData = createSlice({
   name: "userPetData",
   initialState:{
@@ -193,6 +207,7 @@ const friendList = createSlice({
   }
 })
 
+export const {userDataInit} = userData.actions
 export const {targetPetInit} = targetPet.actions
 export const {petdexInit} = userPetData.actions
 export const {petListInit} = petList.actions
@@ -209,5 +224,6 @@ export default configureStore({// 내보낼 state, 작성 문법은 아래와 �
     userPetData : userPetData.reducer,
     petList : petList.reducer,
     targetPet : targetPet.reducer,
+    userData: userData.reducer,
   }
 }) 
