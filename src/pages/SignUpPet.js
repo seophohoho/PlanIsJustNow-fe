@@ -144,6 +144,7 @@ function SignUpPet() {
                     <Container>
                         <Navbar.Brand href="/calendar">
                             <img src='/logo192.png'width={"50px"}></img>
+                            <h1 style={{display: "inline"}} className=''>PETTODO</h1>
                         </Navbar.Brand>
                     </Container>
                 </Navbar>

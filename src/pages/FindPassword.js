@@ -41,6 +41,7 @@ function FindPassword() {
                 <Container>
                     <Navbar.Brand href="#">
                         <img src='/logo192.png'width={"50px"}></img>
+                        <h1 style={{display: "inline"}} className=''>PETTODO</h1>
                     </Navbar.Brand>
                 </Container>
             </Navbar>
