@@ -15,7 +15,7 @@ function PetInfo(props) {
             variant="primary" 
             className='font-bold' 
             onClick={()=>{
-                setIsLastChoice(true)
+                if(setIsLastChoice !== undefined){setIsLastChoice(true)}
                 clickHandler()
             }}
             {...(isDisabled !== undefined && { disabled: isDisabled })}

@@ -47,6 +47,7 @@ function Signup() {
         <Container>
           <Navbar.Brand href="#">
             <img src='/logo192.png'width={"50px"}></img>
+            <h1 style={{display: "inline"}} className=''>PETTODO</h1>
           </Navbar.Brand>
         </Container>
         </Navbar>
@@ -111,7 +112,6 @@ function Signup() {
                       "email": email,
                       "password": password,
                       "nickname": nickname,
-                      "todolist_failure_count": 0
                     })
                       .then((response) => {
                         //todo 로딩 state 연동하기(1개의 state 필요)

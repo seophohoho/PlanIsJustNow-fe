@@ -39,7 +39,14 @@ function Login() {
             if(response.status === 200){
                 alert("로그인 성공 status: 200")
                 navigate('/calendar')
-                setLoading(false);//성공하면 풀어줄 이유가 없지않나? 나중에 판단
+            }
+            else if(response.status === 400){
+                if(response.messageDetail === "Not matched error"){
+                    alert("비밀번호 또는 아이디가 일치하지 않습니다.")
+                }
+                else{
+                    alert("연결과정 중 문제가 발생하였습니다.")
+                }
             }
         })
         .catch((error) => {
@@ -73,6 +80,7 @@ function Login() {
                 <Container>
                     <Navbar.Brand href="#">
                         <img src='/logo192.png'width={"50px"}></img>
+                        <h1 style={{display: "inline"}} className=''>PETTODO</h1>
                     </Navbar.Brand>
                 </Container>
             </Navbar>
@@ -135,7 +143,7 @@ function Login() {
                     <p className='color-violet'>ID 또는 비밀번호를 잃어버리셨나요?</p>
                 </Col>
                 <Col>
-                    <p className='color-violet'><Link to='/'>ID 찾기</Link>/<Link to='/'>비밀번호 찾기</Link></p>
+                    <p className='color-violet'><Link to='/'>ID 찾기</Link>/<Link to='/reset-password'>비밀번호 찾기</Link></p>
                 </Col>
             </Stack>
             

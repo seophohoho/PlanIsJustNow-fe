@@ -3,7 +3,7 @@ import {Col, Row, Stack, Button, Form} from "react-bootstrap"
 import { useSelector, useDispatch } from "react-redux"
 import { Tabs, Avatar } from 'antd';
 import { TeamOutlined, UserAddOutlined, UserOutlined } from '@ant-design/icons';
-import { friendDelete, friendRefuse, friendAccept } from "../store/store";
+import { friendDelete, friendRefuse, friendAccept, userDataInit } from "../store/store";
 import NavbarComponent from "../components/NavbarComponent";
 import TabChildrenComponent from "../components/TabChildrenConponent";
 import axios from "axios";
@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 
 function FriendBoard() {
   const state = useSelector((state)=>state.friendList)
+  const userDataState = useSelector(state => state.userData)
   const dispatch = useDispatch()
 
   const navigate = useNavigate()
@@ -23,6 +24,9 @@ function FriendBoard() {
         if(response.data.messageDetail === "nothing"){
           alert("사용자의 펫이 정해지지 않은 상태입니다!")
           navigate('/signup-pet')//로그인 상태 + 펫
+        }
+        else{
+          dispatch(userDataInit(response.userInfo))
         }
     })
     .catch((error) => {
@@ -52,7 +56,7 @@ function FriendBoard() {
   return (
     <>
     <header>
-      <NavbarComponent/>
+      <NavbarComponent userData={userDataState}/>
     </header>
     <body className="beak-point">
     <Tabs

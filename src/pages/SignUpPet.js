@@ -31,10 +31,12 @@ function SignUpPet() {
         axios.get(`${serverUrl}/api/user/all-pet-info`,
         {withCredentials: true})
         .then(response=>{
-            console.log(response)
-            const copy = response.data
-            dispatch(petListInit(copy))
-            setSelectedPetIndex(0)
+            if(response.status === 200){
+                console.log(response)
+                dispatch(petListInit(response.data))
+                setSelectedPetIndex(0)
+            }
+            
         })
         .catch((error) => {
             console.log(error)
@@ -144,6 +146,7 @@ function SignUpPet() {
                     <Container>
                         <Navbar.Brand href="/calendar">
                             <img src='/logo192.png'width={"50px"}></img>
+                            <h1 style={{display: "inline"}} className=''>PETTODO</h1>
                         </Navbar.Brand>
                     </Container>
                 </Navbar>

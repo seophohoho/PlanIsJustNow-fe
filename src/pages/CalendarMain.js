@@ -7,23 +7,64 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import moment from 'moment';
 /*moment 업데이트 중단!!! -> dayjs로 변경 권장 */
 import 'moment/locale/ko'
-import '../styles/CalendarMain.css'
 import ScheduleAddModal from '../components/ScheduleAddModal';
 import Schedule from '../components/ScheduleComponent';
-import { scheduleInit, addHandleShow } from '../store/store';
+import { scheduleInit, addHandleShow, userDataInit } from '../store/store';
 import { useSelector, useDispatch } from 'react-redux';
 import { Col, Row, Container, Stack, Button } from 'react-bootstrap';
 import PetSpaceComponent from '../components/PetSpaceComponent';
 import NavbarComponent from '../components/NavbarComponent';
 import serverUrl from '../serverConfig'
 import axios from 'axios'
+import { targetPetInit } from '../store/store';
 import { useNavigate } from 'react-router-dom';
 
 const CalendarMain = () => {
     const state = useSelector((state)=> {return state});
+    const userDataState = useSelector((state)=> {return state.userData});
     const [clickedDate, setClickedDate] = useState("");
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    useEffect(()=>{
+
+        //바인딩 자체는 response -> data.data
+        //바인딩 -> 변수가 필요한 곳에 state 넣으면 됨 { state.targetPet.data.~~ }
+        dispatch(targetPetInit(/*axios response*/))
+    })
+
+    useEffect(()=>{ // 펫 도감 정보 초기화
+        axios.get(`${serverUrl}/api/user/has-pet`
+        ,{withCredentials: true})
+        .then((response)=>{
+            if(response.data.messageDetail === "nothing"){
+                alert("사용자의 펫이 정해지지 않은 상태입니다!")
+                navigate('/signup-pet')//로그인 상태 + 펫
+            }else{
+                dispatch(userDataInit(response.userInfo))
+            }
+        })
+        .catch((error) => {
+            if(error.response){ // error.response가 있는지 먼저 확인함
+                if(error.response.status === 401) { // 토큰 만료 리다이렉트
+                    console.log("Error status: " + error.response.status);
+                    alert("로그인을 다시해주세요!");
+                    navigate('/');
+                }
+                else{
+                    alert("서버와 연결에 실패했습니다.");
+                }
+            }
+            else{
+                console.error("Error: ", error);
+                if(error.message) {
+                    alert("에러: " + error.message);
+                }
+                else{
+                    alert("알 수 없는 에러가 발생했습니다.");
+                }
+            }
+        })
+    },[])
 
     useEffect(() => {
         const newImportantEvents = [];
@@ -66,7 +107,7 @@ const CalendarMain = () => {
   return (
     <div>
          <header>
-            <NavbarComponent></NavbarComponent>
+            <NavbarComponent userData={userDataState}></NavbarComponent>
         </header>
         <body>
             <ScheduleAddModal clickedDate={clickedDate}></ScheduleAddModal>
