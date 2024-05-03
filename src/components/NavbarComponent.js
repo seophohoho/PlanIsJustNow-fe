@@ -29,7 +29,7 @@ const NavbarComponent = (props) => {
                                 {userData.nickname}
                             </Navbar.Text>
                             <Navbar.Text className='color-violet'>
-                                {userData.userId}
+                                #{userData.userId}
                             </Navbar.Text>
                         </Stack>
                     </Stack>
