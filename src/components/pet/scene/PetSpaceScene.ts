@@ -13,7 +13,7 @@ export class PetSpaceScene extends Phaser.Scene{
     }
 
     private im:ImageManager;
-    private pet:Pet=null;
+    private pet:Pet;
     private behavior:Behavior;
 
     init(){

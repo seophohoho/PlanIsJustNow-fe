@@ -23,14 +23,10 @@ const CalendarMain = () => {
     const state = useSelector((state)=> {return state});
     const userDataState = useSelector((state)=> {return state.userData});
     const [clickedDate, setClickedDate] = useState("");
+    const [targetPet, setTargetPet] = useState(null);
+    const [isPetInitialized, setIsPetInitialized] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    useEffect(()=>{
-
-        //바인딩 자체는 response -> data.data
-        //바인딩 -> 변수가 필요한 곳에 state 넣으면 됨 { state.targetPet.data.~~ }
-        dispatch(targetPetInit(/*axios response*/))
-    })
 
     useEffect(()=>{ // 펫 도감 정보 초기화
         axios.get(`${serverUrl}/api/user/has-pet`
@@ -40,7 +36,12 @@ const CalendarMain = () => {
                 alert("사용자의 펫이 정해지지 않은 상태입니다!")
                 navigate('/signup-pet')//로그인 상태 + 펫
             }else{
-                dispatch(userDataInit(response.userInfo))
+                dispatch(userDataInit(response.userInfo));
+                const targetPet = response.data.data.filter(item => item.lastChoice === 1);
+                if (targetPet.length > 0) {
+                    setTargetPet(targetPet);
+                    setIsPetInitialized(true);  // targetPet이 초기화되었음을 설정
+                }
             }
         })
         .catch((error) => {
@@ -222,7 +223,7 @@ const CalendarMain = () => {
                                     </Stack>
                                 </div>
                             </Stack>
-                            <PetSpaceComponent></PetSpaceComponent>
+                            {isPetInitialized && <PetSpaceComponent targetPetData={targetPet}/>}
                         </Stack>
                     </Col>
                 </Row>

@@ -9,28 +9,29 @@ export class InitScene extends Phaser.Scene{
     constructor(){
         super({key:'InitScene'});
         this.im = new ImageManager(this);
+        console.log(InitScene.initData);
     }
 
     private im:ImageManager;
     private pet:Pet;
+    
+    static initData:any;
 
+    init(){
+        console.log(InitScene.initData);
+    }
     preload(){
        this.im.loadPetImage();
        this.im.loadIconImage();
     }
 
-    async create(){
+    create(){
         this.pet = new Pet();
         const container = this.add.container();
         this.pet.setContainer(container);
-        try{
-            const res = await axios.get(`${serverUrl}/api/user/has-pet`,{withCredentials: true});
-            const data = res.data.data[0];
-            this.pet.setData(data);
-        } catch(error){
-            console.error(error);
-        }
-        
+        console.log(InitScene.initData);
+        this.pet.setData(InitScene.initData);
+
         for(let i=0;i<=BEHAVIOR_SIZE;i++){
             this.pet.setSprite(this.im.createSprite(`${petList[this.pet.getData()['petId']]}_${this.pet.setEvolution()}_${i}`));
         }
