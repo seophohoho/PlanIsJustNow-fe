@@ -82,7 +82,7 @@ function Petdex(){
                 navigate('/signup-pet')//로그인 상태 + 펫
             }else{
                 dispatch(petdexInit(response.data))
-                dispatch(userDataInit(response.userInfo))
+                dispatch(userDataInit(response.data.userInfo))
             }
         })
         .catch((error) => {

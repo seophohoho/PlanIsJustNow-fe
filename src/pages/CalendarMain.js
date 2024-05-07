@@ -38,7 +38,7 @@ const CalendarMain = () => {
                 alert("사용자의 펫이 정해지지 않은 상태입니다!")
                 navigate('/signup-pet')//로그인 상태 + 펫
             }else{
-                dispatch(userDataInit(response.userInfo));
+                dispatch(userDataInit(response.data.userInfo));
                 const targetPet = response.data.data.filter(item => item.lastChoice === 1);
                 if (targetPet.length > 0) {
                     setTargetPet(targetPet);
