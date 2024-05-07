@@ -18,7 +18,6 @@ export class InitScene extends Phaser.Scene{
  
     preload(){
        this.im.loadPetImage(InitScene.initData.petId.petId,InitScene.initData.evol);
-       this.im.loadIconImage();
     }
     create(){
         this.pet = new Pet();
@@ -33,6 +32,5 @@ export class InitScene extends Phaser.Scene{
         this.im.createSpriteAnimation(InitScene.initData.petId.petId,InitScene.initData.evol);
 
         this.scene.launch('PetSpaceScene',{im:this.im,pet:this.pet,petId:InitScene.initData.petId.petId,evolId:InitScene.initData.evol});
-        this.scene.launch('PetUIScene',{im:this.im});
     }
 }

@@ -1,7 +1,7 @@
 import * as Phaser from 'phaser';
 
-export const CANVAS_WIDTH = 480;
-export const CANVAS_HEIGHT = 225;
+export const CANVAS_WIDTH = 480; //480
+export const CANVAS_HEIGHT = 225; //225
 
 export const petList = [
     '0',

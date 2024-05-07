@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import * as Phaser from 'phaser';
 import { PetSpaceScene } from "./pet/scene/PetSpaceScene"
 import {InitScene} from "./pet/scene/InitScene";
-import {PetUIScene} from "./pet/scene/PetUIScene"
 import { CANVAS_WIDTH,CANVAS_HEIGHT } from './pet/constants/Game';
 
 function PetSpaceComponent(props) {
@@ -24,7 +23,7 @@ function PetSpaceComponent(props) {
                 },
                 backgroundColor: '#486870',
                 parent: 'phaser-container', // 게임을 렌더링할 요소의 ID를 지정합니다.
-                scene: [InitScene,PetSpaceScene,PetUIScene],
+                scene: [InitScene,PetSpaceScene],
             };
             InitScene.initData = targetPetData[0];
             const game = new Phaser.Game(config);
