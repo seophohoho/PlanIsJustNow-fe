@@ -44,7 +44,6 @@ const userPetData = createSlice({
 const targetPet = createSlice({
   name : 'targetPet',
   initialState : {
-    /* need initial format */
   },
   reducers:{
     targetPetInit(state, action){

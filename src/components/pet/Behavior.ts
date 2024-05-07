@@ -5,7 +5,11 @@ export class Behavior{
     constructor(
         private phaserTime:Phaser.Time.Clock,
         private pet:Pet,
+        private petId:number,
+        private evolId:number
     ){
+        this.petId = petId;
+        this.evolId = evolId;
         this.timerEvent = this.phaserTime.addEvent({
             delay:10,
             callback:this.setBehavior.bind(this),
@@ -34,7 +38,7 @@ export class Behavior{
             
             this.lastDirection = this.currentDirection;
             this.currentDirection = this.getRandomDirection();
-            this.pet.startAnimation(this.lastBehavior,this.currentBehavior,this.behaviorGoalCount,this.currentDirection);
+            this.pet.startAnimation(this.petId,this.evolId,this.lastBehavior,this.currentBehavior,this.behaviorGoalCount,this.currentDirection);
         }
     }
 

@@ -5,17 +5,17 @@ import {MaxFrame,FrameRate,DELAY_RATE} from "../constants/MaxFrame";
 export class ImageManager{
     constructor(private phaser:Phaser.Scene){}
 
-    loadPetImage(){
-        for(let i=0;i<=BEHAVIOR_SIZE;i++){
-            this.phaser.load.atlas(`${petList[0]}_0_${i}`,`sprite/kirby/${petList[0]}_0_${i}.png`,`sprite/kirby/${petList[0]}_0_${i}.json`);
-            this.phaser.textures.get(`${petList[0]}_0_${i}`).setFilter(Phaser.Textures.FilterMode.NEAREST);
+    loadPetImage(petId:number,evolId:number){
+        console.log(petId,evolId);
+        for(let j=0;j<=BEHAVIOR_SIZE;j++){
+            this.phaser.load.atlas(`${petId}_${evolId}_${j}`,`sprite/${petId}/${petId}_${evolId}_${j}.png`,`sprite/${petId}/${petId}_${evolId}_${j}.json`);
         }
 
-        this.phaser.load.once('complete', () => {
-            for(let i = 0; i <= BEHAVIOR_SIZE; i++) {
-                this.phaser.textures.get(`${petList[0]}_0_${i}`).setFilter(Phaser.Textures.FilterMode.NEAREST);
-            }
-        });
+        // this.phaser.load.once('complete', () => {
+        //     for(let i = 0; i <= BEHAVIOR_SIZE; i++) {
+        //         this.phaser.textures.get(`${petList[0]}_0_${i}`).setFilter(Phaser.Textures.FilterMode.NEAREST);
+        //     }
+        // });
 
         this.phaser.load.start();
     }
@@ -141,171 +141,171 @@ export class ImageManager{
         sprite.visible = false;
         return sprite;
     }
-    createSpriteAnimation(){
-        const petStayFrameRight = this.phaser.anims.generateFrameNames(`${petList[0]}_0_0`,{
-            prefix:`${petList[0]}_0_0-`,
+    createSpriteAnimation(petId:number,evolId:number){
+        const petStayFrameRight = this.phaser.anims.generateFrameNames(`${petId}_${evolId}_0`,{
+            prefix:`${petId}_${evolId}_0-`,
             suffix:"",
             start:0,
             end:Math.floor(MaxFrame.STAY/2),
         });
-        const petStayFrameLeft = this.phaser.anims.generateFrameNames(`${petList[0]}_0_0`,{
-            prefix:`${petList[0]}_0_0-`,
+        const petStayFrameLeft = this.phaser.anims.generateFrameNames(`${petId}_${evolId}_0`,{
+            prefix:`${petId}_${evolId}_0-`,
             suffix:"",
             start:Math.floor(MaxFrame.STAY/2)+1,
             end:MaxFrame.STAY,
         });
-        const petWalkFrameRight = this.phaser.anims.generateFrameNames(`${petList[0]}_0_1`,{
-            prefix:`${petList[0]}_0_1-`,
+        const petWalkFrameRight = this.phaser.anims.generateFrameNames(`${petId}_${evolId}_1`,{
+            prefix:`${petId}_${evolId}_1-`,
             suffix:"",
             start:0,
             end:Math.floor(MaxFrame.WALK/2),
         });
-        const petWalkFrameleft = this.phaser.anims.generateFrameNames(`${petList[0]}_0_1`,{
-            prefix:`${petList[0]}_0_1-`,
+        const petWalkFrameleft = this.phaser.anims.generateFrameNames(`${petId}_${evolId}_1`,{
+            prefix:`${petId}_${evolId}_1-`,
             suffix:"",
             start:Math.floor(MaxFrame.WALK/2)+1,
             end:MaxFrame.WALK,
         });
-        const petRunFrameRight = this.phaser.anims.generateFrameNames(`${petList[0]}_0_2`,{
-            prefix:`${petList[0]}_0_2-`,
+        const petRunFrameRight = this.phaser.anims.generateFrameNames(`${petId}_${evolId}_2`,{
+            prefix:`${petId}_${evolId}_2-`,
             suffix:"",
             start:0,
             end:Math.floor(MaxFrame.RUN/2),
         });
-        const petRunFrameLeft = this.phaser.anims.generateFrameNames(`${petList[0]}_0_2`,{
-            prefix:`${petList[0]}_0_2-`,
+        const petRunFrameLeft = this.phaser.anims.generateFrameNames(`${petId}_${evolId}_2`,{
+            prefix:`${petId}_${evolId}_2-`,
             suffix:"",
             start:Math.floor(MaxFrame.RUN/2)+1,
             end:MaxFrame.RUN,
         });
-        const petNapFrameRight = this.phaser.anims.generateFrameNames(`${petList[0]}_0_3`,{
-            prefix:`${petList[0]}_0_3-`,
+        const petNapFrameRight = this.phaser.anims.generateFrameNames(`${petId}_${evolId}_3`,{
+            prefix:`${petId}_${evolId}_3-`,
             suffix:"",
             start:0,
             end:Math.floor(MaxFrame.NAP/2),
         });
-        const petNapFrameLeft = this.phaser.anims.generateFrameNames(`${petList[0]}_0_3`,{
-            prefix:`${petList[0]}_0_3-`,
+        const petNapFrameLeft = this.phaser.anims.generateFrameNames(`${petId}_${evolId}_3`,{
+            prefix:`${petId}_${evolId}_3-`,
             suffix:"",
             start:Math.floor(MaxFrame.NAP/2)+1,
             end:MaxFrame.NAP,
         });
-        const petSleepFrameRight = this.phaser.anims.generateFrameNames(`${petList[0]}_0_4`,{
-            prefix:`${petList[0]}_0_4-`,
+        const petSleepFrameRight = this.phaser.anims.generateFrameNames(`${petId}_${evolId}_4`,{
+            prefix:`${petId}_${evolId}_4-`,
             suffix:"",
             start:0,
             end:Math.floor(MaxFrame.SLEEP/2),
         });
-        const petSleepFrameLeft = this.phaser.anims.generateFrameNames(`${petList[0]}_0_4`,{
-            prefix:`${petList[0]}_0_4-`,
+        const petSleepFrameLeft = this.phaser.anims.generateFrameNames(`${petId}_${evolId}_4`,{
+            prefix:`${petId}_${evolId}_4-`,
             suffix:"",
             start:Math.floor(MaxFrame.SLEEP/2)+1,
             end:MaxFrame.SLEEP,
         });
-        const petBoastFrameRight = this.phaser.anims.generateFrameNames(`${petList[0]}_0_5`,{
-            prefix:`${petList[0]}_0_5-`,
+        const petBoastFrameRight = this.phaser.anims.generateFrameNames(`${petId}_${evolId}_5`,{
+            prefix:`${petId}_${evolId}_5-`,
             suffix:"",
             start:0,
             end:Math.floor(MaxFrame.BOAST/2),
         });
-        const petBoastFrameLeft = this.phaser.anims.generateFrameNames(`${petList[0]}_0_5`,{
-            prefix:`${petList[0]}_0_5-`,
+        const petBoastFrameLeft = this.phaser.anims.generateFrameNames(`${petId}_${evolId}_5`,{
+            prefix:`${petId}_${evolId}_5-`,
             suffix:"",
             start:Math.floor(MaxFrame.BOAST/2)+1,
             end:MaxFrame.BOAST,
         });
-        const petSneezeFrameRight = this.phaser.anims.generateFrameNames(`${petList[0]}_0_6`,{
-            prefix:`${petList[0]}_0_6-`,
+        const petSneezeFrameRight = this.phaser.anims.generateFrameNames(`${petId}_${evolId}_6`,{
+            prefix:`${petId}_${evolId}_6-`,
             suffix:"",
             start:0,
             end:Math.floor(MaxFrame.SNEEZE/2),
         });
-        const petSneezeFrameLeft = this.phaser.anims.generateFrameNames(`${petList[0]}_0_6`,{
-            prefix:`${petList[0]}_0_6-`,
+        const petSneezeFrameLeft = this.phaser.anims.generateFrameNames(`${petId}_${evolId}_6`,{
+            prefix:`${petId}_${evolId}_6-`,
             suffix:"",
             start:Math.floor(MaxFrame.SNEEZE/2)+1,
             end:MaxFrame.SNEEZE,
         });
         this.createAnimation(
-            `${petList[0]}_0_0_r`,
+            `${petId}_${evolId}_0_r`,
             petStayFrameRight,
             FrameRate.STAY,
             DELAY_RATE
         );
         this.createAnimation(
-            `${petList[0]}_0_0_l`,
+            `${petId}_${evolId}_0_l`,
             petStayFrameLeft,
             FrameRate.STAY,
             DELAY_RATE
         );
         this.createAnimation(
-            `${petList[0]}_0_1_r`,
+            `${petId}_${evolId}_1_r`,
             petWalkFrameRight,
             FrameRate.WALK,
             DELAY_RATE
         );
         this.createAnimation(
-            `${petList[0]}_0_1_l`,
+            `${petId}_${evolId}_1_l`,
             petWalkFrameleft,
             FrameRate.WALK,
             DELAY_RATE
         );
         this.createAnimation(
-            `${petList[0]}_0_2_r`,
+            `${petId}_${evolId}_2_r`,
             petRunFrameRight,
             FrameRate.RUN,
             DELAY_RATE
         );
         this.createAnimation(
-            `${petList[0]}_0_2_l`,
+            `${petId}_${evolId}_2_l`,
             petRunFrameLeft,
             FrameRate.RUN,
             DELAY_RATE
         );
         this.createAnimation(
-            `${petList[0]}_0_3_r`,
+            `${petId}_${evolId}_3_r`,
             petNapFrameRight,
             FrameRate.NAP,
             DELAY_RATE
         );
         this.createAnimation(
-            `${petList[0]}_0_3_l`,
+            `${petId}_${evolId}_3_l`,
             petNapFrameLeft,
             FrameRate.NAP,
             DELAY_RATE
         );
         this.createAnimation(
-            `${petList[0]}_0_4_r`,
+            `${petId}_${evolId}_4_r`,
             petSleepFrameRight,
             FrameRate.SLEEP,
             DELAY_RATE
         );
         this.createAnimation(
-            `${petList[0]}_0_4_l`,
+            `${petId}_${evolId}_4_l`,
             petSleepFrameLeft,
             FrameRate.SLEEP,
             DELAY_RATE
         );
         this.createAnimation(
-            `${petList[0]}_0_5_r`,
+            `${petId}_${evolId}_5_r`,
             petBoastFrameRight,
             FrameRate.BOAST,
             DELAY_RATE
         );
         this.createAnimation(
-            `${petList[0]}_0_5_l`,
+            `${petId}_${evolId}_5_l`,
             petBoastFrameLeft,
             FrameRate.BOAST,
             DELAY_RATE
         );
         this.createAnimation(
-            `${petList[0]}_0_6_r`,
+            `${petId}_${evolId}_6_r`,
             petSneezeFrameRight,
             FrameRate.SNEEZE,
             DELAY_RATE
         );
         this.createAnimation(
-            `${petList[0]}_0_6_l`,
+            `${petId}_${evolId}_6_l`,
             petSneezeFrameLeft,
             FrameRate.SNEEZE,
             DELAY_RATE
