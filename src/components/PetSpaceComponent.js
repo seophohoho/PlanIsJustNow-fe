@@ -6,10 +6,10 @@ import {PetUIScene} from "./pet/scene/PetUIScene"
 import { CANVAS_WIDTH,CANVAS_HEIGHT } from './pet/constants/Game';
 
 function PetSpaceComponent(props) {
-    const {targetPet,evolLevel} = props.targetPetData;
+    const {targetPetData,evolLevel} = props;
 
     useEffect(() => {
-        if(targetPet !== undefined){
+        if(targetPetData !== undefined){
             const config = {
                 type: Phaser.AUTO,
                 width: CANVAS_WIDTH,
@@ -26,7 +26,7 @@ function PetSpaceComponent(props) {
                 parent: 'phaser-container', // 게임을 렌더링할 요소의 ID를 지정합니다.
                 scene: [InitScene,PetSpaceScene,PetUIScene],
             };
-            InitScene.initData = targetPet[0];
+            InitScene.initData = targetPetData[0];
             const game = new Phaser.Game(config);
             return () => {
                 game.destroy(true);
