@@ -6,7 +6,8 @@ import {PetUIScene} from "./pet/scene/PetUIScene"
 import { CANVAS_WIDTH,CANVAS_HEIGHT } from './pet/constants/Game';
 
 function PetSpaceComponent(props) {
-    const targetPet = props.targetPetData;
+    const {targetPet,evolLevel} = props.targetPetData;
+
     useEffect(() => {
         if(targetPet !== undefined){
             const config = {
@@ -31,7 +32,7 @@ function PetSpaceComponent(props) {
                 game.destroy(true);
             };
         }
-    },[]);
+    },[evolLevel]);
 
     return (
         <div id='phaser-container'></div>  

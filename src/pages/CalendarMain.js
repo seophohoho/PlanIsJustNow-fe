@@ -28,6 +28,8 @@ const CalendarMain = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const [evolLevel, setEvolLevel] = useState(0);
+
     useEffect(()=>{ // 펫 도감 정보 초기화
         axios.get(`${serverUrl}/api/user/has-pet`
         ,{withCredentials: true})
@@ -40,6 +42,7 @@ const CalendarMain = () => {
                 const targetPet = response.data.data.filter(item => item.lastChoice === 1);
                 if (targetPet.length > 0) {
                     setTargetPet(targetPet);
+                    setEvolLevel(targetPet.evol);
                     setIsPetInitialized(true);  // targetPet이 초기화되었음을 설정
                 }
             }
@@ -216,14 +219,14 @@ const CalendarMain = () => {
                                         {/*비동기 문제 &&로 해결*/
                                             state.dateSchedule[clickedDate] && state.dateSchedule[clickedDate].map(function(notUse, i){
                                                 return(
-                                                    <Schedule i={i} clickedDate={clickedDate}/>
+                                                    <Schedule i={i} clickedDate={clickedDate} evolLevel={evolLevel} setEvolLevel={setEvolLevel}/>
                                                 )
                                             })
                                         }
                                     </Stack>
                                 </div>
                             </Stack>
-                            {isPetInitialized && <PetSpaceComponent targetPetData={targetPet}/>}
+                            {isPetInitialized && <PetSpaceComponent targetPetData={targetPet} evolLevel={evolLevel}/>}
                         </Stack>
                     </Col>
                 </Row>

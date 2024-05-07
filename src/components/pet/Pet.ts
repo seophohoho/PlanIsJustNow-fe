@@ -21,7 +21,8 @@ export class Pet {
         natureId: null,
         nickname: null,
         currentFriendship: null,
-        maxFriendship: null
+        maxFriendship: null,
+        isRunAway: false,
     }
 
     setData(data: object) {
@@ -30,6 +31,7 @@ export class Pet {
         this.info['nickname'] = data['petName'];
         this.info['currentFriendShip'] = data['currentFriendShip'];
         this.info['maxFriendShip'] = data['maxFriendShip'];
+        this.info['isRunAway'] = this.info['currentFriendShip'] < 0 ? true : false;
     }
 
     getData() {
@@ -57,11 +59,11 @@ export class Pet {
 
     startAnimation(petId:number,evolId:number,lastBehavior: number, currentBehavior: number, behaviorCount: number, direction: string) {
         this.sprites[lastBehavior].anims.stop();
-        this.sprites[lastBehavior].visible = false;
-        this.sprites[currentBehavior].visible = true;
+        this.sprites[lastBehavior].visible = this.info['isRunAway'] ? false : false;
+        this.sprites[currentBehavior].visible = this.info['isRunAway'] ? false : true;
+
         const animationKey = `${petId}_${evolId}_${currentBehavior}_${direction}`;
         this.sprites[currentBehavior].anims.repeat = behaviorCount;
-        console.log(animationKey);
         this.sprites[currentBehavior].anims.play(animationKey);
 
         if(currentBehavior === 0){
