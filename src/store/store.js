@@ -15,8 +15,8 @@ const userData = createSlice({
   name : "userData",
   initialState:{
     "profileUrl": "/thumbnail.png",
-    "nickname": "seophohoho",
-    "userId": "seophohoho@gmail.com"
+    "nickname": "",
+    "userId": ""
   },
   reducers: {
     userDataInit(state, action){
