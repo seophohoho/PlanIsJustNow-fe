@@ -3,9 +3,8 @@ import * as Phaser from 'phaser';
 export const CANVAS_WIDTH = 480;
 export const CANVAS_HEIGHT = 225;
 
-
 export const petList = [
-    'kirby',
+    '0',
 ];
 
 export const petNatureList = {
@@ -51,7 +50,7 @@ export const enum MAX_BEHAVIOR_COUNT{
     SNEEZE=3,
 }
 
-export const BEHAVIOR_SIZE = 7;
+export const BEHAVIOR_SIZE = 6;
 
 export const BEHAVIOR = {
     0:'stay',

@@ -9,36 +9,30 @@ export class InitScene extends Phaser.Scene{
     constructor(){
         super({key:'InitScene'});
         this.im = new ImageManager(this);
-        console.log(InitScene.initData);
     }
 
     private im:ImageManager;
     private pet:Pet;
     
     static initData:any;
-
-    init(){
-        console.log(InitScene.initData);
-    }
+ 
     preload(){
-       this.im.loadPetImage();
+       this.im.loadPetImage(InitScene.initData.petId.petId,InitScene.initData.evol);
        this.im.loadIconImage();
     }
-
     create(){
         this.pet = new Pet();
         const container = this.add.container();
         this.pet.setContainer(container);
-        console.log(InitScene.initData);
         this.pet.setData(InitScene.initData);
 
         for(let i=0;i<=BEHAVIOR_SIZE;i++){
-            this.pet.setSprite(this.im.createSprite(`${petList[this.pet.getData()['petId']]}_${this.pet.setEvolution()}_${i}`));
+            this.pet.setSprite(this.im.createSprite(`${InitScene.initData.petId}_${InitScene.initData.evol}_${i}`));
         }
 
-        this.im.createSpriteAnimation();
+        this.im.createSpriteAnimation(InitScene.initData.petId.petId,InitScene.initData.evol);
 
-        this.scene.launch('PetSpaceScene',{im:this.im,pet:this.pet});
+        this.scene.launch('PetSpaceScene',{im:this.im,pet:this.pet,petId:InitScene.initData.petId.petId,evolId:InitScene.initData.evol});
         this.scene.launch('PetUIScene',{im:this.im});
     }
 }

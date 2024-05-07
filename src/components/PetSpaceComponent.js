@@ -15,7 +15,7 @@ function PetSpaceComponent(props) {
                 height: CANVAS_HEIGHT,
                 render: {
                     antialias: true, // 안티앨리어싱 활성화
-                    pixelArt: false // 픽셀 아트 게임이 아니라면 false로 설정
+                    pixelArt: true // 픽셀 아트 게임이 아니라면 false로 설정
                 },
                 fps:{
                     target: 60,

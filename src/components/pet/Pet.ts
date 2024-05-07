@@ -12,7 +12,7 @@ export class Pet {
     private moveDistanceX:string;
     private moveDistanceY:string;
     private moveDuration:number;
-    private completeDelay:number; 
+    private completeDelay:number;
 
     private info: object = {
         posX: CANVAS_WIDTH / 2,
@@ -21,22 +21,7 @@ export class Pet {
         natureId: null,
         nickname: null,
         currentFriendship: null,
-        maxEvolutionFriendship_0: null,
-        maxEvolutionFriendship_1: null,
-        maxEvolutionFriendship_2: null,
         maxFriendship: null
-    }
-
-    setEvolution(): number {
-        if (this.info['currentFriendShip'] <= this.info['maxEvolutionFriendShip_0']) {
-            return 0;
-        }
-        if (this.info['currentFriendShip'] <= this.info['maxEvolutionFriendShip_1']) {
-            return 1;
-        }
-        if (this.info['currentFriendShip'] <= this.info['maxEvolutionFriendShip_2']) {
-            return 2;
-        }
     }
 
     setData(data: object) {
@@ -44,9 +29,6 @@ export class Pet {
         this.info['natureId'] = data['natureId'].natureId;
         this.info['nickname'] = data['petName'];
         this.info['currentFriendShip'] = data['currentFriendShip'];
-        this.info['maxEvolutionFriendShip_0'] = Math.floor(data['maxFriendShip'] / 3);
-        this.info['maxEvolutionFriendShip_1'] = this.info['maxEvolutionFriendShip_0'] + Math.floor(data['maxFriendShip'] / 3);
-        this.info['maxEvolutionFriendShip_2'] = this.info['maxEvolutionFriendShip_1'] + Math.floor(data['maxFriendShip'] / 3);
         this.info['maxFriendShip'] = data['maxFriendShip'];
     }
 
@@ -73,13 +55,14 @@ export class Pet {
         return this.sprites;
     }
 
-    startAnimation(lastBehavior: number, currentBehavior: number, behaviorCount: number, direction: string) {
+    startAnimation(petId:number,evolId:number,lastBehavior: number, currentBehavior: number, behaviorCount: number, direction: string) {
         this.sprites[lastBehavior].anims.stop();
         this.sprites[lastBehavior].visible = false;
         this.sprites[currentBehavior].visible = true;
-        const animationKey = `${petList[this.info['petId']]}_${this.setEvolution()}_${currentBehavior}_${direction}`;
+        const animationKey = `${petId}_${evolId}_${currentBehavior}_${direction}`;
         this.sprites[currentBehavior].anims.repeat = behaviorCount;
-        this.sprites[currentBehavior].anims.play(animationKey)
+        console.log(animationKey);
+        this.sprites[currentBehavior].anims.play(animationKey);
 
         if(currentBehavior === 0){
             this.moveDistanceX = direction === 'l' ? '-=0' : '+=0';
