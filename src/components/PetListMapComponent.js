@@ -20,11 +20,12 @@ function PetListMapComponent(props){
                             petDataChunk.map((petData, index) => (
                                 <PetCircleImage
                                     key={index}
-                                    petName={petData.species ? petData.species : petData.nickname}
+                                    petName={petData.petId.species ? petData.petId.species : petData.petId.nickname}
                                     isSelected={(chunkIndex * 4 + index) === selectedPetIndex}
-                                    imagePath={petData.path}
+                                    imagePath={petData.petId.path}
                                     onClick={() => eventHandler(chunkIndex, index)}
                                 />
+                                
                             ))
                         }
                     </Stack>
