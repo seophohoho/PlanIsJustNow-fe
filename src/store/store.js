@@ -29,8 +29,8 @@ const userPetData = createSlice({
   name: "userPetData",
   initialState:{
     "data": [
-      {},
-      {},
+      {"petId":{}},
+      {"petId":{}},
     ],
     "userId": {}
   },
