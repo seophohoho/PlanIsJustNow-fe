@@ -36,7 +36,7 @@ const CalendarMain = () => {
         .then((response)=>{
             if(response.data.messageDetail === "nothing"){
                 alert("사용자의 펫이 정해지지 않은 상태입니다!")
-                navigate('/signup-pet')//로그인 상태 + 펫
+                navigate('/signup-pet');//로그인 상태 + 펫
             }else{
                 dispatch(userDataInit(response.data.userInfo));
                 const targetPet = response.data.data.filter(item => item.lastChoice === 1);
@@ -219,14 +219,14 @@ const CalendarMain = () => {
                                         {/*비동기 문제 &&로 해결*/
                                             state.dateSchedule[clickedDate] && state.dateSchedule[clickedDate].map(function(notUse, i){
                                                 return(
-                                                    <Schedule i={i} clickedDate={clickedDate} evolLevel={evolLevel} setEvolLevel={setEvolLevel}/>
+                                                    <Schedule i={i} clickedDate={clickedDate} evolLevel={evolLevel} setEvolLevel={setEvolLevel} targetPet={targetPet} setTargetPet={setTargetPet}/>
                                                 )
                                             })
                                         }
                                     </Stack>
                                 </div>
                             </Stack>
-                            {isPetInitialized && <PetSpaceComponent targetPetData={targetPet} evolLevel={evolLevel}/>}
+                            {isPetInitialized && <PetSpaceComponent targetPetData={targetPet} evolLevel={evolLevel} />}
                         </Stack>
                     </Col>
                 </Row>

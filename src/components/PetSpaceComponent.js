@@ -9,6 +9,8 @@ function PetSpaceComponent(props) {
 
     useEffect(() => {
         if(targetPetData !== undefined){
+            console.log('PetSpaceComponent 진화!!!');
+            console.log(targetPetData);
             const config = {
                 type: Phaser.AUTO,
                 width: CANVAS_WIDTH,
