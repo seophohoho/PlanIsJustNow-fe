@@ -226,6 +226,13 @@ const CalendarMain = () => {
                                     </Stack>
                                 </div>
                             </Stack>
+                            <div className='fc-direction-ltr-2v'>
+                                <p>이름</p>
+                                <p>하트이모지</p>
+                                {/* progress바 이용 여기서 부터 왼쪽 쏠림 */}
+                                <Button>손바닥이모지+쓰다듬기</Button>
+                                <Button>밥이모지+밥주기</Button>
+                            </div>
                             {isPetInitialized && <PetSpaceComponent targetPetData={targetPet} evolLevel={evolLevel}/>}
                         </Stack>
                     </Col>
