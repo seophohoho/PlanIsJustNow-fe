@@ -35,15 +35,20 @@ function PetUI(props){
                         </Stack>
                     </Stack>
                 </Col>
-                <Col sm={5} className="text-center">
-                    <Stack direction="horizontal" className="" gap={2}>
-                        <Button className="ms-auto">
-                            <Icon src="\pet-space\icon-cutlery.png"/>쓰다듬기
-                            <image src="\pet-space\icon-cutlery.png"></image>
-                        </Button>
-                        <Button>
-                            <Icon src="/pet-space/icon-cutlery.png"/>먹이주기
-                        </Button>    
+                <Col sm={3} className="text-center">
+                    <Stack direction="horizontal" gap={2} >
+                        <Stack className="text-center color-violet cursor-pointer">
+                            <IoHandLeftOutline size={30} className="m-auto"/>
+                            <p className="font-size-sm">
+                                쓰다듬기
+                            </p>
+                        </Stack>
+                        <Stack className="text-center color-violet cursor-pointer">
+                            <PiForkKnifeBold size={30} className="m-auto"/>
+                            <p className="font-size-sm">
+                                먹이주기
+                            </p>
+                        </Stack>
                     </Stack>
                 </Col>
             </Row>
