@@ -197,7 +197,7 @@ const CalendarMain = () => {
                     <Col lg="5">
                         <Stack>{/**나중에 줄바꿈 되는 모든 div에 클래스 적용  white-space:nowrap; <-- 스케줄 컴포넌트에 적용해보기 */}
                             <Stack direction='horizontal' className='fc-direction-ltr-2v'>
-                                <div className='h-410 w-max section-schedule'>
+                                <div className='h-400 w-max section-schedule'>
                                     <Stack className=''>
                                         <Row className='section__item-schedule sticky-schedule'>
                                             <Col sm={2} className='m-auto color-darkBlue text-center'>
