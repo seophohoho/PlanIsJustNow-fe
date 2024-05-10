@@ -234,3 +234,11 @@ input[type="number"]::-webkit-inner-spin-button {
 .line-hight-1{
   line-height: 1px !important;
 }
+
+.min-w-80{
+  min-width: 80px;
+}
+
+.ant-progress-text{
+  color: rgb(200, 200, 250) !important;
+}
