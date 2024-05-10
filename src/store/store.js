@@ -41,17 +41,6 @@ const userPetData = createSlice({
   }
 })
 
-const targetPet = createSlice({
-  name : 'targetPet',
-  initialState : {
-  },
-  reducers:{
-    targetPetInit(state, action){
-      return action.payload
-    }
-  }
-})
-
 const petList = createSlice({
   name : 'petList',
   initialState : {
