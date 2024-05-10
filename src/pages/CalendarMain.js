@@ -1,24 +1,23 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useState, useEffect } from 'react';
 import FullCalendar from '@fullcalendar/react'
 import momentPlugin from '@fullcalendar/moment';
 import interactionPlugin from '@fullcalendar/interaction'
 import dayGridPlugin from '@fullcalendar/daygrid'
-import moment from 'moment';
-/*moment 업데이트 중단!!! -> dayjs로 변경 권장 */
-import 'moment/locale/ko'
 import ScheduleAddModal from '../components/ScheduleAddModal';
 import Schedule from '../components/ScheduleComponent';
-import { scheduleInit, addHandleShow, userDataInit } from '../store/store';
+import PetSpaceComponent from '../components/PetSpaceComponent';
+import NavbarComponent from '../components/NavbarComponent';import { scheduleInit, addHandleShow, userDataInit, targetPetInit } from '../store/store';
+import PetUI from '../components/PetUI';
 import { useSelector, useDispatch } from 'react-redux';
 import { Col, Row, Container, Stack, Button } from 'react-bootstrap';
-import PetSpaceComponent from '../components/PetSpaceComponent';
-import NavbarComponent from '../components/NavbarComponent';
+import { useNavigate } from 'react-router-dom';
 import serverUrl from '../serverConfig'
 import axios from 'axios'
-import { targetPetInit } from '../store/store';
-import { useNavigate } from 'react-router-dom';
-import PetUI from '../components/PetUI';
+/*moment 업데이트 중단!!! -> dayjs로 변경 권장 */
+import moment from 'moment';
+import 'moment/locale/ko'
+
 
 const CalendarMain = () => {
     const state = useSelector((state)=> {return state});
