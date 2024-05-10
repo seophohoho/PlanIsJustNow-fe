@@ -196,7 +196,6 @@ const friendList = createSlice({
 })
 
 export const {userDataInit} = userData.actions
-export const {targetPetInit} = targetPet.actions
 export const {petdexInit} = userPetData.actions
 export const {petListInit} = petList.actions
 export const {addHandleClose, addHandleShow} = addShow.actions
