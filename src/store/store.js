@@ -211,7 +211,6 @@ export default configureStore({// 내보낼 state, 작성 문법은 아래와 �
     friendList : friendList.reducer,
     userPetData : userPetData.reducer,
     petList : petList.reducer,
-    targetPet : targetPet.reducer,
     userData: userData.reducer,
   }
 }) 
