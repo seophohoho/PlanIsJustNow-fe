@@ -1,6 +1,8 @@
 import { Button, Col, Row, Stack } from "react-bootstrap";
 import { Avatar, Progress, Icon } from 'antd';
 import { HeartFilled } from "@ant-design/icons";
+import { IoHandLeftOutline } from "react-icons/io5";
+import { PiForkKnifeBold } from "react-icons/pi";
 function PetUI(props){
     const {targetPet} = props
     const percentSign = <span style={{ fontSize: "5px" }}>%</span>;
@@ -10,9 +12,9 @@ function PetUI(props){
     }
 
     return(
-        <div className='fc-direction-ltr-2v'>
+        <div className='pet-ui'>
             <Row>
-                <Col sm={7}>
+                <Col sm={9}>
                     <Stack>
                         <p className="color-darkBlue margin-left">이름 : {"name 바인딩"}</p>
                     </Stack>
