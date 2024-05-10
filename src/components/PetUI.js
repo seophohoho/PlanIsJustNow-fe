@@ -2,7 +2,13 @@ import { Button, Col, Row, Stack } from "react-bootstrap";
 import { Avatar, Progress, Icon } from 'antd';
 import { HeartFilled } from "@ant-design/icons";
 function PetUI(props){
-    const {petName, currentFriendShip, maxFriendShip } = props
+    const {targetPet} = props
+    const percentSign = <span style={{ fontSize: "5px" }}>%</span>;
+
+    function changeToPercent(current, max){
+        return current / max * 100
+    }
+
     return(
         <div className='fc-direction-ltr-2v'>
             <Row>
@@ -13,10 +19,16 @@ function PetUI(props){
                     <Stack direction="horizontal" gap={2}>
                         <HeartFilled className="color-redfull font-size-20 margin-left"/>
                         <Stack>
-                            <p className="font-size-sm color-darkBlue font-weight-800">{"500/5000"}</p>
+                            <p className="font-size-sm color-darkBlue font-weight-800">{targetPet[0].currentFriendShip} / {targetPet[0].maxFriendShip}</p>
                             <Progress 
                             className="max-w-250 line-hight-1"
-                            percent={50} 
+                            format={(percent) => <>{percent}{percentSign}</>}
+                            percent={
+                                changeToPercent(
+                                    targetPet[0].currentFriendShip,
+                                    targetPet[0].maxFriendShip
+                                ).toFixed(1)
+                            }
                             status="active"
                             size={[, 10]}
                             />
