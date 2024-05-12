@@ -25,6 +25,7 @@ const CalendarMain = () => {
     const [clickedDate, setClickedDate] = useState("");
     const [targetPet, setTargetPet] = useState(null);
     const [isPetInitialized, setIsPetInitialized] = useState(false);
+    const [currentFriendShip, setCurrentFriendShip] = useState();
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -42,6 +43,7 @@ const CalendarMain = () => {
                 const targetPet = response.data.data.filter(item => item.lastChoice === 1);
                 if (targetPet.length > 0) {
                     setTargetPet(targetPet);
+                    setCurrentFriendShip(targetPet[0].currentFriendShip)
                     setEvolLevel(targetPet.evol);
                     setIsPetInitialized(true);  // targetPet이 초기화되었음을 설정
                 }
@@ -219,14 +221,20 @@ const CalendarMain = () => {
                                         {/*비동기 문제 &&로 해결*/
                                             state.dateSchedule[clickedDate] && state.dateSchedule[clickedDate].map(function(notUse, i){
                                                 return(
-                                                    <Schedule i={i} clickedDate={clickedDate} evolLevel={evolLevel} setEvolLevel={setEvolLevel}/>
+                                                    <Schedule 
+                                                    i={i} 
+                                                    clickedDate={clickedDate} 
+                                                    evolLevel={evolLevel} 
+                                                    setEvolLevel={setEvolLevel}
+                                                    setTargetPet={setTargetPet}
+                                                    setCurrentFriendShip={setCurrentFriendShip}/>
                                                 )
                                             })
                                         }
                                     </Stack>
                                 </div>
                             </Stack>
-                            {isPetInitialized && <PetUI targetPet={targetPet}/>}
+                            {isPetInitialized && <PetUI targetPet={targetPet} currentFriendShip={currentFriendShip}/>}
                             {isPetInitialized && <PetSpaceComponent targetPetData={targetPet} evolLevel={evolLevel}/>}
                         </Stack>
                     </Col>
