@@ -85,7 +85,7 @@ function Schedule(props){
             dispatch(scheduleComplete({clickedDate: clickedDate, index: i, package: true }))
             setCurrentFriendShip(response.data.data.friendship)
             if(evolLevel != response.data.evolLevel){
-                setEvolLevel(response.data.evolLevel);
+              setEvolLevel(response.data.evolLevel);
             }
         })
         .catch((error) => {
