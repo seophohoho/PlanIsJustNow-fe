@@ -82,11 +82,11 @@ function Schedule(props){
         {idx : state.dateSchedule[clickedDate][i].idx},
         {withCredentials: true})
         .then((response)=>{
-          dispatch(scheduleComplete({clickedDate: clickedDate, index: i, package: true }))
-          setCurrentFriendShip(response.data.data.friendship)
-          if(evolLevel != response.data.evolLevel){
-            setEvolLevel(response.data.evolLevel);
-          }
+            dispatch(scheduleComplete({clickedDate: clickedDate, index: i, package: true }))
+            setCurrentFriendShip(response.data.data.friendship)
+            if(evolLevel != response.data.evolLevel){
+              setEvolLevel(response.data.evolLevel);
+            }
         })
         .catch((error) => {
             if(error.response){ // 런타임 에러방지 error.response가 있는지 먼저 확인함
