@@ -219,14 +219,21 @@ const CalendarMain = () => {
                                         {/*비동기 문제 &&로 해결*/
                                             state.dateSchedule[clickedDate] && state.dateSchedule[clickedDate].map(function(notUse, i){
                                                 return(
-                                                    <Schedule i={i} clickedDate={clickedDate} evolLevel={evolLevel} setEvolLevel={setEvolLevel} targetPet={targetPet} setTargetPet={setTargetPet}/>
+                                                    <Schedule 
+                                                    i={i} 
+                                                    clickedDate={clickedDate} 
+                                                    evolLevel={evolLevel} 
+                                                    setEvolLevel={setEvolLevel}
+                                                    setTargetPet={setTargetPet}
+                                                    setCurrentFriendShip={setCurrentFriendShip}/>
                                                 )
                                             })
                                         }
                                     </Stack>
                                 </div>
                             </Stack>
-                            {isPetInitialized && <PetSpaceComponent targetPetData={targetPet} evolLevel={evolLevel} />}
+                            {isPetInitialized && <PetUI targetPet={targetPet} currentFriendShip={currentFriendShip}/>}
+                            {isPetInitialized && <PetSpaceComponent targetPetData={targetPet} evolLevel={evolLevel}/>}
                         </Stack>
                     </Col>
                 </Row>
