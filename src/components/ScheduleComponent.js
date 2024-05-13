@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 import dayjs from 'dayjs';
 
 function Schedule(props){
-    const {i, clickedDate, evolLevel, setEvolLevel,targetPet, setTargetPet} = props
+    const {i, clickedDate, evolLevel, setEvolLevel, setCurrentFriendShip} = props
     const state = useSelector((state)=> state)/*자주 쓰는거 변수로 줄여야겠음 --> root로 가져오지마셈 나중에 수정*/
     const ScheduleState = state.dateSchedule[clickedDate][i];
     const dispatch = useDispatch();
@@ -82,15 +82,11 @@ function Schedule(props){
         {idx : state.dateSchedule[clickedDate][i].idx},
         {withCredentials: true})
         .then((response)=>{
-          dispatch(scheduleComplete({clickedDate: clickedDate, index: i, package: true }));
-          console.log(response.data);
-          console.log(targetPet[0]);
-          targetPet[0].currentFriendShip = response.data.data.friendship;
-          targetPet[0].evol = response.data.data.evol;
-          if(evolLevel != response.data.data.evol){
-            setTargetPet(targetPet);
-            setEvolLevel(response.data.data.evol);
-          }
+            dispatch(scheduleComplete({clickedDate: clickedDate, index: i, package: true }))
+            setCurrentFriendShip(response.data.data.friendship)
+            if(evolLevel != response.data.evolLevel){
+                setEvolLevel(response.data.evolLevel);
+            }
         })
         .catch((error) => {
             if(error.response){ // 런타임 에러방지 error.response가 있는지 먼저 확인함
