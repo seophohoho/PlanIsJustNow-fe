@@ -188,3 +188,33 @@ span{
 .Col-Max-width-195{
     max-width: 195px;
 }
+
+.max-w-250{
+    max-width: 250px;
+}
+.font-size-sm{
+    font-size: 10px;
+}
+
+.color-redfull{
+    color: #f5222d;
+}
+
+.ant-progress-text{
+    color: rgb(90, 100, 255);
+    font-weight: 800;
+}
+
+.margin-left-50{
+    margin-left: 38px;
+}
+
+.font-size-20{
+    font-size: 25px;
+}
+
+.pet-ui{
+    border: 3px solid rgb(90, 100, 255) !important;
+    border-radius: 10px 10px 0px 0px !important;
+    margin-top: 20px;
+}

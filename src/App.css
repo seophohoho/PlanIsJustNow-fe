@@ -1,3 +1,6 @@
+p {
+  white-space: nowrap;
+}
 .App {
   display: flex;
   width: auto;
@@ -157,8 +160,8 @@ input[type="number"]::-webkit-inner-spin-button {
   height: 200px;
 }
 
-.h-410{
-  height: 410px;
+.h-400{
+  height: 400px;
 }
 
 .h-600{
@@ -226,4 +229,16 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .font-weight-800{
   font-weight: 800 !important;
+}
+
+.line-hight-1{
+  line-height: 1px !important;
+}
+
+.min-w-80{
+  min-width: 80px;
+}
+
+.ant-progress-text{
+  color: rgb(200, 200, 250) !important;
 }

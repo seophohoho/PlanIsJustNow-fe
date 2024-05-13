@@ -1,23 +1,23 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useState, useEffect } from 'react';
 import FullCalendar from '@fullcalendar/react'
 import momentPlugin from '@fullcalendar/moment';
 import interactionPlugin from '@fullcalendar/interaction'
 import dayGridPlugin from '@fullcalendar/daygrid'
-import moment from 'moment';
-/*moment 업데이트 중단!!! -> dayjs로 변경 권장 */
-import 'moment/locale/ko'
 import ScheduleAddModal from '../components/ScheduleAddModal';
 import Schedule from '../components/ScheduleComponent';
-import { scheduleInit, addHandleShow, userDataInit } from '../store/store';
+import PetSpaceComponent from '../components/PetSpaceComponent';
+import NavbarComponent from '../components/NavbarComponent';import { scheduleInit, addHandleShow, userDataInit, targetPetInit } from '../store/store';
+import PetUI from '../components/PetUI';
 import { useSelector, useDispatch } from 'react-redux';
 import { Col, Row, Container, Stack, Button } from 'react-bootstrap';
-import PetSpaceComponent from '../components/PetSpaceComponent';
-import NavbarComponent from '../components/NavbarComponent';
+import { useNavigate } from 'react-router-dom';
 import serverUrl from '../serverConfig'
 import axios from 'axios'
-import { targetPetInit } from '../store/store';
-import { useNavigate } from 'react-router-dom';
+/*moment 업데이트 중단!!! -> dayjs로 변경 권장 */
+import moment from 'moment';
+import 'moment/locale/ko'
+
 
 const CalendarMain = () => {
     const state = useSelector((state)=> {return state});
@@ -25,6 +25,7 @@ const CalendarMain = () => {
     const [clickedDate, setClickedDate] = useState("");
     const [targetPet, setTargetPet] = useState(null);
     const [isPetInitialized, setIsPetInitialized] = useState(false);
+    const [currentFriendShip, setCurrentFriendShip] = useState();
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -42,6 +43,7 @@ const CalendarMain = () => {
                 const targetPet = response.data.data.filter(item => item.lastChoice === 1);
                 if (targetPet.length > 0) {
                     setTargetPet(targetPet);
+                    setCurrentFriendShip(targetPet[0].currentFriendShip)
                     setEvolLevel(targetPet.evol);
                     setIsPetInitialized(true);  // targetPet이 초기화되었음을 설정
                 }
@@ -197,7 +199,7 @@ const CalendarMain = () => {
                     <Col lg="5">
                         <Stack>{/**나중에 줄바꿈 되는 모든 div에 클래스 적용  white-space:nowrap; <-- 스케줄 컴포넌트에 적용해보기 */}
                             <Stack direction='horizontal' className='fc-direction-ltr-2v'>
-                                <div className='h-410 w-max section-schedule'>
+                                <div className='h-400 w-max section-schedule'>
                                     <Stack className=''>
                                         <Row className='section__item-schedule sticky-schedule'>
                                             <Col sm={2} className='m-auto color-darkBlue text-center'>
