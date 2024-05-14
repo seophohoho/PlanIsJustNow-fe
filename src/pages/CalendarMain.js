@@ -18,7 +18,6 @@ import axios from 'axios'
 import moment from 'moment';
 import 'moment/locale/ko'
 
-
 const CalendarMain = () => {
     const state = useSelector((state)=> {return state});
     const userDataState = useSelector((state)=> {return state.userData});
@@ -26,10 +25,20 @@ const CalendarMain = () => {
     const [targetPet, setTargetPet] = useState(null);
     const [isPetInitialized, setIsPetInitialized] = useState(false);
     const [currentFriendShip, setCurrentFriendShip] = useState();
+    const [isPositiveFriendShip, setIsPositiveFriendShip] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const [evolLevel, setEvolLevel] = useState(0);
+
+    useEffect(()=>{
+        if(targetPet != null && currentFriendShip !=null){
+            if(targetPet[0].currentFriendShip < 0 && currentFriendShip > 0){
+                targetPet[0].currentFriendShip = currentFriendShip;
+                setIsPositiveFriendShip(true);
+            }
+        }
+    },[currentFriendShip]);
 
     useEffect(()=>{ // 펫 도감 정보 초기화
         axios.get(`${serverUrl}/api/user/has-pet`
@@ -235,7 +244,7 @@ const CalendarMain = () => {
                                 </div>
                             </Stack>
                             {isPetInitialized && <PetUI targetPet={targetPet} currentFriendShip={currentFriendShip} setCurrentFriendShip={setCurrentFriendShip}/>}
-                            {isPetInitialized && <PetSpaceComponent targetPetData={targetPet} evolLevel={evolLevel}/>}
+                            {isPetInitialized && <PetSpaceComponent targetPetData={targetPet} evolLevel={evolLevel} isPositiveFriendShip={isPositiveFriendShip} currentFriendShip={currentFriendShip}/>}
                         </Stack>
                     </Col>
                 </Row>
