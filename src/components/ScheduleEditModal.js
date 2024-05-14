@@ -119,6 +119,7 @@ function ScheduleEditModal(props){
                   className="schedule-title m-left-13p"
                   defaultValue={ state.dateSchedule[clickedDate][i].title }
                   onChange={titleHandler}
+                  autoComplete="off"
               />{/*글자 50자 제한 필요*/}
             </Form.Group>
 
@@ -132,18 +133,20 @@ function ScheduleEditModal(props){
                   defaultOpenValue={dayjs('HH:mm')}
                   defaultValue={dayjs(state.dateSchedule[clickedDate][i].time,'HH:mm')}
                   format="HH:mm"
+                  allowClear={false}
                   />
             </Form.Group>
 
             <Form.Group className="mb-4">
               <Form.Label htmlFor="ControlInput2" className="color-darkBlue">날짜</Form.Label>
               <DatePicker 
-                  className="m-left-59p"
+                  className="m-left-65p"
                   id="ControlInput2"
                   inputReadOnly={true} 
                   onChange={DatePickerHandler}
                   defaultOpenValue={dayjs('YYYY-MM-DD')}
                   defaultValue={[dayjs(clickedDate, 'YYYY-MM-DD')]}
+                  allowClear={false}
                   />
             </Form.Group>
 
