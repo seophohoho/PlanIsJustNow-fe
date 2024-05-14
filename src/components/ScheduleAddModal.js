@@ -17,7 +17,7 @@ function ScheduleAddModal(props){
   const navigate = useNavigate();
   const { clickedDate } = props;
   const currentTime = moment().format('HH:mm');
-  
+
   /*초기화 상태*/
   const tempSchedule = {
     clickedDate: clickedDate,
@@ -101,11 +101,10 @@ function ScheduleAddModal(props){
                   일정
               </Form.Label>
               <Form.Control 
-                  type='input'
-                  className="schedule-title m-left-13p"
-                  defaultValue=""
-                  onChange={titleHandler}
-                  maxLength={50}/*글자 50자 제한*/
+                autoComplete="off"
+                className="schedule-title m-left-13p"
+                onChange={titleHandler}
+                maxLength={50}/*글자 50자 제한*/
               />
             </Form.Group>
             
@@ -119,6 +118,7 @@ function ScheduleAddModal(props){
                   defaultOpenValue={dayjs('HH:mm')}
                   defaultValue={dayjs(dayjs(),'HH:mm')}
                   format="HH:mm"
+                  allowClear={false}
                   />
             </Form.Group>
 

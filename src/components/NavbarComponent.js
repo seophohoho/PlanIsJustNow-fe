@@ -18,7 +18,6 @@ const NavbarComponent = (props) => {
                 </Navbar.Brand>
                 <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">{/*추후 아이콘 추가*/}
-                    <Nav.Link onClick={()=>{navigate("/user-page")}}>MyPage</Nav.Link>
                     <Nav.Link onClick={()=>{navigate("/Friend-board")}}>Friends</Nav.Link>
                     <Nav.Link onClick={()=>{navigate("/petdex")}}>Petdex</Nav.Link>
                 </Nav>
