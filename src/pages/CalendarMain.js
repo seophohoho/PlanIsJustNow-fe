@@ -234,7 +234,7 @@ const CalendarMain = () => {
                                     </Stack>
                                 </div>
                             </Stack>
-                            {isPetInitialized && <PetUI targetPet={targetPet} currentFriendShip={currentFriendShip}/>}
+                            {isPetInitialized && <PetUI targetPet={targetPet} currentFriendShip={currentFriendShip} setCurrentFriendShip={setCurrentFriendShip}/>}
                             {isPetInitialized && <PetSpaceComponent targetPetData={targetPet} evolLevel={evolLevel}/>}
                         </Stack>
                     </Col>
