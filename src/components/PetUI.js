@@ -15,12 +15,18 @@ function PetUI(props){
     const navigate = useNavigate()
 
     const [open, setOpen] = useState(false);
-
+    //popup 제어를 localStorage에 저장 
+    //가출 시 알림을 최초 1회 표기 후 hover에만 작동하도록 설정
     useEffect(() => {
         const isPopoverShown = localStorage.getItem('isPopoverShown');
         if (!isPopoverShown && currentFriendShip < 0) {
             setOpen(true);
             localStorage.setItem('isPopoverShown', 'true');
+        } 
+        else if(!isPopoverShown && currentFriendShip <= 0){
+            //호감도가 양수 진입시 다시 알림이 뜰 수 있도록 초기화
+            setOpen(false);
+            localStorage.setItem('isPopoverShown', 'false');
         }
     }, [currentFriendShip]);
 
