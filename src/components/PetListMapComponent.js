@@ -22,7 +22,7 @@ function PetListMapComponent(props){
                                     key={index}
                                     petName={petData.petId.species ? petData.petId.species : petData.petId.nickname}
                                     isSelected={(chunkIndex * 4 + index) === selectedPetIndex}
-                                    imagePath={petData.petId.path}
+                                    imagePath={petData.petId.path ? petData.petId.path : '/thumbnail.png'}
                                     onClick={() => eventHandler(chunkIndex, index)}
                                 />
                                 
