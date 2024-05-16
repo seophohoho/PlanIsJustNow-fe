@@ -4,8 +4,9 @@ import '../App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import InputComponent from '../components/SignUpComponents.js'; 
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Form, Col, Row, Button, Container, Navbar, Image } from 'react-bootstrap';
+import { PiDogFill } from 'react-icons/pi';
 
 
 function Signup() {
@@ -45,9 +46,9 @@ function Signup() {
       <header>
        <Navbar expand="md" className="bg-body-tertiary">
         <Container>
-          <Navbar.Brand href="#">
-            <img src='/logo192.png'width={"50px"}></img>
-            <h1 style={{display: "inline"}} className=''>PETTODO</h1>
+          <Navbar.Brand as={Link} to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: 'inherit' }}>
+            <PiDogFill size={60} />
+            <h1 style={{ display: 'inline', marginLeft: '10px' }}>PETTODO</h1>
           </Navbar.Brand>
         </Container>
         </Navbar>

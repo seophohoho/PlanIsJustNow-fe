@@ -7,7 +7,8 @@ import PetListMapComponent from '../components/PetListMapComponent.js';
 import InputFieldComponent from '../components/InputFieldComponent.js';
 import { petListInit } from '../store/store.js';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import { PiDogFill } from 'react-icons/pi';
 
 //Todo 모든 post 버튼에 로딩 css 로직 추가
 function SignUpPet() {
@@ -144,10 +145,10 @@ function SignUpPet() {
             <header>
                 <Navbar expand="md" className="bg-body-tertiary">
                     <Container>
-                        <Navbar.Brand href="/calendar">
-                            <img src='/logo192.png'width={"50px"}></img>
-                            <h1 style={{display: "inline"}} className=''>PETTODO</h1>
-                        </Navbar.Brand>
+                    <Navbar.Brand as={Link} to="/calendar" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: 'inherit' }}>
+                        <PiDogFill size={60} />
+                        <h1 style={{ display: 'inline', marginLeft: '10px' }}>PETTODO</h1>
+                    </Navbar.Brand>
                     </Container>
                 </Navbar>
             </header>
