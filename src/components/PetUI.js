@@ -1,16 +1,38 @@
 import { Button, Col, Row, Stack } from "react-bootstrap";
-import { Avatar, Progress, Icon } from 'antd';
+import { Progress, Popover } from 'antd';
 import { HeartFilled } from "@ant-design/icons";
 import { IoHandLeftOutline } from "react-icons/io5";
 import { PiForkKnifeBold } from "react-icons/pi";
+import { FaHeartBroken } from "react-icons/fa";
 import axios from "axios";
 import serverUrl from "../serverConfig";
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 function PetUI(props){
     const {targetPet, currentFriendShip, setCurrentFriendShip} = props
     const percentSign = <span style={{ fontSize: "10px" }}>%</span>;
     const navigate = useNavigate()
+
+    const [open, setOpen] = useState(false);
+
+    useEffect(() => {
+        const isPopoverShown = localStorage.getItem('isPopoverShown');
+        if (!isPopoverShown && currentFriendShip < 0) {
+            setOpen(true);
+            localStorage.setItem('isPopoverShown', 'true');
+        }
+    }, [currentFriendShip]);
+
+    const hide = () => {
+        setOpen(false);
+    };
+
+    const handleOpenChange = (newOpen) => {
+        if (localStorage.getItem('isPopoverShown') === 'true') {
+            setOpen(newOpen);
+        }
+    };
 
     function changeToPercent(current, max){
         return current / max * 100
@@ -55,7 +77,23 @@ function PetUI(props){
                         <p className="color-darkBlue margin-left">이름 : {targetPet[0].nickname}</p>
                     </Stack>
                     <Stack direction="horizontal" gap={2}>
-                        <HeartFilled className="color-redfull font-size-20 margin-left"/>
+                        {/* local storage 이용 최초 1회 후에는 hovering으로 tooltip 표시 state 상태에 broken heart icon으로 변경*/}
+                        
+                            {//호감도가 음수일때 icon 변경, 경고 알림 출력
+                            currentFriendShip < 0 ? 
+                            <Popover
+                                content={<a onClick={hide} className="color-darkBlue">닫기</a>}
+                                title="경고: 당신의 행동에 실망한 펫이 가출했습니다!"
+                                trigger="hover"
+                                open={open}
+                                onOpenChange={handleOpenChange}
+                            >
+                                <FaHeartBroken className="color-redfull font-size-20 margin-left"/>  
+                            </Popover>
+                            :<HeartFilled className="color-redfull font-size-20 margin-left"/>
+                               
+                            }
+                        
                         <Stack>
                             <p className="font-size-sm color-darkBlue font-weight-800">{currentFriendShip} / {targetPet[0].maxFriendShip}</p>
                             <Progress 
@@ -96,4 +134,4 @@ function PetUI(props){
     );
 }
 
-export default PetUI
+export default PetUI;
