@@ -5,8 +5,10 @@ import 'bootstrap/dist/css/bootstrap.css';
 import InputComponent from '../components/SignUpComponents.js'; 
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Form, Col, Row, Button, Container, Navbar, Image } from 'react-bootstrap';
+import { Form, Col, Row, Button, Container, Navbar, Image, Stack } from 'react-bootstrap';
 import { PiDogFill } from 'react-icons/pi';
+import { Avatar } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
 
 
 function Signup() {
@@ -92,17 +94,19 @@ function Signup() {
             />
             }
             <Container>
-              <Row>
-                <Col>
+              <Row className='flex-item-center'>
+                <Col sm={3}>
                   <p className='color-darkBlue float-display'>프로필 사진</p>
                 </Col>
-                <Col className='center' sm={7}>
-                  <Image src="/logo192.png" roundedCircle className='input-bgSet float-display w-25 '/>{/**state로 저장된 선택된 파일을 보여줌 */}
-                  <div className=''>
+                <Col sm={2}>
+                  <Avatar size={72} icon={<UserOutlined />} />
+                </Col>
+                <Col sm={7}>
+                  <Stack>
                     <p className='color-violet impo-margin-zero'>100px*100px 권장</p>
                     <p className='color-violet'>PNG, JPNG, JPEG가 지원됩니다.</p>
                     <Form.Control type="file" accept='.png, .jpng, .jpeg' className='form-Control'/>{/**파일 선택한 파일 서버로 post후 서버에서 해당 id 이미지 받아오느 걸로 */}
-                  </div>
+                  </Stack>
                 </Col>
               </Row>
               <div className='center'>
