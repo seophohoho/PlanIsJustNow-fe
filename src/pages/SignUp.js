@@ -51,8 +51,39 @@ function Signup() {
     const file = event.target.files[0];
     if (file) {
       setSelectedFile(file);
-      setPreviewUrl(URL.createObjectURL(file));
+      setPreviewUrl(URL.createObjectURL(file)); // Blob 객체의 임시 URL 생성
     }
+  };
+
+  const handleSubmit = async () => {
+    setIsNextButtonDisabled(true);
+
+    const formData = new FormData();
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("nickname", nickname);
+    if (selectedFile) {
+      formData.append("profileImage", selectedFile);
+    }
+    //response를 따로 빼서 try catch로 하는 깔끔한 방법 있던데 고려해보자
+    await axios.post(`${serverUrl}/api/account/signup`, formData, {
+      headers: {"Content-Type": "multipart/form-data"},
+      withCredentials: true
+    })
+    .then((response)=>{
+      if (response.status === 200) {
+        alert("회원가입이 완료되었습니다!!");
+        navigate('/');
+      } else if (response.status === 409) {
+        alert("이미 사용중인 이메일 계정입니다!");
+        setIsNextButtonDisabled(false);
+      }
+    })
+    .catch((error=>{
+      console.error(error);
+      alert("서버에 문제가 발생했습니다. 나중에 잠시 후 다시 시도해주세요");
+      setIsNextButtonDisabled(false);
+    }))
   };
 
   return (
@@ -130,29 +161,8 @@ function Signup() {
               </Row>
               <div className='center'>
                 <Button as="input" type="button" value="다음" disabled={isNextButtonDisabled} 
-                onClick={()=>{
-                    setIsNextButtonDisabled(true);
-                    axios.post(`${serverUrl}/api/account/signup`, {
-                      "email": email,
-                      "password": password,
-                      "nickname": nickname,
-                    })
-                      .then((response) => {
-                        if (response.status === 200) {
-                          alert("회원가입이 완료되었습니다!!");
-                          navigate('/');
-                        }
-                        if (response.status === 409){
-                          alert("이미 사용중인 이메일 계정입니다!");
-                          setIsNextButtonDisabled(false);
-                        }
-                      })
-                      .catch((error) => {
-                        console.error(error);
-                        alert("서버에 문제가 발생했습니다. 나중에 잠시 후 다시 시도해주세요");
-                        setIsNextButtonDisabled(false);
-                      });
-                }}/>
+                onClick={handleSubmit}
+                />
               </div>
             </Container>
           </Form>
