@@ -10,11 +10,12 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 function PetUI(props){
-    const {targetPet, currentFriendShip, setCurrentFriendShip} = props
+    const {targetPet, currentFriendShip, setCurrentFriendShip, isPositiveFriendShip} = props
     const percentSign = <span style={{ fontSize: "10px" }}>%</span>;
     const navigate = useNavigate()
 
     const [open, setOpen] = useState(false);
+    const [isPositiveFriendShipOpen, setIsPositiveFriendShipOpen] = useState(true);
     //popup 제어를 localStorage에 저장 
     //가출 시 알림을 최초 1회 표기 후 hover에만 작동하도록 설정
     useEffect(() => {
@@ -32,6 +33,10 @@ function PetUI(props){
 
     const hide = () => {
         setOpen(false);
+    };
+
+    const positiveHide = () => {
+        setIsPositiveFriendShipOpen(false);
     };
 
     const handleOpenChange = (newOpen) => {
@@ -91,12 +96,22 @@ function PetUI(props){
                                 content={<a onClick={hide} className="color-darkBlue">닫기</a>}
                                 title="경고: 당신의 행동에 실망한 펫이 가출했습니다!"
                                 trigger="hover"
+                                placement="bottomLeft"
                                 open={open}
                                 onOpenChange={handleOpenChange}
                             >
                                 <FaHeartBroken className="color-redfull font-size-20 margin-left"/>  
                             </Popover>
-                            :<HeartFilled className="color-redfull font-size-20 margin-left"/>
+                            : isPositiveFriendShip ? 
+                            <Popover
+                            content={<a onClick={positiveHide} className="color-darkBlue">닫기</a>}
+                            title="펫 복귀"
+                            placement="bottomLeft"
+                            open={isPositiveFriendShipOpen}
+                            >
+                                <HeartFilled className="color-redfull font-size-20 margin-left"/>
+                            </Popover> 
+                            :<HeartFilled className="color-redfull font-size-20 margin-left"/> 
                                
                             }
                         
