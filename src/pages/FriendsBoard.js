@@ -3,7 +3,8 @@ import {Col, Row, Stack, Button, Form} from "react-bootstrap"
 import { useSelector, useDispatch } from "react-redux"
 import { Tabs, Avatar } from 'antd';
 import { TeamOutlined, UserAddOutlined, UserOutlined } from '@ant-design/icons';
-import { friendDelete, friendRefuse, friendAccept, userDataInit } from "../store/store";
+import { friendDelete, initFriendList, initFriendRequest, userDataInit } from "../store/store";
+import handleError from "../function/errorHandler.js";
 import NavbarComponent from "../components/NavbarComponent";
 import TabChildrenComponent from "../components/TabChildrenConponent";
 import axios from "axios";
@@ -11,10 +12,10 @@ import serverUrl from "../serverConfig.js";
 import { useNavigate } from "react-router-dom";
 
 function FriendBoard() {
-  const state = useSelector((state)=>state.friendList)
+  const stateFriendList = useSelector((state)=>state.friendList)
+  const stateFriendRequest = useSelector((state)=>state.friendsRequest)
   const userDataState = useSelector(state => state.userData)
   const dispatch = useDispatch()
-
   const navigate = useNavigate()
 
   useEffect(()=>{
@@ -74,40 +75,44 @@ function FriendBoard() {
     <body className="beak-point">
     <Tabs
       className="m-auto text-center"
-      defaultActiveKey="0"/*tab 최초 시작지점*/
+      defaultActiveKey="0"
       items={[TeamOutlined, UserAddOutlined].map((Icon, i) => {
         const id = String(i + 1);
-        const tabTitle = ["친구목록", "친구추가"]
+        const tabTitle = ["친구목록", "친구추가"];
+        const list = i === 0 ? stateFriendList : stateFriendRequest;
         return {
           key: id,
           label: tabTitle[i],
-          children: 
-          <Stack gap={3}>{/*redux state와 i에 따라 map*/}
-            {i === 0 ? 
-              <Form.Group as={Row} className="mb-4">
-                      <Col sm={3}></Col>
-                      <Col className='mb-3 m-auto' sm={3}>{/** input칸 */}
-                      <Form.Control
-                        type="eamil" 
-                        className='form-Control'
-                        placeholder='Friend@email.com'
-                        onChange={(e)=>{console.log(e.target.value)}
-                      }/>
-                      </Col>
-                      <Col sm="auto">
-                        <Button onClick={(e)=>{}}>친구요청</Button>
-                      </Col>
-                      <Col sm={3}></Col>
-              </Form.Group>
-            : ""}
-            {//tab1,2에 따라 다르게 목록을 출력
-                state[i === 0 ? "userList" : "userRequest"].map((user, index) => {
-                  return (
-                    <TabChildrenComponent key={index} i={i} index={index} user={user} list={i === 0 ? "userList" : "userRequest"}/>
-                  );
-                })
-            }
-          </Stack>,
+          children: (
+            <Stack gap={3}>
+              {i === 0 && (
+                <Form.Group as={Row} className="mb-4">
+                  <Col sm={3}></Col>
+                  <Col className="mb-3 m-auto" sm={3}>
+                    <Form.Control
+                      type="email"
+                      className="form-Control"
+                      placeholder="Friend@email.com"
+                      onChange={(e) => {
+                        console.log(e.target.value);
+                      }}
+                    />
+                  </Col>
+                  <Col sm="auto">
+                    <Button onClick={friendRequestHandler}>친구요청</Button>
+                  </Col>
+                  <Col sm={3}></Col>
+                </Form.Group>
+              )}
+              {list && list.length > 0 ? (
+                list.map((user, index) => (
+                  <TabChildrenComponent key={index} i={i} index={index} user={user} />
+                ))
+              ) : (
+                <div className="color-violet m-top-5em">조용합니다... 너무조용해요</div>
+              )}
+            </Stack>
+          ),
           icon: <Icon />,
         };
       })}
