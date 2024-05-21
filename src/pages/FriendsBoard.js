@@ -18,40 +18,53 @@ function FriendBoard() {
   const navigate = useNavigate()
 
   useEffect(()=>{
-    axios.get(`${serverUrl}/api/user/has-pet`
-    ,{withCredentials: true})
-    .then((response)=>{
-        if(response.data.messageDetail === "nothing"){
-          alert("사용자의 펫이 정해지지 않은 상태입니다!")
-          navigate('/signup-pet')//로그인 상태 + 펫
+    const fetchData = async () => {
+      try {
+        const friendListResponse = await axios.get(`${serverUrl}/api/friend/select`, { withCredentials: true });
+        if (friendListResponse.status === 200) {
+          dispatch(initFriendList(friendListResponse.data.data));
         }
-        else{
-          dispatch(userDataInit(response.data.userInfo))
+
+        const friendRequestResponse = await axios.get(`${serverUrl}/api/friend/request-select`, { withCredentials: true });
+        if (friendRequestResponse.status === 200) {
+          dispatch(initFriendRequest(friendRequestResponse.data.data));
         }
-    })
-    .catch((error) => {
-      if(error.response){ // 런타임 에러방지 error.response가 있는지 먼저 확인함
-          if(error.response.status === 401) { // 토큰 만료 리다이렉트
-              console.log("Error status: " + error.response.status);
-              alert("로그인을 다시해주세요!");
-              navigate('/');
-          }
-          else{
-            alert("서버와 연결에 실패했습니다.");
-          }
+
+        const userResponse = await axios.get(`${serverUrl}/api/user/has-pet`, { withCredentials: true });
+        if (userResponse.data.messageDetail === "nothing") {
+          alert("사용자의 펫이 정해지지 않은 상태입니다!");
+          navigate('/signup-pet'); // 로그인 상태 + 펫
+        } else {
+          dispatch(userDataInit(userResponse.data.userInfo));
+        }
+
+
+      } catch (error) {
+        handleError(error, navigate)
       }
-      else{
-          console.error("Error: ", error);
-          if(error.message) {
-            alert("에러: " + error.message);
-          }
-          else{
-            alert("알 수 없는 에러가 발생했습니다.");
-          }
-      }
-    })
+    };
+
+    fetchData();
   },[])// ignore Warnning: Check token validity on mount(redirect)
 
+  function friendRequestHandler(){
+    axios.post(`${serverUrl}/api/friend/request`,
+    {
+        "email" : "seop0937@gmail.com"
+    },
+    {withCredentials: true})
+    .then((response)=> {
+      if(response.status === 200){
+        alert("친구요청이 완료되었습니다!")
+      }
+      else if(response.status === 111){
+        console.log("존재하지 않는 계정")
+      }
+    })
+    .catch((error) => {
+      handleError(error, navigate)
+  })
+  }
 
   return (
     <>
