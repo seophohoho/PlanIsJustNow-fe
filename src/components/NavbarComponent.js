@@ -8,7 +8,6 @@ import { PiDogFill } from 'react-icons/pi';
 const NavbarComponent = (props) => {
     const { userData } = props
     const navigate = useNavigate()
-    console.log(userData)
 
     return(
         <Navbar expand="md" className="bg-body-tertiary">{/**추후 Navbar도 컴포넌트화 해서 다른페이지에 적용시키기 */}
