@@ -25,7 +25,11 @@ const NavbarComponent = (props) => {
                 </Navbar.Collapse>
                 <Navbar.Text>
                     <Stack direction="horizontal" gap={2}>
-                        <Avatar className='' size={64} src={userData.profileUrl} />
+                        <Avatar 
+                        size={64}
+                        src={userData.profileUrl}
+                        icon={<UserOutlined/>}
+                        />
                         <Stack gap={0} className='m-auto'>
                             <Navbar.Text className='color-darkBlue '>
                                 {userData.nickname}
