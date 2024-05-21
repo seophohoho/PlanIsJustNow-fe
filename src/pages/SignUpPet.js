@@ -9,6 +9,7 @@ import { petListInit } from '../store/store.js';
 import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { PiDogFill } from 'react-icons/pi';
+import handleError from '../function/errorHandler.js';
 
 //Todo 모든 post 버튼에 로딩 css 로직 추가
 function SignUpPet() {
@@ -33,36 +34,13 @@ function SignUpPet() {
         {withCredentials: true})
         .then(response=>{
             if(response.status === 200){
-                console.log(response)
                 dispatch(petListInit(response.data))
                 setSelectedPetIndex(0)
             }
-            
         })
         .catch((error) => {
-            console.log(error)
-
-            if(error.response){ // 런타임 에러방지 error.response가 있는지 먼저 확인함
-                if(error.response.status === 401) { // 토큰 만료 리다이렉트
-                    console.log("Error status: " + error.response.status);
-                    alert("로그인을 다시해주세요!");
-                    navigate('/');
-                }
-                else{
-                  alert("서버와 연결에 실패했습니다.");
-                }
-            }
-            else{
-                console.error("Error: ", error);
-                if(error.message) {
-                  alert("에러: " + error.message);
-                }
-                else{
-                  alert("알 수 없는 에러가 발생했습니다.");
-                }
-            }
-          })
-        //petlist init dispatch
+            handleError(error, navigate)
+        })
     },[])
 
     
@@ -74,10 +52,7 @@ function SignUpPet() {
     
     useEffect(() => {
         setInputNickname('');// 입력 필드를 빈 문자열로 설정
-    }, [selectedPetIndex, state.data]);
 
-    
-    useEffect(() => {
         if (state.data.length > selectedPetIndex) {
             setPetPostData({
                 species: state.data[selectedPetIndex].idx,
@@ -98,7 +73,6 @@ function SignUpPet() {
     
 
     function SelectBtnAct(){
-        console.log(petPostData)
         axios.post(`${serverUrl}/api/user/pet-signup`,
         {
             "species": petPostData.species, //pet idx 
@@ -115,29 +89,10 @@ function SignUpPet() {
                     alert("서버와 연결에 실패하였습니다.")
                 }
             }
-            console.log("yes")
         })
         .catch((error) => {
-            if(error.response){ // 런타임 에러방지 error.response가 있는지 먼저 확인함
-                if(error.response.status === 401) { // 토큰 만료 리다이렉트
-                    console.log("Error status: " + error.response.status);
-                    alert("로그인을 다시해주세요!");
-                    navigate('/');
-                }
-                else{
-                  alert("서버와 연결에 실패했습니다.");
-                }
-            }
-            else{
-                console.error("Error: ", error);
-                if(error.message) {
-                  alert("에러: " + error.message);
-                }
-                else{
-                  alert("알 수 없는 에러가 발생했습니다.");
-                }
-            }
-          })
+            handleError(error, navigate)
+        })
     }
 
     return (
@@ -167,26 +122,25 @@ function SignUpPet() {
                                     setPetPostData={setPetPostData}
                                     eventHandler={petSelectHandler}
                                 />
-                                {console.log(state.data[selectedPetIndex])}
                             </Col>
-                                <PetInfo
-                                    btnMessage="이 펫으로 할래요!"
-                                    clickHandler={() => { SelectBtnAct(); }}
-                                >
-                                    <Image src="/700x460.png" fluid />
-                                    <Stack direction='horizontal' gap={2} className='center margin-bottom-10'>
-                                        <Form.Label column sm="4" className='color-darkBlue'>펫 이름</Form.Label>   
-                                        <Col sm="8">
-                                            <InputFieldComponent
-                                                type="text"
-                                                placeholder={state.data[selectedPetIndex].species}
-                                                onChangeHandler={handleInputChange}
-                                                value={inputNickname}
-                                            />
-                                        </Col>
-                                    </Stack>
-                                    <p className='color-lightPurple'>{state.data[selectedPetIndex].info}</p>
-                                </PetInfo>
+                            <PetInfo
+                                btnMessage="이 펫으로 할래요!"
+                                clickHandler={() => { SelectBtnAct(); }}
+                            >
+                                <Image src="/700x460.png" fluid />
+                                <Stack direction='horizontal' gap={2} className='center margin-bottom-10'>
+                                    <Form.Label column sm="4" className='color-darkBlue'>펫 이름</Form.Label>   
+                                    <Col sm="8">
+                                        <InputFieldComponent
+                                            type="text"
+                                            placeholder={state.data[selectedPetIndex].species}
+                                            onChangeHandler={handleInputChange}
+                                            value={inputNickname}
+                                        />
+                                    </Col>
+                                </Stack>
+                                <p className='color-lightPurple'>{state.data[selectedPetIndex].info}</p>
+                            </PetInfo>
                         </Row>
                     </Container>
                 </div>
