@@ -14,7 +14,7 @@ redux의 본질을 잊지 말자 -> 너무 아토믹하게 하면 뭐가뭔지 �
 const userData = createSlice({
   name : "userData",
   initialState:{
-    "profileUrl": "/thumbnail.png",
+    "profileUrl": undefined,
     "nickname": "",
     "userId": ""
   },
@@ -168,7 +168,7 @@ const friendList = createSlice({
   name : "friendsList",
   initialState : {
     "userList" : [
-      {userName : "홍일동", userEmail : "example1@email.com"},
+      {userName : "홍일동", userEmail : "example1@email.com", path : '/profile/seophoho.png'},
       {userName : "홍이동", userEmail : "example2@email.com"},
       {userName : "홍삼동", userEmail : "example3@email.com"},
 
