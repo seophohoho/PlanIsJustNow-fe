@@ -164,34 +164,26 @@ const addShow = createSlice({
   }
 })
 
+const friendsRequest = createSlice({
+  name : "friendsRequest",
+  initialState :[],
+  reducers:{
+    initFriendRequest(state, action){
+      return action.payload
+    },
+  }
+})
+
 const friendList = createSlice({
   name : "friendsList",
-  initialState : {
-    "userList" : [
-      {userName : "홍일동", userEmail : "example1@email.com", path : '/profile/seophoho.png'},
-      {userName : "홍이동", userEmail : "example2@email.com"},
-      {userName : "홍삼동", userEmail : "example3@email.com"},
-
-    ],
-    "userRequest":[
-      {userName : "홍사동", userEmail : "example4@email.com"},
-      {userName : "홍오동", userEmail : "example5@email.com"},
-      {userName : "홍육동", userEmail : "example6@email.com"},
-      {userName : "홍칠동", userEmail : "example7@email.com"},
-      {userName : "홍팔동", userEmail : "example8@email.com"},
-    ]
-  },
+  initialState : [],
   reducers: {
+    initFriendList(state, action){
+      return action.payload
+    },
     friendDelete(state, action){/*payload ---> list: userlist or userRequest, index: there index*/
-      state[action.payload.list].splice(action.payload.index, 1); //제거
+      state.splice(action.payload.index, 1);
     },
-    friendRefuse(state, action){
-      state[action.payload.list].splice(action.payload.index, 1); //제거
-    },
-    friendAccept(state, action){
-
-    },
-  
   }
 })
 
@@ -200,7 +192,8 @@ export const {petdexInit} = userPetData.actions
 export const {petListInit} = petList.actions
 export const {addHandleClose, addHandleShow} = addShow.actions
 export const {scheduleInit, scheduleComplete, scheduleStateEdit, scheduleStateAdd, scheduleDelete} = dateSchedule.actions
-export const {friendDelete, friendRefuse, friendAccept } = friendList.actions
+export const {friendDelete, initFriendList} = friendList.actions
+export const {initFriendRequest } = friendsRequest.actions
 //함수또한 내보내야 요청가능
 
 export default configureStore({// 내보낼 state, 작성 문법은 아래와 같음
@@ -211,5 +204,7 @@ export default configureStore({// 내보낼 state, 작성 문법은 아래와 �
     userPetData : userPetData.reducer,
     petList : petList.reducer,
     userData: userData.reducer,
+    friendsRequest: friendsRequest.reducer,
+
   }
 }) 
