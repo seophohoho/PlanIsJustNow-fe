@@ -241,3 +241,12 @@ input[type="number"]::-webkit-inner-spin-button {
 .ant-progress-text{
   color: rgb(200, 200, 250) !important;
 }
+
+.flex-item-center{
+  display: flex;
+  align-items: center;
+}
+
+.ant-avatar-circle{
+  border: 2px solid rgb(35, 45, 150) !important;
+}

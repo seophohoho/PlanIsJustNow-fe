@@ -4,9 +4,10 @@ import serverUrl from "../serverConfig"
 import InputFieldComponent from '../components/InputFieldComponent';
 import { Form, Col, Row, Button, Container, Navbar, Stack } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
+import { PiDogFill } from 'react-icons/pi';
 
 function FindPassword() {
-
+    const navigate = useNavigate()
     const [isEmailDisabled, setIsEmailDisabled] = useState(false);
     const [isAuthDisabled, setIsAuthDisabled] = useState(true);
     const [userEmail, setUserEmail] = useState('');
@@ -39,9 +40,9 @@ function FindPassword() {
         <header>
             <Navbar expand="md" className="bg-body-tertiary">
                 <Container>
-                    <Navbar.Brand href="#">
-                        <img src='/logo192.png'width={"50px"}></img>
-                        <h1 style={{display: "inline"}} className=''>PETTODO</h1>
+                    <Navbar.Brand as={Link} to="/calendar" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: 'inherit' }}>
+                        <PiDogFill size={60} />
+                        <h1 style={{ display: 'inline', marginLeft: '10px' }}>PETTODO</h1>
                     </Navbar.Brand>
                 </Container>
             </Navbar>

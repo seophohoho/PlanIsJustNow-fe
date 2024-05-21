@@ -37,7 +37,11 @@ function TabChildrenComponent(props){
             <Col sm={3} className='text-center impo-margin-zero p-zero'>
             </Col>
             <Col sm={1} className='color-darkBlue text-right'>
-              <Avatar className='' size={64} icon={<UserOutlined/>} />
+              <Avatar 
+                size={64}
+                src={user.path}
+                icon={<UserOutlined/>}
+                />
             </Col>
             <Col sm={2} className='m-auto color-darkBlue p-zero'>
               <p className='color-darkBlue text-left'>{user.userName}</p>

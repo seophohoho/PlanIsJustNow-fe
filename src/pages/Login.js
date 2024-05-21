@@ -3,6 +3,7 @@ import { useEffect, useState, useRef } from 'react';
 import serverUrl from "../serverConfig";
 import { Form, Col, Row, Button, Container, Navbar, Stack } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
+import { PiDogFill } from 'react-icons/pi';
 
 function Login() {
     const [isLoading, setLoading] = useState(false);
@@ -89,10 +90,10 @@ function Login() {
             <header>
                 <Navbar expand="md" className="bg-body-tertiary">
                     <Container>
-                        <Navbar.Brand href="#">
-                            <img src='/logo192.png' width={"50px"}></img>
-                            <h1 style={{ display: "inline" }} className=''>PETTODO</h1>
-                        </Navbar.Brand>
+                    <Navbar.Brand as={Link} to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: 'inherit' }}>
+                        <PiDogFill size={60} />
+                        <h1 style={{ display: 'inline', marginLeft: '10px' }}>PETTODO</h1>
+                    </Navbar.Brand>
                     </Container>
                 </Navbar>
             </header>

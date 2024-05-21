@@ -24,7 +24,7 @@ const CalendarMain = () => {
     const [clickedDate, setClickedDate] = useState("");
     const [targetPet, setTargetPet] = useState(null);
     const [isPetInitialized, setIsPetInitialized] = useState(false);
-    const [currentFriendShip, setCurrentFriendShip] = useState();
+    const [currentFriendShip, setCurrentFriendShip] = useState(null);
     const [isPositiveFriendShip, setIsPositiveFriendShip] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -243,7 +243,7 @@ const CalendarMain = () => {
                                     </Stack>
                                 </div>
                             </Stack>
-                            {isPetInitialized && <PetUI targetPet={targetPet} currentFriendShip={currentFriendShip} setCurrentFriendShip={setCurrentFriendShip}/>}
+                            {isPetInitialized && <PetUI targetPet={targetPet} currentFriendShip={currentFriendShip} setCurrentFriendShip={setCurrentFriendShip} isPositiveFriendShip={isPositiveFriendShip}/>}
                             {isPetInitialized && <PetSpaceComponent targetPetData={targetPet} evolLevel={evolLevel} isPositiveFriendShip={isPositiveFriendShip} currentFriendShip={currentFriendShip}/>}
                         </Stack>
                     </Col>
