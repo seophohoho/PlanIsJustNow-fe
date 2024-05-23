@@ -4,6 +4,7 @@ import { UserOutlined } from '@ant-design/icons';
 import { Col, Row, Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { Avatar } from 'antd';
+import obfuscateEmail from "../function/obfuscateEmail";
 import ConfirmModal from "./ConfirmModal";
 import serverUrl from "../serverConfig";
 import handleError from "../function/errorHandler";
@@ -14,14 +15,18 @@ function TabChildrenComponent(props) {
   const { i, index, user, setRefresh, refresh } = props
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const [confirmShow, setConfirmShow] = useState(false);
   const confirmHandleClose = () => { setConfirmShow(false); };
-
   /*
   상세보기 핸들러 --> url 파라미터로 전달하고 페이지 넘기기 + 난독화
   
   */
+  
+
+  const handleExploreClick = (email) => {
+    const obfuscatedEmail = obfuscateEmail(email); // 이메일 난독화
+    navigate(`/friendDetail/${obfuscatedEmail}`);
+  };
 
   function deleteHandler(user) {
     setConfirmShow(true)
@@ -95,7 +100,7 @@ function TabChildrenComponent(props) {
         <p className='color-violet text-left'>{user.email}</p></Col>
       <Col sm="auto">
         <Button className='font-weight-800'
-          onClick={() => i === 0 ? "" : acceptHandler(user)}
+          onClick={() => i === 0 ? handleExploreClick(user.email) : acceptHandler(user)}
         >{i === 0 ? "살펴보기" : "친구수락"}</Button>
 
         <Button className='margin-left bg-darkblue font-weight-800'
