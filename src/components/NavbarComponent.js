@@ -1,13 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Container, Navbar, Stack, Nav } from 'react-bootstrap';
 import { UserOutlined } from '@ant-design/icons';
-import { Avatar } from 'antd';
+import { Avatar, Badge } from 'antd';
 import { useNavigate, Link } from 'react-router-dom';
 import { PiDogFill } from 'react-icons/pi';
 
 const NavbarComponent = (props) => {
     const { userData } = props
     const navigate = useNavigate()
+    // 친구요청 총 갯수 상태
+    const [requestCount, setRequestCount] = useEffect(0)
+
+    //상대의 요청 즉시 갱신된다면 좋겠지만 양방향 통신은 좀..
+    useEffect(()=>{
+        //친구요청 총 갯수 api 필요
+    },[])
 
     return(
         <Navbar expand="md" className="bg-body-tertiary">{/**추후 Navbar도 컴포넌트화 해서 다른페이지에 적용시키기 */}
@@ -18,8 +25,12 @@ const NavbarComponent = (props) => {
                 </Navbar.Brand>
                 <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">{/*추후 아이콘 추가*/}
-                    <Nav.Link onClick={()=>{navigate("/Friend-board")}}>Friends</Nav.Link>
-                    <Nav.Link onClick={()=>{navigate("/petdex")}}>Petdex</Nav.Link>
+                    <Badge count={requestCount}>
+                        <Nav.Link className='font-size-15' onClick={()=>{navigate("/Friend-board")}}>Friends</Nav.Link>
+                    </Badge>
+                    <Badge>
+                        <Nav.Link className='font-size-15 margin-left' onClick={()=>{navigate("/petdex")}}>Petdex</Nav.Link>
+                    </Badge>
                 </Nav>
                 </Navbar.Collapse>
                 <Navbar.Text>
