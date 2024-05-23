@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Navbar, Stack, Nav } from 'react-bootstrap';
 import { UserOutlined } from '@ant-design/icons';
 import { Avatar, Badge } from 'antd';
@@ -9,7 +9,7 @@ const NavbarComponent = (props) => {
     const { userData } = props
     const navigate = useNavigate()
     // 친구요청 총 갯수 상태
-    const [requestCount, setRequestCount] = useEffect(0)
+    const [requestCount, setRequestCount] = useState(0)
 
     //상대의 요청 즉시 갱신된다면 좋겠지만 양방향 통신은 좀..
     useEffect(()=>{
