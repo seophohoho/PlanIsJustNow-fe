@@ -20,7 +20,7 @@ function TabChildrenComponent(props) {
 
   const handleExploreClick = (email) => {
     const obfuscatedEmail = obfuscateEmail(email); // 이메일 난독화
-    navigate(`/friendDetail/${obfuscatedEmail}`);
+    navigate(`/${obfuscatedEmail}`);
   };
 
   function deleteHandler(user) {
