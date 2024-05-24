@@ -9,7 +9,6 @@ const handleError = (error, navigate) => {
         alert("서버와 연결에 실패했습니다.");
       }
     } else {
-      console.error("Error: ", error);
       if (error.message) {
         alert("에러: " + error.message);
       } else {
