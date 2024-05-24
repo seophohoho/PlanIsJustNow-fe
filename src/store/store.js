@@ -187,6 +187,20 @@ const friendList = createSlice({
   }
 })
 
+const requestCount = createSlice({
+  name : "requestCount",
+  initialState : 0,
+  reducers : {
+    initCount(state, action){
+      return action.payload
+    },
+    subCount(state, action){
+      return state - 1
+    }
+  }
+})
+
+
 export const {userDataInit} = userData.actions
 export const {petdexInit} = userPetData.actions
 export const {petListInit} = petList.actions
@@ -194,6 +208,7 @@ export const {addHandleClose, addHandleShow} = addShow.actions
 export const {scheduleInit, scheduleComplete, scheduleStateEdit, scheduleStateAdd, scheduleDelete} = dateSchedule.actions
 export const {friendDelete, initFriendList} = friendList.actions
 export const {initFriendRequest } = friendsRequest.actions
+export const { initCount, subCount } = requestCount.actions
 //함수또한 내보내야 요청가능
 
 export default configureStore({// 내보낼 state, 작성 문법은 아래와 같음
@@ -205,6 +220,6 @@ export default configureStore({// 내보낼 state, 작성 문법은 아래와 �
     petList : petList.reducer,
     userData: userData.reducer,
     friendsRequest: friendsRequest.reducer,
-
+    requestCount: requestCount.reducer,
   }
 }) 
