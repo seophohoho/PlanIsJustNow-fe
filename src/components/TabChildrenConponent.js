@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { friendDelete } from "../store/store";
+import { friendDelete, subCount } from "../store/store";
 import { UserOutlined } from '@ant-design/icons';
 import { Col, Row, Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
@@ -17,11 +17,6 @@ function TabChildrenComponent(props) {
   const navigate = useNavigate();
   const [confirmShow, setConfirmShow] = useState(false);
   const confirmHandleClose = () => { setConfirmShow(false); };
-  /*
-  상세보기 핸들러 --> url 파라미터로 전달하고 페이지 넘기기 + 난독화
-  
-  */
-  
 
   const handleExploreClick = (email) => {
     const obfuscatedEmail = obfuscateEmail(email); // 이메일 난독화
@@ -54,6 +49,7 @@ function TabChildrenComponent(props) {
     .then((response) => {
       if (response.status === 200) {
         alert("거절");
+        dispatch(subCount())
         setRefresh(!refresh); // 상태 변경으로 useEffect 트리거
       }
     })
@@ -69,6 +65,7 @@ function TabChildrenComponent(props) {
     .then((response) => {
       if (response.status === 200) {
         alert("수락");
+        dispatch(subCount())
         setRefresh(!refresh); // 상태 변경으로 useEffect 트리거
       }
     })
