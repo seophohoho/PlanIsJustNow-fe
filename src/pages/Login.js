@@ -97,15 +97,17 @@ function Login() {
                     </Container>
                 </Navbar>
             </header>
-
-            <h1 className='page-title'>로 그 인</h1>
-
+            <Col sm={4}>
+            </Col>
+            <Col sm={8} className='text-center'>
+                <h1 className='page-title'>로 그 인</h1>
+            </Col>
             <body>
                 <div className='text-center w-30p'>
                     <Form className=''>
                         <Form.Group as={Row} className="mb-4" controlId="formHorizontalEmail">
                             <Col sm={4}>
-                                <Form.Label column>
+                                <Form.Label column className='float-display'>
                                     <p className='color-darkBlue'><span className='color-red'>*</span> {"Email"}</p>
                                 </Form.Label>
                             </Col>
@@ -123,7 +125,7 @@ function Login() {
                         </Form.Group>
                         <Form.Group as={Row} className="mb-4" controlId="formHorizontalPassword">
                             <Col sm={4}>
-                                <Form.Label column>
+                                <Form.Label column className='float-display'>
                                     <p className='color-darkBlue'><span className='color-red'>*</span> {"Password"}</p>
                                 </Form.Label>
                             </Col>
