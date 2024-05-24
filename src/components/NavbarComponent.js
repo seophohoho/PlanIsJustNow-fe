@@ -4,16 +4,31 @@ import { UserOutlined } from '@ant-design/icons';
 import { Avatar, Badge } from 'antd';
 import { useNavigate, Link } from 'react-router-dom';
 import { PiDogFill } from 'react-icons/pi';
+import serverUrl from '../serverConfig';
+import axios from 'axios';
+import handleError from '../function/errorHandler';
+import { initCount } from '../store/store'
+import { useDispatch, useSelector } from 'react-redux';
 
 const NavbarComponent = (props) => {
+    const countState = useSelector(state => state.requestCount)
     const { userData } = props
+    const dispatch = useDispatch()
     const navigate = useNavigate()
     // 친구요청 총 갯수 상태
-    const [requestCount, setRequestCount] = useState(0)
 
-    //상대의 요청 즉시 갱신된다면 좋겠지만 양방향 통신은 좀..
+    //상대의 요청에 따라 즉시 갱신된다면 좋겠지만 양방향 통신은 좀..
     useEffect(()=>{
-        //친구요청 총 갯수 api 필요
+        const fetch = async () =>{
+            try{
+                const requestCountResponse = await axios.get(`${serverUrl}/api/friend/request-count`, { withCredentials: true })
+                dispatch(initCount(requestCountResponse.data.data))
+            }
+            catch (error){
+                handleError(error, navigate)
+            }
+        }
+        fetch()
     },[])
 
     return(
@@ -25,7 +40,7 @@ const NavbarComponent = (props) => {
                 </Navbar.Brand>
                 <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">{/*추후 아이콘 추가*/}
-                    <Badge count={requestCount}>
+                    <Badge count={countState}>
                         <Nav.Link className='font-size-15' onClick={()=>{navigate("/Friend-board")}}>Friends</Nav.Link>
                     </Badge>
                     <Badge>
