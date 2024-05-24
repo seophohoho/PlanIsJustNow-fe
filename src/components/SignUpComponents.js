@@ -23,6 +23,7 @@ function InputComponent(props){
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [isEmailLoading, setIsEmailLoading] = useState(false);
   const [isAuthLoading, setIsAuthLoading] = useState(false);
+  const controlId = ["formEmail","formAuthCode","formPassword","formPasswordCheck","formNickname"]
   
   useEffect(()=>{
     const passwordRegex = /^[a-z\d!@*&-_]{8,20}$/;
@@ -54,7 +55,7 @@ function InputComponent(props){
       }
       else {
         setIsNickName(false)
-        setNickNameMessage("최소 2글자는 입력! 특수문자 공백은 사용할 수 없어요!")
+        setNickNameMessage("2~13자까지 입력가능! 특수문자 공백은 사용할 수 없어요!")
         setIsNextButtonDisabled(true)
       }
     }
@@ -65,7 +66,7 @@ function InputComponent(props){
       {//입력 컴포넌트 inputTitle의 배열 만큼 input 입력칸이 생기도록 설정
         inputTitle.map(function(notUse, i){
           return(
-              <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
+              <Form.Group as={Row} className="mb-3" controlId={controlId[i]}>
                   <Col sm={3}>
                     <Form.Label column className='float-display'>{/** label칸 */}
                       <p className='color-darkBlue'><span>*</span> { inputTitle[i] }</p> 
@@ -193,7 +194,7 @@ async function btnEmail(email) {
 }
 
 function isValidNickname(nickname) {
-  const regex =/^[a-zA-Z가-힣]{2,20}$/;
+  const regex =/^[a-zA-Z가-힣0-9]{2,13}$/;
   return regex.test(nickname);
 }
 
