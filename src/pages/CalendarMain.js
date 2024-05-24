@@ -7,7 +7,8 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import ScheduleAddModal from '../components/ScheduleAddModal';
 import Schedule from '../components/ScheduleComponent';
 import PetSpaceComponent from '../components/PetSpaceComponent';
-import NavbarComponent from '../components/NavbarComponent';import { scheduleInit, addHandleShow, userDataInit, targetPetInit } from '../store/store';
+import NavbarComponent from '../components/NavbarComponent';
+import { scheduleInit, addHandleShow, userDataInit, targetPetInit } from '../store/store';
 import PetUI from '../components/PetUI';
 import { useSelector, useDispatch } from 'react-redux';
 import { Col, Row, Container, Stack, Button } from 'react-bootstrap';
@@ -51,6 +52,7 @@ const CalendarMain = () => {
                 dispatch(userDataInit(response.data.userInfo));
                 const targetPet = response.data.data.filter(item => item.lastChoice === 1);
                 if (targetPet.length > 0) {
+                    console.log("targetPet",targetPet)
                     setTargetPet(targetPet);
                     setCurrentFriendShip(targetPet[0].currentFriendShip)
                     setEvolLevel(targetPet.evol);
@@ -144,7 +146,6 @@ const CalendarMain = () => {
                         dayCellContent={(e) => {
                             const dateStr = moment(e.date).format('YYYY-MM-DD');
                             const eventsForDay = state.dateSchedule[dateStr] ? state.dateSchedule[dateStr].filter(event => !event.important) : [];
-
                             return (
                               <>
                                 {(eventsForDay.length > 0) ? 
@@ -163,9 +164,8 @@ const CalendarMain = () => {
                             axios.get(`${serverUrl}/api/todolist/select`,
                             {withCredentials: true})
                             .then((response)=>{
-                                const copy = response.data
-                                console.log(copy.data)
-                                dispatch(scheduleInit(copy.data))
+                                console.log("todo response",response.data.data)
+                                dispatch(scheduleInit(response.data.data))
                             }).catch((error) => {
                                 if(error.response){ // 런타임 에러방지 error.response가 있는지 먼저 확인함
                                     if(error.response.status === 401) { // 토큰 만료 리다이렉트
