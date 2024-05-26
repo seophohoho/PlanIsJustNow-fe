@@ -16,7 +16,6 @@ export const petNatureList = {
         3:50,
         4:60,
         5:5,
-        6:10,
     },
     //활발한
     1:{
@@ -26,7 +25,6 @@ export const petNatureList = {
         3:20,
         4:50,
         5:20,
-        6:60,
     },
     //장난꾸러기
     2:{
@@ -36,7 +34,6 @@ export const petNatureList = {
         3:50,
         4:50,
         5:50,
-        6:50,
     }
 };
 
@@ -47,10 +44,9 @@ export const enum MAX_BEHAVIOR_COUNT{
     NAP=1,
     SLEEP=20,
     BOAST=3,
-    SNEEZE=3,
 }
 
-export const BEHAVIOR_SIZE = 6;
+export const BEHAVIOR_SIZE = 5;
 
 export const BEHAVIOR = {
     0:'stay',
@@ -59,7 +55,6 @@ export const BEHAVIOR = {
     3:'nap',
     4:'sleep',
     5:'boast',
-    6:'sneeze',
 }
 
 export const BEHAVIOR_RATE = {
@@ -71,7 +66,6 @@ export const BEHAVIOR_RATE = {
         3:0,
         4:0,
         5:0,
-        6:0,
     },
     //활발한
     1:{
@@ -81,7 +75,6 @@ export const BEHAVIOR_RATE = {
         3:10,
         4:10,
         5:80,
-        6:20,
     },
     //장난꾸러기
     2:{
@@ -91,6 +84,5 @@ export const BEHAVIOR_RATE = {
         3:0.02,
         4:0.3,
         5:0.5,
-        6:0.8,
     }
 }

@@ -92,18 +92,6 @@ export class ImageManager{
             start:Math.floor(MaxFrame.BOAST/2)+1,
             end:MaxFrame.BOAST,
         });
-        const petSneezeFrameRight = this.phaser.anims.generateFrameNames(`${petId}_${evolId}_6`,{
-            prefix:`${petId}_${evolId}_6-`,
-            suffix:"",
-            start:0,
-            end:Math.floor(MaxFrame.SNEEZE/2),
-        });
-        const petSneezeFrameLeft = this.phaser.anims.generateFrameNames(`${petId}_${evolId}_6`,{
-            prefix:`${petId}_${evolId}_6-`,
-            suffix:"",
-            start:Math.floor(MaxFrame.SNEEZE/2)+1,
-            end:MaxFrame.SNEEZE,
-        });
         this.createAnimation(
             `${petId}_${evolId}_0_r`,
             petStayFrameRight,
@@ -174,18 +162,6 @@ export class ImageManager{
             `${petId}_${evolId}_5_l`,
             petBoastFrameLeft,
             FrameRate.BOAST,
-            DELAY_RATE
-        );
-        this.createAnimation(
-            `${petId}_${evolId}_6_r`,
-            petSneezeFrameRight,
-            FrameRate.SNEEZE,
-            DELAY_RATE
-        );
-        this.createAnimation(
-            `${petId}_${evolId}_6_l`,
-            petSneezeFrameLeft,
-            FrameRate.SNEEZE,
             DELAY_RATE
         );
     }

@@ -102,12 +102,6 @@ export class Pet {
             this.moveDuration = 1000;
             this.completeDelay = 1000;
         }
-        else if(currentBehavior === 6){
-            this.moveDistanceX = direction === 'l' ? '-=0' : '+=0';
-            this.moveDistanceY = direction === 'l' ? '-=0' : '+=0';
-            this.moveDuration = 1000;
-            this.completeDelay = 1000;
-        }
 
         for (let i = 0; i < this.sprites.length; i++) {
             const sprite = this.sprites[i];

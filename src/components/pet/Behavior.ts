@@ -64,7 +64,6 @@ export class Behavior{
         if(behavior === 3){return Math.floor((Math.random() * MAX_BEHAVIOR_COUNT.NAP+1) + 1);}
         if(behavior === 4){return Math.floor((Math.random() * MAX_BEHAVIOR_COUNT.SLEEP+1) + 5);}
         if(behavior === 5){return Math.floor((Math.random() * MAX_BEHAVIOR_COUNT.BOAST+1) + 1);}
-        if(behavior === 6){return Math.floor((Math.random() * MAX_BEHAVIOR_COUNT.SNEEZE+1) + 1);}
     }
 
     getRandomDirection(){
