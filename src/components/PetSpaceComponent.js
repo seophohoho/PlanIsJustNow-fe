@@ -9,6 +9,7 @@ function PetSpaceComponent(props) {
 
     useEffect(() => {
         if(targetPetData !== undefined){
+                targetPetData[0].evol = evolLevel;
                 const config = {
                     type: Phaser.AUTO,
                     width: CANVAS_WIDTH,
