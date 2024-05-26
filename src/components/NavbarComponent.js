@@ -1,14 +1,35 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Navbar, Stack, Nav } from 'react-bootstrap';
 import { UserOutlined } from '@ant-design/icons';
-import { Avatar } from 'antd';
+import { Avatar, Badge } from 'antd';
 import { useNavigate, Link } from 'react-router-dom';
 import { PiDogFill } from 'react-icons/pi';
+import serverUrl from '../serverConfig';
+import axios from 'axios';
+import handleError from '../function/errorHandler';
+import { initCount } from '../store/store'
+import { useDispatch, useSelector } from 'react-redux';
 
 const NavbarComponent = (props) => {
+    const countState = useSelector(state => state.requestCount)
     const { userData } = props
+    const dispatch = useDispatch()
     const navigate = useNavigate()
-    console.log(userData)
+    // 친구요청 총 갯수 상태
+
+    //상대의 요청에 따라 즉시 갱신된다면 좋겠지만 양방향 통신은 좀..
+    useEffect(()=>{
+        const fetch = async () =>{
+            try{
+                const requestCountResponse = await axios.get(`${serverUrl}/api/friend/request-count`, { withCredentials: true })
+                dispatch(initCount(requestCountResponse.data.data))
+            }
+            catch (error){
+                handleError(error, navigate)
+            }
+        }
+        fetch()
+    },[])
 
     return(
         <Navbar expand="md" className="bg-body-tertiary">{/**추후 Navbar도 컴포넌트화 해서 다른페이지에 적용시키기 */}
@@ -19,8 +40,12 @@ const NavbarComponent = (props) => {
                 </Navbar.Brand>
                 <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">{/*추후 아이콘 추가*/}
-                    <Nav.Link onClick={()=>{navigate("/Friend-board")}}>Friends</Nav.Link>
-                    <Nav.Link onClick={()=>{navigate("/petdex")}}>Petdex</Nav.Link>
+                    <Badge count={countState}>
+                        <Nav.Link className='font-size-15' onClick={()=>{navigate("/Friend-board")}}>Friends</Nav.Link>
+                    </Badge>
+                    <Badge>
+                        <Nav.Link className='font-size-15 margin-left' onClick={()=>{navigate("/petdex")}}>Petdex</Nav.Link>
+                    </Badge>
                 </Nav>
                 </Navbar.Collapse>
                 <Navbar.Text>

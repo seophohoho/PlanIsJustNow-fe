@@ -15,6 +15,7 @@ const CalendarMain = lazy(()=>import('./pages/CalendarMain'));
 const FriendBoard = lazy(()=>import('./pages/FriendsBoard'));
 const Petdex = lazy(()=>import('./pages/Petdex'));
 const FindPassword = lazy(()=>import('./pages/FindPassword'));
+const FriendDetail = lazy(()=>import('./pages/FriendDetail'));
 
 function App() {
   
@@ -30,6 +31,7 @@ function App() {
         <Route path='/Calendar' element={<CalendarMain/>}/>
         <Route path='/petdex' element={<Petdex/>}/> {/* calendar -> nest? */}
         <Route path='/friend-board' element={<FriendBoard/>}/> {/* calendar -> nest? */}
+        <Route path="/:obfuscatedEmail" element={<FriendDetail />} />
         <Route path='/signup' element={ <Signup/> }/>
         <Route path='/signup-pet' element={<SignUpPet/>}/> {/* signup -> nest? */}
         <Route path="*" element={ <div>잘못된 경로입니다!</div> }/>

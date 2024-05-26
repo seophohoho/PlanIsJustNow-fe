@@ -12,16 +12,18 @@ import { scheduleInit, addHandleShow, userDataInit, targetPetInit } from '../sto
 import PetUI from '../components/PetUI';
 import { useSelector, useDispatch } from 'react-redux';
 import { Col, Row, Container, Stack, Button } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import decodeEmail from '../function/decodeEmail';
 import serverUrl from '../serverConfig'
 import axios from 'axios'
 /*moment 업데이트 중단!!! -> dayjs로 변경 권장 */
 import moment from 'moment';
 import 'moment/locale/ko'
 
-const CalendarMain = () => {
+const FriendDetail = () => {
     const state = useSelector((state)=> {return state});
     const userDataState = useSelector((state)=> {return state.userData});
+    const { obfuscatedEmail } = useParams();
     const [clickedDate, setClickedDate] = useState("");
     const [targetPet, setTargetPet] = useState(null);
     const [isPetInitialized, setIsPetInitialized] = useState(false);
@@ -31,6 +33,8 @@ const CalendarMain = () => {
     const navigate = useNavigate();
 
     const [evolLevel, setEvolLevel] = useState(0);
+    
+    const email = decodeEmail(obfuscatedEmail); // 이메일 디코딩
 
     useEffect(()=>{
         if(targetPet != null && currentFriendShip !=null){
@@ -42,7 +46,8 @@ const CalendarMain = () => {
     },[currentFriendShip]);
 
     useEffect(()=>{ // 펫 도감 정보 초기화
-        axios.get(`${serverUrl}/api/user/has-pet`
+        axios.post(`${serverUrl}/api/friend/select-detail-pet`
+        ,{email : email}
         ,{withCredentials: true})
         .then((response)=>{
             if(response.data.messageDetail === "nothing"){
@@ -55,7 +60,7 @@ const CalendarMain = () => {
                     console.log("targetPet",targetPet)
                     setTargetPet(targetPet);
                     setCurrentFriendShip(targetPet[0].currentFriendShip)
-                    setEvolLevel(targetPet[0].evol);
+                    setEvolLevel(targetPet.evol);
                     setIsPetInitialized(true);  // targetPet이 초기화되었음을 설정
                 }
             }
@@ -161,7 +166,8 @@ const CalendarMain = () => {
                           }}
                         nextDayThreshold={'00:00'}
                         datesSet={function(args) {  
-                            axios.get(`${serverUrl}/api/todolist/select`,
+                            axios.post(`${serverUrl}/api/friend/select-detail-todolist`,
+                            { email : email},
                             {withCredentials: true})
                             .then((response)=>{
                                 console.log("todo response",response.data.data)
@@ -257,4 +263,4 @@ const CalendarMain = () => {
    );
 }
 
-export default CalendarMain
+export default FriendDetail

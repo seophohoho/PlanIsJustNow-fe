@@ -21,7 +21,7 @@ function PetSpaceComponent(props) {
                         target: 60,
                         forceSetTimeOut: true
                     },
-                    backgroundColor: '#486870',
+                    backgroundColor: '#e6e6fc',
                     parent: 'phaser-container', // 게임을 렌더링할 요소의 ID를 지정합니다.
                     scene: [InitScene,PetSpaceScene],
                 };
