@@ -55,7 +55,7 @@ const CalendarMain = () => {
                     console.log("targetPet",targetPet)
                     setTargetPet(targetPet);
                     setCurrentFriendShip(targetPet[0].currentFriendShip)
-                    setEvolLevel(targetPet.evol);
+                    setEvolLevel(targetPet[0].evol);
                     setIsPetInitialized(true);  // targetPet이 초기화되었음을 설정
                 }
             }

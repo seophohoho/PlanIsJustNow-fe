@@ -13,6 +13,7 @@ import axios from "axios";
 import serverUrl from "../serverConfig";
 import { useNavigate } from "react-router-dom";
 import dayjs from 'dayjs';
+import handleError from "../function/errorHandler";
 
 function Schedule(props){
     const {i, clickedDate, evolLevel, setEvolLevel, setCurrentFriendShip} = props
@@ -76,42 +77,23 @@ function Schedule(props){
         });
     }
 
-    function confirmEvent(){
+    const confirmEvent = async () =>{
         confirmHandleClose();
-        axios.post(`${serverUrl}/api/todolist/complete`,
+        await axios.post(`${serverUrl}/api/todolist/complete`,
         {idx : state.dateSchedule[clickedDate][i].idx},
         {withCredentials: true})
         .then((response)=>{
             dispatch(scheduleComplete({clickedDate: clickedDate, index: i, package: true }))
             setCurrentFriendShip(response.data.data.friendship)
-            if(evolLevel != response.data.evolLevel){
-              setEvolLevel(response.data.evolLevel);
+            if(evolLevel != response.data.data.evol){
+                console.log(response.data.data.evol)
+                setEvolLevel(response.data.data.evol);
             }
         })
         .catch((error) => {
-            if(error.response){ // 런타임 에러방지 error.response가 있는지 먼저 확인함
-                if(error.response.status === 401) { // 토큰 만료 리다이렉트
-                    console.log("Error status: " + error.response.status);
-                    alert("로그인을 다시해주세요!");
-                    confirmHandleClose();/*모달 닫기*/
-                    navigate('/');
-                }
-                else{
-                  alert("서버와 연결에 실패했습니다.");
-                }
-            }
-            else{
-                console.error("Error: ", error);
-                if(error.message) {
-                  alert("에러: " + error.message);
-                }
-                else{
-                  alert("알 수 없는 에러가 발생했습니다.");
-                }
-            }
+            handleError(error, navigate)
         });
-      }
-
+    }
     
     const defaultItems = [
         { //issue: 현재 <label> 바깥 태그(li) 클릭 시 이벤트가 발생하지 않는 문제 존재
