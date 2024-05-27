@@ -16,7 +16,7 @@ import dayjs from 'dayjs';
 import handleError from "../function/errorHandler";
 
 function Schedule(props){
-    const {i, clickedDate, evolLevel, setEvolLevel, setCurrentFriendShip} = props
+    const {i, clickedDate, evolLevel, setEvolLevel, setCurrentFriendShip, isFriend} = props
     const state = useSelector((state)=> state)/*자주 쓰는거 변수로 줄여야겠음 --> root로 가져오지마셈 나중에 수정*/
     const ScheduleState = state.dateSchedule[clickedDate][i];
     const dispatch = useDispatch();
@@ -37,6 +37,7 @@ function Schedule(props){
     // ScheduleState.title이 변경될 때마다 실행
     useEffect(() => {
         // 제목 길이가 12자 초과면 Marquee를 재생
+        console.log(clickedDate,"clickedDate")
         if (ScheduleState.title.length > 12) {
             setPlayMarquee(true);
         } else {
@@ -134,7 +135,7 @@ function Schedule(props){
                 clickedDate={clickedDate}
             />
 
-            <Col sm={2} className='text-center'>
+            {isFriend ? "" : <Col sm={2} className='text-center'>
                 <Checkbox
                 className="margin-left"
                 icon={<i className="zmdi zmdi-check"/>}
@@ -142,7 +143,7 @@ function Schedule(props){
                 checked={ScheduleState.complete}
                 disabled={!isToday || ScheduleState.complete}
                 />
-            </Col>
+            </Col>}
             <Col sm={2} className='m-auto color-darkBlue'>
                 { "[" + ScheduleState.time + "]" }
             </Col>
@@ -164,7 +165,7 @@ function Schedule(props){
             <Col sm={1} className='m-auto'>
                 {ScheduleState.important ? <StarTwoTone twoToneColor="orange"/> : "" }
             </Col>
-            <Col sm={2} className='m-auto text-center' >
+            {isFriend ? "" : <Col sm={2} className='m-auto text-center' >
                 <Dropdown 
                     className={ScheduleState.complete ? '' : 'cursor-pointer'}
                     //item이라는 고정된 key에 대응하는 value를 보내야함 default: menu={{item}}
@@ -174,7 +175,7 @@ function Schedule(props){
                     >
                     <EllipsisOutlined/>
                 </Dropdown> 
-            </Col>
+            </Col>}
         </Row>
     )
 }
