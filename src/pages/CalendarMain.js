@@ -45,6 +45,7 @@ const CalendarMain = () => {
     },[currentFriendShip]);
 
     useEffect(()=>{ // 펫 도감 정보 초기화
+        setClickedDate(moment().format('YYYY-MM-DD'))
         const initializePetData = async () => {
             try {
                 const response = await axios.get(`${serverUrl}/api/user/has-pet`, { withCredentials: true });
