@@ -1,4 +1,4 @@
-import { Button, Col, Row, Stack } from "react-bootstrap";
+import { Col, Row, Stack } from "react-bootstrap";
 import { Progress, Popover } from 'antd';
 import { HeartFilled } from "@ant-design/icons";
 import { IoHandLeftOutline } from "react-icons/io5";
@@ -8,9 +8,10 @@ import axios from "axios";
 import serverUrl from "../serverConfig";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import handlePetUIerror from "../function/handlePetUIerror";
 
 function PetUI(props){
-    const {targetPet, currentFriendShip, setCurrentFriendShip, isPositiveFriendShip} = props
+    const {targetPet, currentFriendShip, setCurrentFriendShip, isPositiveFriendShip, isFriend} = props
     const percentSign = <span style={{ fontSize: "10px" }}>%</span>;
     const navigate = useNavigate()
 
@@ -49,35 +50,16 @@ function PetUI(props){
         return current / max * 100
     }
 
-    function petUIEventHandler(id){
-        axios.get(`${serverUrl}/api/user/interaction`,
-        {
-            params: { id: id },
-            withCredentials: true
-        })
-        .then((response)=>{
-            setCurrentFriendShip(response.data.data.friendship)
-        })
-        .catch((error)=>{
-            if(error.response){ // 런타임 에러방지 error.response가 있는지 먼저 확인함
-                if(error.response.status === 401) { // 토큰 만료 리다이렉트
-                    console.log("Error status: " + error.response.status);
-                    alert("로그인을 다시해주세요!");
-                    navigate('/');
-                }
-                else if(error.response.status === 400){
-                    if(id === 'hands'){
-                        alert("하루 할당량을 모두 사용하였습니다!")
-                    }else if(id === 'feed'){
-                        alert("현재 할당량 모두 사용!\n각 시간대에 한번씩 사용가능! \n07:00 ~ 09:00\n12:00 ~ 14:00\n17:00 ~ 22:00")
-                    }
-
-                }
-                else{
-                  alert("서버와 연결에 실패했습니다.");
-                }
-            }
-        })
+    async function petUIEventHandler(id) {
+        try {
+            const response = await axios.get(`${serverUrl}/api/user/interaction`, {
+                params: { id: id },
+                withCredentials: true
+            });
+            setCurrentFriendShip(response.data.data.friendship);
+        } catch (error) {
+            handlePetUIerror(error, id, navigate);
+        }
     }
 
     return(
@@ -94,7 +76,7 @@ function PetUI(props){
                             currentFriendShip < 0 ? 
                             <Popover
                                 content={<a onClick={hide} className="color-darkBlue">닫기</a>}
-                                title="경고: 당신의 행동에 실망한 펫이 가출했습니다!"
+                                title={isFriend ? "친구의 펫이 가출상태입니다." : "경고: 당신의 행동에 실망한 펫이 가출했습니다!"}
                                 trigger="hover"
                                 placement="bottomLeft"
                                 open={open}
@@ -105,7 +87,7 @@ function PetUI(props){
                             : isPositiveFriendShip ? 
                             <Popover
                             content={<a onClick={positiveHide} className="color-darkBlue">닫기</a>}
-                            title="펫 복귀"
+                            title="펫이 복귀했습니다!"
                             placement="bottomLeft"
                             open={isPositiveFriendShipOpen}
                             >
