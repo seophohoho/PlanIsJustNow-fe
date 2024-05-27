@@ -19,6 +19,7 @@ import axios from 'axios'
 /*moment 업데이트 중단!!! -> dayjs로 변경 권장 */
 import moment from 'moment';
 import 'moment/locale/ko'
+import handleError from '../function/errorHandler';
 
 const FriendDetail = () => {
     const state = useSelector((state)=> {return state});
@@ -29,6 +30,7 @@ const FriendDetail = () => {
     const [isPetInitialized, setIsPetInitialized] = useState(false);
     const [currentFriendShip, setCurrentFriendShip] = useState(null);
     const [isPositiveFriendShip, setIsPositiveFriendShip] = useState(false);
+    const [isFriend, setIsFriend] = useState(true)
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -60,31 +62,13 @@ const FriendDetail = () => {
                     console.log("targetPet",targetPet)
                     setTargetPet(targetPet);
                     setCurrentFriendShip(targetPet[0].currentFriendShip)
-                    setEvolLevel(targetPet.evol);
+                    setEvolLevel(targetPet[0].evol);
                     setIsPetInitialized(true);  // targetPet이 초기화되었음을 설정
                 }
             }
         })
         .catch((error) => {
-            if(error.response){ // error.response가 있는지 먼저 확인함
-                if(error.response.status === 401) { // 토큰 만료 리다이렉트
-                    console.log("Error status: " + error.response.status);
-                    alert("로그인을 다시해주세요!");
-                    navigate('/');
-                }
-                else{
-                    alert("서버와 연결에 실패했습니다.");
-                }
-            }
-            else{
-                console.error("Error: ", error);
-                if(error.message) {
-                    alert("에러: " + error.message);
-                }
-                else{
-                    alert("알 수 없는 에러가 발생했습니다.");
-                }
-            }
+            handleError(error, navigate)
         })
     },[])
 
@@ -167,7 +151,7 @@ const FriendDetail = () => {
                         nextDayThreshold={'00:00'}
                         datesSet={function(args) {  
                             axios.post(`${serverUrl}/api/friend/select-detail-todolist`,
-                            { email : email},
+                            { email : email },
                             {withCredentials: true})
                             .then((response)=>{
                                 console.log("todo response",response.data.data)
@@ -217,9 +201,9 @@ const FriendDetail = () => {
                                 <div className='h-400 w-max section-schedule'>
                                     <Stack className=''>
                                         <Row className='section__item-schedule sticky-schedule'>
-                                            <Col sm={2} className='m-auto color-darkBlue text-center'>
+                                            {isFriend ? "" :<Col sm={2} className='m-auto color-darkBlue text-center'>
                                                 <p>완료</p>
-                                            </Col>
+                                            </Col>}
                                             <Col sm={2} className='m-auto color-darkBlue text-center'>
                                                 <p>시간</p>
                                             </Col>
@@ -229,9 +213,9 @@ const FriendDetail = () => {
                                             <Col sm={1} className='m-auto color-darkBlue p-zero text-center'>
                                                 <p>중요</p>
                                             </Col>
-                                            <Col sm={2} className='m-auto color-darkBlue p-zero text-center'>
+                                            {isFriend ? "" : <Col sm={2} className='m-auto color-darkBlue p-zero text-center'>
                                                 <Button onClick={modalShow}>+</Button >
-                                            </Col>
+                                            </Col>}
                                         </Row>
                                         {/*비동기 문제 &&로 해결*/
                                             state.dateSchedule[clickedDate] && state.dateSchedule[clickedDate].map(function(notUse, i){
@@ -242,14 +226,15 @@ const FriendDetail = () => {
                                                     evolLevel={evolLevel} 
                                                     setEvolLevel={setEvolLevel}
                                                     setTargetPet={setTargetPet}
-                                                    setCurrentFriendShip={setCurrentFriendShip}/>
+                                                    setCurrentFriendShip={setCurrentFriendShip}
+                                                    isFriend={isFriend}/>
                                                 )
                                             })
                                         }
                                     </Stack>
                                 </div>
                             </Stack>
-                            {isPetInitialized && <PetUI targetPet={targetPet} currentFriendShip={currentFriendShip} setCurrentFriendShip={setCurrentFriendShip} isPositiveFriendShip={isPositiveFriendShip}/>}
+                            {isPetInitialized && <PetUI targetPet={targetPet} currentFriendShip={currentFriendShip} setCurrentFriendShip={setCurrentFriendShip} isPositiveFriendShip={isPositiveFriendShip} isFriend={isFriend}/>}
                             {isPetInitialized && <PetSpaceComponent targetPetData={targetPet} evolLevel={evolLevel} isPositiveFriendShip={isPositiveFriendShip} currentFriendShip={currentFriendShip}/>}
                         </Stack>
                     </Col>
