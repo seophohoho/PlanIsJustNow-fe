@@ -10,13 +10,17 @@ import moment from 'moment';
 import axios from "axios";
 import serverUrl from "../serverConfig";
 import { useNavigate } from "react-router-dom";
+import handleError from "../function/errorHandler";
+import { useState } from "react";
 
 function ScheduleAddModal(props){
   const state = useSelector(state => state)
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { clickedDate } = props;
+  const [isLoading, setIsLoding] = useState(false)
   const currentTime = moment().format('HH:mm');
+  const importantCount = state.dateSchedule[clickedDate] ? state.dateSchedule[clickedDate].filter(item => item.important).length : 0;
 
   /*초기화 상태*/
   const tempSchedule = {
@@ -42,42 +46,40 @@ function ScheduleAddModal(props){
   function modalClose(){dispatch(addHandleClose())}
 
   const addConfirmHandler = function(e){
+    setIsLoding(true)
     tempSchedule.clickedDate = clickedDate;
-    console.log(currentTime)
-    axios.post(`${serverUrl}/api/todolist/add`, {
-      "title":tempSchedule.title,
-      "startDate": tempSchedule.clickedDate,
-      "time": tempSchedule.time,
-      "isImportant": tempSchedule.important ? 1 : 0 
-  }, {withCredentials: true})
-    .then(response => {
+      
+    console.log(importantCount,tempSchedule.important, tempSchedule.title.length)
+    //중요표시는 3개까지, 일정은 1글자 이상 입력 require 제어
+    if((importantCount === 3 && tempSchedule.important === true) || tempSchedule.title.length === 0){
+      if(tempSchedule.title.length === 0){
+        alert("일정을 입력해 주세요!")
+        setIsLoding(false)
+      }
+      else{
+        alert("중요 표시는 3개를 초과하여 등록할 수 없습니다!")
+        setIsLoding(false)
+      }
+    }
+    else{
+      axios.post(`${serverUrl}/api/todolist/add`, {
+        "title":tempSchedule.title,
+        "startDate": tempSchedule.clickedDate,
+        "time": tempSchedule.time,
+        "isImportant": tempSchedule.important ? 1 : 0 
+      }, {withCredentials: true})
+      .then(response => {
         tempSchedule.idx = response.data.data
         dispatch(scheduleStateAdd(tempSchedule));
         console.log(tempSchedule.time + "!!!!time");
         modalClose();
-    })
-    .catch((error) => {
-      if(error.response){ // 런타임 에러방지 error.response가 있는지 먼저 확인함
-          if(error.response.status === 401) { // 토큰 만료 리다이렉트
-              console.log("Error status: " + error.response.status);
-              alert("로그인을 다시해주세요!");
-              modalClose()/*모달 닫고 이동 시켜야 함*/
-              navigate('/');
-          }
-          else{
-            alert("서버와 연결에 실패했습니다.");
-          }
-      }
-      else{
-          console.error("Error: ", error);
-          if(error.message) {
-            alert("에러: " + error.message);
-          }
-          else{
-            alert("알 수 없는 에러가 발생했습니다.");
-          }
-      }
-  });
+        setIsLoding(false)
+      })
+      .catch((error) => {
+        handleError(error, navigate)
+        setIsLoding(false)
+    });
+    }
 };  
   
   const title = "일정추가";
@@ -137,7 +139,7 @@ function ScheduleAddModal(props){
         </Modal.Body>
 
         <Modal.Footer>
-        <Button variant="primary" className=""
+          <Button variant="primary" disabled={isLoading}
           onClick={addConfirmHandler}>
             확인
           </Button>
