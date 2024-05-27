@@ -148,7 +148,7 @@ function Signup() {
                       type="file" 
                       accept='.png, .jpg, .jpeg' 
                       className='form-Control' 
-                      onChange=""//handleChange
+                      onChange={handleFileChange}
                     />
                   </Stack>
                 </Col>
