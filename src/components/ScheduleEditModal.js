@@ -9,11 +9,14 @@ import { Checkbox } from "pretty-checkbox-react";
 import axios from "axios";
 import serverUrl from "../serverConfig";
 import { useNavigate } from "react-router-dom";
+import handleError from "../function/errorHandler";
+import { useState } from "react";
 
 function ScheduleEditModal(props){
   const state = useSelector(state => state)
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isLoading, setIsLoding] = useState(false)
   const {show, handleClose, i, clickedDate} = props;
   const ScheduleState = state.dateSchedule[clickedDate][i];
 
@@ -65,26 +68,7 @@ function ScheduleEditModal(props){
         }
     })
     .catch((error) => {
-      if(error.response){ // 런타임 에러방지 error.response가 있는지 먼저 확인함
-          if(error.response.status === 401) { // 토큰 만료 리다이렉트
-              console.log("Error status: " + error.response.status);
-              alert("로그인을 다시해주세요!");
-              handleClose()
-              navigate('/');
-          }
-          else{
-            alert("서버와 연결에 실패했습니다.");
-          }
-      }
-      else{
-          console.error("Error: ", error);
-          if(error.message) {
-            alert("에러: " + error.message);
-          }
-          else{
-            alert("알 수 없는 에러가 발생했습니다.");
-          }
-      }
+      handleError(error, navigate)
   });
     //클릭된 날짜와 변경된 날짜를 보냄
   };
@@ -165,7 +149,7 @@ function ScheduleEditModal(props){
         </Modal.Body>
 
         <Modal.Footer>
-        <Button variant="primary" 
+          <Button variant="primary" disabled={isLoading}
           onClick={confirmHandler}>
             확인
           </Button>
