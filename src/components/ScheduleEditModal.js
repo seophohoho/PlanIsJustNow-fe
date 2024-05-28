@@ -13,12 +13,12 @@ import handleError from "../function/errorHandler";
 import { useState } from "react";
 
 function ScheduleEditModal(props){
-  const state = useSelector(state => state)
+  const state = useSelector(state => state.dateSchedule)
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isLoading, setIsLoding] = useState(false)
   const {show, handleClose, i, clickedDate} = props;
-  const ScheduleState = state.dateSchedule[clickedDate][i];
+  const ScheduleState = state[clickedDate][i];
 
   const tempSchedule = {
     clickedDate: clickedDate,
@@ -51,8 +51,7 @@ function ScheduleEditModal(props){
   
     const { title, important, idx, time, editDate, clickedDate } = tempSchedule;
     const targetDate = editDate === "" ? clickedDate : editDate;
-    const importantCount = state.dateSchedule[targetDate]
-    ? state.dateSchedule[targetDate].filter((item, idx) => item.important).length : 0;
+    const importantCount = state[targetDate] ? state[targetDate].filter((item, idx) => item.important).length : 0;
     if(title.length === 0 || importantCount === 3 && important){
       if(title.length === 0) {
         alert("일정을 입력해 주세요!");
@@ -101,7 +100,7 @@ function ScheduleEditModal(props){
               <Form.Control 
                   type='input'
                   className="schedule-title m-left-13p"
-                  defaultValue={ state.dateSchedule[clickedDate][i].title }
+                  defaultValue={ state[clickedDate][i].title }
                   onChange={titleHandler}
                   autoComplete="off"
               />{/*글자 50자 제한 필요*/}
@@ -115,7 +114,7 @@ function ScheduleEditModal(props){
                   inputReadOnly={true} 
                   onChange={TimePickerHandler} 
                   defaultOpenValue={dayjs('HH:mm')}
-                  defaultValue={dayjs(state.dateSchedule[clickedDate][i].time,'HH:mm')}
+                  defaultValue={dayjs(state[clickedDate][i].time,'HH:mm')}
                   format="HH:mm"
                   allowClear={false}
                   />
@@ -142,7 +141,7 @@ function ScheduleEditModal(props){
                   icon={<i className="zmdi zmdi-star mdc-text-amber"/>}
                   shape="curve"
                   onChange={checkBoxHandler}
-                  defaultChecked={state.dateSchedule[clickedDate][i].important} 
+                  defaultChecked={state[clickedDate][i].important} 
                   />
             </Form.Group>
           </Form>
