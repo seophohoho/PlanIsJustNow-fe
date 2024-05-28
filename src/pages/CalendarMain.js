@@ -56,7 +56,6 @@ const CalendarMain = () => {
                     dispatch(userDataInit(response.data.userInfo));
                     const targetPet = response.data.data.filter(item => item.lastChoice === 1);
                     if (targetPet.length > 0) {
-                        console.log("targetPet",targetPet)
                         setTargetPet(targetPet);
                         setCurrentFriendShip(targetPet[0].currentFriendShip)
                         setEvolLevel(targetPet[0].evol);
@@ -87,7 +86,6 @@ const CalendarMain = () => {
         });
     
         Object.keys(state.dateSchedule).forEach(date => {
-            console.log(date)
             state.dateSchedule[date].forEach(event => {
                 if (event.important){
                     const eventState = { 
@@ -95,7 +93,6 @@ const CalendarMain = () => {
                         start: date,
                     }
                     setImportantEvents([...importantEvents, eventState]);
-                    console.log(importantEvents)
                 }
                 
             });
@@ -106,7 +103,6 @@ const CalendarMain = () => {
     const fetchScheduleData = async () => {
         try {
             const response = await axios.get(`${serverUrl}/api/todolist/select`, { withCredentials: true });
-            console.log("todo response", response.data.data);
             dispatch(scheduleInit(response.data.data));
         } catch (error) {
             handleError(error,navigate);
