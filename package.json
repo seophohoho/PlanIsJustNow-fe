@@ -21,6 +21,7 @@
     "bootstrap": "^5.3.2",
     "dayjs": "^1.11.10",
     "http-proxy-middleware": "^2.0.6",
+    "js-cookie": "^3.0.5",
     "material-icons": "^1.13.12",
     "phaser": "^3.80.1",
     "pretty-checkbox-react": "^3.2.0",
