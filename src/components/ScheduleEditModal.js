@@ -46,43 +46,43 @@ function ScheduleEditModal(props){
     tempSchedule.title = e.target.value;
   }
 
-  const confirmHandler = function(e){
+  const confirmHandler = async () => {
     tempSchedule.index = i;
-
-    axios.post(`${serverUrl}/api/todolist/modify`,{
-      "idx": tempSchedule.idx,
-      "title": tempSchedule.title,
-      "startDate": tempSchedule.editDate === "" ? tempSchedule.clickedDate : tempSchedule.editDate,
-      "time": tempSchedule.time,
-      "isImportant": tempSchedule.important ? 1 : 0 
-
-    },{withCredentials: true})
-    .then((response)=>{
-        if(response.status == 401){
-          navigate("/")
-        }
-        else{
-          console.log(ScheduleState)
-          dispatch(scheduleStateEdit(tempSchedule))
+  
+    const { title, important, idx, time, editDate, clickedDate } = tempSchedule;
+    const targetDate = editDate === "" ? clickedDate : editDate;
+    const importantCount = state.dateSchedule[targetDate]
+    ? state.dateSchedule[targetDate].filter((item, idx) => item.important).length : 0;
+    if(title.length === 0 || importantCount === 3 && important){
+      if(title.length === 0) {
+        alert("일정을 입력해 주세요!");
+      }
+      else if (importantCount === 3 && important) {
+        alert("중요 표시는 3개를 초과하여 등록할 수 없습니다!");
+      }
+    }else{
+      try {
+        const response = await axios.post(`${serverUrl}/api/todolist/modify`, {
+          idx,
+          title,
+          startDate: targetDate,
+          time,
+          isImportant: important ? 1 : 0,
+        }, { withCredentials: true });
+    
+        if (response.status === 401) {
+          navigate("/");
+        } else {
+          dispatch(scheduleStateEdit(tempSchedule));
           handleClose();
         }
-    })
-    .catch((error) => {
-      handleError(error, navigate)
-  });
-    //클릭된 날짜와 변경된 날짜를 보냄
+      } catch (error) {
+        handleError(error, navigate);
+      }
+    }
   };
-
   
-  
-  const title = "일정수정";//임시, 재활용 하려면 비슷한 형식으로 해야할 듯
-  //title state에 따라 바뀌게?? 초기값, 확인버튼의 동작 이벤트를 다르게 해야함 등등
-
-  //추가의 경우 입력 form이 완전 비어있는 상태
-  //events 추가 조건 함수 해당일의 important가 3개 초과이면 안됨--
-  //modal의 확인 버튼을 누를때 해당 조건을 모두 판단하고 state를 변경하는 식으로
-  //일정의 각 항목의 정보를 나타내는 title 필요 sticky로 일정 추가 버튼도 여기 배치
-  //complete의 경우 모달로 확인 사실을 확정하고 disable 하는 방식으로
+  const title = "일정수정";
 
   return (
     <> {/*todo 올바른 form control 할당 버튼 디자인 변경*/}

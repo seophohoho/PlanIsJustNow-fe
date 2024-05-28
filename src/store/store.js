@@ -91,17 +91,6 @@ const dateSchedule = createSlice({
       const schedule = state[clickedDate][index];
       const targetDate = editDate === "" ? clickedDate : editDate;
     
-      if (title.length === 0) {
-        alert("일정을 입력해 주세요!");
-        return;
-      }
-    
-      const importantCount = state[targetDate]?.filter((item, idx) => idx !== index && item.important).length || 0;
-      if (importantCount >= 3 && important) {
-        alert("중요 표시는 3개를 초과하여 등록할 수 없습니다!");
-        return;
-      }
-    
       // 원본 일정을 제거
       if (clickedDate === targetDate) {
         state[clickedDate].splice(index, 1);
