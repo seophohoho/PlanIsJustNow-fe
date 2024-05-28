@@ -48,9 +48,9 @@ const FriendDetail = () => {
     },[currentFriendShip]);
 
     useEffect(()=>{ // 펫 도감 정보 초기화
-        axios.post(`${serverUrl}/api/friend/select-detail-pet`
-        ,{email : email}
-        ,{withCredentials: true})
+        axios.post(`${serverUrl}/api/friend/select-detail-pet`,
+        {email : email},
+        {withCredentials: true})
         .then((response)=>{
             if(response.data.messageDetail === "nothing"){
                 alert("사용자의 펫이 정해지지 않은 상태입니다!")
@@ -63,7 +63,7 @@ const FriendDetail = () => {
                     setTargetPet(targetPet);
                     setCurrentFriendShip(targetPet[0].currentFriendShip)
                     setEvolLevel(targetPet[0].evol);
-                    setIsPetInitialized(true);  // targetPet이 초기화되었음을 설정
+                    setIsPetInitialized(true);// targetPet이 초기화되었음을 설정
                 }
             }
         })
