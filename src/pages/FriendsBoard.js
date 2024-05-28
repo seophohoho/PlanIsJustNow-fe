@@ -50,32 +50,31 @@ function FriendBoard() {
     fetchData();
   }, [refresh]); // refresh 상태가 변경될 때마다 useEffect 실행
 
-  function friendRequestHandler() {
-    axios.post(`${serverUrl}/api/friend/request`, { "email": requestEmail }, { withCredentials: true })
-      .then((response) => {
-        if (response.status === 200) {
-          alert("친구요청이 완료되었습니다!");
-          setRefresh(!refresh); // 상태 변경으로 useEffect 트리거
-        } 
-      })
-      .catch((error) => {
-        console.log(error)
-        if (error.response && error.response.data && error.response.data.messageDetail) {
-          if (error.response.data.messageDetail === "Self Request error") {
-            alert("본인에게 친구추가를 할 수 없습니다!")
-          } else if (error.response.data.messageDetail === "Exist Request error") {
-            alert("이미 친구 요청 대기중인 상대입니다.")
-          } else if (error.response.data.messageDetail === "Exist Target Request error") {
-            alert("상대에게 온 친구요청이 이미 존재합니다.")
-          } else if (error.response.data.messageDetail === "Exist Friend error") {
-            alert("이미 친구 상태인 대상입니다!")
-          } else {
-            handleError(error, navigate);
-          }
+  const friendRequestHandler = async () => {
+    try{
+      const response = await axios.post(`${serverUrl}/api/friend/request`, { "email": requestEmail }, { withCredentials: true })
+      if (response.status === 200) {
+        alert("친구요청이 완료되었습니다!");
+        setRefresh(!refresh); // 상태 변경으로 useEffect 트리거
+      } 
+    }
+    catch(error){
+      if (error.response && error.response.data && error.response.data.messageDetail) {
+        if (error.response.data.messageDetail === "Self Request error") {
+          alert("본인에게 친구추가를 할 수 없습니다!")
+        } else if (error.response.data.messageDetail === "Exist Request error") {
+          alert("이미 친구 요청 대기중인 상대입니다.")
+        } else if (error.response.data.messageDetail === "Exist Target Request error") {
+          alert("상대에게 온 친구요청이 이미 존재합니다.")
+        } else if (error.response.data.messageDetail === "Exist Friend error") {
+          alert("이미 친구 상태인 대상입니다!")
         } else {
           handleError(error, navigate);
         }
-      });
+      } else {
+        handleError(error, navigate);
+      }
+    }
   }
   
 
