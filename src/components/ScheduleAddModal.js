@@ -45,7 +45,7 @@ function ScheduleAddModal(props){
 
   function modalClose(){dispatch(addHandleClose())}
 
-  const addConfirmHandler = function(e){
+  const addConfirmHandler = async() => {
     setIsLoding(true)
     tempSchedule.clickedDate = clickedDate;
       
@@ -62,7 +62,7 @@ function ScheduleAddModal(props){
       }
     }
     else{
-      axios.post(`${serverUrl}/api/todolist/add`, {
+      await axios.post(`${serverUrl}/api/todolist/add`, {
         "title":tempSchedule.title,
         "startDate": tempSchedule.clickedDate,
         "time": tempSchedule.time,
