@@ -76,19 +76,19 @@ function Schedule(props){
     
     const defaultItems = [
         { //issue: 현재 <label> 바깥 태그(li) 클릭 시 이벤트가 발생하지 않는 문제 존재
-          label: <label className="color-violet text-borderline-black" onClick={editHandleShow}>일정 수정</label>,
+          label: <label className="color-darkBlue" onClick={editHandleShow}>일정 수정</label>,
           key: '0',
         },
         {type: 'divider'},
         {
-          label: <label className="color-violet text-borderline-black" onClick={scheduleDeleteHandler}>일정 삭제</label>,
+          label: <label className="color-darkBlue" onClick={scheduleDeleteHandler}>일정 삭제</label>,
           key: '1',
         }
     ]
 
     const completItems = [
         {
-          label: <label className="color-violet text-borderline-black" onClick={scheduleDeleteHandler}>일정 삭제</label>,
+          label: <label className="color-darkBlue" onClick={scheduleDeleteHandler}>일정 삭제</label>,
           key: '1',
         }
     ]
@@ -102,7 +102,8 @@ function Schedule(props){
                 confirmHandleClose={confirmHandleClose} 
                 i={i} 
                 clickedDate={clickedDate} 
-                Message="한번 완료된 일정은 되돌릴 수 없습니다." 
+                titleMessage={"잘하셨어요!"}
+                Message={"완료된 일정을 다시 확인해 주세요 완료된 일정은 수정할 수 없어요!"}
                 eventHandler={confirmEvent}>
             </ConfirmModal>
             
