@@ -70,8 +70,9 @@ function TabChildrenComponent(props) {
         confirmShow={confirmShow}
         confirmHandleClose={confirmHandleClose}
         i={index}
-        Message="정말로 제거하시겠습니까?"
-        eventHandler={() => deleteHandler(index)}
+        titleMessage={"정말로 하시겠습니까?"}
+        Message="삭제하시겠습니까?"
+        eventHandler={deleteHandler(index)}
       />
       <Col sm={3} className='text-center impo-margin-zero p-zero'>
       </Col>
