@@ -72,7 +72,7 @@ function TabChildrenComponent(props) {
         i={index}
         titleMessage={"정말로 하시겠습니까?"}
         Message="삭제하시겠습니까?"
-        eventHandler={deleteHandler(index)}
+        eventHandler={() => deleteHandler(index)}
       />
       <Col sm={3} className='text-center impo-margin-zero p-zero'>
       </Col>
