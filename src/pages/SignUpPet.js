@@ -83,7 +83,7 @@ function SignUpPet() {
             if(response.data){
                 if(response.data.messageTitle == "success"){
                     alert("펫이 선택되었습니다!")
-                    navigate('/calendar')
+                    navigate('/')
                 }
                 else{
                     alert("서버와 연결에 실패하였습니다.")
@@ -100,7 +100,7 @@ function SignUpPet() {
             <header>
                 <Navbar expand="md" className="bg-body-tertiary">
                     <Container>
-                    <Navbar.Brand as={Link} to="/calendar" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: 'inherit' }}>
+                    <Navbar.Brand as={Link} to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: 'inherit' }}>
                         <PiDogFill size={60} />
                         <h1 style={{ display: 'inline', marginLeft: '10px' }}>PETTODO</h1>
                     </Navbar.Brand>

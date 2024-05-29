@@ -20,7 +20,7 @@ function Login() {
                     navigate('/signup-pet'); // 펫 등록 페이지로 이동
                 } else if (response.data.messageDetail === "has") {
                     alert("이미 로그인 되어 있습니다!");
-                    navigate('/calendar'); // 달력 페이지로 이동
+                    navigate('/'); // 달력 페이지로 이동
                 }
             })
             .catch((error) => {
@@ -40,7 +40,7 @@ function Login() {
                 .then((response) => {
                     if (response.status === 200) {
                         alert("로그인 성공 status: 200");
-                        navigate('/calendar');
+                        navigate('/');
                     } else if (response.status === 400) {
                         if (response.messageDetail === "Not matched error") {
                             alert("비밀번호 또는 아이디가 일치하지 않습니다.");
@@ -54,7 +54,7 @@ function Login() {
                         if (error.response.status === 401) {
                             console.log("Error status: " + error.response.status);
                             alert("로그인을 다시해주세요!");
-                            navigate('/');
+                            navigate('/sign-in');
                         } else if (error.response.data.messageDetail === "Not matched error") {
                             alert("아이디 혹은 비밀번호가 일치하지 않습니다.");
                         } else {
@@ -160,7 +160,7 @@ function Login() {
                         <p className='color-violet'>ID 또는 비밀번호를 잃어버리셨나요?</p>
                     </Col>
                     <Col>
-                        <p className='color-violet'><Link to='/'>ID 찾기</Link>/<Link to='/reset-password'>비밀번호 찾기</Link></p>
+                        <p className='color-violet'><Link to='/sign-in'>ID 찾기</Link>/<Link to='/reset-password'>비밀번호 찾기</Link></p>
                     </Col>
                 </Stack>
             </footer>

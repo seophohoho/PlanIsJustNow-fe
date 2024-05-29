@@ -26,9 +26,9 @@ function App() {
     <Suspense fallback={<CalendarLoading/>}>
       <Routes>
         <Route path='/test' element={<CalendarLoading/>}/>
-        <Route path='/' element={<Login/>}/> {/* nested route -> id,password 찾기? */}
+        <Route path='/sign-in' element={<Login/>}/> {/* nested route -> id,password 찾기? */}
         <Route path='/reset-password' element={<FindPassword/>}></Route>
-        <Route path='/Calendar' element={<CalendarMain/>}/>
+        <Route path='/' element={<CalendarMain/>}/>
         <Route path='/petdex' element={<Petdex/>}/> {/* calendar -> nest? */}
         <Route path='/friend-board' element={<FriendBoard/>}/> {/* calendar -> nest? */}
         <Route path="/:obfuscatedEmail" element={<FriendDetail />} />

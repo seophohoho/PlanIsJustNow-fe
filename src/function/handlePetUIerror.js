@@ -5,7 +5,7 @@ const handlePetUIerror = (error, id, navigate) => {
             case 401:
                 console.log("Error status: " + error.response.status);
                 alert("로그인을 다시해주세요!");
-                navigate('/');
+                navigate('/sign-in');
                 break;
             case 400:
                 if (id === 'hands') {

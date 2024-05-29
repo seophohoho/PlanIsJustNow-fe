@@ -4,7 +4,7 @@ const handleError = (error, navigate) => {
       if (error.response.status === 401) { // 토큰 만료 리다이렉트
         console.log("Error status: " + error.response.status);
         alert("로그인을 다시해주세요!");
-        navigate('/');
+        navigate('/sign-in');
       } else {
         alert("서버와 연결에 실패했습니다.");
       }
