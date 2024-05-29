@@ -9,6 +9,7 @@ import { Form, Col, Row, Button, Container, Navbar, Image, Stack } from 'react-b
 import { PiDogFill } from 'react-icons/pi';
 import { Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
+import handleError from '../function/errorHandler.js';
 
 function Signup() {
   const [inputTitle, setInputTitle] = useState(["e-mail","인증번호","비밀번호","비밀번호 확인","닉네임"]);
@@ -48,6 +49,7 @@ function Signup() {
   const fileInputRef = useRef(null);
 
   const handleFileChange = (event) => {
+    console.log(event.target.files[0],)
     const file = event.target.files[0];
     if (file) {
       setSelectedFile(file);
@@ -56,28 +58,36 @@ function Signup() {
   };
   // public에 이미지 파일저장 해당 파일 이용하는 형식으로 변경
 
-  const handleSubmit = (event) => {
+
+    const handleSubmit = async () => {
     setIsNextButtonDisabled(true);
-    axios.post(`${serverUrl}/api/account/signup`, {
-      "email": email,
-      "password": password,
-      "nickname": nickname,
+
+    const formData = new FormData();
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("nickname", nickname);
+    if (selectedFile) {
+      formData.append("file", selectedFile);
+    }
+    //response를 따로 빼서 try catch로 하는 깔끔한 방법 있던데 고려해보자
+    await axios.post(`${serverUrl}/api/account/signup`, formData, {
+      headers: {"Content-Type": "multipart/form-data"},
+      withCredentials: true
     })
-      .then((response) => {
-        if (response.status === 200) {
-          alert("회원가입이 완료되었습니다!!");
-          navigate('/');
-        }
-        if (response.status === 409){
-          alert("이미 사용중인 이메일 계정입니다!");
-          setIsNextButtonDisabled(false);
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-        alert("서버에 문제가 발생했습니다. 나중에 잠시 후 다시 시도해주세요");
+    .then((response)=>{
+      if (response.status === 200) {
+        alert("회원가입이 완료되었습니다!!");
+        navigate('/');
+      } else if (response.status === 409) {
+        alert("이미 사용중인 이메일 계정입니다!");
         setIsNextButtonDisabled(false);
-      });
+      }
+    })
+    .catch((error=>{
+      console.error(error);
+      alert("서버에 문제가 발생했습니다. 나중에 잠시 후 다시 시도해주세요");
+      setIsNextButtonDisabled(false);
+    }))
   };
   
   return (
