@@ -1,17 +1,12 @@
 import {Modal, Button} from "react-bootstrap"
-import { useDispatch } from "react-redux"
 import "@djthoms/pretty-checkbox"
-import { useNavigate } from "react-router-dom"
 
 
 function ConfirmModal(props){
-    const dispatch = useDispatch(state=> state)
-    const navigate = useNavigate()
     const {
       confirmShow,
       confirmHandleClose,
-      i,
-      clickedDate,
+      titleMessage,
       Message,
       eventHandler
     } = props;
@@ -21,7 +16,7 @@ function ConfirmModal(props){
         <Modal show={confirmShow} onHide={confirmHandleClose} className="p-400" >
 
           <Modal.Header closeButton>
-            <Modal.Title className="color-darkBlue">정말하시겠습니까?</Modal.Title>
+            <Modal.Title className="color-darkBlue">{titleMessage}</Modal.Title>
           </Modal.Header>
 
           <Modal.Body>
