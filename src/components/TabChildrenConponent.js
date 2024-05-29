@@ -23,55 +23,45 @@ function TabChildrenComponent(props) {
     navigate(`/${obfuscatedEmail}`);
   };
 
-  function deleteHandler(user) {
-    setConfirmShow(true)
-    axios.post(`${serverUrl}/api/friend/delete`,
-    { email: user.email },
-    { withCredentials: true })
-    .then((response) => {
+  const deleteHandler = async (user) => {
+    try{
+      setConfirmShow(true)
+      const response = axios.post(`${serverUrl}/api/friend/delete`,{ email: user.email },{ withCredentials: true })
       if (response.status === 200) {
-        alert("삭제");
         setRefresh(!refresh); // 상태 변경으로 useEffect 트리거
         setConfirmShow(false);
-
       }
-    })
-    .catch((error) => {
+    }
+    catch(error){
       handleError(error, navigate);
-    });
+    }
     setRefresh(!refresh); // 상태 변경으로 useEffect 트리거
   }
 
-  function refuseHandler(user) {
-    axios.post(`${serverUrl}/api/friend/request-reject`, 
-    { email: user.email }, 
-    { withCredentials: true })
-    .then((response) => {
+  const refuseHandler = async (user) => {
+    try{
+      const response = axios.post(`${serverUrl}/api/friend/request-reject`,{ email: user.email },{ withCredentials: true })
       if (response.status === 200) {
-        alert("거절");
         dispatch(subCount())
         setRefresh(!refresh); // 상태 변경으로 useEffect 트리거
       }
-    })
-    .catch((error) => {
+    }
+    catch(error){
       handleError(error, navigate);
-    });
+    }
   }
 
-  function acceptHandler(user) {
-    axios.post(`${serverUrl}/api/friend/request-accept`,
-    { email: user.email },
-    { withCredentials: true })
-    .then((response) => {
+  const acceptHandler = async (user) => {
+    try{
+      const response = axios.post(`${serverUrl}/api/friend/request-accept`,{ email: user.email },{ withCredentials: true })
       if (response.status === 200) {
-        alert("수락");
         dispatch(subCount())
         setRefresh(!refresh); // 상태 변경으로 useEffect 트리거
       }
-    })
-    .catch((error) => {
+    }
+    catch(error){
       handleError(error, navigate);
-    });
+    }
   }
 
   return (
