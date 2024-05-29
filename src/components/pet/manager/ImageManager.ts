@@ -2,13 +2,15 @@ import { BEHAVIOR_SIZE, petList, petNatureList } from "../constants/Game";
 import {CANVAS_WIDTH,CANVAS_HEIGHT} from "../constants/Game";
 import {MaxFrame,FrameRate,DELAY_RATE} from "../constants/MaxFrame";
 
+const s3Url = "https://planisjustnow-bukkit.s3.ap-northeast-2.amazonaws.com/pet";
+
 export class ImageManager{
     constructor(private phaser:Phaser.Scene){}
 
     loadPetImage(petId:number,evolId:number){
         console.log(petId,evolId);
         for(let j=0;j<=BEHAVIOR_SIZE;j++){
-            this.phaser.load.atlas(`${petId}_${evolId}_${j}`,`sprite/${petId}/${petId}_${evolId}_${j}.png`,`sprite/${petId}/${petId}_${evolId}_${j}.json`);
+            this.phaser.load.atlas(`${petId}_${evolId}_${j}`,`${s3Url}/${petId}/${petId}_${evolId}_${j}.png`,`${s3Url}/${petId}/${petId}_${evolId}_${j}.json`);
         }
         this.phaser.load.start();
     }
