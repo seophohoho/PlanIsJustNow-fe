@@ -34,14 +34,17 @@ const NavbarComponent = (props) => {
     return(
         <Navbar expand="md" className="bg-body-tertiary">{/**추후 Navbar도 컴포넌트화 해서 다른페이지에 적용시키기 */}
             <Container>
-                <Navbar.Brand as={Link} to="/calendar" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: 'inherit' }}>
+                <Navbar.Brand as={Link} to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: 'inherit' }}>
                     <PiDogFill size={60} />
                     <h1 style={{ display: 'inline', marginLeft: '10px' }}>PETTODO</h1>
                 </Navbar.Brand>
                 <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">{/*추후 아이콘 추가*/}
+                    <Badge>
+                        <Nav.Link className='font-size-15' onClick={()=>{navigate("/")}}>Home</Nav.Link>
+                    </Badge>
                     <Badge count={countState}>
-                        <Nav.Link className='font-size-15' onClick={()=>{navigate("/Friend-board")}}>Friends</Nav.Link>
+                        <Nav.Link className='font-size-15 margin-left' onClick={()=>{navigate("/Friend-board")}}>Friends</Nav.Link>
                     </Badge>
                     <Badge>
                         <Nav.Link className='font-size-15 margin-left' onClick={()=>{navigate("/petdex")}}>Petdex</Nav.Link>
