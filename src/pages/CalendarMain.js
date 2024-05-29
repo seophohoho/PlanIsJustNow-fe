@@ -21,7 +21,7 @@ import 'moment/locale/ko'
 import handleError from '../function/errorHandler';
 
 const CalendarMain = () => {
-    const state = useSelector((state)=> {return state});
+    const state = useSelector((state)=> {return state.dateSchedule});
     const userDataState = useSelector((state)=> {return state.userData});
     const [clickedDate, setClickedDate] = useState("");
     const [targetPet, setTargetPet] = useState(null);
@@ -73,8 +73,8 @@ const CalendarMain = () => {
     useEffect(() => {
         const newImportantEvents = [];
         //Object.keys 인자로 들어간 객채의 모든 key를 반환
-        Object.keys(state.dateSchedule).forEach(date => {
-            state.dateSchedule[date].forEach(event => {
+        Object.keys(state).forEach(date => {
+            state[date].forEach(event => {
             if (event.important) {
                 const eventState = {
                     title: event.title,
@@ -85,8 +85,8 @@ const CalendarMain = () => {
             });
         });
     
-        Object.keys(state.dateSchedule).forEach(date => {
-            state.dateSchedule[date].forEach(event => {
+        Object.keys(state).forEach(date => {
+            state[date].forEach(event => {
                 if (event.important){
                     const eventState = { 
                         title : event.title,
@@ -98,7 +98,7 @@ const CalendarMain = () => {
             });
         });
         setImportantEvents(newImportantEvents);
-    }, [state.dateSchedule]); // state.dateSchedule가 변경될 때마다 이 함수를 다시 실행
+    }, [state]); // state 변경될 때마다 이 함수를 다시 실행
 
     const fetchScheduleData = async () => {
         try {
@@ -137,7 +137,7 @@ const CalendarMain = () => {
                             }}
                             dayCellContent={(e) => {
                                 const dateStr = moment(e.date).format('YYYY-MM-DD');
-                                const eventsForDay = state.dateSchedule[dateStr] ? state.dateSchedule[dateStr].filter(event => !event.important) : [];
+                                const eventsForDay = state[dateStr] ? state[dateStr].filter(event => !event.important) : [];
                                 return (
                                   <>
                                     {(eventsForDay.length > 0) ? 
@@ -188,7 +188,7 @@ const CalendarMain = () => {
                                                 </Col>
                                             </Row>
                                             {/*비동기 문제 &&로 해결*/
-                                                state.dateSchedule[clickedDate] && state.dateSchedule[clickedDate].map(function(notUse, i){
+                                                state[clickedDate] && state[clickedDate].map(function(notUse, i){
                                                     return(
                                                         <Schedule 
                                                         i={i} 

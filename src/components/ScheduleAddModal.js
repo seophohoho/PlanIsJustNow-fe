@@ -14,13 +14,14 @@ import handleError from "../function/errorHandler";
 import { useState } from "react";
 
 function ScheduleAddModal(props){
-  const state = useSelector(state => state)
+  const state = useSelector(state => state.dateSchedule)
+  const addshowState = useSelector(state => state.addShow)
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { clickedDate } = props;
   const [isLoading, setIsLoding] = useState(false)
   const currentTime = moment().format('HH:mm');
-  const importantCount = state.dateSchedule[clickedDate] ? state.dateSchedule[clickedDate].filter(item => item.important).length : 0;
+  const importantCount = state[clickedDate] ? state[clickedDate].filter(item => item.important).length : 0;
 
   /*초기화 상태*/
   const tempSchedule = {
@@ -90,7 +91,7 @@ function ScheduleAddModal(props){
 
   return (
     <> {/*todo 올바른 form control 할당 버튼 디자인 변경*/}
-      <Modal show={state.addShow.show} onHide={modalClose} className="p-400" >
+      <Modal show={addshowState.show} onHide={modalClose} className="p-400" >
 
         <Modal.Header closeButton>
           <Modal.Title className="color-darkBlue">{ title }</Modal.Title>

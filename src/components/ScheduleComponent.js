@@ -17,8 +17,8 @@ import handleError from "../function/errorHandler";
 
 function Schedule(props){
     const {i, clickedDate, evolLevel, setEvolLevel, setCurrentFriendShip, isFriend} = props
-    const state = useSelector((state)=> state)/*자주 쓰는거 변수로 줄여야겠음 --> root로 가져오지마셈 나중에 수정*/
-    const ScheduleState = state.dateSchedule[clickedDate][i];
+    const state = useSelector((state)=> state.dateSchedule)
+    const ScheduleState = state[clickedDate][i];
     const dispatch = useDispatch();
     const navigate = useNavigate();
     /* confirm modal control */
@@ -48,7 +48,7 @@ function Schedule(props){
 
     const scheduleDeleteHandler = async () => {
         try{
-            const response = await axios.put(`${serverUrl}/api/todolist/delete`, { "idx" : state.dateSchedule[clickedDate][i].idx},{withCredentials: true})
+            const response = await axios.put(`${serverUrl}/api/todolist/delete`, { "idx" : state[clickedDate][i].idx},{withCredentials: true})
             dispatch(scheduleDelete({index : i, clickedDate : clickedDate}))
         }
         catch (error){
@@ -59,7 +59,7 @@ function Schedule(props){
     const confirmEvent = async () =>{
         confirmHandleClose();
         await axios.post(`${serverUrl}/api/todolist/complete`,
-        {idx : state.dateSchedule[clickedDate][i].idx},
+        {idx : state[clickedDate][i].idx},
         {withCredentials: true})
         .then((response)=>{
             dispatch(scheduleComplete({clickedDate: clickedDate, index: i, package: true }))
@@ -76,19 +76,19 @@ function Schedule(props){
     
     const defaultItems = [
         { //issue: 현재 <label> 바깥 태그(li) 클릭 시 이벤트가 발생하지 않는 문제 존재
-          label: <label className="color-violet" onClick={editHandleShow}>일정 수정</label>,
+          label: <label className="color-violet text-borderline-black" onClick={editHandleShow}>일정 수정</label>,
           key: '0',
         },
         {type: 'divider'},
         {
-          label: <label className="color-violet" onClick={scheduleDeleteHandler}>일정 삭제</label>,
+          label: <label className="color-violet text-borderline-black" onClick={scheduleDeleteHandler}>일정 삭제</label>,
           key: '1',
         }
     ]
 
     const completItems = [
         {
-          label: <label className="color-violet" onClick={scheduleDeleteHandler}>일정 삭제</label>,
+          label: <label className="color-violet text-borderline-black" onClick={scheduleDeleteHandler}>일정 삭제</label>,
           key: '1',
         }
     ]
