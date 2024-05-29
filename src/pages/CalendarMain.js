@@ -191,6 +191,7 @@ const CalendarMain = () => {
                                                 state[clickedDate] && state[clickedDate].map(function(notUse, i){
                                                     return(
                                                         <Schedule 
+                                                        key={`${clickedDate}-${i}`}
                                                         i={i} 
                                                         clickedDate={clickedDate} 
                                                         evolLevel={evolLevel} 
