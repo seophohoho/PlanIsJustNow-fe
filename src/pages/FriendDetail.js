@@ -22,7 +22,7 @@ import 'moment/locale/ko'
 import handleError from '../function/errorHandler';
 
 const FriendDetail = () => {
-    const state = useSelector((state)=> {return state});
+    const state = useSelector((state)=> {return state.dateSchedule});
     const userDataState = useSelector((state)=> {return state.userData});
     const { obfuscatedEmail } = useParams();
     const [clickedDate, setClickedDate] = useState("");
@@ -75,8 +75,8 @@ const FriendDetail = () => {
     useEffect(() => {
         const newImportantEvents = [];
         //Object.keys 인자로 들어간 객채의 모든 key를 반환
-        Object.keys(state.dateSchedule).forEach(date => {
-            state.dateSchedule[date].forEach(event => {
+        Object.keys(state).forEach(date => {
+            state[date].forEach(event => {
             if (event.important) {
                 const eventState = {
                     title: event.title,
@@ -87,9 +87,9 @@ const FriendDetail = () => {
             });
         });
     
-        Object.keys(state.dateSchedule).forEach(date => {
+        Object.keys(state).forEach(date => {
             console.log(date)
-            state.dateSchedule[date].forEach(event => {
+            state[date].forEach(event => {
                 if (event.important){
                     const eventState = { 
                         title : event.title,
@@ -102,7 +102,7 @@ const FriendDetail = () => {
             });
         });
         setImportantEvents(newImportantEvents);
-    }, [state.dateSchedule]); // state.dateSchedule가 변경될 때마다 이 함수를 다시 실행
+    }, [state]); // state가 변경될 때마다 이 함수를 다시 실행
     
     const modalShow = ()=>{
         dispatch(addHandleShow())
@@ -134,7 +134,7 @@ const FriendDetail = () => {
                         }}
                         dayCellContent={(e) => {
                             const dateStr = moment(e.date).format('YYYY-MM-DD');
-                            const eventsForDay = state.dateSchedule[dateStr] ? state.dateSchedule[dateStr].filter(event => !event.important) : [];
+                            const eventsForDay = state[dateStr] ? state[dateStr].filter(event => !event.important) : [];
                             return (
                               <>
                                 {(eventsForDay.length > 0) ? 
@@ -161,7 +161,7 @@ const FriendDetail = () => {
                                     if(error.response.status === 401) { // 토큰 만료 리다이렉트
                                         console.log("Error status: " + error.response.status);
                                         alert("로그인을 다시해주세요!");
-                                        navigate('/');
+                                        navigate('/sign-in');
                                     }
                                     else{
                                       alert("서버와 연결에 실패했습니다.");
@@ -218,7 +218,7 @@ const FriendDetail = () => {
                                             </Col>}
                                         </Row>
                                         {/*비동기 문제 &&로 해결*/
-                                            state.dateSchedule[clickedDate] && state.dateSchedule[clickedDate].map(function(notUse, i){
+                                            state[clickedDate] && state[clickedDate].map(function(notUse, i){
                                                 return(
                                                     <Schedule 
                                                     i={i} 
