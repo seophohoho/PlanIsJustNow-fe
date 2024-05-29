@@ -1,11 +1,10 @@
 import {Modal, Button} from "react-bootstrap"
-import { useSelector, useDispatch } from "react-redux"
+import { useDispatch } from "react-redux"
 import "@djthoms/pretty-checkbox"
 import { useNavigate } from "react-router-dom"
 
 
 function ConfirmModal(props){
-    const state = useSelector(state => state)
     const dispatch = useDispatch(state=> state)
     const navigate = useNavigate()
     const {
