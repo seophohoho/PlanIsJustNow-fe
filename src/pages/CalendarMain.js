@@ -76,18 +76,17 @@ const CalendarMain = () => {
         // Object.keys 인자로 들어간 객체의 모든 key를 반환
         Object.keys(state).forEach(date => {
             state[date].forEach(event => {
-                if (event.important) {
-                    const eventState = {
-                        title: event.title,
-                        start: date, // FullCalendar에서는 'start'를 사용
+            if (event.important) {
+                const eventState = {
+                    title: event.title,
+                        start: date,
                         className: event.complete === 1 ? 'completed-event' : ''
-                    };
-                    newImportantEvents.push(eventState);
-                }
+                };
+                newImportantEvents.push(eventState);
+            }
             });
         });
 
-        // 한 번에 상태 업데이트
         setImportantEvents(newImportantEvents);
     }, [state]); // state 변경될 때마다 이 함수를 다시 실행
 
@@ -106,7 +105,7 @@ const CalendarMain = () => {
 
     return (
         <div>
-            <header>
+             <header>
                 <NavbarComponent userData={userDataState}></NavbarComponent>
             </header>
             <main>
@@ -115,54 +114,53 @@ const CalendarMain = () => {
                     <Row className="justify-content-md-center">
                         <Col lg="7">
                             <FullCalendar
-                                plugins={[interactionPlugin, dayGridPlugin, momentPlugin]}
-                                initialView="dayGridMonth"
-                                selectable={true}
+                            plugins={[interactionPlugin, dayGridPlugin, momentPlugin]} 
+                            initialView="dayGridMonth" 
+                            selectable={true}
                                 selectAllow={function (e) {
                                     // 클릭 가능한 날짜를 하루로 고정
-                                    if (e.end.getTime() / 1000 - e.start.getTime() / 1000 <= 86400) {
-                                        return true;
-                                    }
-                                }}
+                                if (e.end.getTime() / 1000 - e.start.getTime() / 1000 <= 86400) {
+                                    return true;
+                                }
+                            }}
                                 dateClick={function (data) {
                                     // 클릭된 날짜 반환
                                     setClickedDate(data.dateStr);
-                                }}
-                                dayCellContent={(e) => {
-                                    const dateStr = moment(e.date).format('YYYY-MM-DD');
-                                    const eventsForDay = state[dateStr] ? state[dateStr].filter(event => !event.important) : [];
-                                    return (
-                                        <>
+                            }}
+                            dayCellContent={(e) => {
+                                const dateStr = moment(e.date).format('YYYY-MM-DD');
+                                const eventsForDay = state[dateStr] ? state[dateStr].filter(event => !event.important) : [];
+                                return (
+                                  <>
                                             {eventsForDay.length > 0 ? (
                                                 // 일정이 있을 때 날짜와 일정 수 표기
                                                 <>
                                                     {e.dayNumberText}
                                                     <span className='daySchedule-font'>외 {eventsForDay.length}개</span>
                                                 </>
-                                            ) : (
+                                                ) : (
                                                 // 일정이 없을 때 날짜만 표기
                                                 <>{e.dayNumberText}</>
                                             )}
-                                        </>
-                                    );
-                                }}
-                                nextDayThreshold={'00:00'}
-                                datesSet={fetchScheduleData}
-                                events={importantEvents} /* events 배열은 달력에 표시될 이벤트 목록 */
-                                contentHeight="auto"
+                                  </>
+                                );
+                              }}
+                            nextDayThreshold={'00:00'}
+                            datesSet={fetchScheduleData}
+                            events={importantEvents} /* events 배열은 달력에 표시될 이벤트 목록 */
+                            contentHeight="auto"
                                 eventColor='rgb(86, 86, 208)' // events 블럭 색
-                                eventDisplay='block'
-                                headerToolbar={{
-                                    left: 'prev',
-                                    center: 'title',
-                                    right: 'next'
-                                }}
+                            eventDisplay='block'
+                            headerToolbar={{
+                                left:'prev',
+                                center:'title',
+                                right:'next'
+                             }}
                                 locale="en" /* 지역설정, 시간관련 메소드 사용할시 해당지역으로 설정됨 주의! */
                             />
                         </Col>
-                        <Col lg="5" className='min-w-430'>
-                            <Stack>
-                                {/* 나중에 줄바꿈 되는 모든 div에 클래스 적용  white-space:nowrap; <-- 스케줄 컴포넌트에 적용해보기 */}
+                        <Col lg="5">
+                            <Stack className=' min-w-430'>{/**나중에 줄바꿈 되는 모든 div에 클래스 적용  white-space:nowrap; <-- 스케줄 컴포넌트에 적용해보기 */}
                                 <Stack direction='horizontal' className='fc-direction-ltr-2v'>
                                     <div className='h-400 w-max section-schedule'>
                                         <Stack>
@@ -186,11 +184,11 @@ const CalendarMain = () => {
                                             {/* 비동기 문제 &&로 해결 */}
                                             {state[clickedDate] && state[clickedDate].map(function (notUse, i) {
                                                 return (
-                                                    <Schedule
+                                                        <Schedule 
                                                         key={`${clickedDate}-${i}`}
-                                                        i={i}
-                                                        clickedDate={clickedDate}
-                                                        evolLevel={evolLevel}
+                                                        i={i} 
+                                                        clickedDate={clickedDate} 
+                                                        evolLevel={evolLevel} 
                                                         setEvolLevel={setEvolLevel}
                                                         setTargetPet={setTargetPet}
                                                         setCurrentFriendShip={setCurrentFriendShip}
@@ -223,8 +221,8 @@ const CalendarMain = () => {
                     </Row>
                 </Container>
             </main>
-        </div>
-    );
+         </div>
+       );
 }
 
 export default CalendarMain;
