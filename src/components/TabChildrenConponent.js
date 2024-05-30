@@ -25,8 +25,7 @@ function TabChildrenComponent(props) {
 
   const deleteHandler = async (user) => {
     try{
-      setConfirmShow(true)
-      const response = axios.post(`${serverUrl}/api/friend/delete`,{ email: user.email },{ withCredentials: true })
+      const response = await axios.post(`${serverUrl}/api/friend/delete`,{ email: user.email },{ withCredentials: true })
       if (response.status === 200) {
         setRefresh(!refresh); // 상태 변경으로 useEffect 트리거
         setConfirmShow(false);
@@ -40,7 +39,7 @@ function TabChildrenComponent(props) {
 
   const refuseHandler = async (user) => {
     try{
-      const response = axios.post(`${serverUrl}/api/friend/request-reject`,{ email: user.email },{ withCredentials: true })
+      const response = await axios.post(`${serverUrl}/api/friend/request-reject`,{ email: user.email },{ withCredentials: true })
       if (response.status === 200) {
         dispatch(subCount())
         setRefresh(!refresh); // 상태 변경으로 useEffect 트리거
@@ -53,7 +52,7 @@ function TabChildrenComponent(props) {
 
   const acceptHandler = async (user) => {
     try{
-      const response = axios.post(`${serverUrl}/api/friend/request-accept`,{ email: user.email },{ withCredentials: true })
+      const response = await axios.post(`${serverUrl}/api/friend/request-accept`,{ email: user.email },{ withCredentials: true })
       if (response.status === 200) {
         dispatch(subCount())
         setRefresh(!refresh); // 상태 변경으로 useEffect 트리거
@@ -72,7 +71,7 @@ function TabChildrenComponent(props) {
         i={index}
         titleMessage={"정말로 하시겠습니까?"}
         Message="삭제하시겠습니까?"
-        eventHandler={() => deleteHandler(index)}
+        eventHandler={() => deleteHandler(user)}
       />
       <Col sm={3} className='text-center impo-margin-zero p-zero'>
       </Col>
@@ -92,7 +91,7 @@ function TabChildrenComponent(props) {
         >{i === 0 ? "살펴보기" : "친구수락"}</Button>
 
         <Button className='margin-left bg-darkblue font-weight-800'
-          onClick={() => i === 0 ? deleteHandler(user) : refuseHandler(user)}
+          onClick={() => i === 0 ? setConfirmShow(true) : refuseHandler(user)}
         >{i === 0 ? "친구삭제" : "거절하기"}</Button>
       </Col>
       <Col sm={3}>
