@@ -20,6 +20,8 @@ import axios from 'axios'
 import moment from 'moment';
 import 'moment/locale/ko'
 import handleError from '../function/errorHandler';
+import { Avatar } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
 
 const FriendDetail = () => {
     const state = useSelector((state)=> {return state.dateSchedule});
@@ -197,46 +199,63 @@ const FriendDetail = () => {
                     </Col>
                     <Col lg="5">
                         <Stack>{/**나중에 줄바꿈 되는 모든 div에 클래스 적용  white-space:nowrap; <-- 스케줄 컴포넌트에 적용해보기 */}
-                            <Stack direction='horizontal' className='fc-direction-ltr-2v'>
-                                <div className='h-400 w-max section-schedule'>
-                                    <Stack className=''>
-                                        <Row className='section__item-schedule sticky-schedule'>
-                                            {isFriend ? "" :<Col sm={2} className='m-auto color-darkBlue text-center'>
-                                                <p>완료</p>
-                                            </Col>}
-                                            <Col sm={2} className='m-auto color-darkBlue text-center'>
-                                                <p>시간</p>
-                                            </Col>
-                                            <Col sm={5} className='m-auto color-darkBlue p-zero text-center'>
-                                                <p>일정내용</p>
-                                            </Col>
-                                            <Col sm={1} className='m-auto color-darkBlue p-zero text-center'>
-                                                <p>중요</p>
-                                            </Col>
-                                            {isFriend ? "" : <Col sm={2} className='m-auto color-darkBlue p-zero text-center'>
-                                                <Button onClick={modalShow}>+</Button >
-                                            </Col>}
-                                        </Row>
-                                        {/*비동기 문제 &&로 해결*/
-                                            state[clickedDate] && state[clickedDate].map(function(notUse, i){
-                                                return(
-                                                    <Schedule 
-                                                    i={i} 
-                                                    clickedDate={clickedDate} 
-                                                    evolLevel={evolLevel} 
-                                                    setEvolLevel={setEvolLevel}
-                                                    setTargetPet={setTargetPet}
-                                                    setCurrentFriendShip={setCurrentFriendShip}
-                                                    isFriend={isFriend}/>
-                                                )
-                                            })
-                                        }
-                                    </Stack>
-                                </div>
+                            <Stack direction='horizontal' className='m-top-20' gap={3}>
+                                <Stack direction="horizontal" gap={2}>
+                                <Avatar
+                                size={64}
+                                src={""}//userData.profileUrl
+                                icon={<UserOutlined/>}
+                                />
+                                <Stack gap={0} className='m-auto'>
+                                    <p className='color-darkBlue '>
+                                        qeew{/* {userData.nickname} */}
+                                    </p>
+                                    <p className='color-violet'>
+                                        gdgd{/* #{userData.userId} */}
+                                    </p>
+                                </Stack>
                             </Stack>
-                            {isPetInitialized && <PetUI targetPet={targetPet} currentFriendShip={currentFriendShip} setCurrentFriendShip={setCurrentFriendShip} isPositiveFriendShip={isPositiveFriendShip} isFriend={isFriend}/>}
-                            {isPetInitialized && <PetSpaceComponent targetPetData={targetPet} evolLevel={evolLevel} isPositiveFriendShip={isPositiveFriendShip} currentFriendShip={currentFriendShip}/>}
                         </Stack>
+                        <Stack direction='horizontal' className='fc-direction-ltr-2v'>
+                            <div className='h-225 w-max section-schedule'>
+                                <Stack className=''>
+                                    <Row className='section__item-schedule sticky-schedule'>
+                                        {isFriend ? "" :<Col sm={2} className='m-auto color-darkBlue text-center'>
+                                            <p>완료</p>
+                                        </Col>}
+                                        <Col sm={2} className='m-auto color-darkBlue text-center'>
+                                            <p>시간</p>
+                                        </Col>
+                                        <Col sm={5} className='m-auto color-darkBlue p-zero text-center'>
+                                            <p>일정내용</p>
+                                        </Col>
+                                        <Col sm={1} className='m-auto color-darkBlue p-zero text-center'>
+                                            <p>중요</p>
+                                        </Col>
+                                        {isFriend ? "" : <Col sm={2} className='m-auto color-darkBlue p-zero text-center'>
+                                            <Button onClick={modalShow}>+</Button >
+                                        </Col>}
+                                    </Row>
+                                    {/*비동기 문제 &&로 해결*/
+                                        state[clickedDate] && state[clickedDate].map(function(notUse, i){
+                                            return(
+                                                <Schedule 
+                                                i={i} 
+                                                clickedDate={clickedDate} 
+                                                evolLevel={evolLevel} 
+                                                setEvolLevel={setEvolLevel}
+                                                setTargetPet={setTargetPet}
+                                                setCurrentFriendShip={setCurrentFriendShip}
+                                                isFriend={isFriend}/>
+                                            )
+                                        })
+                                    }
+                                </Stack>
+                            </div>
+                        </Stack>
+                        {isPetInitialized && <PetUI targetPet={targetPet} currentFriendShip={currentFriendShip} setCurrentFriendShip={setCurrentFriendShip} isPositiveFriendShip={isPositiveFriendShip} isFriend={isFriend}/>}
+                        {isPetInitialized && <PetSpaceComponent targetPetData={targetPet} evolLevel={evolLevel} isPositiveFriendShip={isPositiveFriendShip} currentFriendShip={currentFriendShip}/>}
+                    </Stack>
                     </Col>
                 </Row>
             </Container>
