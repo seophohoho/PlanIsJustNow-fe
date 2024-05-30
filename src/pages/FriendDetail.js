@@ -33,14 +33,20 @@ const FriendDetail = () => {
     const [currentFriendShip, setCurrentFriendShip] = useState(null);
     const [isPositiveFriendShip, setIsPositiveFriendShip] = useState(false);
     const [isFriend, setIsFriend] = useState(true)
+    const [friendData, setFriendData] = useState({
+        "profileUrl": undefined,
+        "nickname": "",
+        "userId": ""
+      })
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const [evolLevel, setEvolLevel] = useState(0);
     
-    const email = decodeEmail(obfuscatedEmail); // 이메일 디코딩
+    const email = decodeEmail(obfuscatedEmail) // 이메일 디코딩
 
     useEffect(()=>{
+        console.log(email)
         if(targetPet != null && currentFriendShip !=null){
             if(targetPet[0].currentFriendShip < 0 && currentFriendShip > 0){
                 targetPet[0].currentFriendShip = currentFriendShip;
@@ -58,7 +64,7 @@ const FriendDetail = () => {
                 alert("사용자의 펫이 정해지지 않은 상태입니다!")
                 navigate('/signup-pet');//로그인 상태 + 펫
             }else{
-                dispatch(userDataInit(response.data.userInfo));
+                setFriendData(response.data.userInfo);
                 const targetPet = response.data.data.filter(item => item.lastChoice === 1);
                 if (targetPet.length > 0) {
                     console.log("targetPet",targetPet)
@@ -72,6 +78,18 @@ const FriendDetail = () => {
         .catch((error) => {
             handleError(error, navigate)
         })
+
+        const initializePetData = async () => {
+            try {
+                const response = await axios.get(`${serverUrl}/api/user/has-pet`, { withCredentials: true });
+                dispatch(userDataInit(response.data.userInfo));
+            } 
+            catch (error) {
+                handleError(error, navigate);
+            }
+        };
+
+        initializePetData();
     },[])
 
     useEffect(() => {
@@ -118,9 +136,13 @@ const FriendDetail = () => {
             <NavbarComponent userData={userDataState}></NavbarComponent>
         </header>
         <body>
+            <div className='text-center color-darkBlue bg-color-violet'>
+                <p>현재 {friendData.nickname}({friendData.userId})님 캘린더 확인 중!</p>
+            </div>
             <ScheduleAddModal clickedDate={clickedDate}></ScheduleAddModal>
             <Container>
-                <Row className="justify-content-md-center"  >
+                <Row className="justify-content-md-center">
+                    
                     <Col lg="7">
                         <FullCalendar
                         plugins={[interactionPlugin, dayGridPlugin, momentPlugin]} 
@@ -198,26 +220,9 @@ const FriendDetail = () => {
                         />
                     </Col>
                     <Col lg="5">
-                        <Stack>{/**나중에 줄바꿈 되는 모든 div에 클래스 적용  white-space:nowrap; <-- 스케줄 컴포넌트에 적용해보기 */}
-                            <Stack direction='horizontal' className='m-top-20' gap={3}>
-                                <Stack direction="horizontal" gap={2}>
-                                <Avatar
-                                size={64}
-                                src={""}//userData.profileUrl
-                                icon={<UserOutlined/>}
-                                />
-                                <Stack gap={0} className='m-auto'>
-                                    <p className='color-darkBlue '>
-                                        qeew{/* {userData.nickname} */}
-                                    </p>
-                                    <p className='color-violet'>
-                                        gdgd{/* #{userData.userId} */}
-                                    </p>
-                                </Stack>
-                            </Stack>
-                        </Stack>
+                        <Stack className=' min-w-430'>{/**나중에 줄바꿈 되는 모든 div에 클래스 적용  white-space:nowrap; <-- 스케줄 컴포넌트에 적용해보기 */}
                         <Stack direction='horizontal' className='fc-direction-ltr-2v'>
-                            <div className='h-225 w-max section-schedule'>
+                            <div className='h-400 w-max section-schedule'>
                                 <Stack className=''>
                                     <Row className='section__item-schedule sticky-schedule'>
                                         {isFriend ? "" :<Col sm={2} className='m-auto color-darkBlue text-center'>
