@@ -1,5 +1,5 @@
 import { useEffect, lazy, Suspense } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import serverUrl from './serverConfig';
 import CalendarLoading from './components/CalendarLoading';
@@ -20,15 +20,15 @@ const FriendDetail = lazy(()=>import('./pages/FriendDetail'));
 function App() {
   
   const navigate = useNavigate();
-
+  const location = useLocation();
   return (
     <>
     <Suspense fallback={<CalendarLoading/>}>
-      <Routes>
+      <Routes key={location.pathname}>
+      <Route path='/' element={<CalendarMain/>}/>
         <Route path='/test' element={<CalendarLoading/>}/>
         <Route path='/sign-in' element={<Login/>}/> {/* nested route -> id,password 찾기? */}
         <Route path='/reset-password' element={<FindPassword/>}></Route>
-        <Route path='/' element={<CalendarMain/>}/>
         <Route path='/petdex' element={<Petdex/>}/> {/* calendar -> nest? */}
         <Route path='/friend-board' element={<FriendBoard/>}/> {/* calendar -> nest? */}
         <Route path="/:obfuscatedEmail" element={<FriendDetail />} />
