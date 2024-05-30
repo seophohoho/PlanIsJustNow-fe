@@ -18,7 +18,7 @@ function FriendBoard() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [requestEmail, setRequestEail] = useState("");
+  const [requestEmail, setRequestEmail] = useState("");
   // 친구 목록, 친구 요청 handler 작동시 업데이트 요청 state
   const [refresh, setRefresh] = useState(false); 
 
@@ -105,7 +105,7 @@ function FriendBoard() {
                           className="form-Control"
                           placeholder="Friend@email.com"
                           onChange={(e) => {
-                            setRequestEail(e.target.value);
+                            setRequestEmail(e.target.value);
                           }}
                         />
                       </Col>
