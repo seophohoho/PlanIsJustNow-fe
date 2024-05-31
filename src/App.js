@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
 import './index.css'
 import './styles/CalendarMain.css'
+import ErrorComponent from './components/ErrorComponent';
 
 const Signup = lazy(()=>import('./pages/SignUp'));
 const SignUpPet = lazy(()=>import('./pages/SignUpPet'));
@@ -19,16 +20,16 @@ const FriendDetail = lazy(()=>import('./pages/FriendDetail'));
 
 function App() {
   
-  const navigate = useNavigate();
   const location = useLocation();
   return (
     <>
     <Suspense fallback={<CalendarLoading/>}>
       <Routes key={location.pathname}>
-      <Route path='/' element={<CalendarMain/>}/>
+        <Route path='/' element={<CalendarMain/>}/>
+        <Route path='/connect-status' element={<ErrorComponent/>}/>
         <Route path='/test' element={<CalendarLoading/>}/>
         <Route path='/sign-in' element={<Login/>}/> {/* nested route -> id,password 찾기? */}
-        <Route path='/reset-password' element={<FindPassword/>}></Route>
+        <Route path='/reset-password' element={<FindPassword/>}/>
         <Route path='/petdex' element={<Petdex/>}/> {/* calendar -> nest? */}
         <Route path='/friend-board' element={<FriendBoard/>}/> {/* calendar -> nest? */}
         <Route path="/:obfuscatedEmail" element={<FriendDetail />} />
