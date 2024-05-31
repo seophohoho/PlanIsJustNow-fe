@@ -6,7 +6,6 @@ import { useNavigate, Link } from 'react-router-dom';
 import { PiDogFill } from 'react-icons/pi';
 import serverUrl from '../serverConfig';
 import axios from 'axios';
-import handleError from '../function/errorHandler';
 import { initCount } from '../store/store'
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -25,7 +24,6 @@ const NavbarComponent = (props) => {
                 dispatch(initCount(requestCountResponse.data.data))
             }
             catch (error){
-                handleError(error, navigate)
             }
         }
         fetch()
