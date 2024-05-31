@@ -52,11 +52,16 @@ function FriendBoard() {
 
   const friendRequestHandler = async () => {
     try{
-      const response = await axios.post(`${serverUrl}/api/friend/request`, { "email": requestEmail }, { withCredentials: true })
-      if (response.status === 200) {
-        alert("친구요청이 완료되었습니다!");
-        setRefresh(!refresh); // 상태 변경으로 useEffect 트리거
-      } 
+      if(requestEmail.length === 0){
+        alert("입력란을 비워둘 수 없습니다!")
+      }
+      else{
+        const response = await axios.post(`${serverUrl}/api/friend/request`, { "email": requestEmail }, { withCredentials: true })
+        if (response.status === 200) {
+          alert("친구요청이 완료되었습니다!");
+          setRefresh(!refresh); // 상태 변경으로 useEffect 트리거
+        } 
+      }
     }
     catch(error){
       if (error.response && error.response.data && error.response.data.messageDetail) {
@@ -68,7 +73,10 @@ function FriendBoard() {
           alert("상대에게 온 친구요청이 이미 존재합니다.")
         } else if (error.response.data.messageDetail === "Exist Friend error") {
           alert("이미 친구 상태인 대상입니다!")
-        } else {
+        } else if (error.response.data.messageDetail === "Not Exist User"){
+          alert("존재하지 않는 유저입니다!")
+        }
+          else {
           handleError(error, navigate);
         }
       } else {
