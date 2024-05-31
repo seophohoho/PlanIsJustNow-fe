@@ -66,7 +66,7 @@ function FriendBoard() {
     catch(error){
       if (error.response && error.response.data && error.response.data.messageDetail) {
         if (error.response.data.messageDetail === "Self Request error") {
-          alert("본인에게 친구추가를 할 수 없습니다!")
+          alert("본인에게 친구요청을 할 수 없습니다!")
         } else if (error.response.data.messageDetail === "Exist Request error") {
           alert("이미 친구 요청 대기중인 상대입니다.")
         } else if (error.response.data.messageDetail === "Exist Target Request error") {
