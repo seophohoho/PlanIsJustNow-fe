@@ -40,7 +40,7 @@ function FindPassword() {
         <header>
             <Navbar expand="md" className="bg-body-tertiary">
                 <Container>
-                    <Navbar.Brand as={Link} to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: 'inherit' }}>
+                    <Navbar.Brand as={Link} to="/sign-in" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: 'inherit' }}>
                         <PiDogFill size={60} />
                         <h1 style={{ display: 'inline', marginLeft: '10px' }}>PETTODO</h1>
                     </Navbar.Brand>
