@@ -76,7 +76,7 @@ const FriendDetail = () => {
             }
         })
         .catch((error) => {
-            handleError(error, navigate)
+            //todolist에서 처리
         })
 
         const initializePetData = async () => {
@@ -173,37 +173,25 @@ const FriendDetail = () => {
                             );
                           }}
                         nextDayThreshold={'00:00'}
-                        datesSet={function(args) {  
-                            axios.post(`${serverUrl}/api/friend/select-detail-todolist`,
-                            { email : email },
-                            {withCredentials: true})
-                            .then((response)=>{
-                                console.log("todo response",response.data.data)
-                                dispatch(scheduleInit(response.data.data))
-                            }).catch((error) => {
-                                if(error.response){ // 런타임 에러방지 error.response가 있는지 먼저 확인함
-                                    if(error.response.status === 401) { // 토큰 만료 리다이렉트
-                                        console.log("Error status: " + error.response.status);
-                                        alert("로그인을 다시해주세요!");
-                                        navigate('/sign-in');
-                                    }
-                                    else{
-                                      alert("서버와 연결에 실패했습니다.");
-                                    }
+                        datesSet={function (args){
+                            axios.post(`${serverUrl}/api/friend/select-detail-todolist`, { email: email }, { withCredentials: true })
+                              .then((response) => {
+                                dispatch(scheduleInit(response.data.data));
+                              })
+                              .catch((error) => {
+                                console.log(error)
+                                if(error.response.data.messageDetail === "Is not friend"){
+                                    alert("유효하지 않은 접근이거나 권한이 없습니다.")
+                                    navigate('/')
                                 }
-                                else{
-                                    console.error("Error: ", error);
-                                    if(error.message) {
-                                      alert("에러: " + error.message);
-                                    }
-                                    else{
-                                      alert("알 수 없는 에러가 발생했습니다.");
-                                    }
+                                else if(error.response.data.messageDetail === "Is not User"){
+                                    handleError(error, navigate);
+                                }else{
+                                    handleError(error, navigate);
                                 }
-                            });                          
-                            /*  리액트에서 fullcalendar 최상위 객체 오브젝트에 접근하려면 이렇게 해야함 */
+                              });
+                        
                             const view = args.view.calendar.currentData.currentDate;
-                            /*getMonth는 JavaScript에서 날짜의 월은 0(1월)부터 11(12월)까지 번호가 지정됨 +1을 해야 원본 값이 나옴*/
                             const currentDate = moment().format('YYYY-MM-DD');
                             setClickedDate(currentDate);
                         }}
