@@ -13,7 +13,7 @@ import handleError from '../function/errorHandler.js';
 
 //Todo 모든 post 버튼에 로딩 css 로직 추가
 function SignUpPet() {
-    const state = useSelector((state)=>{return state.petList})//store에 있는 state 가져옴
+    const state = useSelector(state => state.petList)//store에 있는 state 가져옴
     const dispatch = useDispatch()//state변경 함수 사용할때 둘러야함
     const navigate = useNavigate()
     const [selectedPetIndex, setSelectedPetIndex] = useState(0); // 선택된 펫 인덱스의 초기값 설정
@@ -121,13 +121,15 @@ function SignUpPet() {
                                     onSelectPet={setSelectedPetIndex}
                                     setPetPostData={setPetPostData}
                                     eventHandler={petSelectHandler}
+                                    evolId = '0'
                                 />
                             </Col>
                             <PetInfo
                                 btnMessage="이 펫으로 할래요!"
                                 clickHandler={() => { SelectBtnAct(); }}
                             >
-                                <Image src="/700x460.png" fluid />
+                                {/* png 뒤 숫자가 1 은 큰 이미지, 0은 progile 이미지 */ }
+                                <Image src={state.data[selectedPetIndex].path + `0_profile_1.png` ?? "/700x460.png"} fluid />
                                 <Stack direction='horizontal' gap={2} className='center margin-bottom-10'>
                                     <Form.Label column sm="4" className='color-darkBlue'>펫 이름</Form.Label>   
                                     <Col sm="8">
