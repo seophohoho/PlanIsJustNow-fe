@@ -132,16 +132,16 @@ const CalendarMain = () => {
                                 const eventsForDay = state[dateStr] ? state[dateStr].filter(event => !event.important) : [];
                                 return (
                                   <>
-                                            {eventsForDay.length > 0 ? (
-                                                // 일정이 있을 때 날짜와 일정 수 표기
-                                                <>
-                                                    {e.dayNumberText}
-                                                    <span className='daySchedule-font'>외 {eventsForDay.length}개</span>
-                                                </>
-                                                ) : (
-                                                // 일정이 없을 때 날짜만 표기
-                                                <>{e.dayNumberText}</>
-                                            )}
+                                    {eventsForDay.length > 0 ? (
+                                        // 일정이 있을 때 날짜와 일정 수 표기
+                                        <>
+                                            {e.dayNumberText}
+                                            <span className='daySchedule-font'>외 {eventsForDay.length}개</span>
+                                        </>
+                                        ) : (
+                                        // 일정이 없을 때 날짜만 표기
+                                        <>{e.dayNumberText}</>
+                                    )}
                                   </>
                                 );
                               }}
