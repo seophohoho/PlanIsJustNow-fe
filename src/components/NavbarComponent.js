@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Navbar, Stack, Nav } from 'react-bootstrap';
-import { UserOutlined } from '@ant-design/icons';
+import { PoweroffOutlined, UserOutlined } from '@ant-design/icons';
 import { Avatar, Badge } from 'antd';
 import { useNavigate, Link } from 'react-router-dom';
 import { PiDogFill } from 'react-icons/pi';
@@ -8,14 +8,27 @@ import serverUrl from '../serverConfig';
 import axios from 'axios';
 import { initCount } from '../store/store'
 import { useDispatch, useSelector } from 'react-redux';
+import { Button } from 'antd/es/radio';
 
 const NavbarComponent = (props) => {
     const countState = useSelector(state => state.requestCount)
     const { userData } = props
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    // 친구요청 총 갯수 상태
-
+    const logoutHandler = async () =>{
+        try{
+            const response = await axios.get(`${serverUrl}/api/account/logout`,{withCredentials: true})
+            if(response.status === 200){
+                navigate('/sign-in')
+            }else{
+                alert("요청 실패")
+            }
+        }
+        catch{
+            //보류류
+        }
+        
+    }
     //상대의 요청에 따라 즉시 갱신된다면 좋겠지만 양방향 통신은 좀..
     useEffect(()=>{
         const fetch = async () =>{
@@ -64,6 +77,10 @@ const NavbarComponent = (props) => {
                                 #{userData.userId}
                             </Navbar.Text>
                         </Stack>
+                        <Button type="primary"onClick={logoutHandler}>
+                            <PoweroffOutlined/>
+                            <p className='margin-left inline'>로그아웃</p>
+                        </Button>
                     </Stack>
                 </Navbar.Text>
             </Container>
