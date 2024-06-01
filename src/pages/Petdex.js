@@ -13,6 +13,7 @@ function Petdex() {
     //redux userPetData에서 추출
     const petDataState = useSelector((state) => state.userPetData);
     const userDataState = useSelector((state) => state.userData);
+    const petList = useSelector(state => state.petList);
     const dispatch = useDispatch();
     // 선택되어 있는 펫의 index를 기본값으로 설정해야함 아니면 그냥 기본값으로 둬도?
     const [selectedPetIndex, setSelectedPetIndex] = useState(0);
@@ -118,6 +119,7 @@ function Petdex() {
                                     onSelectPet={setSelectedPetIndex}
                                     setPetPostData={setPetPostData}
                                     eventHandler={petChoiceHandler}
+                                    evolId={petDataState.data[selectedPetIndex].evol}
                                 />
                             </Col>{console.log(isLastChoice)}
                             <PetInfo
@@ -126,7 +128,8 @@ function Petdex() {
                                 isDisabled={isLastChoice}
                                 clickHandler={choiceHandler}
                             >
-                                <Image src="/700x460.png" fluid />
+                                {/* 여기 이미지 넣으면 됨 초기화 한거 -- 경로 때문에 api 변경되면 조정필요 */console.log(petList.data[selectedPetIndex].path)}
+                                <Image src={petDataState.data[selectedPetIndex].petId.path+ `${petDataState.data[selectedPetIndex].evol}` + `_profile_1.png` ?? "/700x460.png"} fluid />
                                 <Stack direction='horizontal' gap={2} className='center margin-bottom-10'>
                                     <Form.Label column sm="4" className='color-darkBlue'>펫 이름</Form.Label>
                                     <Col sm="8">
