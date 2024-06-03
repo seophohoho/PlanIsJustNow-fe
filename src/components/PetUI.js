@@ -134,19 +134,21 @@ function PetUI(props){
                 </Col>
                 <Col sm={3} className="text-center">
                     <Stack direction="horizontal" gap={2} >
-                        {isFriend ? "" : <><Stack className="text-center color-darkBlue cursor-pointer"
-                            onClick={() => petUIEventHandler('hands')}>
+                        {
+                        isFriend ? "" : <>
+                        <Stack 
+                        className="text-center color-darkBlue cursor-pointer"
+                        onClick={() => petUIEventHandler('hands')}>
                             <IoHandLeftOutline size={30} className="m-auto" />
-                                <p className="font-size-sm">
-                                    쓰다듬기
-                                </p>
-                        </Stack><Stack className="text-center color-darkBlue cursor-pointer"
-                            onClick={() => petUIEventHandler('feed')}>
-                                <PiForkKnifeBold size={30} className="m-auto" />
-                                <p className="font-size-sm">
-                                    먹이주기
-                                </p>
-                            </Stack></>}
+                            <p className="font-size-sm">쓰다듬기</p>
+                        </Stack>
+                        <Stack 
+                        className="text-center color-darkBlue cursor-pointer"
+                        onClick={() => petUIEventHandler('feed')}>
+                            <PiForkKnifeBold size={30} className="m-auto" />
+                            <p className="font-size-sm">먹이주기</p>
+                        </Stack></>
+                        }
                     </Stack>
                 </Col>
             </Row>
