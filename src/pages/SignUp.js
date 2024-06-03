@@ -77,7 +77,7 @@ function Signup() {
     .then((response)=>{
       if (response.status === 200) {
         alert("회원가입이 완료되었습니다!!");
-        navigate('/');
+        navigate('/sign-in');
       } else if (response.status === 409) {
         alert("이미 사용중인 이메일 계정입니다!");
         setIsNextButtonDisabled(false);
