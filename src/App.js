@@ -21,6 +21,12 @@ const FriendDetail = lazy(()=>import('./pages/FriendDetail'));
 function App() {
   
   const location = useLocation();
+
+  useEffect(() => {
+    const handlePageLoad = () => {};
+    handlePageLoad();
+  }, [location]);
+
   return (
     <>
     <Suspense fallback={<CalendarLoading/>}>
