@@ -46,7 +46,6 @@ const FriendDetail = () => {
     const email = decodeEmail(obfuscatedEmail) // 이메일 디코딩
 
     useEffect(()=>{
-        console.log(email)
         if(targetPet != null && currentFriendShip !=null){
             if(targetPet[0].currentFriendShip < 0 && currentFriendShip > 0){
                 targetPet[0].currentFriendShip = currentFriendShip;
@@ -67,7 +66,6 @@ const FriendDetail = () => {
                 setFriendData(response.data.userInfo);
                 const targetPet = response.data.data.filter(item => item.lastChoice === 1);
                 if (targetPet.length > 0) {
-                    console.log("targetPet",targetPet)
                     setTargetPet(targetPet);
                     setCurrentFriendShip(targetPet[0].currentFriendShip)
                     setEvolLevel(targetPet[0].evol);
@@ -108,7 +106,6 @@ const FriendDetail = () => {
         });
     
         Object.keys(state).forEach(date => {
-            console.log(date)
             state[date].forEach(event => {
                 if (event.important){
                     const eventState = { 
@@ -116,7 +113,7 @@ const FriendDetail = () => {
                         start: date,
                     }
                     setImportantEvents([...importantEvents, eventState]);
-                    console.log(importantEvents)
+                    (importantEvents)
                 }
                 
             });
@@ -179,7 +176,6 @@ const FriendDetail = () => {
                                 dispatch(scheduleInit(response.data.data));
                               })
                               .catch((error) => {
-                                console.log(error)
                                 if(error.response.data.messageDetail === "Is not friend"){
                                     alert("유효하지 않은 접근이거나 권한이 없습니다.")
                                     navigate('/')

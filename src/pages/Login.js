@@ -39,7 +39,6 @@ function Login() {
             }, { withCredentials: true })
                 .then((response) => {
                     if (response.status === 200) {
-                        alert("로그인 성공 status: 200");
                         navigate('/');
                     } else if (response.status === 400) {
                         if (response.messageDetail === "Not matched error") {
@@ -52,13 +51,11 @@ function Login() {
                 .catch((error) => {
                     if (error.response) {
                         if (error.response.status === 401) {
-                            console.log("Error status: " + error.response.status);
                             alert("로그인을 다시해주세요!");
                             navigate('/sign-in');
                         } else if (error.response.data.messageDetail === "Not matched error") {
                             alert("아이디 혹은 비밀번호가 일치하지 않습니다.");
                         } else {
-                            console.log(error.response.data);
                             alert("서버와 연결에 실패했습니다.");
                         }
                     } else {

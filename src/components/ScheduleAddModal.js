@@ -50,7 +50,6 @@ function ScheduleAddModal(props){
     setIsLoding(true)
     tempSchedule.clickedDate = clickedDate;
       
-    console.log(importantCount,tempSchedule.important, tempSchedule.title.length)
     //중요표시는 3개까지, 일정은 1글자 이상 입력 require 제어
     if((importantCount === 3 && tempSchedule.important === true) || tempSchedule.title.length === 0){
       if(tempSchedule.title.length === 0){
@@ -72,7 +71,6 @@ function ScheduleAddModal(props){
       .then(response => {
         tempSchedule.idx = response.data.data
         dispatch(scheduleStateAdd(tempSchedule));
-        console.log(tempSchedule.time + "!!!!time");
         modalClose();
         setIsLoding(false)
       })

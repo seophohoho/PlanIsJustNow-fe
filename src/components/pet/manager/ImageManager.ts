@@ -8,7 +8,6 @@ export class ImageManager{
     constructor(private phaser:Phaser.Scene){}
 
     loadPetImage(petId:number,evolId:number){
-        console.log(petId,evolId);
         for(let j=0;j<=BEHAVIOR_SIZE;j++){
             this.phaser.load.atlas(`${petId}_${evolId}_${j}`,`${s3Url}/${petId}/${petId}_${evolId}_${j}.png`,`${s3Url}/${petId}/${petId}_${evolId}_${j}.json`);
         }

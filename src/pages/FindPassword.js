@@ -26,7 +26,7 @@ function FindPassword() {
               return false;
             }
           } catch (error) {
-            alert(error + ": 메일발송에 실패했습니다. 잠시후 다시 시도해주세요");
+            alert("메일발송에 실패했습니다. 잠시후 다시 시도해주세요");
             return true;
           }
         } else {
@@ -80,7 +80,6 @@ function FindPassword() {
                         value="확인" 
                         disabled={isEmailDisabled}
                         onClick={()=>{
-                            console.log(userEmail)
                             setIsAuthDisabled(false)
                             btnEmail(userEmail)
                         }}/> 

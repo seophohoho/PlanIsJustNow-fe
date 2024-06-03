@@ -49,7 +49,6 @@ function Signup() {
   const fileInputRef = useRef(null);
 
   const handleFileChange = (event) => {
-    console.log(event.target.files[0],)
     const file = event.target.files[0];
     if (file) {
       setSelectedFile(file);

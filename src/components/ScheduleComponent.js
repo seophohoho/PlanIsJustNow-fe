@@ -37,7 +37,6 @@ function Schedule(props){
     // ScheduleState.title이 변경될 때마다 실행
     useEffect(() => {
         // 제목 길이가 12자 초과면 Marquee를 재생
-        console.log(clickedDate,"clickedDate")
         if (ScheduleState.title.length > 12) {
             setPlayMarquee(true);
         } else {
@@ -65,7 +64,6 @@ function Schedule(props){
             dispatch(scheduleComplete({clickedDate: clickedDate, index: i, package: true }))
             setCurrentFriendShip(response.data.data.friendship)
             if(evolLevel != response.data.data.evol){
-                console.log(response.data.data.evol)
                 setEvolLevel(response.data.data.evol);
             }
         })

@@ -72,14 +72,12 @@ function Petdex() {
     const handleError = (error) => {
         if (error.response) {
             if (error.response.status === 401) {
-                console.log("Error status: " + error.response.status);
                 alert("로그인을 다시해주세요!");
                 navigate('/');
             } else {
                 alert("서버와 연결에 실패했습니다.");
             }
         } else {
-            console.error("Error: ", error);
             alert(error.message ? `에러: ${error.message}` : "알 수 없는 에러가 발생했습니다.");
         }
     };
@@ -121,21 +119,20 @@ function Petdex() {
                                     eventHandler={petChoiceHandler}
                                     evolId={petDataState.data[selectedPetIndex].evol}
                                 />
-                            </Col>{console.log(isLastChoice)}
+                            </Col>
                             <PetInfo
                                 btnMessage="펫 적용하기"
                                 setIsLastChoice={setIsLastChoice}
                                 isDisabled={isLastChoice}
                                 clickHandler={choiceHandler}
                             >
-                                {/* 여기 이미지 넣으면 됨 초기화 한거 -- 경로 때문에 api 변경되면 조정필요 */console.log(petList.data[selectedPetIndex].path)}
                                 <Image src={petDataState.data[selectedPetIndex].petId.path+ `${petDataState.data[selectedPetIndex].evol}` + `_profile_1.png` ?? "/700x460.png"} fluid />
                                 <Stack direction='horizontal' gap={2} className='center margin-bottom-10'>
                                     <Form.Label column sm="4" className='color-darkBlue'>펫 이름</Form.Label>
                                     <Col sm="8">
                                         <p>{petDataState.data[selectedPetIndex].nickname}</p>
                                     </Col>
-                                </Stack>{console.log(petDataState)}
+                                </Stack>
                                 <p className='color-lightPurple'>{petDataState.data[selectedPetIndex].info}</p>
                             </PetInfo>
                         </Row>
