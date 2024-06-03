@@ -58,6 +58,12 @@ function PetUI(props){
                 params: { id: id },
                 withCredentials: true
             });
+            if(response.status === 200 && id === 'hands'){
+                setErrorMsg("쓰다듬기 완료!");
+            }
+            else if(response.status === 200 && id === 'feed'){
+                setErrorMsg("밥주기 완료!");
+            }
             setCurrentFriendShip(response.data.data.friendship);
         } catch (error) {
             handlePetUIerror(error, id, navigate, setErrorMsg);
@@ -98,8 +104,7 @@ function PetUI(props){
                             :<HeartFilled className="color-redfull font-size-20 margin-left"/> 
                                
                         }
-                        {
-                        errorMsg && (
+                        {errorMsg && (
                             <Popover 
                                 content={<a onClick={() => setErrorMsg(null)} className="color-darkBlue">닫기</a>}
                                 title={<p style={{ whiteSpace: "pre-wrap" }}>{errorMsg}</p>}
