@@ -138,7 +138,7 @@ function Petdex() {
                                 <Stack direction='horizontal' gap={2} className='center margin-bottom-10'>
                                     <Form.Label column sm="4" className='color-darkBlue'>펫 이름</Form.Label>
                                     <Col sm="8">
-                                        <p>{petDataState.data[selectedPetIndex].nickname}</p>
+                                        <p className='color-violet'>{petDataState.data[selectedPetIndex].nickname}</p>
                                     </Col>
                                 </Stack>
                                 <p className='color-lightPurple'>{petDataState.data[selectedPetIndex].info}</p>
