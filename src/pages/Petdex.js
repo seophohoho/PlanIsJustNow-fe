@@ -2,7 +2,7 @@ import NavbarComponent from "../components/NavbarComponent";
 import { Col, Row, Container, Image, Stack, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from "react-redux";
 import { petdexInit, userDataInit } from "../store/store.js";
-import PetInfo from '../components/PetInpo';
+import PetInfo from '../components/PetInpo.js';
 import PetListMapComponent from '../components/PetListMapComponent.js';
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -100,6 +100,10 @@ function Petdex() {
         fetchPetData();
     }, [dispatch, navigate]);
 
+    const handleImageError = (e) => {
+        e.target.src = "/700x460.png";
+    };
+
     return (
         <>
             <header>
@@ -126,7 +130,11 @@ function Petdex() {
                                 isDisabled={isLastChoice}
                                 clickHandler={choiceHandler}
                             >
-                                <Image src={petDataState.data[selectedPetIndex].petId.path+ `${petDataState.data[selectedPetIndex].evol}` + `_profile_1.png` ?? "/700x460.png"} fluid />
+                                <Image
+                                    src={petDataState.data[selectedPetIndex].petId.path + `${petDataState.data[selectedPetIndex].evol}` + `_profile_1.png`}
+                                    onError={handleImageError}
+                                    fluid
+                                />
                                 <Stack direction='horizontal' gap={2} className='center margin-bottom-10'>
                                     <Form.Label column sm="4" className='color-darkBlue'>펫 이름</Form.Label>
                                     <Col sm="8">

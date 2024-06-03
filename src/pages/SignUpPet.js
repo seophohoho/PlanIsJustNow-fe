@@ -95,6 +95,10 @@ function SignUpPet() {
         })
     }
 
+    const handleImageError = (e) => {
+        e.target.src = "/700x460.png";
+    };
+
     return (
         <div>
             <header>
@@ -129,7 +133,10 @@ function SignUpPet() {
                                 clickHandler={() => { SelectBtnAct(); }}
                             >
                                 {/* png 뒤 숫자가 1 은 큰 이미지, 0은 progile 이미지 */ }
-                                <Image src={state.data[selectedPetIndex].path + `0_profile_1.png` ?? "/700x460.png"} fluid />
+                                <Image 
+                                src={state.data[selectedPetIndex].path + `0_profile_1.png`} 
+                                onError={handleImageError} 
+                                fluid />
                                 <Stack direction='horizontal' gap={2} className='center margin-bottom-10'>
                                     <Form.Label column sm="4" className='color-darkBlue'>펫 이름</Form.Label>   
                                     <Col sm="8">
