@@ -72,28 +72,17 @@ const dateSchedule = createSlice({
 
       // 같은 날짜에 important가 true인 일정의 개수를 계산.
       const clickedDate = action.payload.clickedDate;
-      const importantCount = state[clickedDate] ? state[clickedDate].filter(item => item.important).length : 0;
       
-      //중요표시는 3개까지, 일정은 1글자 이상 입력 require 제어
-      if((importantCount === 3 && action.payload.important === true) || action.payload.title.length === 0){
-        if(action.payload.title.length === 0){
-          alert("일정을 입력해 주세요!")
-        }
-        else{
-          alert("중요 표시는 3개를 초과하여 등록할 수 없습니다!")
-        }
-      }
-      else{
-        // 새로운 날짜가 주어진 경우, 해당 날짜에 대한 새로운 배열을 생성하고 일정을 추가
-        // 이미 해당 날짜에 일정이 있다면, 새로운 일정을 해당 배열에 추가.
-        if (!state[clickedDate]) {
-          state[clickedDate] = [scheduleState];
+      // 새로운 날짜가 주어진 경우, 해당 날짜에 대한 새로운 배열을 생성하고 일정을 추가
+      // 이미 해당 날짜에 일정이 있다면, 새로운 일정을 해당 배열에 추가.
+      if (!state[clickedDate]) {
+        state[clickedDate] = [scheduleState];
+      } 
+      else {
+        if (scheduleState.important) {
+          state[clickedDate].unshift(scheduleState);
         } else {
-          if (scheduleState.important) {
-            state[clickedDate].unshift(scheduleState);
-          } else {
-            state[clickedDate].push(scheduleState);
-          }
+          state[clickedDate].push(scheduleState);
         }
       }
     },
@@ -101,17 +90,6 @@ const dateSchedule = createSlice({
       const { clickedDate, editDate, title, time, important, index } = action.payload;
       const schedule = state[clickedDate][index];
       const targetDate = editDate === "" ? clickedDate : editDate;
-    
-      if (title.length === 0) {
-        alert("일정을 입력해 주세요!");
-        return;
-      }
-    
-      const importantCount = state[targetDate]?.filter((item, idx) => idx !== index && item.important).length || 0;
-      if (importantCount >= 3 && important) {
-        alert("중요 표시는 3개를 초과하여 등록할 수 없습니다!");
-        return;
-      }
     
       // 원본 일정을 제거
       if (clickedDate === targetDate) {

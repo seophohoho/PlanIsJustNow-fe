@@ -26,7 +26,7 @@ function FindPassword() {
               return false;
             }
           } catch (error) {
-            alert(error + ": 메일발송에 실패했습니다. 잠시후 다시 시도해주세요");
+            alert("메일발송에 실패했습니다. 잠시후 다시 시도해주세요");
             return true;
           }
         } else {
@@ -40,7 +40,7 @@ function FindPassword() {
         <header>
             <Navbar expand="md" className="bg-body-tertiary">
                 <Container>
-                    <Navbar.Brand as={Link} to="/calendar" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: 'inherit' }}>
+                    <Navbar.Brand as={Link} to="/sign-in" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: 'inherit' }}>
                         <PiDogFill size={60} />
                         <h1 style={{ display: 'inline', marginLeft: '10px' }}>PETTODO</h1>
                     </Navbar.Brand>
@@ -80,7 +80,6 @@ function FindPassword() {
                         value="확인" 
                         disabled={isEmailDisabled}
                         onClick={()=>{
-                            console.log(userEmail)
                             setIsAuthDisabled(false)
                             btnEmail(userEmail)
                         }}/> 

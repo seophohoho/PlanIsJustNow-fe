@@ -142,6 +142,9 @@ input[type="number"]::-webkit-inner-spin-button {
   color: rgb(35, 45, 150) !important;
   font-weight: 800 !important;
 }
+.bg-color-violet{
+  background-color: rgb(200, 200, 250) !important;
+}
 
 .input-bgSet{
   background: #eee !important;
@@ -249,4 +252,16 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .ant-avatar-circle{
   border: 2px solid rgb(35, 45, 150) !important;
+}
+
+.min-w-430{
+  min-width: 430px;
+}
+
+.h-320{
+  height: 320px;
+}
+
+.inline{
+  display: inline
 }

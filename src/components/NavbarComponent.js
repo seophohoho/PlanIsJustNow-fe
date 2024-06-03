@@ -1,22 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Navbar, Stack, Nav } from 'react-bootstrap';
-import { UserOutlined } from '@ant-design/icons';
+import { PoweroffOutlined, UserOutlined } from '@ant-design/icons';
 import { Avatar, Badge } from 'antd';
 import { useNavigate, Link } from 'react-router-dom';
 import { PiDogFill } from 'react-icons/pi';
 import serverUrl from '../serverConfig';
 import axios from 'axios';
-import handleError from '../function/errorHandler';
 import { initCount } from '../store/store'
 import { useDispatch, useSelector } from 'react-redux';
+import { Button } from 'antd/es/radio';
 
 const NavbarComponent = (props) => {
     const countState = useSelector(state => state.requestCount)
     const { userData } = props
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    // 친구요청 총 갯수 상태
-
+    const logoutHandler = async () =>{
+        try{
+            const response = await axios.get(`${serverUrl}/api/account/logout`,{withCredentials: true})
+            if(response.status === 200){
+                navigate('/sign-in')
+            }else{
+                alert("요청 실패")
+            }
+        }
+        catch{
+            //보류류
+        }
+        
+    }
     //상대의 요청에 따라 즉시 갱신된다면 좋겠지만 양방향 통신은 좀..
     useEffect(()=>{
         const fetch = async () =>{
@@ -25,7 +37,6 @@ const NavbarComponent = (props) => {
                 dispatch(initCount(requestCountResponse.data.data))
             }
             catch (error){
-                handleError(error, navigate)
             }
         }
         fetch()
@@ -34,14 +45,17 @@ const NavbarComponent = (props) => {
     return(
         <Navbar expand="md" className="bg-body-tertiary">{/**추후 Navbar도 컴포넌트화 해서 다른페이지에 적용시키기 */}
             <Container>
-                <Navbar.Brand as={Link} to="/calendar" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: 'inherit' }}>
+                <Navbar.Brand as={Link} to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: 'inherit' }}>
                     <PiDogFill size={60} />
                     <h1 style={{ display: 'inline', marginLeft: '10px' }}>PETTODO</h1>
                 </Navbar.Brand>
                 <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">{/*추후 아이콘 추가*/}
+                    <Badge>
+                        <Nav.Link className='font-size-15' onClick={()=>{navigate("/")}}>Home</Nav.Link>
+                    </Badge>
                     <Badge count={countState}>
-                        <Nav.Link className='font-size-15' onClick={()=>{navigate("/Friend-board")}}>Friends</Nav.Link>
+                        <Nav.Link className='font-size-15 margin-left' onClick={()=>{navigate("/Friend-board")}}>Friends</Nav.Link>
                     </Badge>
                     <Badge>
                         <Nav.Link className='font-size-15 margin-left' onClick={()=>{navigate("/petdex")}}>Petdex</Nav.Link>
@@ -63,6 +77,10 @@ const NavbarComponent = (props) => {
                                 #{userData.userId}
                             </Navbar.Text>
                         </Stack>
+                        <Button type="primary"onClick={logoutHandler}>
+                            <PoweroffOutlined/>
+                            <p className='margin-left inline'>로그아웃</p>
+                        </Button>
                     </Stack>
                 </Navbar.Text>
             </Container>

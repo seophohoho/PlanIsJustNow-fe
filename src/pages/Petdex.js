@@ -2,7 +2,7 @@ import NavbarComponent from "../components/NavbarComponent";
 import { Col, Row, Container, Image, Stack, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from "react-redux";
 import { petdexInit, userDataInit } from "../store/store.js";
-import PetInfo from '../components/PetInpo';
+import PetInfo from '../components/PetInpo.js';
 import PetListMapComponent from '../components/PetListMapComponent.js';
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -13,6 +13,7 @@ function Petdex() {
     //redux userPetData에서 추출
     const petDataState = useSelector((state) => state.userPetData);
     const userDataState = useSelector((state) => state.userData);
+    const petList = useSelector(state => state.petList);
     const dispatch = useDispatch();
     // 선택되어 있는 펫의 index를 기본값으로 설정해야함 아니면 그냥 기본값으로 둬도?
     const [selectedPetIndex, setSelectedPetIndex] = useState(0);
@@ -71,14 +72,12 @@ function Petdex() {
     const handleError = (error) => {
         if (error.response) {
             if (error.response.status === 401) {
-                console.log("Error status: " + error.response.status);
                 alert("로그인을 다시해주세요!");
                 navigate('/');
             } else {
                 alert("서버와 연결에 실패했습니다.");
             }
         } else {
-            console.error("Error: ", error);
             alert(error.message ? `에러: ${error.message}` : "알 수 없는 에러가 발생했습니다.");
         }
     };
@@ -101,6 +100,10 @@ function Petdex() {
         fetchPetData();
     }, [dispatch, navigate]);
 
+    const handleImageError = (e) => {
+        e.target.src = "/700x460.png";
+    };
+
     return (
         <>
             <header>
@@ -118,21 +121,26 @@ function Petdex() {
                                     onSelectPet={setSelectedPetIndex}
                                     setPetPostData={setPetPostData}
                                     eventHandler={petChoiceHandler}
+                                    evolId={petDataState.data[selectedPetIndex].evol}
                                 />
-                            </Col>{console.log(isLastChoice)}
+                            </Col>
                             <PetInfo
                                 btnMessage="펫 적용하기"
                                 setIsLastChoice={setIsLastChoice}
                                 isDisabled={isLastChoice}
                                 clickHandler={choiceHandler}
                             >
-                                <Image src="/700x460.png" fluid />
+                                <Image
+                                    src={petDataState.data[selectedPetIndex].petId.path + `${petDataState.data[selectedPetIndex].evol}` + `_profile_1.png`}
+                                    onError={handleImageError}
+                                    fluid
+                                />
                                 <Stack direction='horizontal' gap={2} className='center margin-bottom-10'>
                                     <Form.Label column sm="4" className='color-darkBlue'>펫 이름</Form.Label>
                                     <Col sm="8">
                                         <p>{petDataState.data[selectedPetIndex].nickname}</p>
                                     </Col>
-                                </Stack>{console.log(petDataState)}
+                                </Stack>
                                 <p className='color-lightPurple'>{petDataState.data[selectedPetIndex].info}</p>
                             </PetInfo>
                         </Row>

@@ -73,7 +73,7 @@ function InputComponent(props){
                     </Form.Label>
                   </Col>
                   <Col className='mb-3' sm={5}>{/** input칸 */}
-                    <Form.Control type={ inputType[i] } placeholder={ placeholder[i] } maxLength={i === 1 ? 6 : 20} className={classNames[i]} 
+                    <Form.Control autoComplete="off" type={ inputType[i] } placeholder={ placeholder[i] } maxLength={i === 1 ? 6 : 20} className={classNames[i]} 
                     value={i===0 ? email : i===1 ? authCode : i===2 ? password : i===3 ? passwordConfirm : i===4 ? nickname : ""}
                     onInput={(e) => {
                       const value = e.target.value
@@ -113,21 +113,20 @@ function InputComponent(props){
                   <Col sm={4}>
                     {
                       btnMessage[i]===false ? null : <Button as="input" type="button" value={ btnMessage[i] }
-                      disabled={i === 0 ? isEmailLoading : i === 1 ? isButtonDisabled : ""}//i가 인증보내기 칸이고 state또한 일치하면 버튼활성화
+                      disabled={i === 0 ? isEmailLoading : i === 1 ? isButtonDisabled : ""}
                       className="float-display"
                       onClick={() => {
-                        //todo i에 따른 로딩 state 연동하기(2개의 state 필요)
                         if (i === 0) {
-                          setIsEmailLoading(true)//로딩 추가됨 나중에 테스트
+                          setIsEmailLoading(true)
                           btnEmail(email).then(copy=>{
                             setIsButtonDisabled(copy);
                             setIsEmail(!copy);
-                            setIsEmailLoading(copy);//로딩 추가됨 나중에 테스트
+                            setIsEmailLoading(copy);
                           if(isPassword && isNickName){setIsNextButtonDisabled(false)}
                           })
                         };
                         if(i===1){
-                          setIsButtonDisabled(true)//로딩 추가됨 나중에 테스트
+                          setIsButtonDisabled(true)
                           btnAuth(email, authCode).then(copy=>{
                             setIsAuthCode(copy);
                             setIsInputDisabled(!copy);

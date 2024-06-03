@@ -23,55 +23,44 @@ function TabChildrenComponent(props) {
     navigate(`/${obfuscatedEmail}`);
   };
 
-  function deleteHandler(user) {
-    setConfirmShow(true)
-    axios.post(`${serverUrl}/api/friend/delete`,
-    { email: user.email },
-    { withCredentials: true })
-    .then((response) => {
+  const deleteHandler = async (user) => {
+    try{
+      const response = await axios.post(`${serverUrl}/api/friend/delete`,{ email: user.email },{ withCredentials: true })
       if (response.status === 200) {
-        alert("삭제");
         setRefresh(!refresh); // 상태 변경으로 useEffect 트리거
         setConfirmShow(false);
-
       }
-    })
-    .catch((error) => {
+    }
+    catch(error){
       handleError(error, navigate);
-    });
+    }
     setRefresh(!refresh); // 상태 변경으로 useEffect 트리거
   }
 
-  function refuseHandler(user) {
-    axios.post(`${serverUrl}/api/friend/request-reject`, 
-    { email: user.email }, 
-    { withCredentials: true })
-    .then((response) => {
+  const refuseHandler = async (user) => {
+    try{
+      const response = await axios.post(`${serverUrl}/api/friend/request-reject`,{ email: user.email },{ withCredentials: true })
       if (response.status === 200) {
-        alert("거절");
         dispatch(subCount())
         setRefresh(!refresh); // 상태 변경으로 useEffect 트리거
       }
-    })
-    .catch((error) => {
+    }
+    catch(error){
       handleError(error, navigate);
-    });
+    }
   }
 
-  function acceptHandler(user) {
-    axios.post(`${serverUrl}/api/friend/request-accept`,
-    { email: user.email },
-    { withCredentials: true })
-    .then((response) => {
+  const acceptHandler = async (user) => {
+    try{
+      const response = await axios.post(`${serverUrl}/api/friend/request-accept`,{ email: user.email },{ withCredentials: true })
       if (response.status === 200) {
-        alert("수락");
         dispatch(subCount())
         setRefresh(!refresh); // 상태 변경으로 useEffect 트리거
       }
-    })
-    .catch((error) => {
+    }
+    catch(error){
       handleError(error, navigate);
-    });
+    }
   }
 
   return (
@@ -80,8 +69,9 @@ function TabChildrenComponent(props) {
         confirmShow={confirmShow}
         confirmHandleClose={confirmHandleClose}
         i={index}
-        Message="정말로 제거하시겠습니까?"
-        eventHandler={() => deleteHandler(index)}
+        titleMessage={"정말로 하시겠습니까?"}
+        Message="삭제하시겠습니까?"
+        eventHandler={() => deleteHandler(user)}
       />
       <Col sm={3} className='text-center impo-margin-zero p-zero'>
       </Col>
@@ -101,7 +91,7 @@ function TabChildrenComponent(props) {
         >{i === 0 ? "살펴보기" : "친구수락"}</Button>
 
         <Button className='margin-left bg-darkblue font-weight-800'
-          onClick={() => i === 0 ? deleteHandler(user) : refuseHandler(user)}
+          onClick={() => i === 0 ? setConfirmShow(true) : refuseHandler(user)}
         >{i === 0 ? "친구삭제" : "거절하기"}</Button>
       </Col>
       <Col sm={3}>

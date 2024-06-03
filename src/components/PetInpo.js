@@ -19,7 +19,7 @@ function PetInfo(props) {
                 clickHandler()
             }}
             {...(isDisabled !== undefined && { disabled: isDisabled })}
-            >{console.log("start!", isDisabled)}
+            >
                 {btnMessage}
             </Button>
         </Col>

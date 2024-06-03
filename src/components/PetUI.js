@@ -1,4 +1,4 @@
-import { Button, Col, Row, Stack } from "react-bootstrap";
+import { Col, Row, Stack } from "react-bootstrap";
 import { Progress, Popover } from 'antd';
 import { HeartFilled } from "@ant-design/icons";
 import { IoHandLeftOutline } from "react-icons/io5";
@@ -8,14 +8,17 @@ import axios from "axios";
 import serverUrl from "../serverConfig";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import handlePetUIerror from "../function/handlePetUIerror";
 
 function PetUI(props){
-    const {targetPet, currentFriendShip, setCurrentFriendShip, isPositiveFriendShip} = props
+    const {targetPet, currentFriendShip, setCurrentFriendShip, isPositiveFriendShip, isFriend} = props
     const percentSign = <span style={{ fontSize: "10px" }}>%</span>;
     const navigate = useNavigate()
 
     const [open, setOpen] = useState(false);
     const [isPositiveFriendShipOpen, setIsPositiveFriendShipOpen] = useState(true);
+    const [errorMsg, setErrorMsg] = useState(null);
+    
     //popup 제어를 localStorage에 저장 
     //가출 시 알림을 최초 1회 표기 후 hover에만 작동하도록 설정
     useEffect(() => {
@@ -49,35 +52,22 @@ function PetUI(props){
         return current / max * 100
     }
 
-    function petUIEventHandler(id){
-        axios.get(`${serverUrl}/api/user/interaction`,
-        {
-            params: { id: id },
-            withCredentials: true
-        })
-        .then((response)=>{
-            setCurrentFriendShip(response.data.data.friendship)
-        })
-        .catch((error)=>{
-            if(error.response){ // 런타임 에러방지 error.response가 있는지 먼저 확인함
-                if(error.response.status === 401) { // 토큰 만료 리다이렉트
-                    console.log("Error status: " + error.response.status);
-                    alert("로그인을 다시해주세요!");
-                    navigate('/');
-                }
-                else if(error.response.status === 400){
-                    if(id === 'hands'){
-                        alert("하루 할당량을 모두 사용하였습니다!")
-                    }else if(id === 'feed'){
-                        alert("현재 할당량 모두 사용!\n각 시간대에 한번씩 사용가능! \n07:00 ~ 09:00\n12:00 ~ 14:00\n17:00 ~ 22:00")
-                    }
-
-                }
-                else{
-                  alert("서버와 연결에 실패했습니다.");
-                }
+    async function petUIEventHandler(id) {
+        try {
+            const response = await axios.get(`${serverUrl}/api/user/interaction`, {
+                params: { id: id },
+                withCredentials: true
+            });
+            if(response.status === 200 && id === 'hands'){
+                setErrorMsg("쓰다듬기 완료!");
             }
-        })
+            else if(response.status === 200 && id === 'feed'){
+                setErrorMsg("밥주기 완료!");
+            }
+            setCurrentFriendShip(response.data.data.friendship);
+        } catch (error) {
+            handlePetUIerror(error, id, navigate, setErrorMsg);
+        }
     }
 
     return(
@@ -94,7 +84,7 @@ function PetUI(props){
                             currentFriendShip < 0 ? 
                             <Popover
                                 content={<a onClick={hide} className="color-darkBlue">닫기</a>}
-                                title="경고: 당신의 행동에 실망한 펫이 가출했습니다!"
+                                title={isFriend ? "친구의 펫이 가출상태입니다." : "경고: 당신의 행동에 실망한 펫이 가출했습니다!"}
                                 trigger="hover"
                                 placement="bottomLeft"
                                 open={open}
@@ -103,9 +93,9 @@ function PetUI(props){
                                 <FaHeartBroken className="color-redfull font-size-20 margin-left"/>  
                             </Popover>
                             : isPositiveFriendShip ? 
-                            <Popover
+                            <Popover 
                             content={<a onClick={positiveHide} className="color-darkBlue">닫기</a>}
-                            title="펫 복귀"
+                            title="펫이 복귀했습니다!"
                             placement="bottomLeft"
                             open={isPositiveFriendShipOpen}
                             >
@@ -113,7 +103,17 @@ function PetUI(props){
                             </Popover> 
                             :<HeartFilled className="color-redfull font-size-20 margin-left"/> 
                                
-                            }
+                        }
+                        {errorMsg && (
+                            <Popover 
+                                content={<a onClick={() => setErrorMsg(null)} className="color-darkBlue">닫기</a>}
+                                title={<p style={{ whiteSpace: "pre-wrap" }}>{errorMsg}</p>}
+                                trigger="click"
+                                placement="bottomLeft"
+                                open={true}
+                            >
+                            </Popover>
+                        )}
                         
                         <Stack>
                             <p className="font-size-sm color-darkBlue font-weight-800">{currentFriendShip} / {targetPet[0].maxFriendShip}</p>
@@ -134,20 +134,21 @@ function PetUI(props){
                 </Col>
                 <Col sm={3} className="text-center">
                     <Stack direction="horizontal" gap={2} >
-                        <Stack className="text-center color-violet cursor-pointer"
+                        {
+                        isFriend ? "" : <>
+                        <Stack 
+                        className="text-center color-darkBlue cursor-pointer"
                         onClick={() => petUIEventHandler('hands')}>
-                            <IoHandLeftOutline size={30} className="m-auto"/>
-                            <p className="font-size-sm">
-                                쓰다듬기
-                            </p>
+                            <IoHandLeftOutline size={30} className="m-auto" />
+                            <p className="font-size-sm">쓰다듬기</p>
                         </Stack>
-                        <Stack className="text-center color-violet cursor-pointer"
+                        <Stack 
+                        className="text-center color-darkBlue cursor-pointer"
                         onClick={() => petUIEventHandler('feed')}>
-                            <PiForkKnifeBold size={30} className="m-auto"/>
-                            <p className="font-size-sm">
-                                먹이주기
-                            </p>
-                        </Stack>
+                            <PiForkKnifeBold size={30} className="m-auto" />
+                            <p className="font-size-sm">먹이주기</p>
+                        </Stack></>
+                        }
                     </Stack>
                 </Col>
             </Row>
