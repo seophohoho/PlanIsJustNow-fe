@@ -17,6 +17,8 @@ function PetUI(props){
 
     const [open, setOpen] = useState(false);
     const [isPositiveFriendShipOpen, setIsPositiveFriendShipOpen] = useState(true);
+    const [errorMsg, setErrorMsg] = useState(null);
+    
     //popup 제어를 localStorage에 저장 
     //가출 시 알림을 최초 1회 표기 후 hover에만 작동하도록 설정
     useEffect(() => {
@@ -58,7 +60,7 @@ function PetUI(props){
             });
             setCurrentFriendShip(response.data.data.friendship);
         } catch (error) {
-            handlePetUIerror(error, id, navigate);
+            handlePetUIerror(error, id, navigate, setErrorMsg);
         }
     }
 
@@ -85,7 +87,7 @@ function PetUI(props){
                                 <FaHeartBroken className="color-redfull font-size-20 margin-left"/>  
                             </Popover>
                             : isPositiveFriendShip ? 
-                            <Popover
+                            <Popover 
                             content={<a onClick={positiveHide} className="color-darkBlue">닫기</a>}
                             title="펫이 복귀했습니다!"
                             placement="bottomLeft"
@@ -95,7 +97,18 @@ function PetUI(props){
                             </Popover> 
                             :<HeartFilled className="color-redfull font-size-20 margin-left"/> 
                                
-                            }
+                        }
+                        {
+                        errorMsg && (
+                            <Popover 
+                                content={<a onClick={() => setErrorMsg(null)} className="color-darkBlue">닫기</a>}
+                                title={<p style={{ whiteSpace: "pre-wrap" }}>{errorMsg}</p>}
+                                trigger="click"
+                                placement="bottomLeft"
+                                open={true}
+                            >
+                            </Popover>
+                        )}
                         
                         <Stack>
                             <p className="font-size-sm color-darkBlue font-weight-800">{currentFriendShip} / {targetPet[0].maxFriendShip}</p>
