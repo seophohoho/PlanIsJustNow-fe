@@ -136,7 +136,7 @@ function Petdex() {
                                         <p className='color-violet'>{petDataState.data[selectedPetIndex]?.nickname}</p>
                                     </Col>
                                 </Stack>
-                                <p className='color-lightPurple'>{petDataState.data[selectedPetIndex]?.natureId?.name}</p>
+                                <p className='color-lightPurple'>성격 : {petDataState.data[selectedPetIndex]?.natureId?.name}</p>
                             </PetInfo>
                         </Row>
                     </Container>
