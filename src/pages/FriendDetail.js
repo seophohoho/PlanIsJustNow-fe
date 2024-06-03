@@ -113,7 +113,6 @@ const FriendDetail = () => {
                         start: date,
                     }
                     setImportantEvents([...importantEvents, eventState]);
-                    (importantEvents)
                 }
                 
             });
