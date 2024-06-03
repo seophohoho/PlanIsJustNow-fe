@@ -10,32 +10,19 @@ import serverUrl from "../serverConfig.js";
 import { useNavigate } from "react-router-dom";
 
 function Petdex() {
-    //redux userPetData에서 추출
     const petDataState = useSelector((state) => state.userPetData);
     const userDataState = useSelector((state) => state.userData);
-    const petList = useSelector(state => state.petList);
     const dispatch = useDispatch();
-    // 선택되어 있는 펫의 index를 기본값으로 설정해야함 아니면 그냥 기본값으로 둬도?
-    const [selectedPetIndex, setSelectedPetIndex] = useState(0);
-    const [isLastChoice, setIsLastChoice] = useState(false); // 기본값 false로 설정
-    const [petPostData, setPetPostData] = useState({
-        idx: ''
-    });
     const navigate = useNavigate();
+    const [selectedPetIndex, setSelectedPetIndex] = useState(0);
+    const [isLastChoice, setIsLastChoice] = useState(false);
+    const [petPostData, setPetPostData] = useState({ idx: '' });
 
     useEffect(() => {
         if (petDataState.data.length > 0) {
             setIsLastChoice(petDataState.data[selectedPetIndex].lastChoice === 1);
         }
     }, [selectedPetIndex, petDataState.data]);
-
-    const petChoiceHandler = (chunkIndex, index) => {
-        const listIndex = chunkIndex * 4 + index;
-        setSelectedPetIndex(listIndex);
-        setPetPostData({
-            idx: petDataState.data[listIndex].idx,
-        });
-    };
 
     const choiceHandler = async () => {
         try {
@@ -69,10 +56,18 @@ function Petdex() {
         }
     };
 
+    const petChoiceHandler = (chunkIndex, index) => {
+        const listIndex = chunkIndex * 4 + index;
+        setSelectedPetIndex(listIndex);
+        setPetPostData({
+            idx: petDataState.data[listIndex].idx,
+        });
+    };
+
     const handleError = (error) => {
         if (error.response) {
             if (error.response.status === 401) {
-                alert("로그인을 다시해주세요!");
+                alert("로그인을 다시 해주세요!");
                 navigate('/');
             } else {
                 alert("서버와 연결에 실패했습니다.");
@@ -111,17 +106,17 @@ function Petdex() {
             </header>
             <h1 className='page-title'>PETDEX</h1>
             <main>
-                <div className='center From'>
+                <div className='center Form'>
                     <Container fluid>
                         <Row className='center'>
                             <Col md="7">
                                 <PetListMapComponent
                                     petList={petDataState.data}
                                     selectedPetIndex={selectedPetIndex}
-                                    onSelectPet={setSelectedPetIndex}
+                                    onSelectPet={petChoiceHandler}
                                     setPetPostData={setPetPostData}
-                                    eventHandler={petChoiceHandler}
-                                    evolId={petDataState.data[selectedPetIndex].evol}
+                                    eventHandler={petChoiceHandler} // Ensure the correct handler is passed here
+                                    evolId={petDataState.data[selectedPetIndex]?.evol} // Optional chaining for safety
                                 />
                             </Col>
                             <PetInfo
@@ -131,17 +126,17 @@ function Petdex() {
                                 clickHandler={choiceHandler}
                             >
                                 <Image
-                                    src={petDataState.data[selectedPetIndex].petId.path + `${petDataState.data[selectedPetIndex].evol}` + `_profile_1.png`}
+                                    src={petDataState.data[selectedPetIndex]?.petId?.path + `${petDataState.data[selectedPetIndex]?.evol}_profile_1.png`}
                                     onError={handleImageError}
                                     fluid
                                 />
                                 <Stack direction='horizontal' gap={2} className='center margin-bottom-10'>
                                     <Form.Label column sm="4" className='color-darkBlue'>펫 이름</Form.Label>
                                     <Col sm="8">
-                                        <p className='color-violet'>{petDataState.data[selectedPetIndex].nickname}</p>
+                                        <p className='color-violet'>{petDataState.data[selectedPetIndex]?.nickname}</p>
                                     </Col>
                                 </Stack>
-                                <p className='color-lightPurple'>{petDataState.data[selectedPetIndex].info}</p>
+                                <p className='color-lightPurple'>{petDataState.data[selectedPetIndex]?.natureId?.name}</p>
                             </PetInfo>
                         </Row>
                     </Container>
