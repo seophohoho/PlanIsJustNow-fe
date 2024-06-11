@@ -106,7 +106,7 @@ function SignUpPet() {
                     <Container>
                     <Navbar.Brand as={Link} to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: 'inherit' }}>
                         <PiDogFill size={60} />
-                        <h1 style={{ display: 'inline', marginLeft: '10px' }}>개딱지</h1>
+                        <h1 style={{ display: 'inline', marginLeft: '10px' }}>계딱지</h1>
                     </Navbar.Brand>
                     </Container>
                 </Navbar>
