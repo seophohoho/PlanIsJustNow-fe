@@ -163,7 +163,7 @@ function Signup() {
                 </Col>
               </Row>
               <div className='center'>
-                <Button as="input" type="button" value="다음" disabled={isNextButtonDisabled} 
+                <Button as="input" type="button" value="다음" 
                 onClick={handleSubmit}
                 />
               </div>
