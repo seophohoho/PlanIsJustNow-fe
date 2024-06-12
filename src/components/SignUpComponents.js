@@ -90,7 +90,7 @@ function InputComponent(props){
                   autoComplete="off" 
                   type={ inputType[i] } 
                   placeholder={ placeholder[i] } 
-                  maxLength={i === 1 ? 6 : 20} 
+                  maxLength={i === 0 ? 35 : i === 1 ? 6 : 20}
                   className={classNames[i]} 
                   value={i===0 ? email : i===1 ? authCode : i===2 ? password : i===3 ? passwordConfirm : i===4 ? nickname : ""}
                   onInput={(e) => {
@@ -187,7 +187,7 @@ async function btnAuth(email, authCode){
 }
 
 async function btnEmail(email) {
-  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{1,20}$/;
+  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{1,6}$/;
 
   if (emailRegex.test(email)) {
     try {
