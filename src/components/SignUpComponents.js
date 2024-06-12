@@ -187,7 +187,7 @@ async function btnAuth(email, authCode){
 }
 
 async function btnEmail(email) {
-  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{1,6}$/;
+  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{1,20}$/;
 
   if (emailRegex.test(email)) {
     try {
