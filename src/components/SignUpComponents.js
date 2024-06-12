@@ -90,7 +90,7 @@ function InputComponent(props){
                   autoComplete="off" 
                   type={ inputType[i] } 
                   placeholder={ placeholder[i] } 
-                  maxLength={i === 0 ? 35 : i === 1 ? 6 : 20}
+                  maxLength={i === 0 ? 40 : i === 1 ? 6 : 20}
                   className={classNames[i]} 
                   value={i===0 ? email : i===1 ? authCode : i===2 ? password : i===3 ? passwordConfirm : i===4 ? nickname : ""}
                   onInput={(e) => {
