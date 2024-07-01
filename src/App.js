@@ -1,13 +1,12 @@
 import { useEffect, lazy, Suspense } from 'react';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
-import axios from 'axios';
-import serverUrl from './serverConfig';
 import CalendarLoading from './components/CalendarLoading';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
 import './index.css'
 import './styles/CalendarMain.css'
 import ErrorComponent from './components/ErrorComponent';
+import ResetPassword from './pages/ResetPassword';
 
 const Signup = lazy(()=>import('./pages/SignUp'));
 const SignUpPet = lazy(()=>import('./pages/SignUpPet'));
@@ -36,6 +35,7 @@ function App() {
         <Route path='/test' element={<CalendarLoading/>}/>
         <Route path='/sign-in' element={<Login/>}/> {/* nested route -> id,password 찾기? */}
         <Route path='/reset-password' element={<FindPassword/>}/>
+        <Route path="/reset-password/:obfuscatedAuth" element={<ResetPassword />} />
         <Route path='/petdex' element={<Petdex/>}/> {/* calendar -> nest? */}
         <Route path='/friend-board' element={<FriendBoard/>}/> {/* calendar -> nest? */}
         <Route path="/:obfuscatedEmail" element={<FriendDetail />} />
