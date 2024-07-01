@@ -34,7 +34,7 @@ function Login() {
             alert("입력 필드를 비울 수 없습니다.")
         }else{
             axios.post(`${serverUrl}/api/account/signin`, {
-                "email": userId,
+                "username": userId,
                 "password": userPassword,
             }, { withCredentials: true })
                 .then((response) => {
@@ -105,14 +105,14 @@ function Login() {
                         <Form.Group as={Row} className="mb-4" controlId="formHorizontalEmail">
                             <Col sm={4}>
                                 <Form.Label column className='float-display'>
-                                    <p className='color-darkBlue'><span className='color-red'>*</span> {"Email"}</p>
+                                    <p className='color-darkBlue'><span className='color-red'>*</span> {"ID"}</p>
                                 </Form.Label>
                             </Col>
                             <Col className='mb-3' sm={8}>
                                 <Form.Control
                                     type="text"
                                     className='form-Control'
-                                    placeholder='example123@gmail.com'
+                                    placeholder='exampleID123'
                                     onChange={(e) => {
                                         setUserId(e.target.value)
                                     }}
