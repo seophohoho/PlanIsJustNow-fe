@@ -12,18 +12,20 @@ import { UserOutlined } from '@ant-design/icons';
 import handleError from '../function/errorHandler.js';
 
 function Signup() {
-  const [inputTitle, setInputTitle] = useState(["e-mail","인증번호","비밀번호","비밀번호 확인","닉네임"]);
-  const [inputType, setInputType] = useState(["email","number","password","password","text"]);
+  const [inputTitle, setInputTitle] = useState(["ID","e-mail","인증번호","비밀번호","비밀번호 확인","닉네임"]);
+  const [inputType, setInputType] = useState(["text","email","number","password","password","text"]);
   const [placeholder, setPlaceholder] = useState([
+    "아이디를 입력하세요.",
     "pettodo@abc.com",
     "인증번호 입력하세요. (숫자 6자리)",
     "비밀번호를 입력하세요.(숫자와 특수문자를 포함한 8글자 이상)",
     "비밀번호 재입력",
     "닉네임을 입력하세요"
   ]);
-  const [classNames, setClassNames] = useState(["form-Control","form-Control","form-Control","form-Control","form-Control"]);
-  const [btnMessage,setBtnMessage] = useState(["인증번호 전송","확인",false,false,false]);
+  const [classNames, setClassNames] = useState(["form-Control","form-Control","form-Control","form-Control","form-Control","form-Control"]);
+  const [btnMessage,setBtnMessage] = useState([false,"인증번호 전송","확인",false,false,false]);
   //회원가입 정보 저장
+  const [id, setId] = useState("")
   const [email, setEmail] = useState("")
   const [authCode, setAuthCode] = useState("")
   const [password, setPassword] = useState("")
@@ -36,6 +38,7 @@ function Signup() {
   //input disabled 상태 저장
   const [isInputDisabled, setIsInputDisabled] = useState(false)
   //유효성 검사 상태(다음 버튼 활성화용)
+  const [isId, setIsId] = useState(false)
   const [isEmail, setIsEmail] = useState(false)
   const [isAuthCode, setIsAuthCode] = useState(false)
   const [isPassword, setIsPassword] = useState(false)
@@ -62,7 +65,8 @@ function Signup() {
     setIsNextButtonDisabled(true);
 
     const formData = new FormData();
-    formData.append("email", email);
+    formData.append("username", id);
+;    formData.append("email", email);
     formData.append("password", password);
     formData.append("nickname", nickname);
     if (selectedFile) {
@@ -116,18 +120,22 @@ function Signup() {
               classNames={classNames}
               btnMessage={btnMessage}
               addr={addr}
+              id={id}
               email={email}
               authCode={authCode}
               nickname={nickname}
+              setId={setId}
               setEmail={setEmail}
               setAuthCode={setAuthCode}
               setPassword={setPassword}
               setPasswordConfirm={setPasswordConfirm}
               setNickname={setNickname}
+              isId={isId}
               isEmail={isEmail}
               isNickName={isNickName}
               isAuthCode={isAuthCode}
               isPassword={isPassword}
+              setIsId={setIsId}
               setIsEmail={setIsEmail}
               setIsNickName={setIsNickName}
               setIsAuthCode={setIsAuthCode}
@@ -165,6 +173,8 @@ function Signup() {
               <div className='center'>
                 <Button as="input" type="button" value="다음" 
                 onClick={handleSubmit}
+                // 현재 disable 기능 제거 --> !! 기존 예외처리 기능 먹통 !! 
+                // is로 판단해서 disable 하지 말고 그냥 필요한 조건 + value 확인해서 alert로 feedback 주기
                 />
               </div>
             </Container>
