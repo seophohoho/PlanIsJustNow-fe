@@ -1,15 +1,14 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import serverUrl from "../serverConfig"
-import InputFieldComponent from '../components/InputFieldComponent';
-import { Form, Col, Row, Button, Container, Navbar, Stack } from 'react-bootstrap';
+import { Form, Col, Row, Button, Container, Navbar } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { PiDogFill } from 'react-icons/pi';
 
 function FindPassword() {
     const navigate = useNavigate()
     const [isEmailDisabled, setIsEmailDisabled] = useState(false);
-    const [isAuthDisabled, setIsAuthDisabled] = useState(true);
+    const [isAuthDisabled, setIsAuthDisabled] = useState(false);
     const [userEmail, setUserEmail] = useState('');
 
     function btnEmail(email) {
@@ -17,7 +16,10 @@ function FindPassword() {
       
         // return은 실패, 성공에 따른 인증확인 버튼 활성화 상태 반환용
         if (emailRegex.test(email)) {
-          try {//debounce 라이브러리 사용 예정 처리 시간당 요청은 몇번?
+          try {
+            //debounce 라이브러리 사용 예정 처리 시간당 요청은 몇번? --> 그냥 state로 1회 작동하는 건?
+            //true false 상태를 검사하고 axios동작 setTimeout으로 500ms 동안 false 동안에는 같은 클릭은 처리 안하는 걸루? 500ms 이후에는 다시 true하고
+            //함수로 구현하고 function 파일로 넘기면 될듯
             const Response = axios.post(`${serverUrl}/api/auth/mail`, {"email": email});
             if (Response.status === 200) {
               alert("인증메일이 발송됐어요!");
@@ -64,7 +66,7 @@ function FindPassword() {
                         </Col>
                         <Col className='mb-3' sm={6}>{/** input칸 */}
                         <Form.Control 
-                        type="text"
+                        type="email"
                         className='form-Control'
                         placeholder='example123@gmail.com'
                         disabled={isEmailDisabled}
@@ -74,15 +76,7 @@ function FindPassword() {
                         />
                         </Col>
                         <Col className='text-left' sm={3}>
-                        <Button 
-                        as="input" 
-                        type="button" 
-                        value="확인" 
-                        disabled={isEmailDisabled}
-                        onClick={()=>{
-                            setIsAuthDisabled(false)
-                            btnEmail(userEmail)
-                        }}/> 
+                        
                     </Col>
                 </Form.Group>
                 <Form.Group 
@@ -91,20 +85,14 @@ function FindPassword() {
                 controlId="formAuthEmail">
                     <Col className='text-left' sm={3}>
                         <Form.Label column>{/** label칸 */}
-                            <p className='color-darkBlue'>인증번호</p>
+                            <p className='color-darkBlue'>ID</p>
                         </Form.Label>
                     </Col>
                     <Col className='mb-3' sm={6}>{/** input칸 */}
                         <Form.Control 
-                        type="number" 
-                        maxLength={6} 
+                        type="text" 
+                        maxLength={20}
                         className="form-Control" 
-                        onInput={(e) => {
-                            const value = e.target.value
-                            if (e.target.value.length > e.target.maxLength){
-                                e.target.value = e.target.value.slice(0, e.target.maxLength);
-                            }
-                        }}
                         disabled={isAuthDisabled}
                         onChange={(e) => {
                             const value = e.target.value;
@@ -114,7 +102,7 @@ function FindPassword() {
                         <Button 
                         as="input" 
                         type="button" 
-                        value="인증확인" 
+                        value="확인" 
                         disabled={isAuthDisabled}
                         onClick={()=>{
                             setIsAuthDisabled(true)
