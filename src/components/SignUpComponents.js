@@ -12,7 +12,7 @@ function InputComponent(props){
     isPassword, isInputDisabled, setIsInputDisabled,
     setIsNickName, setIsAuthCode,
     setIsEmail, setIsPassword,setIsNextButtonDisabled,
-    setPassword, setNickname
+    setPassword, setNickname, id, setId, isId, setIsId// 추후 설정
   } = props 
   
   //유효성 메시지 상태저장
@@ -90,36 +90,39 @@ function InputComponent(props){
                   autoComplete="off" 
                   type={ inputType[i] } 
                   placeholder={ placeholder[i] } 
-                  maxLength={i === 0 ? 255 : i === 1 ? 6 : 20}
+                  maxLength={i === 1 ? 255 : i === 2 ? 6 : 20}
                   className={classNames[i]} 
-                  value={i===0 ? email : i===1 ? authCode : i===2 ? password : i===3 ? passwordConfirm : i===4 ? nickname : ""}
+                  value={i===0 ? id : i===1 ? email : i===2 ? authCode : i===3 ? password : i===4 ? passwordConfirm : i===5 ? nickname : ""}
                   onInput={(e) => {
                     const value = e.target.value;
                     if (value.length > e.target.maxLength){
                       e.target.value = value.slice(0, e.target.maxLength);
                     }
-                    if (i === 2) {
+                    if (i === 3) {
                       setPassword(value);
-                    } else if (i === 3) {
+                    } else if (i === 4) {
                       setPasswordConfirm(value);
                     }
                   }}
-                  disabled={i === 0 ? isInputDisabled : i === 1 ? isInputDisabled : ""}
+                  disabled={i === 1 ? isInputDisabled : i === 2 ? isInputDisabled : ""}
                   onChange={(e) => {
                     const value = e.target.value;
-                    if (i === 0) {
+                    if(i==0){
+                      setId(value)
+                    }
+                      else if (i === 1) {
                       setEmail(value);
-                    } else if (i === 1) {
+                    } else if (i === 2) {
                       setAuthCode(value);
-                    } else if (i === 2 || i === 3) {
-                      if(i===2)setPassword(value);
-                      else if(i===3)setPasswordConfirm(value);
-                    } else if (i === 4) {
+                    } else if (i === 3 || i === 4) {
+                      if(i===3)setPassword(value);
+                      else if(i===4)setPasswordConfirm(value);
+                    } else if (i === 5) {
                       setNickname(value);
                     }
                   }}/>
                 <label className='border-zero impo-margin-zero '>
-                  {i === 2 ? passwordMessage : i === 3 ? passwordConfirmMessage : i === 4 ? nickNameMessage : ''}
+                  {i === 3 ? passwordMessage : i === 4 ? passwordConfirmMessage : i === 5 ? nickNameMessage : ''}
                 </label>
               </Col>
               <Col sm={4}>
@@ -129,18 +132,18 @@ function InputComponent(props){
                       as="input" 
                       type="button" 
                       value={ btnMessage[i] }
-                      disabled={i === 0 ? isEmailLoading : i === 1 ? isButtonDisabled : ""}
+                      disabled={i === 1 ? isEmailLoading : i === 2 ? isButtonDisabled : ""}
                       className="float-display"
                       onClick={() => {
-                        if (i === 0) {
+                        if (i === 1) {
                           setIsEmailLoading(true)
                           btnEmail(email).then(copy => {
                             setIsButtonDisabled(copy);
                             setIsEmail(!copy);
-                            setIsEmailLoading(copy);
+                            setIsEmailLoading(!copy);
                           })
                         };
-                        if(i===1){
+                        if(i===2){
                           setIsButtonDisabled(true)
                           btnAuth(email, authCode).then(copy => {
                             setIsAuthCode(copy);

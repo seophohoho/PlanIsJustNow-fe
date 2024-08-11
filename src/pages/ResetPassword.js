@@ -5,41 +5,12 @@ import { Form, Col, Row, Button, Container, Navbar } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { PiDogFill } from 'react-icons/pi';
 
-function FindPassword() {
+const ResetPassword = () =>{
     const navigate = useNavigate()
-    const [isEmailDisabled, setIsEmailDisabled] = useState(false);
-    const [isAuthDisabled, setIsAuthDisabled] = useState(false);
-    const [userEmail, setUserEmail] = useState('');
-
-    function btnEmail(email) {
-        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{1,6}$/;
-      
-        // return은 실패, 성공에 따른 인증확인 버튼 활성화 상태 반환용
-        if (emailRegex.test(email)) {
-          try {
-            //debounce 라이브러리 사용 예정 처리 시간당 요청은 몇번? --> 그냥 state로 1회 작동하는 건?
-            //true false 상태를 검사하고 axios동작 setTimeout으로 500ms 동안 false 동안에는 같은 클릭은 처리 안하는 걸루? 500ms 이후에는 다시 true하고
-            //함수로 구현하고 function 파일로 넘기면 될듯
-            const Response = axios.post(`${serverUrl}/api/auth/mail`, {"email": email});
-            if (Response.status === 200) {
-              alert("인증메일이 발송됐어요!");
-              setIsEmailDisabled(true)
-              setIsAuthDisabled(false)
-              return false;
-            }
-          } catch (error) {
-            alert("메일발송에 실패했습니다. 잠시후 다시 시도해주세요");
-            return true;
-          }
-        } else {
-          alert("이메일 양식을 다시 확인해주세요..");
-          return true;
-        }
-    }
+    const [isPostDisabled, setIsPostDisabled] = useState(false)
     
     return(
-    <div className='text-center'>
-        <header>
+        <div className='text-center'>
             <Navbar expand="md" className="bg-body-tertiary">
                 <Container>
                     <Navbar.Brand as={Link} to="/sign-in" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: 'inherit' }}>
@@ -48,11 +19,10 @@ function FindPassword() {
                     </Navbar.Brand>
                 </Container>
             </Navbar>
-        </header>
 
-        <h1 className='page-title'>비 밀 번 호  찾 기</h1>
+        <h1 className='page-title'>비 밀 번 호  변 경</h1>
 
-        <body className='App'>
+        <div className='App'>
             <div className='text-center w-30p h-410'>
             <Form className='m-top-5em'>
                 <Form.Group 
@@ -61,17 +31,15 @@ function FindPassword() {
                 controlId="formHorizontalEmail">
                         <Col sm={3} className='text-left'>
                             <Form.Label column>{/** label칸 */}
-                                <p className='color-darkBlue'>Email</p> 
+                                <p className='color-darkBlue'>새 비밀번호</p> 
                             </Form.Label>
                         </Col>
                         <Col className='mb-3' sm={6}>{/** input칸 */}
                         <Form.Control 
                         type="email"
                         className='form-Control'
-                        placeholder='example123@gmail.com'
-                        disabled={isEmailDisabled}
                         onChange={(e)=>{
-                            setUserEmail(e.target.value)
+                            //password state
                         }}
                         />
                         </Col>
@@ -85,7 +53,7 @@ function FindPassword() {
                 controlId="formAuthEmail">
                     <Col className='text-left' sm={3}>
                         <Form.Label column>{/** label칸 */}
-                            <p className='color-darkBlue'>ID</p>
+                            <p className='color-darkBlue'>비밀번호 재입력</p>
                         </Form.Label>
                     </Col>
                     <Col className='mb-3' sm={6}>{/** input칸 */}
@@ -93,31 +61,29 @@ function FindPassword() {
                         type="text" 
                         maxLength={20}
                         className="form-Control" 
-                        disabled={isAuthDisabled}
                         onChange={(e) => {
-                            const value = e.target.value;
+                            const value = e.target.value;//password 재입력 state
+                            //rex랑 auth 관련은 회원가입에ㅓ 재사용
                         }}/>
                     </Col>
                     <Col className='text-left' sm={3}>
                         <Button 
                         as="input" 
                         type="button" 
-                        value="확인" 
-                        disabled={isAuthDisabled}
+                        value="변경" 
+                        disabled={isPostDisabled}
                         onClick={()=>{
-                            setIsAuthDisabled(true)
+                            setIsPostDisabled(true)
                         }}/> 
                     </Col>
                 </Form.Group>
             </Form>
             </div>
-        </body>
+        </div>
         <footer>
         </footer>
     </div>
-  );
+    )    
 }
 
-
-
-export default FindPassword;
+export default ResetPassword
